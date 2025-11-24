@@ -23,6 +23,7 @@ You are building a viral mobile web service called "Hyo-Tier (효도티어)".
   - Define theme variables and keyframes directly in `app/globals.css` using the `@theme` directive.
 - State Management: Zustand
 - Package Manager: pnpm
+  - You need to build or dev with pnpm run dev or pnpm build, not 'npm run dev'
 - Deployment: Vercel
 
 # Design System (Newtro Exam Theme - Tailwind v4 Config)
