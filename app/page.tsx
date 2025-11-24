@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { BookOpen, ChevronRight } from "lucide-react"; // 아이콘
+import { BookOpen, ChevronRight } from 'lucide-react'; // 아이콘
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -13,12 +13,10 @@ export default function Home() {
           부모님 탐구영역
         </h1>
         <div className="flex justify-between items-end mt-2 px-2">
-           <span className="text-xs font-sans bg-omr text-white px-2 py-0.5 rounded-sm">
-             홀수형
-           </span>
-           <span className="text-lg font-serif font-bold">
-             효도티어
-           </span>
+          <span className="text-xs font-sans bg-omr text-white px-2 py-0.5 rounded-sm">
+            홀수형
+          </span>
+          <span className="text-lg font-serif font-bold">효도티어</span>
         </div>
       </div>
 
@@ -27,13 +25,19 @@ export default function Home() {
         <div className="bg-white/50 border border-ink/10 p-6 rounded-lg shadow-sm backdrop-blur-sm">
           <BookOpen className="w-10 h-10 mx-auto mb-4 text-grading opacity-80" />
           <h2 className="text-xl font-serif font-bold mb-2">
-            "당신은 부모님에 대해<br/>얼마나 알고 있습니까?"
+            "당신은 부모님에 대해
+            <br />
+            얼마나 알고 있습니까?"
           </h2>
           <p className="text-sm text-ink/70 leading-relaxed">
-            이 시험은 단순한 심리테스트가 아닙니다.<br/>
-            당신의 효도 등급을 냉정하게 판독합니다.<br/>
-            <br/>
-            <span className="text-grading font-bold">※ 주의: 뼈 맞을 수 있음</span>
+            이 시험은 단순한 심리테스트가 아닙니다.
+            <br />
+            당신의 효도 등급을 냉정하게 판독합니다.
+            <br />
+            <br />
+            <span className="text-grading font-bold">
+              ※ 주의: 뼈 맞을 수 있음
+            </span>
           </p>
         </div>
       </div>
@@ -45,13 +49,13 @@ export default function Home() {
           <span>수험번호: 1 2 3 4 5 6 7</span>
         </div>
 
-        <Link 
+        <Link
           href="/quiz"
           className="block w-full bg-omr text-white py-4 rounded-lg font-serif font-bold text-xl shadow-lg hover:bg-ink transition-all active:scale-95 flex items-center justify-center gap-2"
         >
           문제지 펼치기 <ChevronRight className="w-5 h-5" />
         </Link>
-        
+
         <p className="text-xs text-ink/40 mt-4">
           Designed by Hyo-Tier Committee. 2025
         </p>

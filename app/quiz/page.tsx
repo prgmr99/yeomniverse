@@ -1,21 +1,19 @@
-"use client";
+'use client';
 
-import ProgressBar from "@/components/quiz/ProgressBar";
-import { QUESTIONS } from "@/lib/constants"; // 데이터 불러오기
-import { useQuizStore } from "@/store/useQuizStore"; // 스토어 불러오기
-import { useRouter } from "next/navigation"; // 라우터
-import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation'; // 라우터
+import { useEffect, useState } from 'react';
+import ProgressBar from '@/components/quiz/ProgressBar';
+import { type Effects, QUESTIONS } from '@/lib/constants'; // 데이터 불러오기
+import { useQuizStore } from '@/store/useQuizStore'; // 스토어 불러오기
 
 export default function QuizPage() {
   const router = useRouter();
-  
+
   // Zustand에서 필요한 상태와 액션 꺼내오기
   const { currentStep, nextStep, setAnswer, resetQuiz } = useQuizStore();
 
   // 애니메이션 처리를 위한 로컬 상태 (슬라이드 효과용)
   const [isAnimating, setIsAnimating] = useState(false);
-
-  
 
   // 현재 보여줄 질문 데이터
   const currentQuestion = QUESTIONS[currentStep];
@@ -24,7 +22,7 @@ export default function QuizPage() {
   const isFinished = currentStep >= QUESTIONS.length;
 
   // 답변 클릭 핸들러
-  const handleOptionClick = (index: number, effects: any) => {
+  const handleOptionClick = (index: number, effects: Effects) => {
     if (isAnimating) return; // 애니메이션 중 중복 클릭 방지
 
     setIsAnimating(true); // 슬라이드 아웃 애니메이션 시작
@@ -44,12 +42,13 @@ export default function QuizPage() {
     if (currentStep === 0) {
       resetQuiz();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 결과 페이지 이동 처리
   useEffect(() => {
     if (isFinished) {
-      router.push("/result"); // 결과 페이지로 자동 이동
+      router.push('/result'); // 결과 페이지로 자동 이동
     }
   }, [isFinished, router]);
 
@@ -63,12 +62,11 @@ export default function QuizPage() {
 
       {/* 질문 영역 */}
       <div className="flex-1 flex flex-col justify-center px-6 pb-10 space-y-8 overflow-hidden">
-        
         {/* 애니메이션 래퍼 (문제가 바뀔 때마다 animate-slide-in 실행) */}
         {/* key={currentStep}을 주면 리액트가 다른 요소로 인식해서 애니메이션을 다시 실행함 */}
-        <div 
-          key={currentStep} 
-          className={`space-y-8 ${isAnimating ? "opacity-0 transition-opacity duration-300" : "animate-slide-in"}`}
+        <div
+          key={currentStep}
+          className={`space-y-8 ${isAnimating ? 'opacity-0 transition-opacity duration-300' : 'animate-slide-in'}`}
         >
           {/* 질문 텍스트 */}
           <div className="space-y-3">
@@ -97,7 +95,6 @@ export default function QuizPage() {
             ))}
           </div>
         </div>
-
       </div>
     </main>
   );

@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { serif, sans } from "./fonts";
-import Script from "next/script";
+import type { Metadata } from 'next';
+import './globals.css';
+import Script from 'next/script';
+import { sans, serif } from './fonts';
 
 export const metadata: Metadata = {
-  title: "효도티어 | 부모님 탐구영역",
-  description: "당신의 효도 등급은 몇 등급입니까? 2025학년도 대국민 효도능력시험",
+  title: '효도티어 | 부모님 탐구영역',
+  description:
+    '당신의 효도 등급은 몇 등급입니까? 2025학년도 대국민 효도능력시험',
 };
 
 export default function RootLayout({
@@ -22,7 +23,7 @@ export default function RootLayout({
           - text-ink: 기본 텍스트 색상
         */}
         <div className="w-full max-w-[480px] min-h-screen bg-paper text-ink shadow-2xl relative overflow-x-hidden">
-           {children}
+          {children}
         </div>
 
         <Script

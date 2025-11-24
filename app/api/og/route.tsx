@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og';
-import { NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
 
 export const runtime = 'edge';
 
@@ -39,75 +39,109 @@ export async function GET(req: NextRequest) {
     // 실제 배포 시에는 로컬 폰트 파일을 ArrayBuffer로 읽어오는 것이 가장 안정적입니다.
     // 여기서는 MVP를 위해 fetch 방식을 사용합니다.
     const fontData = await fetch(
-      new URL('https://fonts.gstatic.com/s/notosanskr/v27/PbykFmXiEBPT4ITbgNA5Cgm207zl4z0.ttf', import.meta.url)
+      new URL(
+        'https://fonts.gstatic.com/s/notosanskr/v27/PbykFmXiEBPT4ITbgNA5Cgm207zl4z0.ttf',
+        import.meta.url,
+      ),
     ).then((res) => res.arrayBuffer());
 
     return new ImageResponse(
-      (
+      <div
+        style={{
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#FDFBF7', // 갱지 배경
+          position: 'relative',
+        }}
+      >
+        {/* 테두리 장식 */}
         <div
           style={{
-            height: '100%',
-            width: '100%',
+            position: 'absolute',
+            top: 20,
+            left: 20,
+            right: 20,
+            bottom: 20,
+            border: '4px solid #1c1917',
+            borderRadius: 20,
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: '#FDFBF7', // 갱지 배경
-            position: 'relative',
           }}
         >
-          {/* 테두리 장식 */}
+          {/* 배경 컬러 박스 */}
           <div
             style={{
               position: 'absolute',
-              top: 20, left: 20, right: 20, bottom: 20,
-              border: '4px solid #1c1917',
-              borderRadius: 20,
+              top: 0,
+              left: 0,
+              right: 0,
+              height: '40%',
+              backgroundColor: bg,
+              opacity: 0.5,
+              borderTopLeftRadius: 16,
+              borderTopRightRadius: 16,
+            }}
+          />
+
+          <div
+            style={{
               display: 'flex',
+              flexDirection: 'column',
               alignItems: 'center',
-              justifyContent: 'center',
+              gap: 10,
             }}
           >
-            {/* 배경 컬러 박스 */}
-            <div 
+            <div style={{ fontSize: 24, color: '#DC2626', fontWeight: 900 }}>
+              2025학년도 효도능력시험 성적표
+            </div>
+
+            <div
               style={{
-                position: 'absolute',
-                top: 0, left: 0, right: 0, height: '40%',
-                backgroundColor: bg,
-                opacity: 0.5,
-                borderTopLeftRadius: 16,
-                borderTopRightRadius: 16,
-              }} 
-            />
-
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-              <div style={{ fontSize: 24, color: '#DC2626', fontWeight: 900 }}>
-                2025학년도 효도능력시험 성적표
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 60,
+                  fontWeight: 900,
+                  color: '#1c1917',
+                  marginBottom: 10,
+                }}
+              >
+                {title}
               </div>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{ fontSize: 60, fontWeight: 900, color: '#1c1917', marginBottom: 10 }}>
-                  {title}
-                </div>
-                <div style={{ fontSize: 30, color: '#374151' }}>
-                  나의 점수는? <span style={{ fontWeight: 900, color: '#DC2626', marginLeft: 10 }}>{score}점</span>
-                </div>
+              <div style={{ fontSize: 30, color: '#374151' }}>
+                나의 점수는?{' '}
+                <span
+                  style={{ fontWeight: 900, color: '#DC2626', marginLeft: 10 }}
+                >
+                  {score}점
+                </span>
               </div>
+            </div>
 
-              <div style={{ 
-                marginTop: 30, 
-                padding: '10px 30px', 
-                backgroundColor: '#1c1917', 
-                color: 'white', 
+            <div
+              style={{
+                marginTop: 30,
+                padding: '10px 30px',
+                backgroundColor: '#1c1917',
+                color: 'white',
                 borderRadius: 50,
-                fontSize: 24 
-              }}>
-                너도 테스트 하러가기 👉
-              </div>
+                fontSize: 24,
+              }}
+            >
+              너도 테스트 하러가기 👉
             </div>
           </div>
         </div>
-      ),
+      </div>,
       {
         width: 1200,
         height: 630,

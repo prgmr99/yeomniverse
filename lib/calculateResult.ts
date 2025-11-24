@@ -1,5 +1,5 @@
 // lib/calculateResult.ts
-import { RESULTS, ResultType } from "./resultData";
+import { RESULTS, type ResultType } from './resultData';
 
 type Scores = {
   interest: number;
@@ -20,7 +20,7 @@ export function calculateResult(scores: Scores, flags: Flags): ResultType {
   const totalScore = interest + intimacy + expression;
 
   // 1. 특수 유형 우선 판별 (Flags & High Scores)
-  
+
   // 🦄 유니콘: 모든 항목이 매우 높을 때 (기준점은 조정 가능)
   if (interest >= 70 && intimacy >= 70 && expression >= 70) {
     return RESULTS.UNICORN;
