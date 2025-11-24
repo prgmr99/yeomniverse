@@ -1,65 +1,129 @@
 "use client";
 
 import Link from "next/link";
-import { Share2, RotateCcw } from "lucide-react";
+import { Share2, RotateCcw, Home } from "lucide-react";
+import { useQuizStore } from "@/store/useQuizStore";
+import { calculateResult } from "@/lib/calculateResult";
+import { useEffect, useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ResultPage() {
+  const router = useRouter();
+  const { scores, flags, resetQuiz, currentStep } = useQuizStore();
+  const [isReady, setIsReady] = useState(false); // 클라이언트 렌더링 준비 여부
+
+  // 1. 결과 계산 (메모이제이션)
+  const result = useMemo(() => calculateResult(scores, flags), [scores, flags]);
+
+  // 2. 예외 처리: 퀴즈를 안 풀고 접근했으면 홈으로 보냄
+  useEffect(() => {
+    // 점수가 0점이고 푼 문제도 0개면 비정상 접근으로 간주
+    // (단, 실제 0점일 수도 있으므로 currentStep 체크)
+    if (currentStep === 0) {
+      router.replace("/");
+    } else {
+      setIsReady(true);
+    }
+  }, [currentStep, router]);
+
+  if (!isReady) return null; // 리다이렉트 중 깜빡임 방지
+
   return (
-    <main className="min-h-screen flex flex-col items-center py-10 px-6 animate-fade-in space-y-8">
+    <main className="min-h-screen flex flex-col items-center py-10 px-6 animate-fade-in space-y-8 pb-20">
       
       {/* 1. 결과 등급 (도장 애니메이션) */}
-      <div className="relative w-full text-center py-6 border-b-2 border-dashed border-ink/20">
-        <p className="text-sm font-serif text-ink/60 mb-2">2025학년도 효도능력시험 성적표</p>
+      <div className="relative w-full text-center py-8 border-b-2 border-dashed border-ink/20">
+        <p className="text-sm font-serif text-ink/60 mb-2 font-bold">
+          2025학년도 효도능력시험 성적표
+        </p>
         
         {/* 캐릭터 이름 */}
-        <h1 className="text-3xl font-serif font-black mb-4">
-          전설의 유니콘 효자
+        <h1 className="text-3xl font-serif font-black mb-2 text-ink break-keep leading-tight">
+          {result.title}
         </h1>
+        <p className="text-sm font-sans text-ink/70">
+          "{result.subtitle}"
+        </p>
 
-        {/* 도장 쾅! (Tailwind Config에 정의한 animate-stamp-bang 사용) */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-           <div className="border-4 border-grading text-grading rounded-xl px-4 py-2 text-5xl font-black font-serif opacity-0 animate-stamp-bang -rotate-12 whitespace-nowrap bg-paper/80 backdrop-blur-sm">
-             1등급
+        {/* 1등급 도장 (유니콘일 때만 1등급, 나머지는 재치있게 변경 가능하지만 일단 통일) */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+           <div className="border-[6px] border-grading text-grading rounded-xl px-6 py-2 text-6xl font-black font-serif opacity-0 animate-stamp-bang -rotate-12 whitespace-nowrap bg-paper/90 backdrop-blur-sm shadow-xl">
+             {result.id === 'UNICORN' ? '1등급' : result.id === 'LODGER' ? '9등급' : '등급외'}
            </div>
         </div>
       </div>
 
-      {/* 2. 캐릭터 이미지 (Placeholder) */}
-      <div className="w-64 h-64 bg-stone-200 rounded-lg flex items-center justify-center text-stone-400">
-        (캐릭터 이미지 영역)
-      </div>
-
-      {/* 3. 상세 분석 & 처방전 */}
-      <div className="w-full bg-white/60 p-6 rounded-lg border border-stone-200 space-y-4">
-        <div>
-          <h3 className="font-serif font-bold text-lg mb-1 flex items-center">
-            🩺 닥터의 처방전
-          </h3>
-          <p className="text-sm text-ink/80 leading-relaxed bg-yellow-50 p-3 rounded border border-yellow-100">
-            "이미 완벽하니 더 바랄 게 없습니다. 지금처럼만 부모님 곁에 머물러 주세요."
-          </p>
-        </div>
-
-        {/* 레이더 차트 들어갈 자리 */}
-        <div className="w-full h-40 bg-stone-100 rounded flex items-center justify-center text-xs text-stone-400">
-          [레이더 차트 영역]
+      {/* 2. 캐릭터 상세 설명 */}
+      <div className={`w-full p-6 rounded-2xl border-2 border-ink/10 shadow-sm ${result.imageColor}`}>
+        <p className="text-ink/80 leading-relaxed font-sans text-base whitespace-pre-wrap">
+          {result.desc}
+        </p>
+        
+        {/* 태그 */}
+        <div className="flex flex-wrap gap-2 mt-4">
+          {result.tags.map(tag => (
+            <span key={tag} className="text-xs font-bold bg-white/50 text-ink/60 px-2 py-1 rounded-full">
+              {tag}
+            </span>
+          ))}
         </div>
       </div>
 
-      {/* 4. 액션 버튼 (공유 & 다시하기) */}
-      <div className="w-full space-y-3 pb-10">
-        <button className="w-full bg-[#FEE500] text-[#191919] py-4 rounded-lg font-bold flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-all">
-          <Share2 className="w-5 h-5" /> 카카오톡으로 자랑하기
+      {/* 3. 닥터의 처방전 */}
+      <div className="w-full bg-white p-6 rounded-xl border border-stone-200 shadow-sm space-y-3">
+        <h3 className="font-serif font-bold text-lg flex items-center gap-2 text-ink">
+          🩺 닥터의 처방전
+        </h3>
+        <p className="text-sm text-ink/80 leading-relaxed bg-stone-50 p-4 rounded-lg border border-stone-100">
+          {result.solution}
+        </p>
+      </div>
+
+      {/* 4. 점수 그래프 (Recharts - 일단 막대바로 간단히 구현) */}
+      <div className="w-full space-y-2">
+        <h4 className="text-sm font-bold opacity-70 ml-1">상세 점수</h4>
+        <ScoreBar label="관심도 (지식)" score={scores.interest} max={100} color="bg-blue-400" />
+        <ScoreBar label="친밀도 (마음)" score={scores.intimacy} max={100} color="bg-pink-400" />
+        <ScoreBar label="표현력 (행동)" score={scores.expression} max={100} color="bg-yellow-400" />
+      </div>
+
+      {/* 5. 액션 버튼 */}
+      <div className="w-full space-y-3 pt-4">
+        <button className="w-full bg-[#FEE500] text-[#191919] py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md hover:opacity-90 transition-all text-lg">
+          <Share2 className="w-5 h-5" /> 결과 공유하기
         </button>
         
-        <Link 
-          href="/" 
-          className="block w-full bg-stone-800 text-white py-4 rounded-lg font-bold text-center hover:bg-black transition-all flex items-center justify-center gap-2"
-        >
-          <RotateCcw className="w-5 h-5" /> 재시험 치기
-        </Link>
+        <div className="grid grid-cols-2 gap-3">
+          <Link 
+            href="/"
+            onClick={resetQuiz} // 홈으로 갈 때 리셋
+            className="bg-stone-800 text-white py-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 hover:bg-black transition-all"
+          >
+            <RotateCcw className="w-4 h-4" /> 재시험
+          </Link>
+          {/* 나중에 다른 기능(링크 복사 등) 넣을 자리 */}
+          <button className="bg-white border-2 border-stone-200 text-ink py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-50">
+             <Home className="w-4 h-4" /> 홈으로
+          </button>
+        </div>
       </div>
 
     </main>
+  );
+}
+
+// 간단한 점수 게이지 컴포넌트
+function ScoreBar({ label, score, max, color }: { label: string, score: number, max: number, color: string }) {
+  // 점수 정규화 (최대 100% 안 넘게)
+  const percent = Math.min(Math.max((score / max) * 100, 5), 100);
+  
+  return (
+    <div className="flex items-center gap-3 text-xs">
+      <span className="w-20 font-bold opacity-70 text-right">{label}</span>
+      <div className="flex-1 h-3 bg-stone-200 rounded-full overflow-hidden">
+        <div className={`h-full ${color} rounded-full`} style={{ width: `${percent}%` }} />
+      </div>
+      <span className="w-8 opacity-50">{score}</span>
+    </div>
   );
 }
