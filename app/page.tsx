@@ -2,8 +2,27 @@ import { BookOpen, ChevronRight } from 'lucide-react'; // 아이콘
 import Link from 'next/link';
 
 export default function Home() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: '효도티어',
+    url: 'https://hyo-tier.vercel.app',
+    description:
+      '당신의 효도 등급은 몇 등급입니까? 2025학년도 대국민 효도능력시험',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://hyo-tier.vercel.app/search?q={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
+  };
+
   return (
     <main className="flex flex-col items-center justify-center min-h-screen p-6 text-center space-y-8 animate-fade-in">
+      <script
+        type="application/ld+json"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* 상단: 시험 정보 헤더 */}
       <div className="w-full border-b-2 border-ink pb-4 mb-4">
         <p className="text-sm font-serif font-bold tracking-widest mb-1">
