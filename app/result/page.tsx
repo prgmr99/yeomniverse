@@ -45,7 +45,7 @@ export default function ResultPage() {
         <h1 className="text-3xl font-serif font-black mb-2 text-ink break-keep leading-tight">
           {result.title}
         </h1>
-        <p className="text-sm font-sans text-ink/70">"{result.subtitle}"</p>
+        <p className="text-sm font-sans text-ink/70">&quot;{result.subtitle}&quot;</p>
 
         {/* 1등급 도장 (유니콘일 때만 1등급, 나머지는 재치있게 변경 가능하지만 일단 통일) */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">

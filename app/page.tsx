@@ -24,17 +24,11 @@ export default function Home() {
       <div className="space-y-4 py-8">
         <div className="bg-white/50 border border-ink/10 p-6 rounded-lg shadow-sm backdrop-blur-sm">
           <BookOpen className="w-10 h-10 mx-auto mb-4 text-grading opacity-80" />
-          <h2 className="text-xl font-serif font-bold mb-2">
-            "당신은 부모님에 대해
-            <br />
-            얼마나 알고 있습니까?"
+          <h2 className="text-xl font-serif font-bold mb-2 whitespace-pre-line">
+            {`"당신은 부모님에 대해\n얼마나 알고 있습니까?"`}
           </h2>
-          <p className="text-sm text-ink/70 leading-relaxed">
-            이 시험은 단순한 심리테스트가 아닙니다.
-            <br />
-            당신의 효도 등급을 냉정하게 판독합니다.
-            <br />
-            <br />
+          <p className="text-sm text-ink/70 leading-relaxed whitespace-pre-line">
+            {`이 시험은 단순한 심리테스트가 아닙니다.\n당신의 효도 등급을 냉정하게 판독합니다.\n\n`}
             <span className="text-grading font-bold">
               ※ 주의: 뼈 맞을 수 있음
             </span>
