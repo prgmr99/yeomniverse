@@ -1,4 +1,3 @@
-// hooks/useKakaoShare.ts
 import { useEffect } from 'react';
 
 export const useKakaoShare = (
@@ -6,16 +5,6 @@ export const useKakaoShare = (
   resultTitle: string,
   score: number,
 ) => {
-  useEffect(() => {
-    // 카카오 SDK 초기화
-    if (window.Kakao && !window.Kakao.isInitialized()) {
-      // ⚠️ 여기에 본인의 JavaScript 키를 넣어야 합니다! (환경변수 추천)
-      window.Kakao.init(
-        process.env.NEXT_PUBLIC_KAKAO_API_KEY || 'YOUR_KAKAO_JS_KEY',
-      );
-    }
-  }, []);
-
   const shareKakao = () => {
     if (!window.Kakao) {
       alert('카카오톡 로딩 중입니다. 잠시 후 다시 시도해 주세요.');
@@ -53,12 +42,20 @@ export const useKakaoShare = (
     });
   };
 
+  useEffect(() => {
+    // 카카오 SDK 초기화
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
+    }
+  }, []);
+
   return { shareKakao };
 };
 
 // window 객체 타입 보강
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Kakao: any;
   }
 }

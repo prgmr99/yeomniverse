@@ -37,12 +37,13 @@ export default function QuizPage() {
     }, 300);
   };
 
-  // 컴포넌트 마운트 시 퀴즈 초기화 (새로고침 했을 때 대비)
+  // 컴포넌트 마운트 시 퀴즈 초기화
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <컴포넌트 마운트>
   useEffect(() => {
     if (currentStep === 0) {
       resetQuiz();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 결과 페이지 이동 처리
@@ -82,6 +83,7 @@ export default function QuizPage() {
           <div className="space-y-3">
             {currentQuestion.options.map((option, index) => (
               <button
+                type="button"
                 key={index}
                 onClick={() => handleOptionClick(index, option.effects)}
                 className="w-full text-left p-5 rounded-xl border-2 border-stone-200 bg-white/60 hover:bg-stone-100 hover:border-omr active:scale-[0.98] active:bg-stone-200 transition-all group flex items-center justify-between shadow-sm"

@@ -45,7 +45,9 @@ export default function ResultPage() {
         <h1 className="text-3xl font-serif font-black mb-2 text-ink break-keep leading-tight">
           {result.title}
         </h1>
-        <p className="text-sm font-sans text-ink/70">&quot;{result.subtitle}&quot;</p>
+        <p className="text-sm font-sans text-ink/70">
+          &quot;{result.subtitle}&quot;
+        </p>
 
         {/* 1등급 도장 (유니콘일 때만 1등급, 나머지는 재치있게 변경 가능하지만 일단 통일) */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
@@ -117,6 +119,7 @@ export default function ResultPage() {
       {/* TODO: 부모님께 공유하기 */}
       <div className="w-full space-y-3 pt-4">
         <button
+          type="button"
           className="w-full bg-[#FEE500] text-[#191919] py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md hover:opacity-90 transition-all text-lg"
           onClick={shareKakao}
         >
@@ -132,7 +135,10 @@ export default function ResultPage() {
             <RotateCcw className="w-4 h-4" /> 재시험
           </Link>
           {/* 나중에 다른 기능(링크 복사 등) 넣을 자리 */}
-          <button className="bg-white border-2 border-stone-200 text-ink py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-50">
+          <button
+            type="button"
+            className="bg-white border-2 border-stone-200 text-ink py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-50"
+          >
             <Home className="w-4 h-4" /> 홈으로
           </button>
         </div>

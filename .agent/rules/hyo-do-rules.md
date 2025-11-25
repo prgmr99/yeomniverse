@@ -9,26 +9,48 @@ You are building a viral mobile web service called "Hyo-Tier (효도티어)".
 
 # Project Overview
 
-- Service Name: 효도티어 (Hyo-Tier)
-- Concept: A fun, viral quiz service styled like a "2025 Korean College Entrance Exam" to test how well users know their parents.
-- Target Audience: MZ generation (Mobile-first experience).
-- Core Goal: Viral sharing via KakaoTalk and generating revenue via Google AdSense.
+- **Service Name**: 효도티어 (Hyo-Tier)
+- **Concept**: A fun, viral quiz service styled like a "2025 Korean College Entrance Exam" to test how well users know their parents.
+- **Target Audience**: MZ generation (Mobile-first experience).
+- **Core Goal**: Viral sharing via KakaoTalk and generating revenue via Google AdSense.
 
 # Tech Stack & Constraints
 
-- Framework: Next.js 16.0.3 (App Router)
-- Library: React 19.2.0 (Utilize latest React 19 features if necessary).
-- Styling: Tailwind CSS v4
-  - IMPORTANT: Do NOT use `tailwind.config.ts`. Tailwind v4 uses CSS-first configuration.
-  - Define theme variables and keyframes directly in `app/globals.css` using the `@theme` directive.
-- State Management: Zustand
-- Package Manager: pnpm
-  - You need to build or dev with pnpm run dev or pnpm build, not 'npm run dev'
-- Deployment: Vercel
+- **Framework**: Next.js 16.0.3 (App Router)
+- **Library**: React 19.2.0 (Utilize latest React 19 features).
+- **Styling**: Tailwind CSS v4
+  - **Configuration**: CSS-first approach. Define theme variables and keyframes in `app/globals.css` using the `@theme` directive.
+  - **Restriction**: Do NOT use `tailwind.config.ts`.
+- **State Management**: Zustand
+  - Store location: `store/useQuizStore.ts`
+- **Data Management**:
+  - Static Data: `lib/constants.ts` (Questions, Types)
+- **Package Manager**: pnpm
+  - Use `pnpm run dev` or `pnpm build`.
+- **Deployment**: Vercel
 
-# Design System (Newtro Exam Theme - Tailwind v4 Config)
+# Project Structure & Conventions
 
-You must configure the following tokens inside `app/globals.css` using Tailwind v4 syntax:
+## File Organization
+
+- `app/`: Next.js App Router pages and layouts.
+- `components/`: Reusable UI components.
+- `lib/`: Static data (`constants.ts`) and utility functions (`calculateResult.ts`).
+- `store/`: Zustand stores (`useQuizStore.ts`).
+
+## Coding Conventions
+
+- **Text Handling**:
+  - Use `whitespace-pre-line` class and `\n` for multi-line text to maintain clean JSX.
+  - Avoid excessive `<br />` tags.
+  - Use HTML entities for special characters (e.g., `&quot;` for `"`).
+- **Component Design**:
+  - Mobile-first design with a max-width container (`max-w-[480px]`) in `layout.tsx`.
+  - Use `lucide-react` for icons.
+
+# Design System (Newtro Exam Theme)
+
+Configure the following tokens inside `app/globals.css`:
 
 ```css
 @import "tailwindcss";
@@ -81,5 +103,13 @@ You must configure the following tokens inside `app/globals.css` using Tailwind 
       opacity: 1;
     }
   }
+}
+
+/* Utilities */
+@utility font-serif {
+  font-family: var(--font-serif);
+}
+@utility font-sans {
+  font-family: var(--font-sans);
 }
 ```
