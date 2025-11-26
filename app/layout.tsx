@@ -64,10 +64,15 @@ export const metadata: Metadata = {
     canonical: process.env.NEXT_PUBLIC_DOMAIN_URL,
   },
   verification: {
-    google: '4QaYZkeXK8b9g5gYGiTcVhUUHtfcjjAv5iUFgiEJTf4',
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
     other: {
-      'naver-site-verification': '1cb381ba0c300828a577760565aa352a5750877f',
+      'naver-site-verification': process.env
+        .NEXT_PUBLIC_NAVER_SITE_VERIFICATION as string,
     },
+  },
+  other: {
+    'google-adsense-account': process.env
+      .NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT as string,
   },
 };
 
