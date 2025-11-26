@@ -1,3 +1,4 @@
+// app/robots.ts
 import type { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
@@ -5,8 +6,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/private/', // Example of disallowed path
     },
-    sitemap: process.env.NEXT_PUBLIC_DOMAIN_URL,
+    sitemap: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/sitemap.xml`,
   };
 }
