@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://hyo-tier.vercel.app';
+  const baseUrl = process.env.NEXT_PUBLIC_DOMAIN_URL as string;
 
   return [
     {

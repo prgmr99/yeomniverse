@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/private/', // Example of disallowed path
     },
-    sitemap: 'https://hyo-tier.vercel.app/sitemap.xml',
+    sitemap: process.env.NEXT_PUBLIC_DOMAIN_URL,
   };
 }
