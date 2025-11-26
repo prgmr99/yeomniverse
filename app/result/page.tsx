@@ -2,34 +2,52 @@
 
 import { Home, RotateCcw, Share2 } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useKakaoShare } from '@/hooks/useKakaoShare';
 import { calculateResult } from '@/lib/calculateResult';
+import { RESULTS } from '@/lib/resultData';
 import { useQuizStore } from '@/store/useQuizStore';
 
-export default function ResultPage() {
+function ResultContent() {
   const router = useRouter();
-  const { scores, flags, resetQuiz, currentStep } = useQuizStore();
+  const searchParams = useSearchParams();
+  const { scores: storeScores, flags, resetQuiz, currentStep } = useQuizStore();
   const [isReady, setIsReady] = useState(false); // 클라이언트 렌더링 준비 여부
 
-  // 1. 결과 계산 (메모이제이션)
-  const result = useMemo(() => calculateResult(scores, flags), [scores, flags]);
-  const totalScore = scores.interest + scores.intimacy + scores.expression;
+  // 1. 쿼리 파라미터 파싱 (공유된 결과인 경우)
+  const sharedResultId = searchParams.get('result');
+  const sharedScores = useMemo(
+    () => ({
+      interest: Number(searchParams.get('interest')) || 0,
+      intimacy: Number(searchParams.get('intimacy')) || 0,
+      expression: Number(searchParams.get('expression')) || 0,
+    }),
+    [searchParams],
+  );
 
-  const { shareKakao } = useKakaoShare(result.id, result.title, totalScore);
+  // 2. 결과 계산 (공유된 결과 우선, 없으면 스토어 데이터 사용)
+  const scores = sharedResultId ? sharedScores : storeScores;
 
-  // 2. 예외 처리: 퀴즈를 안 풀고 접근했으면 홈으로 보냄
+  const result = useMemo(() => {
+    if (sharedResultId && RESULTS[sharedResultId]) {
+      return RESULTS[sharedResultId];
+    }
+    return calculateResult(storeScores, flags);
+  }, [sharedResultId, storeScores, flags]);
+
+  const { shareKakao } = useKakaoShare(result.id, result.title, scores);
+
+  // 3. 예외 처리: 퀴즈를 안 풀고 접근했으면 홈으로 보냄 (단, 공유된 링크는 제외)
   useEffect(() => {
-    // 점수가 0점이고 푼 문제도 0개면 비정상 접근으로 간주
-    // (단, 실제 0점일 수도 있으므로 currentStep 체크)
-    if (currentStep === 0) {
+    // 공유된 결과가 없고, 푼 문제도 0개면 비정상 접근
+    if (!sharedResultId && currentStep === 0) {
       router.replace('/');
     } else {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsReady(true);
     }
-  }, [currentStep, router]);
+  }, [currentStep, router, sharedResultId]);
 
   if (!isReady) return null; // 리다이렉트 중 깜빡임 방지
 
@@ -144,6 +162,20 @@ export default function ResultPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function ResultPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          로딩 중...
+        </div>
+      }
+    >
+      <ResultContent />
+    </Suspense>
   );
 }
 
