@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 export const useKakaoShare = (
   resultType: string,
   resultTitle: string,
-  score: number,
+  scores: { interest: number; intimacy: number; expression: number },
 ) => {
   const shareKakao = () => {
     if (!window.Kakao) {
@@ -11,20 +11,20 @@ export const useKakaoShare = (
       return;
     }
 
-    const shareUrl =
+    const baseUrl =
       typeof window !== 'undefined'
         ? window.location.origin
         : process.env.NEXT_PUBLIC_DOMAIN_URL;
 
-    // 동적 썸네일 URL 생성
-    const imageUrl = `${shareUrl}/api/og?type=${resultType}&score=${score}`;
+    const shareUrl = `${baseUrl}/result?result=${resultType}&interest=${scores.interest}&intimacy=${scores.intimacy}&expression=${scores.expression}`;
+    const totalScore = scores.interest + scores.intimacy + scores.expression;
 
     window.Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
         title: `[효도성적표] ${resultTitle}`,
-        description: `나의 효도 점수는 ${score}점! 너는 몇 등급이야? #엄빠고사 #효도티어`,
-        imageUrl: imageUrl, // 우리가 만든 동적 이미지
+        description: `나의 효도 점수는 ${totalScore}점! 너는 몇 등급이야? #엄빠고사 #효도티어`,
+        imageUrl: '/og-image.png',
         link: {
           mobileWebUrl: shareUrl,
           webUrl: shareUrl,
@@ -42,8 +42,8 @@ export const useKakaoShare = (
     });
   };
 
+  // 카카오 SDK 초기화
   useEffect(() => {
-    // 카카오 SDK 초기화
     if (window.Kakao && !window.Kakao.isInitialized()) {
       window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
     }
