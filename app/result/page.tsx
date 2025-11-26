@@ -134,31 +134,31 @@ function ResultContent() {
       </div>
 
       {/* 5. 액션 버튼 */}
-      {/* TODO: 부모님께 공유하기 */}
       <div className="w-full space-y-3 pt-4">
         <button
           type="button"
           className="w-full bg-[#FEE500] text-[#191919] py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md hover:opacity-90 transition-all text-lg"
           onClick={shareKakao}
         >
-          <Share2 className="w-5 h-5" /> 결과 공유하기
+          <Share2 className="w-5 h-5" /> 부모님께 공유하기
         </button>
 
         <div className="grid grid-cols-2 gap-3">
           <Link
             href="/"
-            onClick={resetQuiz} // 홈으로 갈 때 리셋
+            onClick={resetQuiz}
             className="bg-stone-800 text-white py-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 hover:bg-black transition-all"
           >
             <RotateCcw className="w-4 h-4" /> 재시험
           </Link>
-          {/* 나중에 다른 기능(링크 복사 등) 넣을 자리 */}
-          <button
-            type="button"
+
+          <Link
+            href="/"
+            onClick={resetQuiz}
             className="bg-white border-2 border-stone-200 text-ink py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-50"
           >
             <Home className="w-4 h-4" /> 홈으로
-          </button>
+          </Link>
         </div>
       </div>
     </main>
