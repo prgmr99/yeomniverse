@@ -20,19 +20,19 @@ export const QUESTIONS: Question[] = [
   // --- PART 1. 기초 탐구 (관심도 위주) ---
   {
     id: 1,
-    q: "부모님의 정확한 '생신'을 기억하고 있나요?",
+    q: "부모님 성함의 '한자(漢字)' 뜻을 정확히 알고 있나요?",
     options: [
       {
-        text: '당연하지! 양력/음력까지 완벽 암기',
+        text: '두 분 다 정확히 안다 (ex. 옥 옥, 구슬 주)',
         effects: { interest: 20, expression: 5 },
       },
-      { text: '날짜는 아는데... 음력이었나?', effects: { interest: 10 } },
+      { text: '한 분만 확실히 안다', effects: { interest: 10 } },
       {
-        text: '카톡 생일 알림 뜨면 그때 안다',
+        text: '대충 좋은 뜻이라고만 알고 있다',
         effects: { interest: 5, intimacy: -5 },
       },
       {
-        text: '솔직히 기억 안 난다 (불효자 ㅠㅠ)',
+        text: '한글 이름인 줄 알았다... (모름)',
         effects: { interest: 0, intimacy: -10 },
       },
     ],

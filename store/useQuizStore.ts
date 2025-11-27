@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { QUESTIONS } from '@/lib/constants';
 
 type Scores = {
   interest: number; // 관심도
@@ -21,10 +22,11 @@ interface QuizState {
   // Actions
   setAnswer: (choiceIndex: number, effects: Partial<Scores & Flags>) => void;
   nextStep: () => void;
+  prevStep: () => void;
   resetQuiz: () => void;
 }
 
-export const useQuizStore = create<QuizState>((set) => ({
+export const useQuizStore = create<QuizState>((set, get) => ({
   // 초기 상태
   currentStep: 0,
   answers: [],
@@ -48,6 +50,38 @@ export const useQuizStore = create<QuizState>((set) => ({
 
   // 다음 단계로 이동
   nextStep: () => set((state) => ({ currentStep: state.currentStep + 1 })),
+
+  // 이전 단계로 이동 (뒤로가기 지원)
+  prevStep: () => {
+    const state = get();
+    if (state.currentStep <= 0) return;
+
+    const prevStepIndex = state.currentStep - 1;
+    const lastAnswerIndex = state.answers[prevStepIndex];
+    const question = QUESTIONS[prevStepIndex];
+
+    // 예외 처리: 데이터가 없으면 그냥 스텝만 줄임
+    if (!question || lastAnswerIndex === undefined) {
+      set((state) => ({ currentStep: state.currentStep - 1 }));
+      return;
+    }
+
+    const effects = question.options[lastAnswerIndex].effects;
+
+    set((state) => ({
+      currentStep: state.currentStep - 1,
+      answers: state.answers.slice(0, -1),
+      scores: {
+        interest: state.scores.interest - (effects.interest || 0),
+        intimacy: state.scores.intimacy - (effects.intimacy || 0),
+        expression: state.scores.expression - (effects.expression || 0),
+      },
+      flags: {
+        tsundere: state.flags.tsundere - (effects.tsundere || 0),
+        sns: state.flags.sns - (effects.sns || 0),
+      },
+    }));
+  },
 
   // 퀴즈 초기화 (다시 풀기용)
   resetQuiz: () =>

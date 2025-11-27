@@ -1,17 +1,36 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { useRouter } from 'next/navigation'; // 라우터
-import { useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation'; // 라우터
+import { Suspense, useEffect, useState } from 'react';
 import ProgressBar from '@/components/quiz/ProgressBar';
 import { type Effects, QUESTIONS } from '@/lib/constants'; // 데이터 불러오기
 import { useQuizStore } from '@/store/useQuizStore'; // 스토어 불러오기
 
-export default function QuizPage() {
+// 애니메이션 변형 정의
+const variants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? '100%' : '-100%',
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => ({
+    x: direction < 0 ? '100%' : '-100%',
+    opacity: 0,
+  }),
+};
+
+function QuizContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [direction, setDirection] = useState(1); // 1: 다음, -1: 이전
 
   // Zustand에서 필요한 상태와 액션 꺼내오기
-  const { currentStep, nextStep, setAnswer, resetQuiz } = useQuizStore();
+  const { currentStep, answers, nextStep, prevStep, setAnswer, resetQuiz } =
+    useQuizStore();
 
   // 현재 보여줄 질문 데이터
   const currentQuestion = QUESTIONS[currentStep];
@@ -21,18 +40,43 @@ export default function QuizPage() {
 
   // 답변 클릭 핸들러
   const handleOptionClick = (index: number, effects: Effects) => {
-    // 1. 점수 저장
+    // 1. 점수 저장 (answers 배열도 업데이트됨)
     setAnswer(index, effects);
+    setDirection(1); // 앞으로 가기
 
-    // 2. 다음 문제로 (애니메이션은 Framer Motion이 처리)
-    nextStep();
+    // 2. URL 업데이트 -> useEffect에서 감지하여 nextStep() 호출
+    router.push(`/quiz?step=${currentStep + 1}`);
   };
+
+  // URL 쿼리 파라미터와 스토어 상태 동기화
+  useEffect(() => {
+    const stepParam = searchParams.get('step');
+    const stepFromUrl = stepParam ? Number.parseInt(stepParam, 10) : 0;
+
+    // 1. 뒤로가기 감지 (URL 스텝 < 현재 스텝)
+    if (stepFromUrl < currentStep) {
+      setDirection(-1); // 뒤로 가기
+      prevStep();
+    }
+    // 2. 앞으로 가기 (정상적인 진행)
+    // URL이 현재보다 1 크고, 답변이 이미 저장되어 있다면(answers.length) 이동 허용
+    else if (stepFromUrl === currentStep + 1 && answers.length >= stepFromUrl) {
+      setDirection(1); // 앞으로 가기
+      nextStep();
+    }
+    // 3. 비정상적인 앞으로 가기 방지 (건너뛰기 등)
+    else if (stepFromUrl > currentStep) {
+      router.replace(`/quiz?step=${currentStep}`);
+    }
+  }, [searchParams, currentStep, answers.length, prevStep, nextStep, router]);
 
   // 컴포넌트 마운트 시 퀴즈 초기화
   // biome-ignore lint/correctness/useExhaustiveDependencies: <컴포넌트 마운트>
   useEffect(() => {
     if (currentStep === 0) {
       resetQuiz();
+      // URL도 초기화
+      router.replace('/quiz?step=0');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -55,12 +99,14 @@ export default function QuizPage() {
       {/* 질문 영역 */}
       <div className="flex-1 flex flex-col justify-center px-6 pb-10 space-y-8 overflow-hidden">
         {/* 애니메이션 래퍼 */}
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence mode="popLayout" custom={direction}>
           <motion.div
             key={currentStep}
-            initial={{ x: '100%', opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: '-100%', opacity: 0 }}
+            custom={direction}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
             transition={{ duration: 0.4, ease: 'easeInOut' }}
             className="space-y-8"
           >
@@ -95,5 +141,19 @@ export default function QuizPage() {
         </AnimatePresence>
       </div>
     </main>
+  );
+}
+
+export default function QuizPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          로딩 중...
+        </div>
+      }
+    >
+      <QuizContent />
+    </Suspense>
   );
 }
