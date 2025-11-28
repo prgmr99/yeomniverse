@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import './globals.css';
+import Footer from '@/components/Footer';
 import KakaoScript from '@/components/KakaoScript';
 import { sans, serif } from './fonts';
 
@@ -116,6 +117,7 @@ export default function RootLayout({
         */}
         <div className="w-full max-w-[480px] min-h-screen bg-paper text-ink shadow-2xl relative overflow-x-hidden">
           {children}
+          <Footer />
         </div>
 
         <KakaoScript />
