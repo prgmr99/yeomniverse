@@ -48,7 +48,7 @@
       transform: scale(0.9) rotate(-12deg);
     }
     100% {
-      transform: translateX(168px) translateY(32px) scale(0.3) rotate(-12deg);
+      transform: translateX(var(--stamp-translate-x)) translateY(52px) scale(0.3) rotate(-12deg);
       opacity: 1;
     }
   }
@@ -81,6 +81,10 @@
 }
 
 /* Base Styles */
+:root {
+  --stamp-translate-x: min(168px, calc(50vw - 60px));
+}
+
 body {
   background-color: var(--color-paper);
   color: var(--color-ink);
