@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation'; // 라우터
 import { Suspense, useEffect, useState } from 'react';
+import Loading from '@/components/Loading';
 import ProgressBar from '@/components/quiz/ProgressBar';
 import { type Effects, QUESTIONS } from '@/lib/constants'; // 데이터 불러오기
 import { useQuizStore } from '@/store/useQuizStore'; // 스토어 불러오기
@@ -88,8 +89,8 @@ function QuizContent() {
     }
   }, [isFinished, router]);
 
-  // 로딩 중이거나 완료된 상태면 빈 화면 (리다이렉트 대기)
-  if (!currentQuestion || isFinished) return null;
+  // 로딩 중이거나 완료된 상태면 로딩 화면 표시 (빈 화면 방지)
+  if (!currentQuestion || isFinished) return <Loading />;
 
   return (
     <main className="min-h-screen flex flex-col bg-paper">

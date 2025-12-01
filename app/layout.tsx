@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import './globals.css';
 import Footer from '@/components/Footer';
+import GoogleAdSense from '@/components/GoogleAdSense';
 import KakaoScript from '@/components/KakaoScript';
 import { sans, serif } from './fonts';
 
@@ -121,6 +122,7 @@ export default function RootLayout({
         </div>
 
         <KakaoScript />
+        <GoogleAdSense />
       </body>
     </html>
   );
