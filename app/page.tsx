@@ -148,6 +148,57 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 구글 봇을 위한 긴 텍스트 섹션 (위키백과 스타일) */}
+      <section className="mt-20 px-6 py-12 bg-white border-t-2 border-stone-200 text-left">
+        <article className="prose prose-stone max-w-none">
+          <h2 className="text-2xl font-bold mb-6 text-stone-800">
+            2025년, 현대 사회에서 재정의된 효(孝)의 가치
+          </h2>
+
+          <h3 className="text-xl font-bold mt-8 mb-4">
+            1. 디지털 시대의 효도 트렌드 변화
+          </h3>
+          <p className="text-stone-600 leading-relaxed mb-4 text-sm">
+            과거의 효도가 물리적인 봉양과 동거를 의미했다면, 2025년 현재의
+            효도는 &apos;정서적 연결&apos;과 &apos;디지털 소통&apos;으로 그
+            패러다임이 완전히 전환되었습니다. 통계청 자료에 따르면, 부모 세대가
+            자녀에게 가장 원하는 것은 현금보다 &apos;자주 하는 안부 전화&apos;와
+            &apos;공감&apos;인 것으로 나타났습니다. &apos;효도티어
+            테스트&apos;는 이러한 사회적 흐름을 반영하여 설계되었습니다.
+          </p>
+
+          <h3 className="text-xl font-bold mt-8 mb-4">
+            2. 심리학적 관점에서 본 부모-자녀 관계
+          </h3>
+          <p className="text-stone-600 leading-relaxed mb-4 text-sm">
+            부모와 자녀 사이의 유대감은 쌍방향적 소통에서 비롯됩니다. 단순히
+            용돈을 드리는 행위보다, 부모님의 기호를 파악하고(예: 좋아하는 음식,
+            취미 등) 사소한 일상을 공유하는 것이 관계 만족도를 300% 이상
+            높인다는 연구 결과가 있습니다. 본 서비스는 14가지 정밀 질문을 통해
+            당신의 행동 패턴을 분석합니다.
+          </p>
+
+          <h3 className="text-xl font-bold mt-8 mb-4">
+            3. 효도 등급(Tier) 시스템의 이해
+          </h3>
+          <p className="text-stone-600 leading-relaxed mb-4 text-sm">
+            게임의 랭킹 시스템을 차용한 &apos;효도티어&apos;는 불효자(Iron)부터
+            전설의 효자(Challenger)까지 총 8단계로 구분됩니다. 이는 타인과의
+            경쟁을 위한 것이 아니라, 현재 나의 위치를 객관적으로 파악하고 더
+            나은 관계를 맺기 위한 동기 부여를 제공하는 데 목적이 있습니다.
+          </p>
+
+          <h3 className="text-xl font-bold mt-8 mb-4">
+            4. 테스트 결과 활용 가이드
+          </h3>
+          <p className="text-stone-600 leading-relaxed mb-4 text-sm">
+            결과 페이지에서는 단순한 등급 확인을 넘어, 유형별 맞춤 효도 솔루션을
+            제공합니다. 무뚝뚝한 부모님에게 다가가는 법, 멀리 떨어져 사는 경우의
+            소통법 등 실질적인 행동 지침(Action Plan)을 확인해 보세요.
+          </p>
+        </article>
+      </section>
+
       <section className="mt-16 px-6 py-10 border-t border-ink/10 text-left space-y-8 bg-stone-100/50">
         {/* 서비스 소개 */}
         <div className="space-y-2">

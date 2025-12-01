@@ -4,6 +4,7 @@ import { Home, RotateCcw, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useMemo, useState } from 'react';
+import Loading from '@/components/Loading';
 import { useKakaoShare } from '@/hooks/useKakaoShare';
 import { calculateResult } from '@/lib/calculateResult';
 import { RESULTS } from '@/lib/resultData';
@@ -49,7 +50,7 @@ function ResultContent() {
     }
   }, [currentStep, router, sharedResultId]);
 
-  if (!isReady) return null; // 리다이렉트 중 깜빡임 방지
+  if (!isReady) return <Loading />; // 리다이렉트 중 깜빡임 방지 및 푸터 점프 방지
 
   return (
     <main className="min-h-screen flex flex-col items-center py-10 px-6 animate-fade-in space-y-8 pb-20">
@@ -167,13 +168,7 @@ function ResultContent() {
 
 export default function ResultPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen flex items-center justify-center">
-          로딩 중...
-        </div>
-      }
-    >
+    <Suspense fallback={<Loading />}>
       <ResultContent />
     </Suspense>
   );

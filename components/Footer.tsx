@@ -14,6 +14,10 @@ export default function Footer() {
         >
           개인정보처리방침
         </Link>
+        <span className="text-stone-300">|</span>
+        <Link href="/about" className="hover:text-stone-800 transition-colors">
+          서비스 소개
+        </Link>
       </div>
       <p className="mb-2">
         본 서비스는 재미를 위한 심리테스트이며, <br />
