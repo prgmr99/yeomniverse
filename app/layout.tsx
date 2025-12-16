@@ -25,7 +25,15 @@ export const metadata: Metadata = {
     '부모님 퀴즈',
   ],
   icons: {
-    icon: '/icon.svg',
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: [
+      { url: '/apple-icon-180.png', sizes: '180x180', type: 'image/png' },
+    ],
   },
   authors: [{ name: 'Hyo-Tier Committee' }],
   creator: 'Hyo-Tier Committee',
