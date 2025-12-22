@@ -99,11 +99,20 @@ export const metadata: Metadata = {
   },
 };
 
+// Viewport configuration for mobile optimization
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Enhanced JSON-LD with Quiz schema
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -115,6 +124,22 @@ export default function RootLayout({
       '@type': 'SearchAction',
       target: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/search?q={search_term_string}`,
       'query-input': 'required name=search_term_string',
+    },
+  };
+
+  // Quiz schema for better SEO
+  const quizSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Quiz',
+    name: '2025학년도 대국민 효도능력시험',
+    description:
+      '부모님에 대한 관심도, 친밀도, 표현력을 측정하는 심리 진단 테스트',
+    educationalLevel: 'All ages',
+    numberOfQuestions: 14,
+    quiz: {
+      '@type': 'Question',
+      name: '부모님 탐구영역',
+      text: '당신은 부모님에 대해 얼마나 알고 있습니까?',
     },
   };
 
@@ -130,6 +155,12 @@ export default function RootLayout({
           type="application/ld+json"
           // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <Script
+          id="quiz-schema"
+          type="application/ld+json"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(quizSchema) }}
         />
         {/* 모바일 뷰 컨테이너 
           - max-w-[480px]: 모바일 너비 제한

@@ -1,4 +1,28 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: '서비스 소개',
+  description:
+    '효도티어는 MZ세대를 위한 재미있고 의미있는 효도 자가진단 서비스입니다. 관심도, 친밀도, 표현력 3가지 지표로 부모님과의 관계를 분석합니다.',
+  keywords: [
+    '효도티어 소개',
+    '서비스 소개',
+    '효도 진단',
+    '부모님과의 관계',
+    'MZ세대 효도',
+  ],
+  openGraph: {
+    title: '효도티어 서비스 소개',
+    description:
+      '효도티어는 MZ세대를 위한 재미있고 의미있는 효도 자가진단 서비스입니다.',
+    url: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/about`,
+    type: 'website',
+  },
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/about`,
+  },
+};
 
 export default function AboutPage() {
   return (
