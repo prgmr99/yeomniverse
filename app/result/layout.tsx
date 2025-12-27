@@ -39,7 +39,7 @@ export async function generateMetadata({
         type: 'website',
         images: [
           {
-            url: '/og-image.png',
+            url: `/api/og?result=${resultId}`,
             width: 1200,
             height: 630,
             alt: `${result.title} - 효도티어 결과`,
@@ -50,7 +50,7 @@ export async function generateMetadata({
         card: 'summary_large_image',
         title: `나는 ${result.title}!`,
         description: result.subtitle,
-        images: ['/og-image.png'],
+        images: [`/api/og?result=${resultId}`],
       },
       alternates: {
         canonical: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/result`,

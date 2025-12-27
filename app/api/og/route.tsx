@@ -1,43 +1,45 @@
 import { ImageResponse } from 'next/og';
 import type { NextRequest } from 'next/server';
+import { RESULTS } from '@/lib/resultData';
 
 export const runtime = 'edge';
+
+// 배경색 매핑 (Tailwind 클래스를 hex로 변환)
+const bgColorMap: Record<string, string> = {
+  'bg-purple-100': '#f3e8ff',
+  'bg-yellow-100': '#fef9c3',
+  'bg-blue-100': '#dbeafe',
+  'bg-green-100': '#dcfce7',
+  'bg-pink-100': '#fce7f3',
+  'bg-orange-100': '#ffedd5',
+  'bg-slate-200': '#e2e8f0',
+  'bg-stone-200': '#e7e5e4',
+  'bg-gray-400': '#9ca3af',
+};
+
+// 등급 결정 함수
+function getGrade(resultId: string): string {
+  if (resultId === 'UNICORN') return '1등급';
+  if (resultId === 'LODGER') return '9등급';
+  if (resultId === 'UNFILIAL') return '등급외';
+  return '등급외';
+}
 
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const type = searchParams.get('type') || 'UNICORN'; // 기본값
-    const score = searchParams.get('score') || '0';
+    const resultId = searchParams.get('result') || 'UNICORN';
 
-    // 캐릭터별 데이터 매핑 (간단하게)
-    const TITLES: Record<string, string> = {
-      UNICORN: '전설의 유니콘 효자',
-      FINANCIAL: '금융치료 전문의',
-      K_LEADER: 'K-장녀/장남 리더십',
-      TSUNDERE: '방구석 츤데레',
-      SOULMATE: '영혼의 단짝',
-      SHOW_WINDOW: '쇼윈도 기획자',
-      AI_BOT: 'AI 음성 사서함',
-      LODGER: '하숙집 장기 투숙객',
-    };
+    // 결과 데이터 가져오기
+    const result = RESULTS[resultId];
+    if (!result) {
+      return new Response('Result not found', { status: 404 });
+    }
 
-    const COLORS: Record<string, string> = {
-      UNICORN: '#d8b4fe', // purple
-      FINANCIAL: '#fde047', // yellow
-      K_LEADER: '#93c5fd', // blue
-      TSUNDERE: '#86efac', // green
-      SOULMATE: '#f9a8d4', // pink
-      SHOW_WINDOW: '#fdba74', // orange
-      AI_BOT: '#cbd5e1', // slate
-      LODGER: '#d6d3d1', // stone
-    };
+    const bgColor = bgColorMap[result.imageColor] || '#f5f5f4';
+    const grade = getGrade(resultId);
 
-    const title = TITLES[type] || '효도 등급 측정중...';
-    const bg = COLORS[type] || '#FDFBF7';
-
-    // 폰트 로드 (구글 폰트 fetch)
-    // 실제 배포 시에는 로컬 폰트 파일을 ArrayBuffer로 읽어오는 것이 가장 안정적입니다.
-    // 여기서는 MVP를 위해 fetch 방식을 사용합니다.
+    // 한글 폰트 로드
     const fontData = await fetch(
       new URL(
         'https://fonts.gstatic.com/s/notosanskr/v27/PbykFmXiEBPT4ITbgNA5Cgm207zl4z0.ttf',
@@ -54,92 +56,140 @@ export async function GET(req: NextRequest) {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#FDFBF7', // 갱지 배경
+          backgroundColor: bgColor,
+          backgroundImage: `
+              radial-gradient(circle at 25px 25px, rgba(0, 0, 0, 0.05) 2%, transparent 0%),
+              radial-gradient(circle at 75px 75px, rgba(0, 0, 0, 0.05) 2%, transparent 0%)
+            `,
+          backgroundSize: '100px 100px',
+          padding: '60px',
           position: 'relative',
+          fontFamily: 'NotoSansKR',
         }}
       >
-        {/* 테두리 장식 */}
+        {/* 상단 브랜딩 */}
         <div
           style={{
             position: 'absolute',
-            top: 20,
-            left: 20,
-            right: 20,
-            bottom: 20,
-            border: '4px solid #1c1917',
-            borderRadius: 20,
+            top: '40px',
+            left: '60px',
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            flexDirection: 'column',
+            gap: '4px',
           }}
         >
-          {/* 배경 컬러 박스 */}
           <div
             style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: '40%',
-              backgroundColor: bg,
-              opacity: 0.5,
-              borderTopLeftRadius: 16,
-              borderTopRightRadius: 16,
+              fontSize: '28px',
+              fontWeight: 900,
+              color: '#292524',
+              letterSpacing: '-0.02em',
             }}
-          />
+          >
+            효도티어
+          </div>
+          <div
+            style={{
+              fontSize: '16px',
+              color: '#78716c',
+              fontWeight: 500,
+            }}
+          >
+            2025학년도 대국민 효도능력시험
+          </div>
+        </div>
 
+        {/* 중앙 컨텐츠 */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '32px',
+            textAlign: 'center',
+            maxWidth: '900px',
+          }}
+        >
+          {/* 등급 스탬프 */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              border: '8px solid #dc2626',
+              borderRadius: '20px',
+              padding: '20px 60px',
+              backgroundColor: 'rgba(255, 255, 255, 0.95)',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+              transform: 'rotate(-4deg)',
+            }}
+          >
+            <div
+              style={{
+                fontSize: '80px',
+                fontWeight: 900,
+                color: '#dc2626',
+                letterSpacing: '-0.02em',
+              }}
+            >
+              {grade}
+            </div>
+          </div>
+
+          {/* 캐릭터 타이틀 */}
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
+              gap: '16px',
               alignItems: 'center',
-              gap: 10,
             }}
           >
-            <div style={{ fontSize: 24, color: '#DC2626', fontWeight: 900 }}>
-              2025학년도 효도능력시험 성적표
-            </div>
-
             <div
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
+                fontSize: '68px',
+                fontWeight: 900,
+                color: '#1c1917',
+                lineHeight: 1.1,
+                letterSpacing: '-0.03em',
               }}
             >
-              <div
-                style={{
-                  fontSize: 60,
-                  fontWeight: 900,
-                  color: '#1c1917',
-                  marginBottom: 10,
-                }}
-              >
-                {title}
-              </div>
-              <div style={{ fontSize: 30, color: '#374151' }}>
-                나의 점수는?{' '}
-                <span
-                  style={{ fontWeight: 900, color: '#DC2626', marginLeft: 10 }}
-                >
-                  {score}점
-                </span>
-              </div>
+              {result.title}
             </div>
-
             <div
               style={{
-                marginTop: 30,
-                padding: '10px 30px',
-                backgroundColor: '#1c1917',
-                color: 'white',
-                borderRadius: 50,
-                fontSize: 24,
+                fontSize: '32px',
+                color: '#57534e',
+                fontWeight: 500,
+                lineHeight: 1.3,
+                maxWidth: '800px',
               }}
             >
-              너도 테스트 하러가기 👉
+              &quot;{result.subtitle}&quot;
             </div>
           </div>
+        </div>
+
+        {/* 하단 CTA */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '40px',
+            right: '60px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            backgroundColor: '#292524',
+            color: 'white',
+            padding: '18px 36px',
+            borderRadius: '14px',
+            fontSize: '22px',
+            fontWeight: 700,
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
+          }}
+        >
+          <span>너도 테스트 하러가기 →</span>
         </div>
       </div>,
       {
@@ -154,11 +204,8 @@ export async function GET(req: NextRequest) {
         ],
       },
     );
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    console.log(`${e.message}`);
-    return new Response(`Failed to generate the image`, {
-      status: 500,
-    });
+  } catch (e: unknown) {
+    console.error('OG Image generation error:', e);
+    return new Response('Failed to generate image', { status: 500 });
   }
 }
