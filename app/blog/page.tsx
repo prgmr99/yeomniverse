@@ -11,9 +11,7 @@ export default function BlogPage() {
       <header className="mb-8 border-b-2 border-ink pb-4">
         <div className="flex items-center gap-2 mb-2">
           <BookOpen className="w-8 h-8 text-grading" />
-          <h1 className="text-3xl font-serif font-black text-ink">
-            효도 블로그
-          </h1>
+          <h1 className="text-3xl font-black text-ink">효도 블로그</h1>
         </div>
         <p className="text-sm text-ink/60 font-sans">
           부모님과의 관계를 개선하는 효도 팁과 가이드
@@ -22,7 +20,7 @@ export default function BlogPage() {
 
       {/* CTA 배너 */}
       <div className="mb-8 bg-gradient-to-r from-purple-100 to-pink-100 p-6 rounded-xl border border-ink/10">
-        <h2 className="text-lg font-serif font-bold text-ink mb-2">
+        <h2 className="text-lg font-bold text-ink mb-2">
           💝 나의 효도 등급은?
         </h2>
         <p className="text-sm text-ink/70 mb-4">
@@ -57,7 +55,7 @@ export default function BlogPage() {
             </div>
 
             {/* 제목 */}
-            <h3 className="text-xl font-serif font-bold text-ink mb-2 group-hover:text-grading transition-colors">
+            <h3 className="text-xl font-bold text-ink mb-2 group-hover:text-grading transition-colors">
               {post.title}
             </h3>
 
@@ -83,9 +81,7 @@ export default function BlogPage() {
 
       {/* 하단 CTA */}
       <div className="mt-12 text-center p-8 bg-stone-100 rounded-xl">
-        <h3 className="text-xl font-serif font-bold text-ink mb-2">
-          효도, 어렵지 않아요
-        </h3>
+        <h3 className="text-xl font-bold text-ink mb-2">효도, 어렵지 않아요</h3>
         <p className="text-sm text-ink/60 mb-4">
           지금 바로 효도티어 테스트로 나의 효도 스타일을 확인하고,
           <br />

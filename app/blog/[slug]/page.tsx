@@ -100,7 +100,7 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
 
           {/* Title */}
-          <h1 className="text-3xl font-serif font-black text-ink mb-4 leading-tight">
+          <h1 className="text-3xl font-black text-ink mb-4 leading-tight">
             {post.title}
           </h1>
 
@@ -124,7 +124,7 @@ export default async function BlogPostPage({ params }: Props) {
           {/* Content */}
           <div
             className="prose prose-stone max-w-none
-              prose-headings:font-serif prose-headings:font-bold prose-headings:text-ink
+              prose-headings:font-bold prose-headings:text-ink
               prose-h1:text-3xl prose-h1:mb-4 prose-h1:mt-8
               prose-h2:text-2xl prose-h2:mb-3 prose-h2:mt-6 prose-h2:border-b prose-h2:border-ink/10 prose-h2:pb-2
               prose-h3:text-xl prose-h3:mb-2 prose-h3:mt-4
@@ -143,9 +143,7 @@ export default async function BlogPostPage({ params }: Props) {
         {/* Related Posts */}
         {relatedPosts.length > 0 && (
           <section className="mb-8">
-            <h2 className="text-xl font-serif font-bold text-ink mb-4">
-              관련 글
-            </h2>
+            <h2 className="text-xl font-bold text-ink mb-4">관련 글</h2>
             <div className="grid gap-4">
               {relatedPosts.map((relatedPost) => (
                 <Link
@@ -167,7 +165,7 @@ export default async function BlogPostPage({ params }: Props) {
 
         {/* CTA */}
         <div className="bg-gradient-to-r from-purple-100 to-pink-100 p-8 rounded-xl text-center border border-ink/10">
-          <h3 className="text-2xl font-serif font-bold text-ink mb-3">
+          <h3 className="text-2xl font-bold text-ink mb-3">
             나의 효도 등급은?
           </h3>
           <p className="text-sm text-ink/70 mb-6">

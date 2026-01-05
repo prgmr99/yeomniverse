@@ -172,26 +172,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="bg-stone-200 flex justify-center min-h-screen font-sans antialiased">
-        <Script
-          id="json-ld"
-          type="application/ld+json"
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <Script
-          id="quiz-schema"
-          type="application/ld+json"
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(quizSchema) }}
-        />
-        <Script
-          id="organization-schema"
-          type="application/ld+json"
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema),
-          }}
-        />
         {/* 모바일 뷰 컨테이너 
           - max-w-[480px]: 모바일 너비 제한
           - bg-paper: 갱지 배경색 (Tailwind v4 변수)
@@ -205,6 +185,27 @@ export default function RootLayout({
         <GoogleAnalytics />
         <KakaoScript />
         <GoogleAdSense />
+
+        <Script
+          id="json-ld"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <Script
+          id="quiz-schema"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(quizSchema) }}
+        />
+        <Script
+          id="organization-schema"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
+        />
       </body>
     </html>
   );
