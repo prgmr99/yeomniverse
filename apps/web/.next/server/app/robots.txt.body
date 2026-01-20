@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://hyo-do-tier.vercel.app/sitemap.xml

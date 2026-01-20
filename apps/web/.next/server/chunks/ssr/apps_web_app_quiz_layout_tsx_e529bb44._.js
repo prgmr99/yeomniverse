@@ -1,0 +1,3 @@
+module.exports=[3363,a=>{"use strict";var b=a.i(86357);function c({children:a}){return(0,b.jsx)(b.Fragment,{children:a})}a.s(["default",()=>c,"metadata",0,{title:"효도 능력 시험 문제풀이",description:"부모님에 대해 얼마나 알고 계신가요? 14개의 문제를 풀고 당신의 효도 등급을 확인하세요. 관심도, 친밀도, 표현력을 종합적으로 진단합니다.",keywords:["효도티어 퀴즈","부모님 퀴즈","효도 테스트 문제","심리테스트"],openGraph:{title:"효도 능력 시험 문제풀이 | 효도티어",description:"14개의 문제로 당신의 효도 등급을 확인하세요",url:"https://hyo-do-tier.vercel.app/quiz",type:"website"},alternates:{canonical:"https://hyo-do-tier.vercel.app/quiz"}}])}];
+
+//# sourceMappingURL=apps_web_app_quiz_layout_tsx_e529bb44._.js.map
