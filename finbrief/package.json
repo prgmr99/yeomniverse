@@ -7,9 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:rss": "ts-node src/collectors/rss-collector.ts",
     "test:ai": "ts-node -r dotenv/config src/analyzers/gemini-analyzer.ts",
+    "test:telegram": "ts-node -r dotenv/config src/messengers/telegram-sender.ts",
     "test:integration": "ts-node -r dotenv/config src/test-integration.ts",
-    "send-briefing": "ts-node src/main.ts",
-    "dev": "ts-node src/main.ts",
+    "send-briefing": "ts-node -r dotenv/config src/main.ts",
+    "dev": "ts-node -r dotenv/config src/main.ts",
     "build": "tsc"
   },
   "keywords": [],
@@ -22,8 +23,10 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
+    "@types/node-telegram-bot-api": "^0.64.13",
     "axios": "^1.13.2",
     "dotenv": "^17.2.3",
+    "node-telegram-bot-api": "^0.67.0",
     "rss-parser": "^3.13.0"
   }
 }
