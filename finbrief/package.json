@@ -9,6 +9,8 @@
     "test:ai": "ts-node -r dotenv/config src/analyzers/gemini-analyzer.ts",
     "test:telegram": "ts-node -r dotenv/config src/messengers/telegram-sender.ts",
     "test:integration": "ts-node -r dotenv/config src/test-integration.ts",
+    "test:blog": "ts-node -r dotenv/config src/blog-publisher-example.ts",
+    "publish:blog": "RUN_ONCE=true ts-node -r dotenv/config src/blog-publisher-example.ts",
     "send-briefing": "ts-node -r dotenv/config src/main.ts",
     "dev": "ts-node -r dotenv/config src/main.ts",
     "build": "tsc"
@@ -17,7 +19,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/cheerio": "^0.22.35",
     "@types/node": "^25.0.10",
+    "@types/node-cron": "^3.0.11",
+    "@types/turndown": "^5.0.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },
@@ -25,8 +30,12 @@
     "@google/generative-ai": "^0.24.1",
     "@types/node-telegram-bot-api": "^0.64.13",
     "axios": "^1.13.2",
+    "cheerio": "^1.1.2",
     "dotenv": "^17.2.3",
+    "form-data": "^4.0.5",
+    "node-cron": "^4.2.1",
     "node-telegram-bot-api": "^0.67.0",
-    "rss-parser": "^3.13.0"
+    "rss-parser": "^3.13.0",
+    "turndown": "^7.2.2"
   }
 }
