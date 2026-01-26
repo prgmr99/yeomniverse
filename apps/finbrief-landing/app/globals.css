@@ -1,21 +1,158 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-background: #ffffff;
+  --color-foreground: #1D1D1F;
+
+  /* FinBrief Colors */
+  --color-finbrief-black: #1D1D1F;
+  --color-finbrief-white: #FFFFFF;
+  --color-finbrief-gray-100: #F5F5F7;
+  --color-finbrief-gray-200: #E8E8ED;
+  --color-finbrief-gray-300: #D2D2D7;
+  --color-finbrief-gray-500: #86868B;
+  --color-finbrief-gray-600: #6E6E73;
+  --color-finbrief-blue-400: #2997FF;
+  --color-finbrief-blue-500: #0071E3;
+  --color-finbrief-blue-600: #0077ED;
+  --color-finbrief-purple-500: #5E5CE6;
+  --color-finbrief-bullish: #34C759;
+  --color-finbrief-bearish: #FF3B30;
+  --color-finbrief-neutral: #86868B;
+
+  /* Typography */
+  --font-size-hero: clamp(48px, 10vw, 96px);
+  --font-size-section: clamp(32px, 6vw, 64px);
+  --font-size-feature: clamp(24px, 4vw, 40px);
+  --font-size-lead: clamp(18px, 2.5vw, 24px);
+
+  /* Spacing */
+  --spacing-section: clamp(80px, 12vh, 150px);
+  --spacing-element: clamp(40px, 6vh, 80px);
+
+  /* Max Width */
+  --max-width-content: 980px;
+  --max-width-text: 680px;
+
+  /* Animations */
+  --animate-fade-up: fadeUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  --animate-fade-in: fadeIn 0.6s ease-out forwards;
+  --animate-scale-in: scaleIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  --animate-bounce-slow: bounceSlow 2s ease-in-out infinite;
+  --animate-gradient-shift: gradientShift 8s ease infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes bounceSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--color-foreground);
+  background: var(--color-background);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Apple-style text gradient */
+.text-gradient {
+  background: linear-gradient(135deg, #2997FF 0%, #5E5CE6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animated gradient text */
+.text-gradient-animated {
+  background: linear-gradient(135deg, #2997FF 0%, #5E5CE6 50%, #2997FF 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 8s ease infinite;
+}
+
+/* Blur backdrop for navigation */
+.backdrop-blur-nav {
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D2D2D7;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #86868B;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(41, 151, 255, 0.3);
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid #0071E3;
+  outline-offset: 2px;
+}
+
+/* Utility for hiding scrollbar but allowing scroll */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Background gradients */
+.bg-cta-gradient {
+  background: linear-gradient(135deg, #0071E3 0%, #5E5CE6 100%);
+}
+
+.bg-hero-gradient {
+  background: linear-gradient(135deg, #2997FF 0%, #5E5CE6 50%, #2997FF 100%);
+  background-size: 200% 200%;
 }
