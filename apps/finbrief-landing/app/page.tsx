@@ -4,10 +4,24 @@ import { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Zap, Brain, Target, ChevronDown, ArrowRight, Send } from 'lucide-react';
 import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/landing';
+import LiquidEther from '@/components/backgrounds/LiquidEther';
 
 export default function Home() {
   return (
-    <main className="bg-finbrief-white">
+    <main className="relative">
+      {/* Fixed Background */}
+      <div className="fixed inset-0 -z-10">
+        <LiquidEther
+          colors={['#0077B6', '#00B4D8', '#90E0EF']}
+          resolution={0.5}
+          autoDemo={true}
+          autoSpeed={0.3}
+          autoIntensity={1.5}
+          mouseForce={15}
+          cursorSize={80}
+        />
+      </div>
+
       <HeroSection />
       <ValueProposition />
       <FeatureShowcase />
@@ -37,18 +51,23 @@ function HeroSection() {
       style={{ opacity, scale }}
       className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden"
     >
-      {/* Subtle animated background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-finbrief-gray-100 to-finbrief-white" />
-
       <div className="relative z-10 text-center max-w-content mx-auto">
         {/* Main Title */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-hero font-bold tracking-tight mb-6"
+          className="font-bold tracking-tight mb-6"
+          style={{ fontSize: 'clamp(64px, 14vw, 140px)', lineHeight: 1 }}
         >
-          <span className="text-gradient-animated">FinBrief</span>
+          <span
+            style={{
+              color: '#FFFFFF',
+              textShadow: '0 4px 8px rgba(0,0,0,0.4), 0 8px 32px rgba(0,0,0,0.3), 0 16px 64px rgba(0,0,0,0.2)'
+            }}
+          >
+            FinBrief
+          </span>
         </motion.h1>
 
         {/* Tagline */}
@@ -56,7 +75,12 @@ function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-lead text-finbrief-gray-500 mb-10 max-w-text mx-auto"
+          className="mb-10 max-w-text mx-auto font-medium"
+          style={{
+            fontSize: 'clamp(20px, 3vw, 28px)',
+            color: 'rgba(255,255,255,0.95)',
+            textShadow: '0 2px 4px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2), 0 8px 32px rgba(0,0,0,0.15)'
+          }}
         >
           30초 만에 읽는 AI 재테크 브리핑
         </motion.p>
@@ -69,7 +93,7 @@ function HeroSection() {
         >
           <a
             href="#subscribe"
-            className="inline-flex items-center gap-2 bg-finbrief-blue-500 text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-finbrief-blue-600 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            className="inline-flex items-center gap-2 bg-white/90 backdrop-blur text-finbrief-blue-500 px-8 py-4 rounded-full text-lg font-medium hover:bg-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
           >
             무료로 시작하기
             <ArrowRight className="w-5 h-5" />
@@ -87,7 +111,7 @@ function HeroSection() {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          className="flex flex-col items-center gap-2 text-finbrief-gray-500"
+          className="flex flex-col items-center gap-2 text-white/70"
         >
           <span className="text-sm">스크롤</span>
           <ChevronDown className="w-5 h-5" />
@@ -102,7 +126,7 @@ function HeroSection() {
 // ============================================
 function ValueProposition() {
   return (
-    <section className="py-section px-6 bg-finbrief-white">
+    <section className="py-section px-6 bg-white/50 backdrop-blur-sm">
       <div className="max-w-content mx-auto text-center">
         <StaggerContainer staggerDelay={0.15} className="space-y-4">
           <StaggerItem>
@@ -192,7 +216,7 @@ function HowItWorks() {
   ];
 
   return (
-    <section className="py-section px-6 bg-finbrief-white">
+    <section className="py-section px-6 bg-white/50 backdrop-blur-sm">
       <div className="max-w-content mx-auto">
         <ScrollReveal className="text-center mb-element">
           <p className="text-finbrief-gray-500 text-sm font-medium tracking-wide uppercase mb-4">
@@ -273,7 +297,7 @@ function BriefingSample() {
   };
 
   return (
-    <section className="py-section px-6 bg-finbrief-gray-100">
+    <section className="py-section px-6 bg-white/50 backdrop-blur-sm">
       <div className="max-w-content mx-auto">
         <ScrollReveal className="text-center mb-element">
           <p className="text-finbrief-gray-500 text-sm font-medium tracking-wide uppercase mb-4">
@@ -410,7 +434,7 @@ function CTASection() {
 // ============================================
 function Footer() {
   return (
-    <footer className="py-12 px-6 bg-finbrief-white border-t border-finbrief-gray-200">
+    <footer className="py-12 px-6 bg-white/50 backdrop-blur-sm border-t border-white/20">
       <div className="max-w-content mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-gradient font-bold text-2xl">FinBrief</div>
