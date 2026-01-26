@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import './globals.css';
 import {
-	Footer,
 	GoogleAdSense,
 	GoogleAnalytics,
 	KakaoScript,
@@ -173,16 +172,8 @@ export default function RootLayout({
       className={`${serif.variable} ${sans.variable}`}
       suppressHydrationWarning
     >
-      <body className="bg-stone-200 flex justify-center min-h-screen font-sans antialiased">
-        {/* 모바일 뷰 컨테이너 
-          - max-w-[480px]: 모바일 너비 제한
-          - bg-paper: 갱지 배경색 (Tailwind v4 변수)
-          - text-ink: 기본 텍스트 색상
-        */}
-        <div className="w-full max-w-[480px] min-h-screen bg-paper text-ink shadow-2xl relative overflow-x-hidden">
-          {children}
-          <Footer />
-        </div>
+      <body className="min-h-screen font-sans antialiased">
+        {children}
 
         <GoogleAnalytics />
         <KakaoScript />
