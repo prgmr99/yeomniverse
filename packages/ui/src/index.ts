@@ -1,5 +1,6 @@
 // UI Components
 export { default as Footer } from './Footer';
+export { default as Galaxy } from './Galaxy';
 export { default as Loading } from './Loading';
 
 // Analytics & Scripts

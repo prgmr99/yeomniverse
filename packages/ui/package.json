@@ -9,16 +9,19 @@
     "format": "biome check --write ."
   },
   "peerDependencies": {
-    "react": "^19",
-    "react-dom": "^19",
-    "next": "^16",
+    "framer-motion": "^12",
     "lucide-react": "^0.554.0",
-    "framer-motion": "^12"
+    "next": "^16",
+    "react": "^19",
+    "react-dom": "^19"
   },
   "devDependencies": {
     "@hyo/tsconfig": "workspace:*",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "typescript": "^5"
+  },
+  "dependencies": {
+    "ogl": "^1.0.11"
   }
 }

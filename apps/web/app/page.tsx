@@ -1,5 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { Galaxy } from '@hyo/ui';
 
 export default function YeomniverseLanding() {
   const services = [
@@ -22,54 +25,76 @@ export default function YeomniverseLanding() {
   ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center px-6 py-20 text-center">
-        <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-4">
-          <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 bg-clip-text text-transparent">
-            Yeomniverse
-          </span>
-        </h1>
-        <p className="text-lg md:text-xl text-gray-600 max-w-md">
-          다양한 디지털 서비스를 만나보세요
-        </p>
-      </section>
+    <>
+      {/* Fixed Galaxy Background */}
+      <div className="fixed inset-0 -z-10 bg-black">
+        <Galaxy
+          focal={[0.5, 0.5]}
+          starSpeed={0.5}
+          density={1}
+          hueShift={140}
+          speed={1.0}
+          glowIntensity={0.3}
+          saturation={0.0}
+          mouseRepulsion={true}
+          repulsionStrength={2}
+          twinkleIntensity={0.3}
+          rotationSpeed={0.05}
+          autoCenterRepulsion={0}
+          transparent={false}
+          mouseInteraction={true}
+        />
+      </div>
 
-      {/* Services Grid */}
-      <section className="max-w-4xl mx-auto px-6 pb-20">
-        <div className="grid md:grid-cols-2 gap-6">
-          {services.map((service) => (
-            <Link
-              key={service.href}
-              href={service.href}
-              className={`group block p-8 rounded-3xl ${service.bgColor} border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1`}
-            >
-              <div className="mb-4">
-                <h2 className={`text-3xl font-black bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent`}>
-                  {service.title}
-                </h2>
-                <p className="text-sm font-medium text-gray-500 mt-1">
-                  {service.subtitle}
+      <main className="min-h-screen relative">
+        {/* Hero Section */}
+        <section className="flex flex-col items-center justify-center px-6 py-20 text-center">
+          <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-4">
+            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent drop-shadow-2xl">
+              Yeomniverse
+            </span>
+          </h1>
+          <p className="text-lg md:text-xl text-gray-200 max-w-md">
+            다양한 디지털 서비스를 만나보세요
+          </p>
+        </section>
+
+        {/* Services Grid */}
+        <section className="max-w-4xl mx-auto px-6 pb-20">
+          <div className="grid md:grid-cols-2 gap-6">
+            {services.map((service) => (
+              <Link
+                key={service.href}
+                href={service.href}
+                className="group block p-8 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/15 hover:border-white/30 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="mb-4">
+                  <h2 className={`text-3xl font-black bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent`}>
+                    {service.title}
+                  </h2>
+                  <p className="text-sm font-medium text-gray-300 mt-1">
+                    {service.subtitle}
+                  </p>
+                </div>
+
+                <p className="text-gray-200 leading-relaxed mb-6">
+                  {service.description}
                 </p>
-              </div>
 
-              <p className="text-gray-600 leading-relaxed mb-6">
-                {service.description}
-              </p>
+                <div className={`inline-flex items-center gap-2 text-sm font-bold bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent group-hover:gap-3 transition-all`}>
+                  시작하기
+                  <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-white transition-colors" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
 
-              <div className={`inline-flex items-center gap-2 text-sm font-bold bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent group-hover:gap-3 transition-all`}>
-                시작하기
-                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" />
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-100 py-8 text-center text-sm text-gray-400">
-        <p>2025 Yeomniverse. All rights reserved.</p>
-      </footer>
-    </main>
+        {/* Footer */}
+        <footer className="border-t border-white/10 py-8 text-center text-sm text-gray-400">
+          <p>2025 Yeomniverse. All rights reserved.</p>
+        </footer>
+      </main>
+    </>
   );
 }
