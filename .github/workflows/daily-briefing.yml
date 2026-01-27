@@ -2,6 +2,7 @@ name: Daily FinBrief
 
 on:
   # 매일 한국시간 오전 8시 실행 (UTC 23:00 = KST 08:00)
+  # GitHub Actions scheduled workflows require recent repository activity
   schedule:
     - cron: '0 23 * * *'
   
