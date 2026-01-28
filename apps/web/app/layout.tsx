@@ -66,11 +66,20 @@ export const metadata: Metadata = {
     siteName: 'Yeomniverse',
     locale: 'ko_KR',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Yeomniverse - 효도티어, FinBrief 등 디지털 서비스',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Yeomniverse',
     description: 'Yeomniverse - 디지털 서비스 포털',
+    images: ['/og-image.png'],
   },
   alternates: {
     canonical: DOMAIN_URL,
@@ -114,6 +123,23 @@ export default function RootLayout({
     description: 'Yeomniverse - 디지털 서비스 포털',
   };
 
+  // WebSite schema
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Yeomniverse',
+    url: DOMAIN_URL,
+    description: 'Yeomniverse - 디지털 서비스 포털. 효도티어, FinBrief 등 다양한 서비스를 만나보세요.',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${DOMAIN_URL}/?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  };
+
   return (
     <html
       lang="ko"
@@ -133,6 +159,15 @@ export default function RootLayout({
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationSchema),
+          }}
+        />
+
+        <Script
+          id="website-schema"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteSchema),
           }}
         />
       </body>
