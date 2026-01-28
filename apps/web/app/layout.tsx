@@ -8,8 +8,21 @@ import {
 } from '@hyo/ui';
 import { sans, serif } from './fonts';
 
+// Validate required environment variables
+function getRequiredEnv(key: string): string {
+  const value = process.env[key];
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${key}`);
+  }
+  return value;
+}
+
+const DOMAIN_URL = getRequiredEnv('NEXT_PUBLIC_DOMAIN_URL');
+const NAVER_VERIFICATION = process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION || '';
+const ADSENSE_ACCOUNT = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT || '';
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_DOMAIN_URL as string),
+  metadataBase: new URL(DOMAIN_URL),
   title: {
     default: 'Yeomniverse',
     template: '%s | Yeomniverse',
@@ -49,7 +62,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Yeomniverse',
     description: 'Yeomniverse - 디지털 서비스 포털',
-    url: process.env.NEXT_PUBLIC_DOMAIN_URL,
+    url: DOMAIN_URL,
     siteName: 'Yeomniverse',
     locale: 'ko_KR',
     type: 'website',
@@ -60,18 +73,16 @@ export const metadata: Metadata = {
     description: 'Yeomniverse - 디지털 서비스 포털',
   },
   alternates: {
-    canonical: process.env.NEXT_PUBLIC_DOMAIN_URL,
+    canonical: DOMAIN_URL,
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
     other: {
-      'naver-site-verification': process.env
-        .NEXT_PUBLIC_NAVER_SITE_VERIFICATION as string,
+      'naver-site-verification': NAVER_VERIFICATION,
     },
   },
   other: {
-    'google-adsense-account': process.env
-      .NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT as string,
+    'google-adsense-account': ADSENSE_ACCOUNT,
   },
 };
 
@@ -93,10 +104,10 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Yeomniverse',
-    url: process.env.NEXT_PUBLIC_DOMAIN_URL,
+    url: DOMAIN_URL,
     logo: {
       '@type': 'ImageObject',
-      url: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/images/favicon/icon-512.png`,
+      url: `${DOMAIN_URL}/images/favicon/icon-512.png`,
       width: 512,
       height: 512,
     },

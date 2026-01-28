@@ -47,6 +47,7 @@ export default function YeomniverseLanding() {
               <Link
                 key={service.href}
                 href={service.href}
+                aria-label={`${service.title} - ${service.subtitle} 서비스 시작하기`}
                 className="group block p-8 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/15 hover:border-white/30 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="mb-4">
@@ -64,7 +65,7 @@ export default function YeomniverseLanding() {
 
                 <div className={`inline-flex items-center gap-2 text-sm font-bold bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent group-hover:gap-3 transition-all`}>
                   시작하기
-                  <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-white transition-colors" />
+                  <ArrowRight aria-hidden="true" className="w-4 h-4 text-gray-300 group-hover:text-white transition-colors" />
                 </div>
               </Link>
             ))}

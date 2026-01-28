@@ -9,10 +9,10 @@ const Galaxy = dynamic(() => import('@hyo/ui').then((mod) => mod.Galaxy), {
 
 export default function GalaxyBackground() {
   return (
-    <div className="fixed inset-0 -z-10 bg-black">
+    <div className="fixed inset-0 -z-10 bg-black" aria-hidden="true">
       <Galaxy
         focal={[0.5, 0.5]}
-        starSpeed={0.5}
+        starSpeed={1}
         density={1}
         hueShift={140}
         speed={1.0}
