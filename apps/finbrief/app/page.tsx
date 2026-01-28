@@ -393,10 +393,15 @@ function BriefingSample() {
 // ============================================
 function CTASection() {
   const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError('');
+
     try {
       const response = await fetch('/api/subscribe', {
         method: 'POST',
@@ -405,14 +410,19 @@ function CTASection() {
         },
         body: JSON.stringify({ email }),
       });
+
       if (response.ok) {
-        console.log('구독:', email);
         setIsSubmitted(true);
-        setTimeout(() => setIsSubmitted(false), 3000);
         setEmail('');
+      } else {
+        const data = await response.json();
+        setError(data.error || '구독에 실패했습니다. 다시 시도해주세요.');
       }
     } catch (error) {
+      setError('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       console.error('구독 실패:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -436,15 +446,32 @@ function CTASection() {
                 placeholder="이메일 주소"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onFocus={() => {
+                  if (isSubmitted) {
+                    setIsSubmitted(false);
+                    setError('');
+                  }
+                }}
+                disabled={isLoading || isSubmitted}
                 required
-                className="flex-1 px-6 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-white/50 transition-colors"
+                className="flex-1 px-6 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-white/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               />
               <button
                 type="submit"
-                className="inline-flex items-center justify-center gap-2 bg-finbrief-white px-8 py-4 rounded-full font-semibold hover:bg-white/90 transition-all duration-300 hover:scale-105"
+                disabled={isLoading || isSubmitted}
+                className="inline-flex items-center justify-center gap-2 bg-finbrief-white px-8 py-4 rounded-full font-semibold hover:bg-white/90 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 style={{ color: '#0071E3' }}
               >
-                {isSubmitted ? (
+                {isLoading ? (
+                  <>
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                      className="w-4 h-4 border-2 border-current border-t-transparent rounded-full"
+                    />
+                    전송 중...
+                  </>
+                ) : isSubmitted ? (
                   '구독 완료!'
                 ) : (
                   <>
@@ -454,6 +481,26 @@ function CTASection() {
                 )}
               </button>
             </div>
+
+            {isSubmitted && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-4 text-white/90 font-medium"
+              >
+                이메일을 확인해주세요. 곧 첫 브리핑을 받아보실 수 있습니다!
+              </motion.p>
+            )}
+
+            {error && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-4 text-red-300 font-medium"
+              >
+                {error}
+              </motion.p>
+            )}
           </form>
 
           <p className="mt-8" style={{ color: 'rgba(255,255,255,0.6)' }}>
