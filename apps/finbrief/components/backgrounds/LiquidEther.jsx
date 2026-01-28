@@ -24,7 +24,7 @@ export default function LiquidEther({
   takeoverDuration = 0.25,
   autoResumeDelay = 1000,
   autoRampDuration = 0.6,
-  disableTouchInteraction = false
+  disableInteraction = false
 }) {
   const mountRef = useRef(null);
   const webglRef = useRef(null);
@@ -142,22 +142,23 @@ export default function LiquidEther({
         this._onTouchEnd = this.onTouchEnd.bind(this);
         this._onDocumentLeave = this.onDocumentLeave.bind(this);
       }
-      init(container, disableTouchInteraction = false) {
+      init(container, disableInteraction = false) {
         this.container = container;
         this.docTarget = container.ownerDocument || null;
         const defaultView =
           (this.docTarget && this.docTarget.defaultView) || (typeof window !== 'undefined' ? window : null);
         if (!defaultView) return;
         this.listenerTarget = defaultView;
-        this.listenerTarget.addEventListener('mousemove', this._onMouseMove);
-        // Only add touch listeners if touch interaction is enabled
-        if (!disableTouchInteraction) {
+
+        // Only add event listeners if interaction is enabled
+        if (!disableInteraction) {
+          this.listenerTarget.addEventListener('mousemove', this._onMouseMove);
           this.listenerTarget.addEventListener('touchstart', this._onTouchStart, { passive: true });
           this.listenerTarget.addEventListener('touchmove', this._onTouchMove, { passive: true });
           this.listenerTarget.addEventListener('touchend', this._onTouchEnd);
-        }
-        if (this.docTarget) {
-          this.docTarget.addEventListener('mouseleave', this._onDocumentLeave);
+          if (this.docTarget) {
+            this.docTarget.addEventListener('mouseleave', this._onDocumentLeave);
+          }
         }
       }
       dispose() {
@@ -933,7 +934,7 @@ export default function LiquidEther({
       constructor(props) {
         this.props = props;
         Common.init(props.$wrapper);
-        Mouse.init(props.$wrapper, props.disableTouchInteraction);
+        Mouse.init(props.$wrapper, props.disableInteraction);
         Mouse.autoIntensity = props.autoIntensity;
         Mouse.takeoverDuration = props.takeoverDuration;
         this.lastUserInteraction = performance.now();
@@ -1021,7 +1022,7 @@ export default function LiquidEther({
       takeoverDuration,
       autoResumeDelay,
       autoRampDuration,
-      disableTouchInteraction
+      disableInteraction
     });
     webglRef.current = webgl;
 
@@ -1118,7 +1119,7 @@ export default function LiquidEther({
     takeoverDuration,
     autoResumeDelay,
     autoRampDuration,
-    disableTouchInteraction
+    disableInteraction
   ]);
 
   useEffect(() => {

@@ -20,7 +20,7 @@ export default function FinBriefPage() {
           autoIntensity={1.5}
           mouseForce={15}
           cursorSize={80}
-          disableTouchInteraction={true}
+          disableInteraction={true}
         />
       </div>
 
