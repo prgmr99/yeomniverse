@@ -1,2 +1,18 @@
 export { createServerClient } from './client';
-export type { Database, Subscriber } from './types';
+export {
+  createBrowserAuthClient,
+  createServerAuthClient,
+  getSession,
+  getUser
+} from './auth';
+export type {
+  Database,
+  Subscriber,
+  Plan,
+  Subscription,
+  Watchlist,
+  StockAnalysis,
+  PaymentLog,
+  PlanFeatures,
+  RelatedNews
+} from './types';

@@ -7,8 +7,10 @@
   "exports": {
     ".": "./src/index.ts",
     "./supabase": "./src/supabase/index.ts",
+    "./supabase/auth": "./src/supabase/auth.ts",
     "./resend": "./src/resend/index.ts",
-    "./email": "./src/email/index.ts"
+    "./email": "./src/email/index.ts",
+    "./lemonsqueezy": "./src/lemonsqueezy/index.ts"
   },
   "scripts": {
     "lint": "biome check .",
@@ -16,15 +18,18 @@
   },
   "dependencies": {
     "@react-email/components": "^0.0.30",
+    "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.93.1",
     "resend": "^6.8.0"
   },
   "peerDependencies": {
+    "next": "^16",
     "react": "^19"
   },
   "devDependencies": {
     "@hyo/tsconfig": "workspace:*",
     "@types/react": "^19",
+    "next": "^16",
     "typescript": "^5"
   }
 }

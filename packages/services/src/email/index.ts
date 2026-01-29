@@ -1,1 +1,1 @@
-export { WelcomeEmail } from './templates';
+export { WelcomeEmail, PersonalizedBriefing } from './templates';

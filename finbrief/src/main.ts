@@ -2,11 +2,12 @@ import { collectAllNews } from './collectors/rss-collector';
 import { analyzeNews, formatAnalysisResult } from './analyzers/gemini-analyzer';
 import { sendDailyBriefing, getContextualAffiliateLinks } from './messengers/telegram-sender';
 import { sendEmailBriefing } from './messengers/email-sender';
+import { sendPersonalizedBriefings } from './messengers/personalized-email-sender';
 import * as fs from 'fs';
 import * as path from 'path';
 
 /**
- * 메인 실행 스크립트: RSS 수집 + AI 분석 + 텔레그램 발송
+ * 메인 실행 스크립트: RSS 수집 + AI 분석 + 텔레그램 발송 + 개인화 이메일
  */
 
 async function main() {
@@ -44,14 +45,25 @@ async function main() {
       await sendDailyBriefing(chatId, analysis, affiliateLinks);
     }
 
-    // Step 5: 이메일 발송
-    console.log('\n📧 Step 5: 이메일 발송 중...\n');
-    const emailResult = await sendEmailBriefing(analysis, affiliateLinks);
+    // Step 5: 개인화 이메일 발송 (구독 플랜별 분기)
+    console.log('\n📧 Step 5: 개인화 이메일 발송 중...\n');
+
+    // Check if personalized sending is enabled
+    const usePersonalizedEmails = process.env.USE_PERSONALIZED_EMAILS === 'true';
+
+    if (usePersonalizedEmails) {
+      // New personalized email flow
+      await sendPersonalizedBriefings(analysis);
+    } else {
+      // Legacy email flow (fallback)
+      const emailResult = await sendEmailBriefing(analysis, affiliateLinks);
+      console.log(`  이메일 발송 완료: ${emailResult.emailsSent}건`);
+    }
 
     // Step 6: JSON 파일로 저장
     const today = new Date().toISOString().split('T')[0];
     const outputPath = path.join(__dirname, '..', 'data', `${today}.json`);
-    
+
     const output = {
       date: today,
       timestamp: new Date().toISOString(),
@@ -59,8 +71,7 @@ async function main() {
       analysis: analysis,
       affiliateLinks: affiliateLinks,
       sentToTelegram: !!chatId,
-      sentToEmail: emailResult.success,
-      emailsSent: emailResult.emailsSent
+      usePersonalizedEmails,
     };
     
     fs.writeFileSync(outputPath, JSON.stringify(output, null, 2), 'utf-8');
