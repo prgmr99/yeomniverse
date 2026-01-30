@@ -102,40 +102,42 @@ export default function PricingPage() {
 
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-8 text-center">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-6">
-          <span className="text-gradient">
-            똑똑한 투자
-          </span>
-          를 위한
-          <br />
-          완벽한 요금제
-        </h1>
-        <p className="text-white/70 text-lg sm:text-xl max-w-2xl mx-auto mb-8">
-          매일 아침 핵심 금융 뉴스와 개인화된 투자 인사이트를 받아보세요.
-        </p>
+        <div className="bg-white/60 backdrop-blur-md rounded-3xl p-8 sm:p-12 mx-auto max-w-4xl">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-finbrief-black mb-6">
+            <span className="text-gradient">
+              똑똑한 투자
+            </span>
+            를 위한
+            <br />
+            완벽한 요금제
+          </h1>
+          <p className="text-finbrief-gray-500 text-lg sm:text-xl max-w-2xl mx-auto mb-8">
+            매일 아침 핵심 금융 뉴스와 개인화된 투자 인사이트를 받아보세요.
+          </p>
 
-        {/* Email Input */}
-        <div className="max-w-md mx-auto mb-16">
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-2">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
-              className="w-full px-4 py-3 bg-transparent text-white placeholder-white/50 focus:outline-none"
-            />
-          </div>
-          {message && (
-            <div
-              className={`mt-3 p-3 rounded-lg text-sm ${
-                message.type === 'success'
-                  ? 'bg-finbrief-blue-500/10 border border-finbrief-blue-500/20 text-finbrief-blue-400'
-                  : 'bg-red-500/10 border border-red-500/20 text-red-400'
-              }`}
-            >
-              {message.text}
+          {/* Email Input */}
+          <div className="max-w-md mx-auto">
+            <div className="bg-white/80 backdrop-blur-xl border border-white/30 rounded-xl p-2">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+                className="w-full px-4 py-3 bg-transparent text-finbrief-black placeholder-finbrief-gray-500/50 focus:outline-none"
+              />
             </div>
-          )}
+            {message && (
+              <div
+                className={`mt-3 p-3 rounded-lg text-sm ${
+                  message.type === 'success'
+                    ? 'bg-finbrief-blue-500/10 border border-finbrief-blue-500/20 text-finbrief-blue-400'
+                    : 'bg-red-500/10 border border-red-500/20 text-red-400'
+                }`}
+              >
+                {message.text}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -198,42 +200,44 @@ export default function PricingPage() {
 
       {/* FAQ Section */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            자주 묻는 질문
-          </h2>
-          <p className="text-white/70 text-lg">
-            궁금하신 사항을 확인해보세요.
-          </p>
-        </div>
+        <div className="bg-white/50 backdrop-blur-sm rounded-3xl p-8 sm:p-12">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-finbrief-black mb-4">
+              자주 묻는 질문
+            </h2>
+            <p className="text-finbrief-gray-500 text-lg">
+              궁금하신 사항을 확인해보세요.
+            </p>
+          </div>
 
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden transition-all duration-300 hover:border-white/20"
-            >
-              <button
-                type="button"
-                onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
-                className="w-full flex items-center justify-between p-6 text-left"
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="bg-white/80 backdrop-blur-xl border border-white/30 rounded-xl overflow-hidden transition-all duration-300 hover:border-finbrief-blue-500/30"
               >
-                <span className="text-white font-semibold pr-4">
-                  {faq.question}
-                </span>
-                {openFAQ === index ? (
-                  <ChevronUp className="w-5 h-5 text-finbrief-blue-400 flex-shrink-0" />
-                ) : (
-                  <ChevronDown className="w-5 h-5 text-white/50 flex-shrink-0" />
+                <button
+                  type="button"
+                  onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
+                  className="w-full flex items-center justify-between p-6 text-left"
+                >
+                  <span className="text-finbrief-black font-semibold pr-4">
+                    {faq.question}
+                  </span>
+                  {openFAQ === index ? (
+                    <ChevronUp className="w-5 h-5 text-finbrief-blue-400 flex-shrink-0" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5 text-finbrief-gray-500 flex-shrink-0" />
+                  )}
+                </button>
+                {openFAQ === index && (
+                  <div className="px-6 pb-6">
+                    <p className="text-finbrief-gray-600 leading-relaxed">{faq.answer}</p>
+                  </div>
                 )}
-              </button>
-              {openFAQ === index && (
-                <div className="px-6 pb-6">
-                  <p className="text-white/80 leading-relaxed">{faq.answer}</p>
-                </div>
-              )}
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -264,23 +268,23 @@ export default function PricingPage() {
       </div>
 
       {/* Footer */}
-      <div className="border-t border-white/10 bg-finbrief-black">
+      <div className="border-t border-white/10 bg-white/50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-white/60">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-finbrief-gray-500">
             <p>© 2026 FinBrief. All rights reserved.</p>
             <div className="flex gap-6">
-              <a href="/" className="hover:text-white transition-colors">
+              <a href="/" className="hover:text-finbrief-black transition-colors">
                 홈
               </a>
               <a
                 href="/pricing"
-                className="hover:text-white transition-colors"
+                className="hover:text-finbrief-black transition-colors"
               >
                 요금제
               </a>
               <a
                 href="/auth/login"
-                className="hover:text-white transition-colors"
+                className="hover:text-finbrief-black transition-colors"
               >
                 로그인
               </a>
@@ -292,9 +296,9 @@ export default function PricingPage() {
       {/* Loading Overlay */}
       {isLoading && (
         <div className="fixed inset-0 bg-finbrief-black/80 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 text-center">
+          <div className="bg-white/90 backdrop-blur-xl border border-white/30 rounded-2xl p-8 text-center">
             <div className="w-16 h-16 border-4 border-finbrief-blue-500/20 border-t-finbrief-blue-500 rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-white font-semibold">결제 페이지로 이동 중...</p>
+            <p className="text-finbrief-black font-semibold">결제 페이지로 이동 중...</p>
           </div>
         </div>
       )}
