@@ -28,6 +28,7 @@ interface SuccessResponse {
   watchlists: WatchlistItem[];
   limit: number;
   count: number;
+  planName: string;
 }
 
 interface ErrorResponse {
@@ -81,9 +82,11 @@ export async function GET(
       .single();
 
     let limit = 0;
+    let planName = 'free';
     if (subscription && subscription.plans) {
       const plan = subscription.plans as unknown as Plan;
       limit = plan.max_watchlist;
+      planName = plan.name;
     }
 
     // Get user's watchlists
@@ -106,6 +109,7 @@ export async function GET(
       watchlists: watchlists || [],
       limit,
       count: (watchlists || []).length,
+      planName,
     });
   } catch (error) {
     console.error('Watchlist GET error:', error);

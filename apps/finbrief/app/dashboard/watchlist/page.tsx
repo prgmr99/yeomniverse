@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Plus, Trash2, TrendingUp, X, AlertCircle, Crown } from 'lucide-react';
 import Link from 'next/link';
+import StockAnalysisCard from '@/components/dashboard/StockAnalysisCard';
 
 interface Watchlist {
   id: string;
@@ -13,7 +14,7 @@ interface Watchlist {
 }
 
 interface Subscription {
-  plan: 'free' | 'pro';
+  plan: 'free' | 'basic' | 'pro';
   watchlistLimit: number;
 }
 
@@ -31,6 +32,7 @@ export default function WatchlistPage() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [selectedStock, setSelectedStock] = useState<{ symbol: string; name: string } | null>(null);
 
   // Form state
   const [symbol, setSymbol] = useState('');
@@ -374,17 +376,26 @@ export default function WatchlistPage() {
                   삭제
                 </button>
                 <button
-                  disabled
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white/5 text-slate-500 text-sm font-medium cursor-not-allowed"
+                  onClick={() => setSelectedStock({ symbol: item.symbol, name: item.name })}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 text-emerald-400 text-sm font-medium hover:bg-emerald-500/30 transition-all duration-200"
                 >
                   <TrendingUp className="w-4 h-4" />
                   분석 보기
-                  <span className="text-xs">(준비중)</span>
                 </button>
               </div>
             </motion.div>
           ))}
         </div>
+      )}
+
+      {/* Stock Analysis Modal */}
+      {selectedStock && (
+        <StockAnalysisCard
+          symbol={selectedStock.symbol}
+          name={selectedStock.name}
+          planName={subscription?.plan || 'free'}
+          onClose={() => setSelectedStock(null)}
+        />
       )}
     </div>
   );

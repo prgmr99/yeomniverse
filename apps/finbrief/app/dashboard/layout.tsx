@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { LayoutDashboard, Star, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Star, Settings, LogOut, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -43,6 +43,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const navItems = [
     { href: '/dashboard', label: '대시보드', icon: LayoutDashboard },
     { href: '/dashboard/watchlist', label: '관심종목', icon: Star },
+    { href: '/dashboard/settings', label: '설정', icon: Settings },
   ];
 
   if (isLoading) {
