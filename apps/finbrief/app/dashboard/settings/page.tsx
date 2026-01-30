@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Settings, Bell, Mail, Send, Crown, Check, AlertCircle, X } from 'lucide-react';
+import { Settings, Bell, Mail, Send, Crown, Check, AlertCircle, X, CreditCard } from 'lucide-react';
 
 interface UserSettings {
   newsAlertsEnabled: boolean;
@@ -24,6 +24,7 @@ export default function SettingsPage() {
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [isPortalLoading, setIsPortalLoading] = useState(false);
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
 
@@ -86,6 +87,25 @@ export default function SettingsPage() {
       setError(error instanceof Error ? error.message : '저장에 실패했습니다.');
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleManageSubscription = async () => {
+    setIsPortalLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('/api/customer-portal');
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || '구독 관리 페이지로 이동할 수 없습니다.');
+      }
+
+      window.location.href = data.portalUrl;
+    } catch (error) {
+      setError(error instanceof Error ? error.message : '구독 관리 페이지로 이동할 수 없습니다.');
+      setIsPortalLoading(false);
     }
   };
 
@@ -350,6 +370,47 @@ export default function SettingsPage() {
           )}
         </div>
       </motion.div>
+
+      {/* Subscription Management - Only for paid users */}
+      {isBasicOrPro && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="p-8 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10"
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <CreditCard className="w-6 h-6 text-emerald-400" />
+            <h2 className="text-2xl font-bold text-white">구독 관리</h2>
+          </div>
+
+          <p className="text-slate-400 mb-6">
+            결제 수단 변경, 구독 취소, 인보이스 확인 등 구독 관련 설정을 관리할 수 있습니다.
+          </p>
+
+          <button
+            onClick={handleManageSubscription}
+            disabled={isPortalLoading}
+            className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/10 border border-white/20 text-white font-medium hover:bg-white/20 hover:border-white/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isPortalLoading ? (
+              <>
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                  className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                />
+                <span>이동 중...</span>
+              </>
+            ) : (
+              <>
+                <CreditCard className="w-5 h-5" />
+                <span>구독 관리 포털 열기</span>
+              </>
+            )}
+          </button>
+        </motion.div>
+      )}
     </div>
   );
 }

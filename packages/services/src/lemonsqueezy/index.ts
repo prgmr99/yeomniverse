@@ -16,6 +16,19 @@ interface CheckoutResponse {
   };
 }
 
+interface SubscriptionResponse {
+  data: {
+    id: string;
+    attributes: {
+      status: string;
+      urls: {
+        customer_portal: string;
+        update_payment_method: string;
+      };
+    };
+  };
+}
+
 export async function createCheckout(
   options: CheckoutOptions,
 ): Promise<string> {
@@ -144,4 +157,37 @@ export async function resumeSubscription(
     console.error('Resume subscription error:', error);
     throw new Error('Failed to resume subscription');
   }
+}
+
+export async function getSubscription(subscriptionId: string): Promise<SubscriptionResponse['data']> {
+  const apiKey = process.env.LEMONSQUEEZY_API_KEY;
+
+  if (!apiKey) {
+    throw new Error('Missing Lemon Squeezy API key');
+  }
+
+  const response = await fetch(
+    `${LEMONSQUEEZY_API_URL}/subscriptions/${subscriptionId}`,
+    {
+      method: 'GET',
+      headers: {
+        Accept: 'application/vnd.api+json',
+        Authorization: `Bearer ${apiKey}`,
+      },
+    },
+  );
+
+  if (!response.ok) {
+    const error = await response.text();
+    console.error('Get subscription error:', error);
+    throw new Error('Failed to get subscription');
+  }
+
+  const data: SubscriptionResponse = await response.json();
+  return data.data;
+}
+
+export async function getCustomerPortalUrl(subscriptionId: string): Promise<string> {
+  const subscription = await getSubscription(subscriptionId);
+  return subscription.attributes.urls.customer_portal;
 }
