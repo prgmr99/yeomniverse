@@ -60,7 +60,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
 
   // Get plans
   const { data: plans } = await supabase.from('plans').select('id, name, features');
-  const planMap = new Map(plans?.map(p => [p.id, p]) || []);
+  const planMap = new Map(plans?.map((p: { id: string; name: string; features: unknown }) => [p.id, p]) || []);
 
   // Format date
   const today = new Date();

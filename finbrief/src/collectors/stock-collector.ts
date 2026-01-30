@@ -30,7 +30,19 @@ export async function getStockQuote(symbol: string): Promise<StockQuote | null> 
     const normalized = normalizeKoreanSymbol(symbol);
     const querySymbol = normalized.isValid ? normalized.symbol! : symbol;
 
-    const quote = await yahooFinance.quote(querySymbol);
+    const quote = await yahooFinance.quote(querySymbol) as {
+      shortName?: string;
+      longName?: string;
+      regularMarketPrice?: number;
+      regularMarketChange?: number;
+      regularMarketChangePercent?: number;
+      regularMarketVolume?: number;
+      regularMarketDayHigh?: number;
+      regularMarketDayLow?: number;
+      fiftyTwoWeekHigh?: number;
+      fiftyTwoWeekLow?: number;
+      currency?: string;
+    } | null;
 
     if (!quote) {
       return null;
@@ -67,7 +79,14 @@ export async function getHistoricalData(
     const result = await yahooFinance.historical(querySymbol, {
       period1,
       period2,
-    });
+    }) as Array<{
+      date: Date;
+      open: number;
+      high: number;
+      low: number;
+      close: number;
+      volume: number;
+    }>;
 
     return result.map((item) => ({
       date: item.date,
@@ -85,12 +104,20 @@ export async function getHistoricalData(
 
 export async function searchStocks(query: string): Promise<Array<{ symbol: string; name: string; exchange: string }>> {
   try {
-    const results = await yahooFinance.search(query);
+    const results = await yahooFinance.search(query) as {
+      quotes: Array<{
+        quoteType?: string;
+        symbol: string;
+        shortname?: string;
+        longname?: string;
+        exchange?: string;
+      }>;
+    };
 
     return results.quotes
-      .filter((q: any) => q.quoteType === 'EQUITY')
+      .filter((q) => q.quoteType === 'EQUITY')
       .slice(0, 10)
-      .map((q: any) => ({
+      .map((q) => ({
         symbol: q.symbol,
         name: q.shortname || q.longname || q.symbol,
         exchange: q.exchange || 'Unknown',

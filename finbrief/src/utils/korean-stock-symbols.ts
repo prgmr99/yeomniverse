@@ -1,4 +1,4 @@
-import koreanStocks from '../../data/korean-stocks.json' assert { type: 'json' };
+import koreanStocks from '../../data/korean-stocks.json';
 
 export interface SymbolValidationResult {
   isValid: boolean;
