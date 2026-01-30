@@ -1,6 +1,5 @@
 import { Resend } from 'resend';
-import { createServerClient } from '../../../packages/services/src/supabase/client.js';
-import { PersonalizedBriefing } from '../../../packages/services/src/email/templates/PersonalizedBriefing.js';
+import { createClient } from '@supabase/supabase-js';
 import { getStockQuote, getHistoricalData } from '../collectors/stock-collector.js';
 import { calculateTechnicalIndicators } from '../analyzers/technical-analyzer.js';
 import { generateBriefAnalysis } from '../analyzers/stock-ai-analyzer.js';
@@ -17,6 +16,7 @@ interface Subscriber {
 }
 
 interface Plan {
+  id: string;
   name: 'free' | 'basic' | 'pro';
   features: {
     technical_analysis?: boolean;
@@ -26,6 +26,16 @@ interface Plan {
 interface WatchlistItem {
   symbol: string;
   name: string;
+}
+
+interface WatchlistStock {
+  symbol: string;
+  name: string;
+  price: number;
+  changePercent: number;
+  aiSummary?: string;
+  rsi?: number;
+  macdSignal?: string;
 }
 
 // Utility functions
@@ -41,9 +51,227 @@ function delay(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function escapeHtml(text: string): string {
+  const map: { [key: string]: string } = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+function getSentimentEmoji(sentiment: 'bull' | 'bear' | 'neutral'): string {
+  switch (sentiment) {
+    case 'bull':
+      return '🐂';
+    case 'bear':
+      return '🐻';
+    case 'neutral':
+      return '😐';
+    default:
+      return '📰';
+  }
+}
+
+function generatePersonalizedEmailHtml(options: {
+  date: string;
+  planName: string;
+  topNews: Array<{ title: string; summary: string; sentiment: 'bull' | 'bear' | 'neutral' }>;
+  keywords: string[];
+  marketSentiment: string;
+  unsubscribeToken: string;
+  dashboardUrl: string;
+  watchlist?: WatchlistStock[];
+}): string {
+  const { date, planName, topNews, keywords, marketSentiment, unsubscribeToken, dashboardUrl, watchlist } = options;
+
+  const isPro = planName === 'pro';
+  const isPaid = planName !== 'free';
+
+  // 주요 뉴스 HTML 생성
+  const newsItemsHtml = topNews.map((news, idx) => {
+    const emoji = getSentimentEmoji(news.sentiment);
+    return `
+      <div style="margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #e5e7eb;">
+        <h2 style="font-size: 20px; font-weight: 700; color: #111827; margin: 0 0 16px 0;">
+          ${idx + 1}. ${escapeHtml(news.title)} ${emoji}
+        </h2>
+        <p style="font-size: 16px; line-height: 1.6; color: #374151; margin: 0;">
+          ${escapeHtml(news.summary)}
+        </p>
+      </div>
+    `;
+  }).join('');
+
+  // 키워드 HTML 생성
+  const keywordsHtml = keywords
+    .map(keyword => `<span style="display: inline-block; background-color: #dbeafe; color: #1e40af; padding: 4px 12px; border-radius: 16px; font-size: 14px; margin: 4px;">${escapeHtml(keyword)}</span>`)
+    .join('');
+
+  // 워치리스트 HTML 생성 (유료 플랜만)
+  let watchlistHtml = '';
+  if (isPaid && watchlist && watchlist.length > 0) {
+    const stocksHtml = watchlist.map(stock => {
+      const changeColor = stock.changePercent >= 0 ? '#10b981' : '#ef4444';
+      const changeSign = stock.changePercent >= 0 ? '+' : '';
+
+      let technicalHtml = '';
+      if (isPro && (stock.rsi || stock.macdSignal)) {
+        technicalHtml = `
+          <div style="margin-top: 8px; font-size: 12px; color: #6b7280;">
+            ${stock.rsi ? `RSI: ${stock.rsi.toFixed(1)}` : ''}
+            ${stock.rsi && stock.macdSignal ? ' | ' : ''}
+            ${stock.macdSignal || ''}
+          </div>
+        `;
+      }
+
+      let aiSummaryHtml = '';
+      if (isPro && stock.aiSummary) {
+        aiSummaryHtml = `
+          <div style="margin-top: 8px; padding: 8px; background-color: #f9fafb; border-radius: 4px; font-size: 13px; color: #4b5563;">
+            🤖 ${escapeHtml(stock.aiSummary)}
+          </div>
+        `;
+      }
+
+      return `
+        <div style="padding: 16px; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-weight: 600; color: #111827;">${escapeHtml(stock.name)}</div>
+              <div style="font-size: 12px; color: #6b7280;">${escapeHtml(stock.symbol)}</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-weight: 600; color: #111827;">₩${stock.price.toLocaleString()}</div>
+              <div style="font-size: 14px; color: ${changeColor};">${changeSign}${stock.changePercent.toFixed(2)}%</div>
+            </div>
+          </div>
+          ${technicalHtml}
+          ${aiSummaryHtml}
+        </div>
+      `;
+    }).join('');
+
+    watchlistHtml = `
+      <div style="margin-bottom: 32px;">
+        <h3 style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 16px 0;">
+          📌 내 관심 종목
+        </h3>
+        ${stocksHtml}
+      </div>
+    `;
+  }
+
+  // 플랜 배지
+  const planBadgeColor = planName === 'pro' ? '#7c3aed' : planName === 'basic' ? '#2563eb' : '#6b7280';
+  const planBadgeText = planName === 'pro' ? 'PRO' : planName === 'basic' ? 'BASIC' : 'FREE';
+
+  const unsubscribeUrl = `${dashboardUrl.replace('/dashboard', '')}/api/unsubscribe?token=${unsubscribeToken}`;
+
+  return `
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinBrief - ${date} 브리핑</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; background-color: #f9fafb;">
+  <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+    <!-- Header -->
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 32px 24px; text-align: center;">
+      <div style="display: inline-block; background-color: ${planBadgeColor}; color: white; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 4px; margin-bottom: 12px;">
+        ${planBadgeText}
+      </div>
+      <h1 style="font-size: 28px; font-weight: 800; color: #ffffff; margin: 0 0 8px 0;">
+        📊 FinBrief
+      </h1>
+      <p style="font-size: 16px; color: #e0e7ff; margin: 0;">
+        ${isPaid ? '맞춤 재테크 브리핑' : '오늘의 재테크 브리핑'}
+      </p>
+      <p style="font-size: 14px; color: #c7d2fe; margin: 8px 0 0 0;">
+        ${date}
+      </p>
+    </div>
+
+    <!-- Content -->
+    <div style="padding: 32px 24px;">
+      <!-- 워치리스트 (유료만) -->
+      ${watchlistHtml}
+
+      <!-- 주요 뉴스 -->
+      <div style="margin-bottom: 32px;">
+        <h3 style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 16px 0;">
+          📰 주요 뉴스
+        </h3>
+        ${newsItemsHtml}
+      </div>
+
+      <!-- 오늘의 키워드 -->
+      <div style="margin-bottom: 32px;">
+        <h3 style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 16px 0;">
+          🔑 오늘의 키워드
+        </h3>
+        <div>
+          ${keywordsHtml}
+        </div>
+      </div>
+
+      <!-- 시장 분위기 -->
+      <div style="margin-bottom: 32px; padding: 24px; background-color: #f0fdf4; border-left: 4px solid #10b981; border-radius: 8px;">
+        <h3 style="font-size: 18px; font-weight: 700; color: #065f46; margin: 0 0 12px 0;">
+          📈 시장 분위기
+        </h3>
+        <p style="font-size: 16px; line-height: 1.6; color: #047857; margin: 0;">
+          ${escapeHtml(marketSentiment)}
+        </p>
+      </div>
+
+      <!-- CTA -->
+      <div style="text-align: center; margin-top: 32px;">
+        <a href="${dashboardUrl}" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 16px;">
+          대시보드에서 더 보기
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="padding: 24px; background-color: #f3f4f6; text-align: center; border-top: 1px solid #e5e7eb;">
+      <p style="font-size: 14px; color: #6b7280; margin: 0 0 8px 0;">
+        <strong>FinBrief</strong> | AI가 엄선한 재테크 뉴스
+      </p>
+      <div style="margin-top: 16px;">
+        <a href="${unsubscribeUrl}" style="font-size: 12px; color: #6b7280; text-decoration: underline;">
+          구독 해지
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+  `.trim();
+}
+
 export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promise<void> {
+  // 환경 변수 검증
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    console.warn('⚠️ Supabase 설정이 누락되어 개인화 이메일을 건너뜁니다.');
+    return;
+  }
+
+  if (!process.env.RESEND_API_KEY) {
+    console.warn('⚠️ RESEND_API_KEY가 설정되지 않아 개인화 이메일을 건너뜁니다.');
+    return;
+  }
+
   const resend = new Resend(process.env.RESEND_API_KEY);
-  const supabase = createServerClient();
+  const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
   const fromEmail = process.env.RESEND_FROM_EMAIL || 'FinBrief <noreply@finbrief.io>';
   const dashboardUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finbrief.vercel.app';
 
@@ -60,7 +288,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
 
   // Get plans
   const { data: plans } = await supabase.from('plans').select('id, name, features');
-  const planMap = new Map(plans?.map((p: { id: string; name: string; features: unknown }) => [p.id, p]) || []);
+  const planMap = new Map<string, Plan>(plans?.map((p: Plan) => [p.id, p]) || []);
 
   // Format date
   const today = new Date();
@@ -76,7 +304,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
   const paidSubscribers: Subscriber[] = [];
 
   for (const sub of subscribers) {
-    const plan = planMap.get(sub.plan_id || '') as Plan | undefined;
+    const plan = planMap.get(sub.plan_id || '');
     if (!plan || plan.name === 'free') {
       freeSubscribers.push(sub);
     } else {
@@ -97,7 +325,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
           from: fromEmail,
           to: sub.email,
           subject: `📊 FinBrief - ${dateStr} 재테크 브리핑`,
-          react: PersonalizedBriefing({
+          html: generatePersonalizedEmailHtml({
             date: dateStr,
             planName: 'free',
             topNews: analysis.topNews.map(n => ({
@@ -120,7 +348,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
   for (const batch of chunk(paidSubscribers, BATCH_SIZE)) {
     await Promise.allSettled(
       batch.map(async sub => {
-        const plan = planMap.get(sub.plan_id || '') as Plan;
+        const plan = planMap.get(sub.plan_id || '');
         const isPro = plan?.name === 'pro';
 
         // Get user's watchlist
@@ -159,7 +387,6 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
               name: w.name,
               price: quote.regularMarketPrice,
               changePercent: quote.regularMarketChangePercent,
-              aiSignal: undefined,
               aiSummary,
               rsi,
               macdSignal,
@@ -167,16 +394,16 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
           })
         );
 
-        const validWatchlist = watchlistData.filter(Boolean) as NonNullable<typeof watchlistData[0]>[];
+        const validWatchlist = watchlistData.filter((item): item is NonNullable<typeof item> => item !== null);
 
         return resend.emails.send({
           from: fromEmail,
           to: sub.email,
           subject: `📊 FinBrief - ${dateStr} 맞춤 브리핑`,
-          react: PersonalizedBriefing({
+          html: generatePersonalizedEmailHtml({
             date: dateStr,
             planName: plan?.name || 'basic',
-            watchlist: validWatchlist,
+            watchlist: validWatchlist as WatchlistStock[],
             topNews: analysis.topNews.map(n => ({
               title: n.title,
               summary: n.summary,
