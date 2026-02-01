@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom/vitest';
+import "@testing-library/jest-dom/vitest";
 
 // Tailwind CSS v4 Note:
 // JSDOM does not process CSS, so Tailwind classes exist in DOM but don't compute styles.

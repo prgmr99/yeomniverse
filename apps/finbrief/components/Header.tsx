@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -101,13 +101,23 @@ export default function Header() {
             className="md:hidden bg-white/95 backdrop-blur-xl border-b border-white/20 overflow-hidden"
           >
             <div className="px-6 py-6 space-y-2">
-              <MobileNavLink href="/pricing" onClick={() => setIsMenuOpen(false)}>
+              <MobileNavLink
+                href="/pricing"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Pricing
               </MobileNavLink>
-              <MobileNavLink href="/dashboard" onClick={() => setIsMenuOpen(false)}>
+              <MobileNavLink
+                href="/dashboard"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Dashboard
               </MobileNavLink>
-              <MobileNavLink href="/login" onClick={() => setIsMenuOpen(false)} isAccent>
+              <MobileNavLink
+                href="/login"
+                onClick={() => setIsMenuOpen(false)}
+                isAccent
+              >
                 Login
               </MobileNavLink>
             </div>
@@ -158,7 +168,12 @@ interface MobileNavLinkProps {
   isAccent?: boolean;
 }
 
-function MobileNavLink({ href, children, onClick, isAccent }: MobileNavLinkProps) {
+function MobileNavLink({
+  href,
+  children,
+  onClick,
+  isAccent,
+}: MobileNavLinkProps) {
   return (
     <a
       href={href}

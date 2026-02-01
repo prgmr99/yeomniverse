@@ -1,5 +1,5 @@
 import { createCheckout } from '@hyo/services/lemonsqueezy';
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 interface CheckoutRequest {
   email: string;

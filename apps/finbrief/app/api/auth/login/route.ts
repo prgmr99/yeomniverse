@@ -1,6 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
 const loginSchema = z.object({
@@ -14,42 +14,45 @@ export async function POST(request: NextRequest) {
 
     if (!validation.success) {
       return NextResponse.json(
-        { error: validation.error.issues[0]?.message || '입력값이 올바르지 않습니다.' },
-        { status: 400 }
+        {
+          error:
+            validation.error.issues[0]?.message ||
+            '입력값이 올바르지 않습니다.',
+        },
+        { status: 400 },
       );
     }
 
     const { email } = validation.data;
     const normalizedEmail = email.toLowerCase().trim();
 
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+    const supabaseUrl =
+      process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+    const supabaseAnonKey =
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+      process.env.SUPABASE_ANON_KEY;
 
     if (!supabaseUrl || !supabaseAnonKey) {
       return NextResponse.json(
         { error: 'Supabase가 구성되지 않았습니다.' },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
     const cookieStore = await cookies();
-    const supabase = createServerClient(
-      supabaseUrl,
-      supabaseAnonKey,
-      {
-        cookies: {
-          get(name: string) {
-            return cookieStore.get(name)?.value;
-          },
-          set(name: string, value: string, options: any) {
-            cookieStore.set({ name, value, ...options });
-          },
-          remove(name: string, options: any) {
-            cookieStore.set({ name, value: '', ...options });
-          },
+    const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
         },
-      }
-    );
+        set(name: string, value: string, options: any) {
+          cookieStore.set({ name, value, ...options });
+        },
+        remove(name: string, options: any) {
+          cookieStore.set({ name, value: '', ...options });
+        },
+      },
+    });
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001';
 
@@ -63,8 +66,10 @@ export async function POST(request: NextRequest) {
     if (error) {
       console.error('Magic link send error:', error);
       return NextResponse.json(
-        { error: '로그인 링크 전송에 실패했습니다. 잠시 후 다시 시도해주세요.' },
-        { status: 500 }
+        {
+          error: '로그인 링크 전송에 실패했습니다. 잠시 후 다시 시도해주세요.',
+        },
+        { status: 500 },
       );
     }
 
@@ -75,7 +80,7 @@ export async function POST(request: NextRequest) {
     console.error('Login API error:', error);
     return NextResponse.json(
       { error: '서버 오류가 발생했습니다.' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

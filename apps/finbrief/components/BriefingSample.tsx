@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ScrollReveal } from '@/components/landing';
 
 type BriefingData = {
@@ -60,7 +60,10 @@ export default function BriefingSample() {
 
   if (isLoading) {
     return (
-      <section className="px-6 bg-white/50 backdrop-blur-sm" style={{ padding: 'clamp(80px, 12vh, 150px) 24px' }}>
+      <section
+        className="px-6 bg-white/50 backdrop-blur-sm"
+        style={{ padding: 'clamp(80px, 12vh, 150px) 24px' }}
+      >
         <div className="max-w-[980px] mx-auto">
           <div className="text-center mb-10">
             <p className="text-finbrief-gray-500 text-base font-medium tracking-wide uppercase mb-4">
@@ -86,7 +89,10 @@ export default function BriefingSample() {
   }
 
   return (
-    <section className="px-6 bg-white/50 backdrop-blur-sm" style={{ padding: 'clamp(80px, 12vh, 150px) 24px' }}>
+    <section
+      className="px-6 bg-white/50 backdrop-blur-sm"
+      style={{ padding: 'clamp(80px, 12vh, 150px) 24px' }}
+    >
       <div className="max-w-[980px] mx-auto">
         <ScrollReveal className="text-center mb-10">
           <p className="text-finbrief-gray-500 text-base font-medium tracking-wide uppercase mb-4">
@@ -147,9 +153,7 @@ export default function BriefingSample() {
                   </span>
                 ))}
               </div>
-              <p className="text-sm text-finbrief-gray-500">
-                {data.summary}
-              </p>
+              <p className="text-sm text-finbrief-gray-500">{data.summary}</p>
             </div>
           </div>
         </ScrollReveal>

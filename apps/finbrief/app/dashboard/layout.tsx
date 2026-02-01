@@ -1,11 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { LayoutDashboard, Star, LogOut, Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { LayoutDashboard, LogOut, Menu, Settings, Star, X } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [user, setUser] = useState<{ email: string } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -43,6 +47,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const navItems = [
     { href: '/dashboard', label: '대시보드', icon: LayoutDashboard },
     { href: '/dashboard/watchlist', label: '관심종목', icon: Star },
+    { href: '/dashboard/settings', label: '설정', icon: Settings },
   ];
 
   if (isLoading) {
@@ -108,7 +113,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
 
@@ -142,7 +151,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   );
                 })}
                 <div className="pt-4 border-t border-white/10 space-y-2">
-                  <div className="px-4 py-2 text-sm text-slate-400">{user?.email}</div>
+                  <div className="px-4 py-2 text-sm text-slate-400">
+                    {user?.email}
+                  </div>
                   <button
                     onClick={() => {
                       setIsMobileMenuOpen(false);
@@ -161,9 +172,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-8">
-        {children}
-      </main>
+      <main className="max-w-7xl mx-auto px-6 py-8">{children}</main>
     </div>
   );
 }

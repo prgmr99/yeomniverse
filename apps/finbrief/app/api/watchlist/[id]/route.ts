@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@hyo/services/supabase';
 import { createServerAuthClient } from '@hyo/services/supabase/auth';
+import { type NextRequest, NextResponse } from 'next/server';
 
 interface SuccessResponse {
   success: true;
@@ -12,27 +12,27 @@ interface ErrorResponse {
 }
 
 export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse<SuccessResponse | ErrorResponse>> {
   try {
     const authSupabase = await createServerAuthClient();
-    const { data: { user }, error: authError } = await authSupabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await authSupabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json(
         { error: '로그인이 필요합니다.' },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
     const { id } = await params;
 
     if (!id) {
-      return NextResponse.json(
-        { error: 'ID가 필요합니다.' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'ID가 필요합니다.' }, { status: 400 });
     }
 
     const supabase = createServerClient();
@@ -47,7 +47,7 @@ export async function DELETE(
     if (subscriberError || !subscriber) {
       return NextResponse.json(
         { error: '사용자 정보를 찾을 수 없습니다.' },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -64,7 +64,7 @@ export async function DELETE(
       console.error('Delete error:', updateError);
       return NextResponse.json(
         { error: '관심 목록 삭제 중 오류가 발생했습니다.' },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -76,7 +76,7 @@ export async function DELETE(
     console.error('Watchlist DELETE error:', error);
     return NextResponse.json(
       { error: '서버 오류가 발생했습니다.' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -3,6 +3,7 @@ import { analyzeNews, formatAnalysisResult } from './analyzers/gemini-analyzer';
 import { sendDailyBriefing, getContextualAffiliateLinks } from './messengers/telegram-sender';
 import { sendEmailBriefing } from './messengers/email-sender';
 import { sendPersonalizedBriefings } from './messengers/personalized-email-sender';
+import { sendStockNewsAlerts } from './messengers/stock-news-alerter';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -60,6 +61,11 @@ async function main() {
       console.log(`  이메일 발송 완료: ${emailResult.emailsSent}건`);
     }
 
+    // Step 5.5: Stock News Alerts (Basic/Pro users with watchlists)
+    console.log('\n🔔 Step 5.5: 관심 종목 뉴스 알림 발송 중...\n');
+    const alertResult = await sendStockNewsAlerts(newsItems);
+    console.log(`  뉴스 알림 발송 완료: ${alertResult.emailsSent}건 이메일`);
+
     // Step 6: JSON 파일로 저장
     const today = new Date().toISOString().split('T')[0];
     const outputPath = path.join(__dirname, '..', 'data', `${today}.json`);
@@ -72,6 +78,7 @@ async function main() {
       affiliateLinks: affiliateLinks,
       sentToTelegram: !!chatId,
       usePersonalizedEmails,
+      alertsSent: alertResult.emailsSent,
     };
     
     fs.writeFileSync(outputPath, JSON.stringify(output, null, 2), 'utf-8');

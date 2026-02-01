@@ -1,64 +1,66 @@
 import {
-  createBrowserClient as createSupabaseBrowserClient,
-  createServerClient as createSupabaseServerClient,
-} from '@supabase/ssr';
-import { cookies } from 'next/headers';
+	createBrowserClient as createSupabaseBrowserClient,
+	createServerClient as createSupabaseServerClient,
+} from "@supabase/ssr";
+import { cookies } from "next/headers";
 
 // Browser client for client components
 export function createBrowserAuthClient() {
-  return createSupabaseBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  );
+	const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+	const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+	if (!supabaseUrl || !supabaseAnonKey) {
+		throw new Error("Missing Supabase environment variables");
+	}
+
+	return createSupabaseBrowserClient(supabaseUrl, supabaseAnonKey);
 }
 
 // Server client for server components and route handlers
 export async function createServerAuthClient() {
-  const cookieStore = await cookies();
+	const cookieStore = await cookies();
 
-  return createSupabaseServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value;
-        },
-        set(name: string, value: string, options: any) {
-          try {
-            cookieStore.set({ name, value, ...options });
-          } catch (error) {
-            // Server Component context
-          }
-        },
-        remove(name: string, options: any) {
-          try {
-            cookieStore.set({ name, value: '', ...options });
-          } catch (error) {
-            // Server Component context
-          }
-        },
-      },
-    },
-  );
+	const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+	const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+	if (!supabaseUrl || !supabaseAnonKey) {
+		throw new Error("Missing Supabase environment variables");
+	}
+
+	return createSupabaseServerClient(supabaseUrl, supabaseAnonKey, {
+		cookies: {
+			getAll() {
+				return cookieStore.getAll();
+			},
+			setAll(cookiesToSet) {
+				try {
+					for (const { name, value, options } of cookiesToSet) {
+						cookieStore.set(name, value, options);
+					}
+				} catch {
+					// Server Component context - setAll can be ignored
+				}
+			},
+		},
+	});
 }
 
 // Helper to get current user session
 export async function getSession() {
-  const supabase = await createServerAuthClient();
-  const {
-    data: { session },
-    error,
-  } = await supabase.auth.getSession();
-  return { session, error };
+	const supabase = await createServerAuthClient();
+	const {
+		data: { session },
+		error,
+	} = await supabase.auth.getSession();
+	return { session, error };
 }
 
 // Helper to get current user
 export async function getUser() {
-  const supabase = await createServerAuthClient();
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-  return { user, error };
+	const supabase = await createServerAuthClient();
+	const {
+		data: { user },
+		error,
+	} = await supabase.auth.getUser();
+	return { user, error };
 }

@@ -1,11 +1,14 @@
 import { createServerClient } from '@hyo/services/supabase';
 import { createServerAuthClient } from '@hyo/services/supabase/auth';
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     const authSupabase = await createServerAuthClient();
-    const { data: { user }, error: authError } = await authSupabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await authSupabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

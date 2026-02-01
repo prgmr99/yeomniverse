@@ -36,6 +36,7 @@ interface WatchlistStock {
   aiSummary?: string;
   rsi?: number;
   macdSignal?: string;
+  trendSignal?: string; // Simple trend signal for Basic plan
 }
 
 // Utility functions
@@ -88,6 +89,7 @@ function generatePersonalizedEmailHtml(options: {
   const { date, planName, topNews, keywords, marketSentiment, unsubscribeToken, dashboardUrl, watchlist } = options;
 
   const isPro = planName === 'pro';
+  const isBasic = planName === 'basic';
   const isPaid = planName !== 'free';
 
   // 주요 뉴스 HTML 생성
@@ -119,11 +121,19 @@ function generatePersonalizedEmailHtml(options: {
 
       let technicalHtml = '';
       if (isPro && (stock.rsi || stock.macdSignal)) {
+        // Pro plan: Show RSI and MACD
         technicalHtml = `
           <div style="margin-top: 8px; font-size: 12px; color: #6b7280;">
             ${stock.rsi ? `RSI: ${stock.rsi.toFixed(1)}` : ''}
             ${stock.rsi && stock.macdSignal ? ' | ' : ''}
             ${stock.macdSignal || ''}
+          </div>
+        `;
+      } else if (isBasic && stock.trendSignal) {
+        // Basic plan: Show simple trend signal
+        technicalHtml = `
+          <div style="margin-top: 8px; font-size: 12px; color: #6b7280;">
+            📊 ${stock.trendSignal}
           </div>
         `;
       }
@@ -367,8 +377,12 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
             let rsi: number | undefined;
             let macdSignal: string | undefined;
             let aiSummary: string | undefined;
+            let trendSignal: string | undefined;
+
+            const isBasic = plan?.name === 'basic';
 
             if (isPro) {
+              // Pro plan: Full technical analysis
               const ninetyDaysAgo = new Date();
               ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
               const historical = await getHistoricalData(w.symbol, ninetyDaysAgo);
@@ -380,6 +394,26 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
               }
 
               aiSummary = await generateBriefAnalysis(quote, indicators);
+            } else if (isBasic) {
+              // Basic plan: Simple SMA-based trend signal
+              const thirtyDaysAgo = new Date();
+              thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+              const historical = await getHistoricalData(w.symbol, thirtyDaysAgo);
+              const indicators = calculateTechnicalIndicators(historical);
+
+              // Simple trend based on SMA crossover
+              if (indicators.sma.sma5 && indicators.sma.sma20) {
+                if (indicators.sma.sma5 > indicators.sma.sma20) {
+                  trendSignal = '상승 추세 (5일선 > 20일선)';
+                } else if (indicators.sma.sma5 < indicators.sma.sma20) {
+                  trendSignal = '하락 추세 (5일선 < 20일선)';
+                } else {
+                  trendSignal = '중립';
+                }
+              } else {
+                // Fallback to simple price change
+                trendSignal = quote.regularMarketChangePercent >= 0 ? '상승 추세' : '하락 추세';
+              }
             }
 
             return {
@@ -390,6 +424,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
               aiSummary,
               rsi,
               macdSignal,
+              trendSignal,
             };
           })
         );

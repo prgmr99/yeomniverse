@@ -15,7 +15,8 @@ interface KoreanStockInfo {
   sector: string;
 }
 
-const KOREAN_STOCK_MAPPING: Record<string, KoreanStockInfo> = koreanStocks as Record<string, KoreanStockInfo>;
+const KOREAN_STOCK_MAPPING: Record<string, KoreanStockInfo> =
+  koreanStocks as Record<string, KoreanStockInfo>;
 
 /**
  * Normalize Korean stock code to 6 digits
@@ -79,7 +80,9 @@ export function normalizeKoreanSymbol(input: string): SymbolValidationResult {
 
   // 3. Korean stock name (e.g., 삼성전자)
   const foundByName = Object.entries(KOREAN_STOCK_MAPPING).find(
-    ([_, info]) => info.name === trimmed || info.englishName.toLowerCase() === trimmed.toLowerCase()
+    ([_, info]) =>
+      info.name === trimmed ||
+      info.englishName.toLowerCase() === trimmed.toLowerCase(),
   );
 
   if (foundByName) {
@@ -114,7 +117,9 @@ export function normalizeKoreanSymbol(input: string): SymbolValidationResult {
 /**
  * Search Korean stocks by name or code
  */
-export function searchKoreanStocks(query: string): Array<{ symbol: string; name: string; market: string }> {
+export function searchKoreanStocks(
+  query: string,
+): Array<{ symbol: string; name: string; market: string }> {
   const lowerQuery = query.toLowerCase();
   const results: Array<{ symbol: string; name: string; market: string }> = [];
 

@@ -1,1 +1,1 @@
-export { getResendClient } from './client';
+export { getResendClient } from "./client";

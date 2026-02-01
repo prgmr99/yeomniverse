@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 // Old Vercel domain to redirect FROM
 const OLD_DOMAIN = 'hyo-tier.vercel.app';
@@ -9,7 +9,8 @@ export function middleware(request: NextRequest) {
 
   // If request is from old Vercel domain, redirect to new domain
   if (host === OLD_DOMAIN || host === `www.${OLD_DOMAIN}`) {
-    const newDomain = process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://hyo-do-tier.vercel.app';
+    const newDomain =
+      process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://hyo-do-tier.vercel.app';
     const url = new URL(request.url);
     url.host = new URL(newDomain).host;
     url.protocol = 'https:';

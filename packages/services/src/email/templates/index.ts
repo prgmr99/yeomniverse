@@ -1,2 +1,2 @@
-export { WelcomeEmail } from './welcome';
-export { PersonalizedBriefing } from './PersonalizedBriefing';
+export { PersonalizedBriefing } from "./PersonalizedBriefing";
+export { WelcomeEmail } from "./welcome";

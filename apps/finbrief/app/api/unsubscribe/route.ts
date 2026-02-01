@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@hyo/services/supabase';
+import { type NextRequest, NextResponse } from 'next/server';
 
 /**
  * 구독 취소 API 엔드포인트
@@ -24,7 +24,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       {
         status: 400,
         headers: { 'Content-Type': 'text/html; charset=utf-8' },
-      }
+      },
     );
   }
 
@@ -50,7 +50,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         {
           status: 404,
           headers: { 'Content-Type': 'text/html; charset=utf-8' },
-        }
+        },
       );
     }
 
@@ -65,7 +65,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         {
           status: 200,
           headers: { 'Content-Type': 'text/html; charset=utf-8' },
-        }
+        },
       );
     }
 
@@ -83,13 +83,14 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       return new NextResponse(
         generateHtmlPage({
           title: '오류가 발생했습니다',
-          message: '구독 취소 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+          message:
+            '구독 취소 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
           status: 'error',
         }),
         {
           status: 500,
           headers: { 'Content-Type': 'text/html; charset=utf-8' },
-        }
+        },
       );
     }
 
@@ -105,7 +106,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       {
         status: 200,
         headers: { 'Content-Type': 'text/html; charset=utf-8' },
-      }
+      },
     );
   } catch (error) {
     console.error('Unsubscribe API error:', error);
@@ -118,7 +119,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       {
         status: 500,
         headers: { 'Content-Type': 'text/html; charset=utf-8' },
-      }
+      },
     );
   }
 }
