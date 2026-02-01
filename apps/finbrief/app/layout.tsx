@@ -5,7 +5,8 @@ import './finbrief.css';
 import { GoogleAnalytics } from '@hyo/ui';
 import { sans, serif } from './fonts';
 
-const DOMAIN_URL = process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://finbrief.yeomniverse.com';
+const DOMAIN_URL =
+  process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://finbrief.yeomniverse.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(DOMAIN_URL),
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
     default: 'FinBrief | AI 재테크 브리핑',
     template: '%s | FinBrief',
   },
-  description: '30초 만에 읽는 AI 재테크 브리핑. 매일 아침 8시, 핵심 금융 뉴스만 텔레그램으로 받아보세요. AI가 100개 뉴스를 분석하고 3가지만 선별합니다.',
+  description:
+    '30초 만에 읽는 AI 재테크 브리핑. 매일 아침 8시, 핵심 금융 뉴스만 텔레그램으로 받아보세요. AI가 100개 뉴스를 분석하고 3가지만 선별합니다.',
   applicationName: 'FinBrief',
   keywords: [
     'AI 금융 뉴스',
@@ -30,12 +32,24 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/images/favicon/icon.svg', type: 'image/svg+xml' },
-      { url: '/images/favicon/icon-192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/images/favicon/icon-512.png', sizes: '512x512', type: 'image/png' },
+      {
+        url: '/images/favicon/icon-192.png',
+        sizes: '192x192',
+        type: 'image/png',
+      },
+      {
+        url: '/images/favicon/icon-512.png',
+        sizes: '512x512',
+        type: 'image/png',
+      },
     ],
     shortcut: '/images/favicon/favicon.ico',
     apple: [
-      { url: '/images/favicon/apple-icon-180.png', sizes: '180x180', type: 'image/png' },
+      {
+        url: '/images/favicon/apple-icon-180.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
     ],
   },
   authors: [{ name: 'FinBrief Team' }],
@@ -59,7 +73,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'FinBrief | AI 재테크 브리핑',
-    description: '30초 만에 읽는 AI 재테크 브리핑. AI가 100개 뉴스를 분석하고 3가지만 선별합니다.',
+    description:
+      '30초 만에 읽는 AI 재테크 브리핑. AI가 100개 뉴스를 분석하고 3가지만 선별합니다.',
     url: DOMAIN_URL,
     siteName: 'FinBrief',
     locale: 'ko_KR',
@@ -76,7 +91,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'FinBrief | AI 재테크 브리핑',
-    description: '30초 만에 읽는 AI 재테크 브리핑. 매일 아침 8시, 핵심 금융 뉴스만 텔레그램으로.',
+    description:
+      '30초 만에 읽는 AI 재테크 브리핑. 매일 아침 8시, 핵심 금융 뉴스만 텔레그램으로.',
     images: ['/api/og'],
   },
   alternates: {
@@ -85,7 +101,8 @@ export const metadata: Metadata = {
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
     other: {
-      'naver-site-verification': process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION || '',
+      'naver-site-verification':
+        process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION || '',
     },
   },
 };
@@ -120,7 +137,8 @@ export default function RootLayout({
       price: '0',
       priceCurrency: 'KRW',
     },
-    description: '30초 만에 읽는 AI 재테크 브리핑. 매일 아침 8시 텔레그램으로 핵심 금융 뉴스를 받아보세요.',
+    description:
+      '30초 만에 읽는 AI 재테크 브리핑. 매일 아침 8시 텔레그램으로 핵심 금융 뉴스를 받아보세요.',
   };
 
   // Service schema
@@ -132,13 +150,18 @@ export default function RootLayout({
       '@type': 'Organization',
       name: 'FinBrief',
     },
-    description: 'AI가 100개의 금융 뉴스를 분석하고 가장 중요한 3가지만 선별하여 매일 아침 8시 텔레그램으로 전송합니다.',
+    description:
+      'AI가 100개의 금융 뉴스를 분석하고 가장 중요한 3가지만 선별하여 매일 아침 8시 텔레그램으로 전송합니다.',
     serviceType: 'AI News Curation',
     areaServed: 'KR',
   };
 
   return (
-    <html lang="ko" className={`${serif.variable} ${sans.variable}`} suppressHydrationWarning>
+    <html
+      lang="ko"
+      className={`${serif.variable} ${sans.variable}`}
+      suppressHydrationWarning
+    >
       <body className="min-h-screen font-sans antialiased">
         {children}
         <GoogleAnalytics />

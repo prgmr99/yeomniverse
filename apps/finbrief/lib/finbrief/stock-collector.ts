@@ -1,5 +1,5 @@
 import yahooFinance from 'yahoo-finance2';
-import { normalizeKoreanSymbol, type SymbolValidationResult } from './korean-stock-symbols';
+import { normalizeKoreanSymbol } from './korean-stock-symbols';
 
 export interface StockQuote {
   symbol: string;
@@ -24,13 +24,15 @@ export interface HistoricalData {
   volume: number;
 }
 
-export async function getStockQuote(symbol: string): Promise<StockQuote | null> {
+export async function getStockQuote(
+  symbol: string,
+): Promise<StockQuote | null> {
   try {
     // Normalize Korean stock symbols
     const normalized = normalizeKoreanSymbol(symbol);
     const querySymbol = normalized.isValid ? normalized.symbol! : symbol;
 
-    const quote = await yahooFinance.quote(querySymbol) as any;
+    const quote = (await yahooFinance.quote(querySymbol)) as any;
 
     if (!quote) {
       return null;
@@ -58,16 +60,16 @@ export async function getStockQuote(symbol: string): Promise<StockQuote | null> 
 export async function getHistoricalData(
   symbol: string,
   period1: Date,
-  period2: Date = new Date()
+  period2: Date = new Date(),
 ): Promise<HistoricalData[]> {
   try {
     const normalized = normalizeKoreanSymbol(symbol);
     const querySymbol = normalized.isValid ? normalized.symbol! : symbol;
 
-    const result = await yahooFinance.historical(querySymbol, {
+    const result = (await yahooFinance.historical(querySymbol, {
       period1,
       period2,
-    }) as any[];
+    })) as any[];
 
     return result.map((item: any) => ({
       date: item.date,
@@ -83,9 +85,11 @@ export async function getHistoricalData(
   }
 }
 
-export async function searchStocks(query: string): Promise<Array<{ symbol: string; name: string; exchange: string }>> {
+export async function searchStocks(
+  query: string,
+): Promise<Array<{ symbol: string; name: string; exchange: string }>> {
   try {
-    const results = await yahooFinance.search(query) as any;
+    const results = (await yahooFinance.search(query)) as any;
 
     return results.quotes
       .filter((q: any) => q.quoteType === 'EQUITY')

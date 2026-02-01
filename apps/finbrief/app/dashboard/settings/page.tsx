@@ -1,8 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Settings, Bell, Mail, Send, Crown, Check, AlertCircle, X, CreditCard } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import {
+  AlertCircle,
+  Bell,
+  Check,
+  CreditCard,
+  Crown,
+  Mail,
+  Send,
+  X,
+} from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface UserSettings {
   newsAlertsEnabled: boolean;
@@ -28,10 +37,6 @@ export default function SettingsPage() {
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const fetchData = async () => {
     try {
       const [settingsRes, subRes] = await Promise.all([
@@ -56,13 +61,17 @@ export default function SettingsPage() {
           planDisplayName: data.plan?.display_name || 'Free',
         });
       }
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
+    } catch (_error) {
       setError('데이터를 불러오는데 실패했습니다.');
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSave = async () => {
     setIsSaving(true);
@@ -104,13 +113,18 @@ export default function SettingsPage() {
 
       window.location.href = data.portalUrl;
     } catch (error) {
-      setError(error instanceof Error ? error.message : '구독 관리 페이지로 이동할 수 없습니다.');
+      setError(
+        error instanceof Error
+          ? error.message
+          : '구독 관리 페이지로 이동할 수 없습니다.',
+      );
       setIsPortalLoading(false);
     }
   };
 
   const isPro = subscription?.plan === 'pro';
-  const isBasicOrPro = subscription?.plan === 'basic' || subscription?.plan === 'pro';
+  const isBasicOrPro =
+    subscription?.plan === 'basic' || subscription?.plan === 'pro';
 
   if (isLoading) {
     return (
@@ -194,14 +208,19 @@ export default function SettingsPage() {
           {/* News Alerts Toggle */}
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
-              <h3 className="text-lg font-semibold text-white mb-1">뉴스 알림</h3>
+              <h3 className="text-lg font-semibold text-white mb-1">
+                뉴스 알림
+              </h3>
               <p className="text-sm text-slate-400">
                 관심종목 관련 중요 뉴스가 발생하면 알림을 받습니다
               </p>
             </div>
             <button
               onClick={() =>
-                setSettings((prev) => ({ ...prev, newsAlertsEnabled: !prev.newsAlertsEnabled }))
+                setSettings((prev) => ({
+                  ...prev,
+                  newsAlertsEnabled: !prev.newsAlertsEnabled,
+                }))
               }
               className={`relative w-14 h-8 rounded-full transition-all duration-300 ${
                 settings.newsAlertsEnabled ? 'bg-emerald-500' : 'bg-slate-700'
@@ -229,14 +248,21 @@ export default function SettingsPage() {
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
                 <Mail className="w-5 h-5 text-slate-300" />
-                <h3 className="text-lg font-semibold text-white">이메일 알림</h3>
+                <h3 className="text-lg font-semibold text-white">
+                  이메일 알림
+                </h3>
               </div>
-              <p className="text-sm text-slate-400">이메일로 뉴스 알림을 받습니다</p>
+              <p className="text-sm text-slate-400">
+                이메일로 뉴스 알림을 받습니다
+              </p>
             </div>
             <button
               onClick={() =>
                 settings.newsAlertsEnabled &&
-                setSettings((prev) => ({ ...prev, emailNotifications: !prev.emailNotifications }))
+                setSettings((prev) => ({
+                  ...prev,
+                  emailNotifications: !prev.emailNotifications,
+                }))
               }
               disabled={!settings.newsAlertsEnabled}
               className={`relative w-14 h-8 rounded-full transition-all duration-300 ${
@@ -247,7 +273,10 @@ export default function SettingsPage() {
             >
               <motion.div
                 animate={{
-                  x: settings.emailNotifications && settings.newsAlertsEnabled ? 24 : 4,
+                  x:
+                    settings.emailNotifications && settings.newsAlertsEnabled
+                      ? 24
+                      : 4,
                 }}
                 transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                 className="absolute top-1 w-6 h-6 rounded-full bg-white shadow-lg"
@@ -264,7 +293,9 @@ export default function SettingsPage() {
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
                 <Send className="w-5 h-5 text-slate-300" />
-                <h3 className="text-lg font-semibold text-white">텔레그램 알림</h3>
+                <h3 className="text-lg font-semibold text-white">
+                  텔레그램 알림
+                </h3>
                 {!isPro && (
                   <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-semibold">
                     <Crown className="w-3 h-3" />
@@ -273,7 +304,8 @@ export default function SettingsPage() {
                 )}
               </div>
               <p className="text-sm text-slate-400">
-                텔레그램으로 실시간 뉴스 알림을 받습니다 {!isPro && '(Pro 전용)'}
+                텔레그램으로 실시간 뉴스 알림을 받습니다{' '}
+                {!isPro && '(Pro 전용)'}
               </p>
             </div>
             <button
@@ -287,7 +319,9 @@ export default function SettingsPage() {
               }
               disabled={!isPro || !settings.newsAlertsEnabled}
               className={`relative w-14 h-8 rounded-full transition-all duration-300 ${
-                settings.telegramNotifications && settings.newsAlertsEnabled && isPro
+                settings.telegramNotifications &&
+                settings.newsAlertsEnabled &&
+                isPro
                   ? 'bg-emerald-500'
                   : 'bg-slate-700'
               }`}
@@ -295,7 +329,11 @@ export default function SettingsPage() {
               <motion.div
                 animate={{
                   x:
-                    settings.telegramNotifications && settings.newsAlertsEnabled && isPro ? 24 : 4,
+                    settings.telegramNotifications &&
+                    settings.newsAlertsEnabled &&
+                    isPro
+                      ? 24
+                      : 4,
                 }}
                 transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                 className="absolute top-1 w-6 h-6 rounded-full bg-white shadow-lg"
@@ -338,9 +376,12 @@ export default function SettingsPage() {
           <div className="flex items-start gap-4">
             <Crown className="w-6 h-6 text-amber-400 flex-shrink-0 mt-1" />
             <div className="flex-1">
-              <h3 className="text-lg font-semibold text-white mb-2">Pro로 업그레이드</h3>
+              <h3 className="text-lg font-semibold text-white mb-2">
+                Pro로 업그레이드
+              </h3>
               <p className="text-slate-300 mb-4">
-                텔레그램 알림, 기술적 분석, 심층 리포트 등 프리미엄 기능을 이용하세요.
+                텔레그램 알림, 기술적 분석, 심층 리포트 등 프리미엄 기능을
+                이용하세요.
               </p>
               <a
                 href="/pricing"
@@ -362,12 +403,14 @@ export default function SettingsPage() {
       >
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-sm font-medium text-slate-400 mb-1">현재 플랜</h3>
-            <p className="text-xl font-bold text-white">{subscription?.planDisplayName}</p>
+            <h3 className="text-sm font-medium text-slate-400 mb-1">
+              현재 플랜
+            </h3>
+            <p className="text-xl font-bold text-white">
+              {subscription?.planDisplayName}
+            </p>
           </div>
-          {isPro && (
-            <Crown className="w-8 h-8 text-amber-400" />
-          )}
+          {isPro && <Crown className="w-8 h-8 text-amber-400" />}
         </div>
       </motion.div>
 
@@ -385,7 +428,8 @@ export default function SettingsPage() {
           </div>
 
           <p className="text-slate-400 mb-6">
-            결제 수단 변경, 구독 취소, 인보이스 확인 등 구독 관련 설정을 관리할 수 있습니다.
+            결제 수단 변경, 구독 취소, 인보이스 확인 등 구독 관련 설정을 관리할
+            수 있습니다.
           </p>
 
           <button

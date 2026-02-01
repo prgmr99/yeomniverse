@@ -99,15 +99,11 @@ export default function PricingPage() {
 
   return (
     <div className="min-h-screen">
-
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-8 text-center">
         <div className="bg-white/60 backdrop-blur-md rounded-3xl p-8 sm:p-12 mx-auto max-w-4xl">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-finbrief-black mb-6">
-            <span className="text-gradient">
-              똑똑한 투자
-            </span>
-            를 위한
+            <span className="text-gradient">똑똑한 투자</span>를 위한
             <br />
             완벽한 요금제
           </h1>
@@ -232,7 +228,9 @@ export default function PricingPage() {
                 </button>
                 {openFAQ === index && (
                   <div className="px-6 pb-6">
-                    <p className="text-finbrief-gray-600 leading-relaxed">{faq.answer}</p>
+                    <p className="text-finbrief-gray-600 leading-relaxed">
+                      {faq.answer}
+                    </p>
                   </div>
                 )}
               </div>
@@ -273,7 +271,10 @@ export default function PricingPage() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-finbrief-gray-500">
             <p>© 2026 FinBrief. All rights reserved.</p>
             <div className="flex gap-6">
-              <a href="/" className="hover:text-finbrief-black transition-colors">
+              <a
+                href="/"
+                className="hover:text-finbrief-black transition-colors"
+              >
                 홈
               </a>
               <a
@@ -298,7 +299,9 @@ export default function PricingPage() {
         <div className="fixed inset-0 bg-finbrief-black/80 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white/90 backdrop-blur-xl border border-white/30 rounded-2xl p-8 text-center">
             <div className="w-16 h-16 border-4 border-finbrief-blue-500/20 border-t-finbrief-blue-500 rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-finbrief-black font-semibold">결제 페이지로 이동 중...</p>
+            <p className="text-finbrief-black font-semibold">
+              결제 페이지로 이동 중...
+            </p>
           </div>
         </div>
       )}

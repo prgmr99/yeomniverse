@@ -1,43 +1,43 @@
 {
-	"name": "@hyo/web",
-	"version": "0.1.0",
-	"private": true,
-	"scripts": {
-		"dev": "next dev",
-		"build": "next build",
-		"start": "next start",
-		"lint": "biome check .",
-		"format": "biome check --write .",
-		"clean": "rm -rf .next",
-		"test": "vitest run",
-		"test:watch": "vitest"
-	},
-	"dependencies": {
-		"@hyo/ui": "workspace:*",
-		"@hyo/utils": "workspace:*",
-		"@vercel/analytics": "^1.6.1",
-		"framer-motion": "^12.23.24",
-		"lucide-react": "^0.554.0",
-		"next": "16.0.10",
-		"react": "19.2.0",
-		"react-dom": "19.2.0"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "^2.3.7",
-		"@hyo/tsconfig": "workspace:*",
-		"@tailwindcss/postcss": "^4",
-		"@testing-library/jest-dom": "^6.9.1",
-		"@testing-library/react": "^16.3.2",
-		"@testing-library/user-event": "^14.6.1",
-		"@types/node": "^20",
-		"@types/react": "^19",
-		"@types/react-dom": "^19",
-		"@vitejs/plugin-react": "^5.1.2",
-		"eslint": "^9",
-		"eslint-config-next": "16.0.3",
-		"jsdom": "^27.4.0",
-		"tailwindcss": "^4",
-		"typescript": "^5",
-		"vitest": "^4.0.18"
-	}
+  "name": "@hyo/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "clean": "rm -rf .next",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@hyo/ui": "workspace:*",
+    "@hyo/utils": "workspace:*",
+    "@vercel/analytics": "^1.6.1",
+    "framer-motion": "^12.23.24",
+    "lucide-react": "^0.554.0",
+    "next": "16.0.10",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.7",
+    "@hyo/tsconfig": "workspace:*",
+    "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^5.1.2",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.3",
+    "jsdom": "^27.4.0",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "^4.0.18"
+  }
 }

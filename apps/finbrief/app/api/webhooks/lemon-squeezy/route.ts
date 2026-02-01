@@ -1,6 +1,6 @@
-import { createServerClient } from '@hyo/services/supabase';
-import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'node:crypto';
+import { createServerClient } from '@hyo/services/supabase';
+import { type NextRequest, NextResponse } from 'next/server';
 
 interface WebhookEvent {
   meta: {
@@ -84,7 +84,7 @@ async function handleDowngrade(
     return;
   }
 
-  const itemsToKeep = watchlists.slice(0, newPlan.max_watchlist);
+  const _itemsToKeep = watchlists.slice(0, newPlan.max_watchlist);
   const itemsToDeactivate = watchlists.slice(newPlan.max_watchlist);
 
   if (itemsToDeactivate.length > 0) {
@@ -144,7 +144,10 @@ export async function POST(request: NextRequest) {
           planName = 'pro';
         } else {
           console.error(`Unknown variant ID: ${variantId}`);
-          return NextResponse.json({ error: 'Unknown variant' }, { status: 400 });
+          return NextResponse.json(
+            { error: 'Unknown variant' },
+            { status: 400 },
+          );
         }
 
         const { data: plan } = await supabase
@@ -155,21 +158,22 @@ export async function POST(request: NextRequest) {
 
         if (!plan) {
           console.error(`Plan not found: ${planName}`);
-          return NextResponse.json({ error: 'Plan not found' }, { status: 404 });
+          return NextResponse.json(
+            { error: 'Plan not found' },
+            { status: 404 },
+          );
         }
 
-        await supabase
-          .from('subscribers')
-          .upsert(
-            {
-              email,
-              auth_user_id: userId,
-              plan_id: plan.id,
-              is_active: true,
-              updated_at: new Date().toISOString(),
-            },
-            { onConflict: 'email' },
-          );
+        await supabase.from('subscribers').upsert(
+          {
+            email,
+            auth_user_id: userId,
+            plan_id: plan.id,
+            is_active: true,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: 'email' },
+        );
 
         if (userId) {
           await supabase.from('subscriptions').insert({
@@ -179,8 +183,10 @@ export async function POST(request: NextRequest) {
             ls_customer_id: customerId,
             ls_variant_id: variantId,
             status: 'active',
-            current_period_start: event.data.attributes.current_period_start || null,
-            current_period_end: event.data.attributes.current_period_end || null,
+            current_period_start:
+              event.data.attributes.current_period_start || null,
+            current_period_end:
+              event.data.attributes.current_period_end || null,
             cancel_at_period_end: false,
             retry_count: 0,
           });
@@ -231,7 +237,10 @@ export async function POST(request: NextRequest) {
               newPlanName = 'pro';
             } else {
               console.error(`Unknown variant ID: ${newVariantId}`);
-              return NextResponse.json({ error: 'Unknown variant' }, { status: 400 });
+              return NextResponse.json(
+                { error: 'Unknown variant' },
+                { status: 400 },
+              );
             }
 
             const { data: newPlan } = await supabase
@@ -262,22 +271,28 @@ export async function POST(request: NextRequest) {
 
               await handleDowngrade(supabase, userId, newPlanName);
 
-              console.log(`Updated subscription plan to ${newPlanName} for ${email}`);
+              console.log(
+                `Updated subscription plan to ${newPlanName} for ${email}`,
+              );
             }
           } else {
             await supabase
               .from('subscriptions')
               .update({
                 status: subscriptionStatus,
-                current_period_start: event.data.attributes.current_period_start || null,
-                current_period_end: event.data.attributes.current_period_end || null,
+                current_period_start:
+                  event.data.attributes.current_period_start || null,
+                current_period_end:
+                  event.data.attributes.current_period_end || null,
                 cancel_at_period_end: cancelled,
                 updated_at: new Date().toISOString(),
               })
               .eq('user_id', userId)
               .eq('ls_subscription_id', subscriptionId);
 
-            console.log(`Updated subscription status to ${subscriptionStatus} for ${email}`);
+            console.log(
+              `Updated subscription status to ${subscriptionStatus} for ${email}`,
+            );
           }
         }
         break;
@@ -340,7 +355,9 @@ export async function POST(request: NextRequest) {
             webhook_payload: JSON.parse(payload),
           });
 
-          console.log(`Payment failed for ${email}, retry count: ${newRetryCount}`);
+          console.log(
+            `Payment failed for ${email}, retry count: ${newRetryCount}`,
+          );
         }
         break;
       }

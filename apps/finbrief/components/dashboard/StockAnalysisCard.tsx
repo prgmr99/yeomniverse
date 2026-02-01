@@ -1,20 +1,20 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
-  X,
-  TrendingUp,
-  TrendingDown,
-  Minus,
+  Activity,
   AlertCircle,
-  RefreshCw,
-  Crown,
   ArrowRight,
   BarChart3,
-  Activity,
+  Crown,
+  Minus,
+  RefreshCw,
+  TrendingDown,
+  TrendingUp,
+  X,
 } from 'lucide-react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 interface StockAnalysisCardProps {
   symbol: string;
@@ -83,7 +83,9 @@ export default function StockAnalysisCard({
 
       setData(result);
     } catch (err) {
-      setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
+      setError(
+        err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.',
+      );
     } finally {
       setIsLoading(false);
     }
@@ -91,7 +93,7 @@ export default function StockAnalysisCard({
 
   useEffect(() => {
     fetchAnalysis();
-  }, [symbol]);
+  }, [fetchAnalysis]);
 
   const getSentimentInfo = (sentiment: 'bullish' | 'bearish' | 'neutral') => {
     switch (sentiment) {
@@ -135,7 +137,7 @@ export default function StockAnalysisCard({
   };
 
   const isPro = planName === 'pro';
-  const isFree = planName === 'free';
+  const _isFree = planName === 'free';
 
   return (
     <motion.div
@@ -206,7 +208,8 @@ export default function StockAnalysisCard({
                         종목 분석은 유료 플랜 전용 기능입니다
                       </h3>
                       <p className="text-slate-300 mb-4">
-                        Basic 또는 Pro 플랜으로 업그레이드하고 AI 기반 기술적 분석을 받아보세요.
+                        Basic 또는 Pro 플랜으로 업그레이드하고 AI 기반 기술적
+                        분석을 받아보세요.
                       </p>
                       <Link
                         href="/pricing"
@@ -256,7 +259,9 @@ export default function StockAnalysisCard({
                       {data.change >= 0 ? '+' : ''}
                       {formatPrice(data.change)}
                     </div>
-                    <div className="text-sm">{formatPercent(data.changePercent)}</div>
+                    <div className="text-sm">
+                      {formatPercent(data.changePercent)}
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -277,8 +282,12 @@ export default function StockAnalysisCard({
                       <div className="flex items-center gap-3">
                         <Icon className={`w-6 h-6 ${sentiment.color}`} />
                         <div>
-                          <p className="text-sm text-slate-300 mb-1">종합 판단</p>
-                          <p className={`text-2xl font-bold ${sentiment.color}`}>
+                          <p className="text-sm text-slate-300 mb-1">
+                            종합 판단
+                          </p>
+                          <p
+                            className={`text-2xl font-bold ${sentiment.color}`}
+                          >
                             {sentiment.label}
                           </p>
                         </div>
@@ -297,7 +306,9 @@ export default function StockAnalysisCard({
               >
                 <div className="flex items-center gap-2 mb-4">
                   <BarChart3 className="w-5 h-5 text-emerald-400" />
-                  <h3 className="text-lg font-semibold text-white">이동평균선 분석</h3>
+                  <h3 className="text-lg font-semibold text-white">
+                    이동평균선 분석
+                  </h3>
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   {[
@@ -305,10 +316,17 @@ export default function StockAnalysisCard({
                     { label: '20일', value: data.sma.sma20 },
                     { label: '60일', value: data.sma.sma60 },
                   ].map((item, index) => (
-                    <div key={index} className="text-center p-3 rounded-lg bg-white/5">
-                      <p className="text-xs text-slate-400 mb-1">{item.label}</p>
+                    <div
+                      key={index}
+                      className="text-center p-3 rounded-lg bg-white/5"
+                    >
+                      <p className="text-xs text-slate-400 mb-1">
+                        {item.label}
+                      </p>
                       <p className="text-lg font-semibold text-white">
-                        {item.value !== null ? `$${formatPrice(item.value)}` : 'N/A'}
+                        {item.value !== null
+                          ? `$${formatPrice(item.value)}`
+                          : 'N/A'}
                       </p>
                     </div>
                   ))}
@@ -325,7 +343,9 @@ export default function StockAnalysisCard({
                 >
                   <div className="flex items-center gap-2 mb-4">
                     <Activity className="w-5 h-5 text-teal-400" />
-                    <h3 className="text-lg font-semibold text-white">매매 신호</h3>
+                    <h3 className="text-lg font-semibold text-white">
+                      매매 신호
+                    </h3>
                   </div>
                   <ul className="space-y-2">
                     {data.signals.map((signal, index) => (
@@ -354,7 +374,9 @@ export default function StockAnalysisCard({
                     >
                       <div className="flex items-center gap-2 mb-3">
                         <Crown className="w-5 h-5 text-amber-400" />
-                        <h3 className="text-lg font-semibold text-white">RSI</h3>
+                        <h3 className="text-lg font-semibold text-white">
+                          RSI
+                        </h3>
                         <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 font-semibold">
                           PRO
                         </span>
@@ -382,7 +404,9 @@ export default function StockAnalysisCard({
                     >
                       <div className="flex items-center gap-2 mb-4">
                         <Crown className="w-5 h-5 text-amber-400" />
-                        <h3 className="text-lg font-semibold text-white">MACD</h3>
+                        <h3 className="text-lg font-semibold text-white">
+                          MACD
+                        </h3>
                         <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 font-semibold">
                           PRO
                         </span>
@@ -401,7 +425,9 @@ export default function StockAnalysisCard({
                           </p>
                         </div>
                         <div className="text-center p-3 rounded-lg bg-white/5">
-                          <p className="text-xs text-slate-400 mb-1">Histogram</p>
+                          <p className="text-xs text-slate-400 mb-1">
+                            Histogram
+                          </p>
                           <p className="text-sm font-semibold text-white">
                             {data.macd.histogram.toFixed(2)}
                           </p>
@@ -420,7 +446,9 @@ export default function StockAnalysisCard({
                     >
                       <div className="flex items-center gap-2 mb-4">
                         <Crown className="w-5 h-5 text-amber-400" />
-                        <h3 className="text-lg font-semibold text-white">볼린저 밴드</h3>
+                        <h3 className="text-lg font-semibold text-white">
+                          볼린저 밴드
+                        </h3>
                         <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 font-semibold">
                           PRO
                         </span>
@@ -465,8 +493,8 @@ export default function StockAnalysisCard({
                         더 상세한 분석이 필요하신가요?
                       </h3>
                       <p className="text-slate-300 mb-4">
-                        Pro 플랜으로 업그레이드하고 RSI, MACD, 볼린저 밴드 등 고급 기술적 지표를
-                        확인하세요.
+                        Pro 플랜으로 업그레이드하고 RSI, MACD, 볼린저 밴드 등
+                        고급 기술적 지표를 확인하세요.
                       </p>
                       <Link
                         href="/pricing"

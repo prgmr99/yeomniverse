@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
 import { createServerClient } from '@hyo/services/supabase';
 import { createServerAuthClient } from '@hyo/services/supabase/auth';
+import { type NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 
 const addWatchlistSchema = z.object({
   symbol: z.string().min(1, '종목 코드를 입력해주세요.'),
@@ -42,16 +42,19 @@ interface Plan {
 }
 
 export async function GET(
-  request: NextRequest
+  _request: NextRequest,
 ): Promise<NextResponse<SuccessResponse | ErrorResponse>> {
   try {
     const authSupabase = await createServerAuthClient();
-    const { data: { user }, error: authError } = await authSupabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await authSupabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json(
         { error: '로그인이 필요합니다.' },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -67,7 +70,7 @@ export async function GET(
     if (subscriberError || !subscriber) {
       return NextResponse.json(
         { error: '사용자 정보를 찾을 수 없습니다.' },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -83,7 +86,7 @@ export async function GET(
 
     let limit = 0;
     let planName = 'free';
-    if (subscription && subscription.plans) {
+    if (subscription?.plans) {
       const plan = subscription.plans as unknown as Plan;
       limit = plan.max_watchlist;
       planName = plan.name;
@@ -101,7 +104,7 @@ export async function GET(
       console.error('Watchlist fetch error:', watchlistError);
       return NextResponse.json(
         { error: '관심 목록을 불러오는데 실패했습니다.' },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -115,22 +118,27 @@ export async function GET(
     console.error('Watchlist GET error:', error);
     return NextResponse.json(
       { error: '서버 오류가 발생했습니다.' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function POST(
-  request: NextRequest
-): Promise<NextResponse<{ success: true; watchlist: WatchlistItem } | ErrorResponse>> {
+  request: NextRequest,
+): Promise<
+  NextResponse<{ success: true; watchlist: WatchlistItem } | ErrorResponse>
+> {
   try {
     const authSupabase = await createServerAuthClient();
-    const { data: { user }, error: authError } = await authSupabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await authSupabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json(
         { error: '로그인이 필요합니다.' },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -139,8 +147,12 @@ export async function POST(
 
     if (!validation.success) {
       return NextResponse.json(
-        { error: validation.error.issues[0]?.message || '입력값이 올바르지 않습니다.' },
-        { status: 400 }
+        {
+          error:
+            validation.error.issues[0]?.message ||
+            '입력값이 올바르지 않습니다.',
+        },
+        { status: 400 },
       );
     }
 
@@ -158,7 +170,7 @@ export async function POST(
     if (subscriberError || !subscriber) {
       return NextResponse.json(
         { error: '사용자 정보를 찾을 수 없습니다.' },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -173,7 +185,7 @@ export async function POST(
       .single();
 
     let limit = 0;
-    if (subscription && subscription.plans) {
+    if (subscription?.plans) {
       const plan = subscription.plans as unknown as Plan;
       limit = plan.max_watchlist;
     }
@@ -189,7 +201,7 @@ export async function POST(
       console.error('Count error:', countError);
       return NextResponse.json(
         { error: '관심 목록 확인 중 오류가 발생했습니다.' },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -199,7 +211,7 @@ export async function POST(
           error: `관심 목록은 최대 ${limit}개까지 추가할 수 있습니다. 플랜을 업그레이드하세요.`,
           upgrade: true,
         },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -215,7 +227,7 @@ export async function POST(
     if (existing) {
       return NextResponse.json(
         { error: '이미 관심 목록에 추가된 종목입니다.' },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -235,7 +247,7 @@ export async function POST(
       console.error('Insert error:', insertError);
       return NextResponse.json(
         { error: '관심 목록 추가 중 오류가 발생했습니다.' },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -247,7 +259,7 @@ export async function POST(
     console.error('Watchlist POST error:', error);
     return NextResponse.json(
       { error: '서버 오류가 발생했습니다.' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

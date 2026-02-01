@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { ArrowRight, Mail, Sparkles } from 'lucide-react';
 import Link from 'next/link';
-import { Mail, ArrowRight, Sparkles } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
 
 function LoginForm() {
   const searchParams = useSearchParams();
@@ -45,7 +45,10 @@ function LoginForm() {
       const data = await response.json();
 
       if (!response.ok) {
-        setMessage({ type: 'error', text: data.error || '오류가 발생했습니다.' });
+        setMessage({
+          type: 'error',
+          text: data.error || '오류가 발생했습니다.',
+        });
       } else {
         setMessage({
           type: 'success',
@@ -53,7 +56,7 @@ function LoginForm() {
         });
         setEmail('');
       }
-    } catch (error) {
+    } catch (_error) {
       setMessage({
         type: 'error',
         text: '서버와 통신 중 오류가 발생했습니다.',
@@ -97,7 +100,10 @@ function LoginForm() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-finbrief-gray-600 mb-2">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-finbrief-gray-600 mb-2"
+              >
                 이메일
               </label>
               <input
@@ -174,11 +180,17 @@ function LoginForm() {
         {/* Footer Links */}
         <div className="mt-8 text-center">
           <div className="flex items-center justify-center gap-4 text-sm text-finbrief-gray-500">
-            <Link href="/" className="hover:text-finbrief-black transition-colors">
+            <Link
+              href="/"
+              className="hover:text-finbrief-black transition-colors"
+            >
               홈
             </Link>
             <span>•</span>
-            <Link href="/pricing" className="hover:text-finbrief-black transition-colors">
+            <Link
+              href="/pricing"
+              className="hover:text-finbrief-black transition-colors"
+            >
               요금제
             </Link>
           </div>

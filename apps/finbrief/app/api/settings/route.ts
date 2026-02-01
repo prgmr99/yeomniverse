@@ -1,11 +1,14 @@
 import { createServerClient } from '@hyo/services/supabase';
 import { createServerAuthClient } from '@hyo/services/supabase/auth';
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     const authSupabase = await createServerAuthClient();
-    const { data: { user }, error: authError } = await authSupabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await authSupabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -16,7 +19,9 @@ export async function GET(request: NextRequest) {
 
     const { data: subscriber, error: subscriberError } = await supabase
       .from('subscribers')
-      .select('news_alerts_enabled, email_notifications, telegram_notifications')
+      .select(
+        'news_alerts_enabled, email_notifications, telegram_notifications',
+      )
       .eq('auth_user_id', userId)
       .single();
 
@@ -44,7 +49,10 @@ export async function GET(request: NextRequest) {
 export async function PATCH(request: NextRequest) {
   try {
     const authSupabase = await createServerAuthClient();
-    const { data: { user }, error: authError } = await authSupabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await authSupabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -52,7 +60,8 @@ export async function PATCH(request: NextRequest) {
 
     const userId = user.id;
     const body = await request.json();
-    const { newsAlertsEnabled, emailNotifications, telegramNotifications } = body;
+    const { newsAlertsEnabled, emailNotifications, telegramNotifications } =
+      body;
 
     const supabase = createServerClient();
 

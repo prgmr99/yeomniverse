@@ -1,4 +1,4 @@
-import { RSI, MACD, BollingerBands, SMA } from 'technicalindicators';
+import { BollingerBands, MACD, RSI, SMA } from 'technicalindicators';
 import type { HistoricalData } from './stock-collector';
 
 export interface TechnicalIndicators {
@@ -21,13 +21,15 @@ export interface TechnicalIndicators {
   volumeRatio: number | null;
 }
 
-export function calculateTechnicalIndicators(historicalData: HistoricalData[]): TechnicalIndicators {
+export function calculateTechnicalIndicators(
+  historicalData: HistoricalData[],
+): TechnicalIndicators {
   if (historicalData.length < 60) {
     console.warn('Insufficient data for full technical analysis');
   }
 
-  const closePrices = historicalData.map(d => d.close);
-  const volumes = historicalData.map(d => d.volume);
+  const closePrices = historicalData.map((d) => d.close);
+  const volumes = historicalData.map((d) => d.volume);
 
   // RSI (14-period)
   let rsi: number | null = null;
@@ -52,7 +54,11 @@ export function calculateTechnicalIndicators(historicalData: HistoricalData[]): 
     });
     if (macdValues.length > 0) {
       const latest = macdValues[macdValues.length - 1];
-      if (latest.MACD !== undefined && latest.signal !== undefined && latest.histogram !== undefined) {
+      if (
+        latest.MACD !== undefined &&
+        latest.signal !== undefined &&
+        latest.histogram !== undefined
+      ) {
         macd = {
           MACD: latest.MACD,
           signal: latest.signal,
@@ -81,9 +87,18 @@ export function calculateTechnicalIndicators(historicalData: HistoricalData[]): 
   }
 
   // Simple Moving Averages
-  const sma5Values = closePrices.length >= 5 ? SMA.calculate({ period: 5, values: closePrices }) : [];
-  const sma20Values = closePrices.length >= 20 ? SMA.calculate({ period: 20, values: closePrices }) : [];
-  const sma60Values = closePrices.length >= 60 ? SMA.calculate({ period: 60, values: closePrices }) : [];
+  const sma5Values =
+    closePrices.length >= 5
+      ? SMA.calculate({ period: 5, values: closePrices })
+      : [];
+  const sma20Values =
+    closePrices.length >= 20
+      ? SMA.calculate({ period: 20, values: closePrices })
+      : [];
+  const sma60Values =
+    closePrices.length >= 60
+      ? SMA.calculate({ period: 60, values: closePrices })
+      : [];
 
   // Volume ratio (current vs 20-day average)
   let volumeRatio: number | null = null;
@@ -99,14 +114,19 @@ export function calculateTechnicalIndicators(historicalData: HistoricalData[]): 
     bollingerBands,
     sma: {
       sma5: sma5Values.length > 0 ? sma5Values[sma5Values.length - 1] : null,
-      sma20: sma20Values.length > 0 ? sma20Values[sma20Values.length - 1] : null,
-      sma60: sma60Values.length > 0 ? sma60Values[sma60Values.length - 1] : null,
+      sma20:
+        sma20Values.length > 0 ? sma20Values[sma20Values.length - 1] : null,
+      sma60:
+        sma60Values.length > 0 ? sma60Values[sma60Values.length - 1] : null,
     },
     volumeRatio,
   };
 }
 
-export function interpretIndicators(indicators: TechnicalIndicators, currentPrice: number): {
+export function interpretIndicators(
+  indicators: TechnicalIndicators,
+  currentPrice: number,
+): {
   signals: string[];
   overallSentiment: 'bullish' | 'bearish' | 'neutral';
 } {
@@ -167,9 +187,13 @@ export function interpretIndicators(indicators: TechnicalIndicators, currentPric
   // Volume interpretation
   if (indicators.volumeRatio !== null) {
     if (indicators.volumeRatio > 150) {
-      signals.push(`거래량: 평균 대비 ${indicators.volumeRatio.toFixed(0)}% (거래 활발)`);
+      signals.push(
+        `거래량: 평균 대비 ${indicators.volumeRatio.toFixed(0)}% (거래 활발)`,
+      );
     } else if (indicators.volumeRatio < 50) {
-      signals.push(`거래량: 평균 대비 ${indicators.volumeRatio.toFixed(0)}% (거래 저조)`);
+      signals.push(
+        `거래량: 평균 대비 ${indicators.volumeRatio.toFixed(0)}% (거래 저조)`,
+      );
     }
   }
 

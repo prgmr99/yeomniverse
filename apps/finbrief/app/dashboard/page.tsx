@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { TrendingUp, Star, Clock, Zap, ArrowRight, Crown } from 'lucide-react';
+import { ArrowRight, Clock, Crown, Star, TrendingUp, Zap } from 'lucide-react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 interface Subscription {
   plan: 'free' | 'pro';
@@ -77,7 +77,9 @@ export default function DashboardPage() {
         <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradientShift_3s_ease-in-out_infinite]">
           대시보드
         </h1>
-        <p className="mt-2 text-slate-400">AI가 분석한 금융 뉴스를 한눈에 확인하세요</p>
+        <p className="mt-2 text-slate-400">
+          AI가 분석한 금융 뉴스를 한눈에 확인하세요
+        </p>
       </motion.div>
 
       {/* Stats Row */}
@@ -117,7 +119,9 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between mb-3">
             <Crown className="w-6 h-6 text-amber-400" />
           </div>
-          <div className="text-3xl font-bold text-white capitalize">{subscription?.plan || 'Free'}</div>
+          <div className="text-3xl font-bold text-white capitalize">
+            {subscription?.plan || 'Free'}
+          </div>
           <div className="text-sm text-slate-400 mt-1">현재 플랜</div>
         </motion.div>
       </div>
@@ -149,7 +153,12 @@ export default function DashboardPage() {
               {subscription?.renewalDate && (
                 <div className="flex items-center gap-2 text-sm text-slate-300">
                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                  <span>갱신일: {new Date(subscription.renewalDate).toLocaleDateString('ko-KR')}</span>
+                  <span>
+                    갱신일:{' '}
+                    {new Date(subscription.renewalDate).toLocaleDateString(
+                      'ko-KR',
+                    )}
+                  </span>
                 </div>
               )}
             </div>
@@ -188,13 +197,14 @@ export default function DashboardPage() {
         {watchlists.length === 0 ? (
           <div className="text-center py-12">
             <Star className="w-12 h-12 text-slate-600 mx-auto mb-4" />
-            <p className="text-slate-400 mb-4">아직 등록된 관심종목이 없습니다</p>
+            <p className="text-slate-400 mb-4">
+              아직 등록된 관심종목이 없습니다
+            </p>
             <Link
               href="/dashboard/watchlist"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-500/20 text-emerald-400 font-medium hover:bg-emerald-500/30 transition-all duration-200"
             >
-              <Star className="w-4 h-4" />
-              첫 종목 추가하기
+              <Star className="w-4 h-4" />첫 종목 추가하기
             </Link>
           </div>
         ) : (
@@ -239,10 +249,12 @@ export default function DashboardPage() {
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-emerald-400" />
               <div className="flex-1">
-                <h3 className="font-semibold text-white mb-2">AI 분석 준비 중</h3>
+                <h3 className="font-semibold text-white mb-2">
+                  AI 분석 준비 중
+                </h3>
                 <p className="text-sm text-slate-400 leading-relaxed">
-                  매일 새벽 AI가 100개 이상의 뉴스를 분석하고, 아침 8시에 가장 중요한 3가지 소식을 전달합니다.
-                  텔레그램으로 받아보세요!
+                  매일 새벽 AI가 100개 이상의 뉴스를 분석하고, 아침 8시에 가장
+                  중요한 3가지 소식을 전달합니다. 텔레그램으로 받아보세요!
                 </p>
               </div>
             </div>

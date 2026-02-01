@@ -16,16 +16,6 @@ export function createBrowserAuthClient() {
 	return createSupabaseBrowserClient(supabaseUrl, supabaseAnonKey);
 }
 
-interface CookieOptions {
-	path?: string;
-	domain?: string;
-	maxAge?: number;
-	expires?: Date;
-	httpOnly?: boolean;
-	secure?: boolean;
-	sameSite?: "strict" | "lax" | "none";
-}
-
 // Server client for server components and route handlers
 export async function createServerAuthClient() {
 	const cookieStore = await cookies();
@@ -39,21 +29,16 @@ export async function createServerAuthClient() {
 
 	return createSupabaseServerClient(supabaseUrl, supabaseAnonKey, {
 		cookies: {
-			get(name: string) {
-				return cookieStore.get(name)?.value;
+			getAll() {
+				return cookieStore.getAll();
 			},
-			set(name: string, value: string, options: CookieOptions) {
+			setAll(cookiesToSet) {
 				try {
-					cookieStore.set({ name, value, ...options });
+					for (const { name, value, options } of cookiesToSet) {
+						cookieStore.set(name, value, options);
+					}
 				} catch {
-					// Server Component context
-				}
-			},
-			remove(name: string, options: CookieOptions) {
-				try {
-					cookieStore.set({ name, value: "", ...options });
-				} catch {
-					// Server Component context
+					// Server Component context - setAll can be ignored
 				}
 			},
 		},

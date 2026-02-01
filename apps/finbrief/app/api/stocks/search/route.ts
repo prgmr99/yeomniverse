@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { searchKoreanStocks } from '@/lib/finbrief/korean-stock-symbols';
 import { searchStocks as searchYahoo } from '@/lib/finbrief/stock-collector';
 
@@ -17,7 +17,7 @@ interface ErrorResponse {
 }
 
 export async function GET(
-  request: NextRequest
+  request: NextRequest,
 ): Promise<NextResponse<SuccessResponse | ErrorResponse>> {
   try {
     const { searchParams } = new URL(request.url);
@@ -26,7 +26,7 @@ export async function GET(
     if (!query || query.trim().length === 0) {
       return NextResponse.json(
         { error: '검색어를 입력해주세요.' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -39,7 +39,7 @@ export async function GET(
     let usResults: StockSearchResult[] = [];
     try {
       const yahooResults = await searchYahoo(trimmedQuery);
-      usResults = yahooResults.map(r => ({
+      usResults = yahooResults.map((r) => ({
         symbol: r.symbol,
         name: r.name,
         market: r.exchange.includes('NASDAQ') ? 'NASDAQ' : 'NYSE',
@@ -59,7 +59,7 @@ export async function GET(
     console.error('Stock search error:', error);
     return NextResponse.json(
       { error: '검색 중 오류가 발생했습니다.' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

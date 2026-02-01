@@ -1,8 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@hyo/services/supabase';
 import { createServerAuthClient } from '@hyo/services/supabase/auth';
-import { getStockQuote, getHistoricalData } from '@/lib/finbrief/stock-collector';
-import { calculateTechnicalIndicators, interpretIndicators } from '@/lib/finbrief/technical-analyzer';
+import { type NextRequest, NextResponse } from 'next/server';
+import {
+  getHistoricalData,
+  getStockQuote,
+} from '@/lib/finbrief/stock-collector';
+import {
+  calculateTechnicalIndicators,
+  interpretIndicators,
+} from '@/lib/finbrief/technical-analyzer';
 
 interface Plan {
   name: string;
@@ -47,17 +53,22 @@ interface ErrorResponse {
 }
 
 export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ symbol: string }> }
-): Promise<NextResponse<BasicAnalysisResponse | ProAnalysisResponse | ErrorResponse>> {
+  _request: NextRequest,
+  { params }: { params: Promise<{ symbol: string }> },
+): Promise<
+  NextResponse<BasicAnalysisResponse | ProAnalysisResponse | ErrorResponse>
+> {
   try {
     const authSupabase = await createServerAuthClient();
-    const { data: { user }, error: authError } = await authSupabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await authSupabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json(
         { error: '로그인이 필요합니다.' },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -66,7 +77,7 @@ export async function GET(
     if (!symbol) {
       return NextResponse.json(
         { error: '종목 코드가 필요합니다.' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -82,7 +93,7 @@ export async function GET(
     if (subscriberError || !subscriber) {
       return NextResponse.json(
         { error: '사용자 정보를 찾을 수 없습니다.' },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -102,7 +113,7 @@ export async function GET(
           error: '종목 분석은 Basic 또는 Pro 플랜에서 이용할 수 있습니다.',
           upgrade: true,
         },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -116,7 +127,7 @@ export async function GET(
           error: '종목 분석은 Basic 또는 Pro 플랜에서 이용할 수 있습니다.',
           upgrade: true,
         },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -126,7 +137,7 @@ export async function GET(
     if (!quote) {
       return NextResponse.json(
         { error: '종목 정보를 찾을 수 없습니다.' },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -139,13 +150,16 @@ export async function GET(
     if (historicalData.length < 20) {
       return NextResponse.json(
         { error: '충분한 과거 데이터가 없습니다.' },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     // Calculate technical indicators
     const indicators = calculateTechnicalIndicators(historicalData);
-    const interpretation = interpretIndicators(indicators, quote.regularMarketPrice);
+    const interpretation = interpretIndicators(
+      indicators,
+      quote.regularMarketPrice,
+    );
 
     // Basic response (for Basic plan)
     const basicResponse: BasicAnalysisResponse = {
@@ -175,7 +189,7 @@ export async function GET(
     console.error('Stock analysis error:', error);
     return NextResponse.json(
       { error: '분석 중 오류가 발생했습니다.' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -1,11 +1,8 @@
+import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
-import {
-	GoogleAdSense,
-	GoogleAnalytics,
-} from '@hyo/ui';
+import { GoogleAdSense, GoogleAnalytics } from '@hyo/ui';
 import { sans, serif } from './fonts';
 
 // Validate required environment variables
@@ -18,7 +15,8 @@ function getRequiredEnv(key: string): string {
 }
 
 const DOMAIN_URL = getRequiredEnv('NEXT_PUBLIC_DOMAIN_URL');
-const NAVER_VERIFICATION = process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION || '';
+const NAVER_VERIFICATION =
+  process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION || '';
 const ADSENSE_ACCOUNT = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT || '';
 
 export const metadata: Metadata = {
@@ -27,17 +25,30 @@ export const metadata: Metadata = {
     default: 'Yeomniverse',
     template: '%s | Yeomniverse',
   },
-  description: 'Yeomniverse - 디지털 서비스 포털. 효도티어, FinBrief 등 다양한 서비스를 만나보세요.',
+  description:
+    'Yeomniverse - 디지털 서비스 포털. 효도티어, FinBrief 등 다양한 서비스를 만나보세요.',
   applicationName: 'Yeomniverse',
   icons: {
     icon: [
       { url: '/images/favicon/icon.svg', type: 'image/svg+xml' },
-      { url: '/images/favicon/icon-192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/images/favicon/icon-512.png', sizes: '512x512', type: 'image/png' },
+      {
+        url: '/images/favicon/icon-192.png',
+        sizes: '192x192',
+        type: 'image/png',
+      },
+      {
+        url: '/images/favicon/icon-512.png',
+        sizes: '512x512',
+        type: 'image/png',
+      },
     ],
     shortcut: '/images/favicon/favicon.ico',
     apple: [
-      { url: '/images/favicon/apple-icon-180.png', sizes: '180x180', type: 'image/png' },
+      {
+        url: '/images/favicon/apple-icon-180.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
     ],
   },
   authors: [{ name: 'Yeomniverse' }],
@@ -129,7 +140,8 @@ export default function RootLayout({
     '@type': 'WebSite',
     name: 'Yeomniverse',
     url: DOMAIN_URL,
-    description: 'Yeomniverse - 디지털 서비스 포털. 효도티어, FinBrief 등 다양한 서비스를 만나보세요.',
+    description:
+      'Yeomniverse - 디지털 서비스 포털. 효도티어, FinBrief 등 다양한 서비스를 만나보세요.',
     potentialAction: {
       '@type': 'SearchAction',
       target: {

@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 interface BriefingData {
   briefings: Array<{
@@ -67,7 +67,8 @@ function getFallbackData(): BriefingData {
     briefings: [
       {
         title: '오늘의 브리핑을 준비 중입니다',
-        description: '최신 금융 뉴스를 분석하여 곧 브리핑을 제공해드릴 예정입니다. 잠시만 기다려주세요.',
+        description:
+          '최신 금융 뉴스를 분석하여 곧 브리핑을 제공해드릴 예정입니다. 잠시만 기다려주세요.',
         sentiment: 'neutral',
       },
     ],

@@ -1,9 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Star, Plus, Trash2, TrendingUp, X, AlertCircle, Crown } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import {
+  AlertCircle,
+  Crown,
+  Plus,
+  Star,
+  Trash2,
+  TrendingUp,
+  X,
+} from 'lucide-react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import StockAnalysisCard from '@/components/dashboard/StockAnalysisCard';
 
 interface Watchlist {
@@ -32,16 +40,15 @@ export default function WatchlistPage() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [selectedStock, setSelectedStock] = useState<{ symbol: string; name: string } | null>(null);
+  const [selectedStock, setSelectedStock] = useState<{
+    symbol: string;
+    name: string;
+  } | null>(null);
 
   // Form state
   const [symbol, setSymbol] = useState('');
   const [name, setName] = useState('');
   const [market, setMarket] = useState<string>('KOSPI');
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const fetchData = async () => {
     try {
@@ -59,13 +66,17 @@ export default function WatchlistPage() {
         const data = await subRes.json();
         setSubscription(data);
       }
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
+    } catch (_error) {
       setError('데이터를 불러오는데 실패했습니다.');
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -205,7 +216,8 @@ export default function WatchlistPage() {
                 관심종목 한도에 도달했습니다
               </h3>
               <p className="text-slate-300 mb-4">
-                Pro 플랜으로 업그레이드하면 무제한으로 종목을 추가할 수 있습니다.
+                Pro 플랜으로 업그레이드하면 무제한으로 종목을 추가할 수
+                있습니다.
               </p>
               <Link
                 href="/pricing"
@@ -247,7 +259,10 @@ export default function WatchlistPage() {
 
               <form onSubmit={handleAdd} className="space-y-4">
                 <div>
-                  <label htmlFor="symbol" className="block text-sm font-medium text-slate-300 mb-2">
+                  <label
+                    htmlFor="symbol"
+                    className="block text-sm font-medium text-slate-300 mb-2"
+                  >
                     종목 코드
                   </label>
                   <input
@@ -262,7 +277,10 @@ export default function WatchlistPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-slate-300 mb-2"
+                  >
                     종목명
                   </label>
                   <input
@@ -277,7 +295,10 @@ export default function WatchlistPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="market" className="block text-sm font-medium text-slate-300 mb-2">
+                  <label
+                    htmlFor="market"
+                    className="block text-sm font-medium text-slate-300 mb-2"
+                  >
                     시장
                   </label>
                   <select
@@ -287,7 +308,11 @@ export default function WatchlistPage() {
                     className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-emerald-500/50 transition-colors"
                   >
                     {MARKET_OPTIONS.map((option) => (
-                      <option key={option.value} value={option.value} className="bg-slate-900">
+                      <option
+                        key={option.value}
+                        value={option.value}
+                        className="bg-slate-900"
+                      >
                         {option.label}
                       </option>
                     ))}
@@ -310,7 +335,11 @@ export default function WatchlistPage() {
                     {isSubmitting ? (
                       <motion.div
                         animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                        transition={{
+                          duration: 1,
+                          repeat: Infinity,
+                          ease: 'linear',
+                        }}
                         className="w-5 h-5 mx-auto border-2 border-white border-t-transparent rounded-full"
                       />
                     ) : (
@@ -343,8 +372,7 @@ export default function WatchlistPage() {
             onClick={() => setShowAddForm(true)}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105"
           >
-            <Plus className="w-5 h-5" />
-            첫 종목 추가하기
+            <Plus className="w-5 h-5" />첫 종목 추가하기
           </button>
         </motion.div>
       ) : (
@@ -359,7 +387,9 @@ export default function WatchlistPage() {
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
-                  <h3 className="text-lg font-bold text-white mb-1">{item.name}</h3>
+                  <h3 className="text-lg font-bold text-white mb-1">
+                    {item.name}
+                  </h3>
                   <p className="text-sm text-slate-400">{item.symbol}</p>
                 </div>
                 <span className="px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 text-xs font-semibold">
@@ -376,7 +406,9 @@ export default function WatchlistPage() {
                   삭제
                 </button>
                 <button
-                  onClick={() => setSelectedStock({ symbol: item.symbol, name: item.name })}
+                  onClick={() =>
+                    setSelectedStock({ symbol: item.symbol, name: item.name })
+                  }
                   className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 text-emerald-400 text-sm font-medium hover:bg-emerald-500/30 transition-all duration-200"
                 >
                   <TrendingUp className="w-4 h-4" />
