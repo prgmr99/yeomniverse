@@ -3,7 +3,6 @@ import { createClient } from '@supabase/supabase-js';
 import { getStockQuote, getHistoricalData } from '../collectors/stock-collector';
 import { calculateTechnicalIndicators } from '../analyzers/technical-analyzer';
 import { generateBriefAnalysis } from '../analyzers/stock-ai-analyzer';
-import { filterBasicSignals } from '../utils/signal-filter';
 import type { AnalysisResult } from '../types/news.types';
 
 const BATCH_SIZE = 10;
