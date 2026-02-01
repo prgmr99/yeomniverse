@@ -2,7 +2,13 @@
   "$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!**/app/globals.css", "!.next", "!next-env.d.ts"]
+    "includes": [
+      "**",
+      "!**/app/globals.css",
+      "!.next",
+      "!next-env.d.ts",
+      "!public/data"
+    ]
   },
   "formatter": {
     "enabled": true,
