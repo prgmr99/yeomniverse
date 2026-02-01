@@ -6,41 +6,58 @@ import { cookies } from "next/headers";
 
 // Browser client for client components
 export function createBrowserAuthClient() {
-	return createSupabaseBrowserClient(
-		process.env.NEXT_PUBLIC_SUPABASE_URL!,
-		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-	);
+	const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+	const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+	if (!supabaseUrl || !supabaseAnonKey) {
+		throw new Error("Missing Supabase environment variables");
+	}
+
+	return createSupabaseBrowserClient(supabaseUrl, supabaseAnonKey);
+}
+
+interface CookieOptions {
+	path?: string;
+	domain?: string;
+	maxAge?: number;
+	expires?: Date;
+	httpOnly?: boolean;
+	secure?: boolean;
+	sameSite?: "strict" | "lax" | "none";
 }
 
 // Server client for server components and route handlers
 export async function createServerAuthClient() {
 	const cookieStore = await cookies();
 
-	return createSupabaseServerClient(
-		process.env.NEXT_PUBLIC_SUPABASE_URL!,
-		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-		{
-			cookies: {
-				get(name: string) {
-					return cookieStore.get(name)?.value;
-				},
-				set(name: string, value: string, options: any) {
-					try {
-						cookieStore.set({ name, value, ...options });
-					} catch (error) {
-						// Server Component context
-					}
-				},
-				remove(name: string, options: any) {
-					try {
-						cookieStore.set({ name, value: "", ...options });
-					} catch (error) {
-						// Server Component context
-					}
-				},
+	const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+	const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+	if (!supabaseUrl || !supabaseAnonKey) {
+		throw new Error("Missing Supabase environment variables");
+	}
+
+	return createSupabaseServerClient(supabaseUrl, supabaseAnonKey, {
+		cookies: {
+			get(name: string) {
+				return cookieStore.get(name)?.value;
+			},
+			set(name: string, value: string, options: CookieOptions) {
+				try {
+					cookieStore.set({ name, value, ...options });
+				} catch {
+					// Server Component context
+				}
+			},
+			remove(name: string, options: CookieOptions) {
+				try {
+					cookieStore.set({ name, value: "", ...options });
+				} catch {
+					// Server Component context
+				}
 			},
 		},
-	);
+	});
 }
 
 // Helper to get current user session

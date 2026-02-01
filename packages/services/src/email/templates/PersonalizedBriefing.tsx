@@ -70,8 +70,8 @@ export function PersonalizedBriefing({
 								🎯 내 관심종목
 							</Heading>
 							<Hr style={styles.hr} />
-							{watchlist.map((stock, index) => (
-								<Section key={index} style={styles.stockItem}>
+							{watchlist.map((stock) => (
+								<Section key={stock.symbol} style={styles.stockItem}>
 									<Text style={styles.stockName}>
 										{stock.name} {stock.price.toLocaleString()}원
 										<span
@@ -113,8 +113,8 @@ export function PersonalizedBriefing({
 							📰 오늘의 주요 뉴스
 						</Heading>
 						<Hr style={styles.hr} />
-						{topNews.map((news, index) => (
-							<Section key={index} style={styles.newsItem}>
+						{topNews.map((news) => (
+							<Section key={news.title} style={styles.newsItem}>
 								<Text style={styles.newsTitle}>
 									{news.sentiment === "bull"
 										? "🟢"

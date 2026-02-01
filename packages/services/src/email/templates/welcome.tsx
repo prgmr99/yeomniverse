@@ -13,7 +13,8 @@ export function WelcomeEmail({
 	const telegramUrl = "https://t.me/finbrief_news_bot";
 
 	return (
-		<html>
+		<html lang="ko">
+			{/* biome-ignore lint/style/noHeadElement: Email template requires raw HTML head element */}
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />

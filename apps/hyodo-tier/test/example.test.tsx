@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 describe('Test Setup', () => {
   it('renders a basic element', () => {
@@ -8,7 +8,11 @@ describe('Test Setup', () => {
   });
 
   it('jest-dom matchers work', () => {
-    render(<button disabled>Click me</button>);
+    render(
+      <button type="button" disabled>
+        Click me
+      </button>,
+    );
     expect(screen.getByRole('button')).toBeDisabled();
   });
 });
