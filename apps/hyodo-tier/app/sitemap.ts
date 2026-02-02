@@ -1,9 +1,19 @@
 import type { MetadataRoute } from 'next';
+import { getBlogPosts } from '@/lib/blogData';
 
 const DOMAIN =
   process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://hyo-tier.vercel.app';
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  // Get all blog posts for dynamic URLs
+  const posts = getBlogPosts();
+  const blogUrls = posts.map((post) => ({
+    url: `${DOMAIN}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
   return [
     {
       url: DOMAIN,
@@ -11,5 +21,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 1.0,
     },
+    {
+      url: `${DOMAIN}/about`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${DOMAIN}/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${DOMAIN}/quiz`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      url: `${DOMAIN}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: `${DOMAIN}/terms`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    ...blogUrls,
   ];
 }

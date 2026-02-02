@@ -92,6 +92,7 @@ export const metadata: Metadata = {
     'google-adsense-account': process.env
       .NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT as string,
   },
+  manifest: '/manifest.json',
 };
 
 // Viewport configuration for mobile optimization

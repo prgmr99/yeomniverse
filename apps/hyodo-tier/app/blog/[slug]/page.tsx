@@ -1,4 +1,5 @@
 import { Calendar, ChevronRight, Clock, Home } from 'lucide-react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
@@ -7,6 +8,45 @@ import { getBlogPost, getBlogPosts } from '@/lib/blogData';
 type Props = {
   params: Promise<{ slug: string }>;
 };
+
+const DOMAIN_URL =
+  process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://hyo-tier.vercel.app';
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getBlogPost(slug);
+
+  if (!post) {
+    return {};
+  }
+
+  return {
+    title: post.title,
+    description: post.description,
+    keywords: post.keywords,
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: 'article',
+      publishedTime: post.date,
+      authors: [post.author],
+      url: `${DOMAIN_URL}/blog/${slug}`,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
+    },
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
+  };
+}
+
+export function generateStaticParams() {
+  const posts = getBlogPosts();
+  return posts.map((post) => ({ slug: post.slug }));
+}
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;

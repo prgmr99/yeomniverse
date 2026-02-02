@@ -1,6 +1,29 @@
 import { BookOpen, Calendar, Clock } from 'lucide-react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getBlogPosts } from '@/lib/blogData';
+
+export const metadata: Metadata = {
+  title: '효도 블로그',
+  description:
+    '부모님과의 관계를 개선하는 효도 팁, MZ세대 효도 가이드, 대화 주제 등 실용적인 콘텐츠를 제공합니다.',
+  keywords: ['효도 블로그', '부모님 소통', 'MZ세대 효도', '효도 팁'],
+  openGraph: {
+    title: '효도 블로그 | 효도티어',
+    description:
+      '부모님과의 관계를 개선하는 효도 팁, MZ세대 효도 가이드, 대화 주제 등 실용적인 콘텐츠를 제공합니다.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '효도 블로그 | 효도티어',
+    description:
+      '부모님과의 관계를 개선하는 효도 팁, MZ세대 효도 가이드, 대화 주제 등 실용적인 콘텐츠를 제공합니다.',
+  },
+  alternates: {
+    canonical: '/blog',
+  },
+};
 
 export default function BlogPage() {
   const posts = getBlogPosts();
