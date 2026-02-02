@@ -10,7 +10,7 @@ type Props = {
 };
 
 const DOMAIN_URL =
-  process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://hyo-tier.vercel.app';
+  process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://hyodo-tier.yeomniverse.com';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: post.description,
     },
     alternates: {
-      canonical: `/blog/${slug}`,
+      canonical: `${DOMAIN_URL}/blog/${slug}`,
     },
   };
 }

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
       '부모님과의 관계를 개선하는 효도 팁, MZ세대 효도 가이드, 대화 주제 등 실용적인 콘텐츠를 제공합니다.',
   },
   alternates: {
-    canonical: '/blog',
+    canonical: 'https://hyodo-tier.yeomniverse.com/blog',
   },
 };
 

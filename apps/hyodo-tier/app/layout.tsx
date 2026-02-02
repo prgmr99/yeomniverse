@@ -5,7 +5,7 @@ import { Footer, GoogleAdSense, GoogleAnalytics } from '@hyo/ui';
 import { sans, serif } from './fonts';
 
 const DOMAIN_URL =
-  process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://hyo-tier.vercel.app';
+  process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://hyodo-tier.yeomniverse.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(DOMAIN_URL),

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 const DOMAIN =
-  process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://hyo-tier.vercel.app';
+  process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://hyodo-tier.yeomniverse.com';
 
 export default function robots(): MetadataRoute.Robots {
   return {
