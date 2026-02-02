@@ -213,11 +213,31 @@ export async function sendStockNewsAlerts(
       console.error(`Failed to send email alert to ${subscriber.email}:`, error);
     }
 
-    // Send telegram alert (Pro only)
-    if (planName === 'pro') {
-      // Note: telegram_chat_id would need to be stored in subscribers table
-      // For now, skip telegram alerts as the column doesn't exist
-      // This can be added when telegram integration is fully set up
+    // Send telegram alert for paid subscribers (using global chat ID for now)
+    const telegramChatId = process.env.TELEGRAM_CHAT_ID;
+    if (telegramChatId) {
+      try {
+        await sendTelegramAlert(telegramChatId, newMatches);
+        telegramsSent++;
+
+        // Log sent telegram alerts
+        for (const match of newMatches) {
+          if (match.news.link) {
+            await supabase.from('stock_news_alerts').upsert({
+              user_id: subscriber.id,
+              watchlist_id: match.matchedStock.id,
+              news_title: match.news.title,
+              news_url: match.news.link,
+              channel: 'telegram',
+            }, {
+              onConflict: 'user_id,news_url',
+              ignoreDuplicates: true
+            });
+          }
+        }
+      } catch (error) {
+        console.error(`Failed to send telegram alert to ${subscriber.email}:`, error);
+      }
     }
 
     await delay(BATCH_DELAY_MS);

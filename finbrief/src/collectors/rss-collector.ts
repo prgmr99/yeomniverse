@@ -51,6 +51,34 @@ export async function fetchNaverStockNews(): Promise<NewsItem[]> {
 }
 
 /**
+ * 블로그 도메인 필터링
+ * 개인 블로그 URL을 제거합니다.
+ */
+export function filterBlogNews(newsItems: NewsItem[]): NewsItem[] {
+  const blogDomains = [
+    'tistory.com',
+    'blog.naver.com',
+    'post.naver.com',
+    'velog.io',
+    'brunch.co.kr',
+    'medium.com',
+    'notion.site',
+    'github.io',
+    'wordpress.com',
+    'blogspot.com',
+    'daum.net/blog',
+    'egloos.com'
+  ];
+
+  return newsItems.filter(item => {
+    const hasBlogDomain = blogDomains.some(domain =>
+      item.link.includes(domain)
+    );
+    return !hasBlogDomain;
+  });
+}
+
+/**
  * 광고성 기사 필터링
  * 특정 키워드가 포함된 기사를 제거합니다.
  */
@@ -64,12 +92,54 @@ export function filterAdNews(newsItems: NewsItem[]): NewsItem[] {
     '협찬',
     '제공:'
   ];
-  
+
   return newsItems.filter(item => {
-    const hasAdKeyword = adKeywords.some(keyword => 
+    const hasAdKeyword = adKeywords.some(keyword =>
       item.title.includes(keyword)
     );
     return !hasAdKeyword;
+  });
+}
+
+/**
+ * 신뢰할 수 있는 언론사 필터링
+ * 화이트리스트에 포함된 도메인의 뉴스만 유지합니다.
+ */
+export function filterReliableNews(newsItems: NewsItem[]): NewsItem[] {
+  const reliableDomains = [
+    'hankyung.com',
+    'mk.co.kr',
+    'chosun.com',
+    'biz.chosun.com',
+    'yna.co.kr',
+    'news1.kr',
+    'edaily.co.kr',
+    'mt.co.kr',
+    'sedaily.com',
+    'asiae.co.kr',
+    'fnnews.com',
+    'newsis.com',
+    'yonhapnewstv.co.kr',
+    'sbs.co.kr',
+    'sbscnbc.sbs.co.kr',
+    'mbc.co.kr',
+    'kbs.co.kr',
+    'jtbc.co.kr',
+    'ytn.co.kr',
+    'wowtv.co.kr',
+    'bloomberg.com',
+    'reuters.com'
+  ];
+
+  return newsItems.filter(item => {
+    try {
+      const url = new URL(item.link);
+      const hostname = url.hostname.replace(/^www\./, '');
+      return reliableDomains.some(domain => hostname.includes(domain));
+    } catch {
+      // URL 파싱 실패 시 제외
+      return false;
+    }
   });
 }
 
@@ -83,11 +153,12 @@ export async function collectAllNews(): Promise<NewsItem[]> {
   ]);
 
   const allNews = [...googleNews];
-  const filteredNews = filterAdNews(allNews);
+  const withoutAds = filterAdNews(allNews);
+  const reliableNews = filterReliableNews(withoutAds);
 
-  console.log(`\n📊 총 ${allNews.length}개 수집 → 필터링 후 ${filteredNews.length}개\n`);
+  console.log(`\n📊 총 ${allNews.length}개 수집 → 광고 필터: ${withoutAds.length}개 → 신뢰 언론사 필터: ${reliableNews.length}개\n`);
 
-  return filteredNews;
+  return reliableNews;
 }
 
 // 테스트 실행 (이 파일을 직접 실행할 때)

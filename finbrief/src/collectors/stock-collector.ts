@@ -1,5 +1,7 @@
-import yahooFinance from 'yahoo-finance2';
+import YahooFinance from 'yahoo-finance2';
 import { normalizeKoreanSymbol, type SymbolValidationResult } from '../utils/korean-stock-symbols';
+
+const yahooFinance = new YahooFinance();
 
 export interface StockQuote {
   symbol: string;
