@@ -103,43 +103,49 @@ export function filterAdNews(newsItems: NewsItem[]): NewsItem[] {
 
 /**
  * 신뢰할 수 있는 언론사 필터링
- * 화이트리스트에 포함된 도메인의 뉴스만 유지합니다.
+ * 구글 뉴스 RSS의 타이틀에서 출처명을 추출하여 필터링합니다.
+ * 타이틀 형식: "뉴스 제목 - 출처명"
  */
 export function filterReliableNews(newsItems: NewsItem[]): NewsItem[] {
-  const reliableDomains = [
-    'hankyung.com',
-    'mk.co.kr',
-    'chosun.com',
-    'biz.chosun.com',
-    'yna.co.kr',
-    'news1.kr',
-    'edaily.co.kr',
-    'mt.co.kr',
-    'sedaily.com',
-    'asiae.co.kr',
-    'fnnews.com',
-    'newsis.com',
-    'yonhapnewstv.co.kr',
-    'sbs.co.kr',
-    'sbscnbc.sbs.co.kr',
-    'mbc.co.kr',
-    'kbs.co.kr',
-    'jtbc.co.kr',
-    'ytn.co.kr',
-    'wowtv.co.kr',
-    'bloomberg.com',
-    'reuters.com'
+  const reliableSources = [
+    '한국경제', '한경',
+    '매일경제', '매경',
+    '조선비즈', '조선일보',
+    '연합뉴스', '연합',
+    '뉴스1',
+    '이데일리',
+    '머니투데이',
+    '서울경제',
+    '아시아경제',
+    '파이낸셜뉴스',
+    '뉴시스',
+    'SBS', 'SBSCNBC',
+    'MBC',
+    'KBS',
+    'JTBC',
+    'YTN',
+    '한국경제TV', '한경TV', '와우TV',
+    'Bloomberg',
+    'Reuters',
+    '문화일보',
+    '중앙일보',
+    '동아일보',
+    '헤럴드경제'
   ];
 
   return newsItems.filter(item => {
-    try {
-      const url = new URL(item.link);
-      const hostname = url.hostname.replace(/^www\./, '');
-      return reliableDomains.some(domain => hostname.includes(domain));
-    } catch {
-      // URL 파싱 실패 시 제외
-      return false;
+    // 타이틀에서 마지막 " - " 이후의 출처명 추출
+    const lastDashIndex = item.title.lastIndexOf(' - ');
+    if (lastDashIndex === -1) {
+      return false; // 출처명이 없으면 제외
     }
+
+    const sourceName = item.title.substring(lastDashIndex + 3).trim();
+
+    // 신뢰할 수 있는 출처명에 포함되는지 확인 (대소문자 구분 없이)
+    return reliableSources.some(reliable =>
+      sourceName.toLowerCase().includes(reliable.toLowerCase())
+    );
   });
 }
 
