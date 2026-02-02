@@ -1,8 +1,6 @@
 # 🌌 Yeomniverse
 
 <div align="center">
-  <h1>🌌 Yeomniverse</h1>
-
   <p>
     Building creative and useful digital services to share with the world
   </p>

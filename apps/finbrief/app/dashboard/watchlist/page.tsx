@@ -11,7 +11,7 @@ import {
   X,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import StockAnalysisCard from '@/components/dashboard/StockAnalysisCard';
 
 interface Watchlist {
@@ -50,7 +50,7 @@ export default function WatchlistPage() {
   const [name, setName] = useState('');
   const [market, setMarket] = useState<string>('KOSPI');
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const [watchlistRes, subRes] = await Promise.all([
         fetch('/api/watchlist'),
@@ -71,12 +71,11 @@ export default function WatchlistPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchData]);
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -166,6 +165,7 @@ export default function WatchlistPage() {
         </div>
 
         <button
+          type="button"
           onClick={() => setShowAddForm(true)}
           disabled={isAtLimit}
           className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
@@ -193,6 +193,7 @@ export default function WatchlistPage() {
               <p className="text-red-400 text-sm">{error}</p>
             </div>
             <button
+              type="button"
               onClick={() => setError('')}
               className="text-red-400 hover:text-red-300 transition-colors"
             >
@@ -250,6 +251,7 @@ export default function WatchlistPage() {
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-white">종목 추가</h2>
                 <button
+                  type="button"
                   onClick={() => setShowAddForm(false)}
                   className="p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all"
                 >
@@ -369,6 +371,7 @@ export default function WatchlistPage() {
             종목을 추가하고 맞춤형 분석을 받아보세요
           </p>
           <button
+            type="button"
             onClick={() => setShowAddForm(true)}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105"
           >
@@ -399,6 +402,7 @@ export default function WatchlistPage() {
 
               <div className="flex gap-2">
                 <button
+                  type="button"
                   onClick={() => handleDelete(item.id)}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500/20 text-red-400 text-sm font-medium hover:bg-red-500/30 transition-all duration-200"
                 >
@@ -406,6 +410,7 @@ export default function WatchlistPage() {
                   삭제
                 </button>
                 <button
+                  type="button"
                   onClick={() =>
                     setSelectedStock({ symbol: item.symbol, name: item.name })
                   }

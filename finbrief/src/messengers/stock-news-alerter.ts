@@ -2,6 +2,7 @@ import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
 import { filterNewsByWatchlist, MatchedNews, WatchlistItem } from '../collectors/news-filter';
 import type { NewsItem } from '../types/news.types';
+import { KOREAN_STOCK_MAPPING } from '../utils/korean-stock-symbols';
 
 const BATCH_SIZE = 10;
 const BATCH_DELAY_MS = 1000;
@@ -105,7 +106,7 @@ async function sendTelegramAlert(chatId: string, matches: MatchedNews[]): Promis
 
 export async function sendStockNewsAlerts(
   news: NewsItem[],
-  stockMapping: Record<string, { name: string; englishName?: string; market: string }> = {}
+  stockMapping = KOREAN_STOCK_MAPPING
 ): Promise<{ emailsSent: number; telegramsSent: number }> {
   if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
     console.warn('⚠️ Supabase not configured, skipping stock news alerts');
@@ -196,13 +197,16 @@ export async function sendStockNewsAlerts(
       // Log sent alerts
       for (const match of newMatches) {
         if (match.news.link) {
-          await supabase.from('stock_news_alerts').insert({
+          await supabase.from('stock_news_alerts').upsert({
             user_id: subscriber.id,
             watchlist_id: match.matchedStock.id,
             news_title: match.news.title,
             news_url: match.news.link,
             channel: 'email',
-          }).onConflict('user_id,news_url').ignore();
+          }, {
+            onConflict: 'user_id,news_url',
+            ignoreDuplicates: true
+          });
         }
       }
     } catch (error) {
