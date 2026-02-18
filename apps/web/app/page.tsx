@@ -54,7 +54,7 @@ export default function YeomniverseLanding() {
                 key={service.href}
                 href={service.href}
                 aria-label={`${service.title} - ${service.subtitle} 서비스 시작하기`}
-                className="group block p-8 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/15 hover:border-white/30 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                className="group flex flex-col p-8 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/15 hover:border-white/30 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 <div className="mb-4">
                   <h2
@@ -67,7 +67,7 @@ export default function YeomniverseLanding() {
                   </p>
                 </div>
 
-                <p className="text-gray-200 leading-relaxed mb-6">
+                <p className="text-gray-200 leading-relaxed mb-6 flex-1">
                   {service.description}
                 </p>
 
