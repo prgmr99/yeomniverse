@@ -13,16 +13,18 @@ export default function MarketingLayout({
   return (
     <>
       {/* Fixed Background */}
-      <div className="fixed inset-0 -z-10">
+      <div className="fixed inset-0 -z-10" style={{ willChange: 'transform' }}>
         <LiquidEther
           colors={LIQUID_ETHER_COLORS}
-          resolution={0.5}
+          resolution={0.35}
           autoDemo={true}
           autoSpeed={0.3}
           autoIntensity={1.5}
           mouseForce={15}
           cursorSize={80}
           disableInteraction={true}
+          iterationsPoisson={16}
+          iterationsViscous={16}
         />
       </div>
       <Header />

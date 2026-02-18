@@ -9,10 +9,17 @@ export default function Header() {
 	const [isScrolled, setIsScrolled] = useState(false);
 
 	useEffect(() => {
+		let ticking = false;
 		const handleScroll = () => {
-			setIsScrolled(window.scrollY > 50);
+			if (!ticking) {
+				ticking = true;
+				requestAnimationFrame(() => {
+					setIsScrolled(window.scrollY > 50);
+					ticking = false;
+				});
+			}
 		};
-		window.addEventListener("scroll", handleScroll);
+		window.addEventListener("scroll", handleScroll, { passive: true });
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
 
@@ -29,7 +36,7 @@ export default function Header() {
 
 	return (
 		<header
-			className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+			className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,backdrop-filter] duration-500 ${
 				isScrolled ? "bg-white/80 backdrop-blur-xl" : "bg-transparent"
 			}`}
 		>

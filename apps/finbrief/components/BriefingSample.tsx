@@ -61,7 +61,7 @@ export default function BriefingSample() {
   if (isLoading) {
     return (
       <section
-        className="px-6 bg-white/50 backdrop-blur-sm"
+        className="px-6 bg-[#f5f5f7]"
         style={{ padding: 'clamp(80px, 12vh, 150px) 24px' }}
       >
         <div className="max-w-[980px] mx-auto">
@@ -90,7 +90,7 @@ export default function BriefingSample() {
 
   return (
     <section
-      className="px-6 bg-white/50 backdrop-blur-sm"
+      className="px-6 bg-[#f5f5f7]"
       style={{ padding: 'clamp(80px, 12vh, 150px) 24px' }}
     >
       <div className="max-w-[980px] mx-auto">

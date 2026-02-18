@@ -47,7 +47,7 @@ function HeroSection() {
   return (
     <motion.section
       ref={ref}
-      style={{ opacity, scale }}
+      style={{ opacity, scale, willChange: 'transform, opacity' }}
       className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden"
     >
       <div className="relative z-10 text-center max-w-[980px] mx-auto">
@@ -102,7 +102,7 @@ function HeroSection() {
         >
           <a
             href="#subscribe"
-            className="inline-flex items-center gap-2 bg-white/90 backdrop-blur px-8 py-4 rounded-full text-lg font-medium hover:bg-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            className="inline-flex items-center gap-2 bg-white/90 px-8 py-4 rounded-full text-lg font-medium hover:bg-white transition-colors duration-300 hover:scale-105 hover:shadow-lg"
             style={{ color: '#0071E3' }}
           >
             Get Started Free
@@ -138,7 +138,7 @@ function HeroSection() {
 function ValueProposition() {
   return (
     <section
-      className="px-6 bg-white/50 backdrop-blur-sm"
+      className="px-6 bg-[#f5f5f7]"
       style={{ padding: 'clamp(80px, 12vh, 150px) 24px' }}
     >
       <div className="max-w-[980px] mx-auto text-center">
@@ -224,7 +224,7 @@ function FeatureShowcase() {
         >
           {features.map((feature, index) => (
             <StaggerItem key={index}>
-              <div className="p-8 h-72 rounded-2xl bg-white/5 backdrop-blur border border-white/10 hover:bg-white/10 transition-colors duration-300">
+              <div className="p-8 h-72 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors duration-300">
                 <feature.icon
                   className="w-12 h-12 mb-6"
                   style={{ color: '#2997FF' }}
@@ -259,7 +259,7 @@ function HowItWorks() {
 
   return (
     <section
-      className="px-6 bg-white/50 backdrop-blur-sm"
+      className="px-6 bg-[#f5f5f7]"
       style={{ padding: 'clamp(80px, 12vh, 150px) 24px' }}
     >
       <div className="max-w-[980px] mx-auto">
@@ -391,7 +391,7 @@ function CTASection() {
               <button
                 type="submit"
                 disabled={isLoading || isSubmitted}
-                className="inline-flex items-center justify-center gap-2 bg-finbrief-white px-8 py-4 rounded-full font-semibold hover:bg-white/90 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="inline-flex items-center justify-center gap-2 bg-finbrief-white px-8 py-4 rounded-full font-semibold hover:bg-white/90 transition-colors duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 style={{ color: '#0071E3' }}
               >
                 {isLoading ? (
@@ -461,7 +461,7 @@ function CTASection() {
 // ============================================
 function Footer() {
   return (
-    <footer className="py-12 px-6 bg-white/50 backdrop-blur-sm border-t border-white/20">
+    <footer className="py-12 px-6 bg-[#f5f5f7] border-t border-[#e8e8ed]">
       <div className="max-w-[980px] mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-gradient font-bold text-2xl">FinBrief</div>
