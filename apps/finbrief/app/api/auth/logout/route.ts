@@ -38,7 +38,7 @@ export async function POST() {
   } catch (error) {
     console.error('Logout error:', error);
     return NextResponse.json(
-      { error: '로그아웃에 실패했습니다.' },
+      { error: 'Failed to log out.' },
       { status: 500 },
     );
   }

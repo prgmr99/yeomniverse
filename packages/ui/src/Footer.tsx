@@ -5,7 +5,6 @@ export default function Footer() {
 		<footer className="w-full py-8 px-4 mt-8 border-t border-stone-300 text-center text-stone-500 text-xs space-y-6">
 			{/* 빠른 링크 */}
 			<div>
-				<h3 className="font-bold text-ink mb-2">빠른 링크</h3>
 				<div className="flex justify-center flex-wrap gap-3">
 					<Link href="/" className="hover:text-stone-800 transition-colors">
 						테스트 시작

@@ -137,23 +137,23 @@ export function interpretIndicators(
   // RSI interpretation
   if (indicators.rsi !== null) {
     if (indicators.rsi < 30) {
-      signals.push(`RSI ${indicators.rsi.toFixed(1)}: 과매도 구간 (매수 신호)`);
+      signals.push(`RSI ${indicators.rsi.toFixed(1)}: Oversold (buy signal)`);
       bullishCount++;
     } else if (indicators.rsi > 70) {
-      signals.push(`RSI ${indicators.rsi.toFixed(1)}: 과매수 구간 (매도 신호)`);
+      signals.push(`RSI ${indicators.rsi.toFixed(1)}: Overbought (sell signal)`);
       bearishCount++;
     } else {
-      signals.push(`RSI ${indicators.rsi.toFixed(1)}: 중립 구간`);
+      signals.push(`RSI ${indicators.rsi.toFixed(1)}: Neutral zone`);
     }
   }
 
   // MACD interpretation
   if (indicators.macd) {
     if (indicators.macd.MACD > indicators.macd.signal) {
-      signals.push('MACD: 시그널선 상향 돌파 (매수 신호)');
+      signals.push('MACD: Crossed above signal line (buy signal)');
       bullishCount++;
     } else {
-      signals.push('MACD: 시그널선 하향 (매도 신호)');
+      signals.push('MACD: Below signal line (sell signal)');
       bearishCount++;
     }
   }
@@ -162,13 +162,13 @@ export function interpretIndicators(
   if (indicators.bollingerBands) {
     const { upper, lower, middle } = indicators.bollingerBands;
     if (currentPrice >= upper) {
-      signals.push('볼린저밴드: 상단 터치 (과매수 가능성)');
+      signals.push('Bollinger Bands: Upper band touch (potential overbought)');
       bearishCount++;
     } else if (currentPrice <= lower) {
-      signals.push('볼린저밴드: 하단 터치 (과매도 가능성)');
+      signals.push('Bollinger Bands: Lower band touch (potential oversold)');
       bullishCount++;
     } else {
-      signals.push('볼린저밴드: 중간 밴드 내 거래');
+      signals.push('Bollinger Bands: Trading within middle band');
     }
   }
 
@@ -176,10 +176,10 @@ export function interpretIndicators(
   const { sma5, sma20 } = indicators.sma;
   if (sma5 !== null && sma20 !== null) {
     if (sma5 > sma20) {
-      signals.push('이동평균: 5일선 > 20일선 (단기 상승 추세)');
+      signals.push('Moving Average: 5-day > 20-day (short-term uptrend)');
       bullishCount++;
     } else {
-      signals.push('이동평균: 5일선 < 20일선 (단기 하락 추세)');
+      signals.push('Moving Average: 5-day < 20-day (short-term downtrend)');
       bearishCount++;
     }
   }
@@ -188,11 +188,11 @@ export function interpretIndicators(
   if (indicators.volumeRatio !== null) {
     if (indicators.volumeRatio > 150) {
       signals.push(
-        `거래량: 평균 대비 ${indicators.volumeRatio.toFixed(0)}% (거래 활발)`,
+        `Volume: ${indicators.volumeRatio.toFixed(0)}% vs average (high activity)`,
       );
     } else if (indicators.volumeRatio < 50) {
       signals.push(
-        `거래량: 평균 대비 ${indicators.volumeRatio.toFixed(0)}% (거래 저조)`,
+        `Volume: ${indicators.volumeRatio.toFixed(0)}% vs average (low activity)`,
       );
     }
   }

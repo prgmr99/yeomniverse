@@ -78,13 +78,13 @@ export default function StockAnalysisCard({
         if (result.upgrade) {
           setShouldUpgrade(true);
         }
-        throw new Error(result.error || '분석 데이터를 불러올 수 없습니다.');
+        throw new Error(result.error || 'Unable to load analysis data.');
       }
 
       setData(result);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.',
+        err instanceof Error ? err.message : 'An unknown error occurred.',
       );
     } finally {
       setIsLoading(false);
@@ -99,7 +99,7 @@ export default function StockAnalysisCard({
     switch (sentiment) {
       case 'bullish':
         return {
-          label: '상승',
+          label: 'Bullish',
           color: 'text-emerald-400',
           bgColor: 'bg-emerald-500/20',
           borderColor: 'border-emerald-500/30',
@@ -107,7 +107,7 @@ export default function StockAnalysisCard({
         };
       case 'bearish':
         return {
-          label: '하락',
+          label: 'Bearish',
           color: 'text-red-400',
           bgColor: 'bg-red-500/20',
           borderColor: 'border-red-500/30',
@@ -115,7 +115,7 @@ export default function StockAnalysisCard({
         };
       default:
         return {
-          label: '중립',
+          label: 'Neutral',
           color: 'text-slate-400',
           bgColor: 'bg-slate-500/20',
           borderColor: 'border-slate-500/30',
@@ -125,7 +125,7 @@ export default function StockAnalysisCard({
   };
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('ko-KR', {
+    return new Intl.NumberFormat('en-US', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }).format(price);
@@ -182,7 +182,7 @@ export default function StockAnalysisCard({
                 transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                 className="w-12 h-12 border-3 border-emerald-500 border-t-transparent rounded-full mb-4"
               />
-              <p className="text-slate-400">분석 중...</p>
+              <p className="text-slate-400">Analyzing...</p>
             </div>
           )}
 
@@ -193,7 +193,7 @@ export default function StockAnalysisCard({
                 <div className="flex items-start gap-3">
                   <AlertCircle className="w-6 h-6 text-red-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
-                    <p className="text-red-400 font-medium mb-1">오류</p>
+                    <p className="text-red-400 font-medium mb-1">Error</p>
                     <p className="text-red-300 text-sm">{error}</p>
                   </div>
                 </div>
@@ -205,17 +205,16 @@ export default function StockAnalysisCard({
                     <Crown className="w-6 h-6 text-amber-400 flex-shrink-0 mt-1" />
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold text-white mb-2">
-                        종목 분석은 유료 플랜 전용 기능입니다
+                        Stock analysis is a paid plan feature
                       </h3>
                       <p className="text-slate-300 mb-4">
-                        Basic 또는 Pro 플랜으로 업그레이드하고 AI 기반 기술적
-                        분석을 받아보세요.
+                        Upgrade to Basic or Pro for AI-powered technical analysis.
                       </p>
                       <Link
                         href="/pricing"
                         className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-medium hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105"
                       >
-                        플랜 업그레이드
+                        Upgrade Plan
                         <ArrowRight className="w-4 h-4" />
                       </Link>
                     </div>
@@ -228,7 +227,7 @@ export default function StockAnalysisCard({
                 className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/5 text-slate-300 font-medium hover:bg-white/10 transition-all duration-200"
               >
                 <RefreshCw className="w-4 h-4" />
-                다시 시도
+                Try Again
               </button>
             </div>
           )}
@@ -245,7 +244,7 @@ export default function StockAnalysisCard({
               >
                 <div className="flex items-end justify-between">
                   <div>
-                    <p className="text-sm text-slate-400 mb-2">현재가</p>
+                    <p className="text-sm text-slate-400 mb-2">Current Price</p>
                     <div className="text-4xl font-bold text-white">
                       ${formatPrice(data.currentPrice)}
                     </div>
@@ -283,7 +282,7 @@ export default function StockAnalysisCard({
                         <Icon className={`w-6 h-6 ${sentiment.color}`} />
                         <div>
                           <p className="text-sm text-slate-300 mb-1">
-                            종합 판단
+                            Overall Sentiment
                           </p>
                           <p
                             className={`text-2xl font-bold ${sentiment.color}`}
@@ -307,14 +306,14 @@ export default function StockAnalysisCard({
                 <div className="flex items-center gap-2 mb-4">
                   <BarChart3 className="w-5 h-5 text-emerald-400" />
                   <h3 className="text-lg font-semibold text-white">
-                    이동평균선 분석
+                    Moving Average Analysis
                   </h3>
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   {[
-                    { label: '5일', value: data.sma.sma5 },
-                    { label: '20일', value: data.sma.sma20 },
-                    { label: '60일', value: data.sma.sma60 },
+                    { label: '5-Day', value: data.sma.sma5 },
+                    { label: '20-Day', value: data.sma.sma20 },
+                    { label: '60-Day', value: data.sma.sma60 },
                   ].map((item, index) => (
                     <div
                       key={index}
@@ -344,7 +343,7 @@ export default function StockAnalysisCard({
                   <div className="flex items-center gap-2 mb-4">
                     <Activity className="w-5 h-5 text-teal-400" />
                     <h3 className="text-lg font-semibold text-white">
-                      매매 신호
+                      Trading Signals
                     </h3>
                   </div>
                   <ul className="space-y-2">
@@ -386,10 +385,10 @@ export default function StockAnalysisCard({
                       </div>
                       <p className="text-sm text-slate-400 mt-1">
                         {data.rsi > 70
-                          ? '과매수 구간'
+                          ? 'Overbought'
                           : data.rsi < 30
-                            ? '과매도 구간'
-                            : '중립 구간'}
+                            ? 'Oversold'
+                            : 'Neutral zone'}
                       </p>
                     </motion.div>
                   )}
@@ -447,7 +446,7 @@ export default function StockAnalysisCard({
                       <div className="flex items-center gap-2 mb-4">
                         <Crown className="w-5 h-5 text-amber-400" />
                         <h3 className="text-lg font-semibold text-white">
-                          볼린저 밴드
+                          Bollinger Bands
                         </h3>
                         <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 font-semibold">
                           PRO
@@ -455,19 +454,19 @@ export default function StockAnalysisCard({
                       </div>
                       <div className="grid grid-cols-3 gap-4">
                         <div className="text-center p-3 rounded-lg bg-white/5">
-                          <p className="text-xs text-slate-400 mb-1">상단</p>
+                          <p className="text-xs text-slate-400 mb-1">Upper</p>
                           <p className="text-sm font-semibold text-white">
                             ${formatPrice(data.bollingerBands.upper)}
                           </p>
                         </div>
                         <div className="text-center p-3 rounded-lg bg-white/5">
-                          <p className="text-xs text-slate-400 mb-1">중간</p>
+                          <p className="text-xs text-slate-400 mb-1">Middle</p>
                           <p className="text-sm font-semibold text-white">
                             ${formatPrice(data.bollingerBands.middle)}
                           </p>
                         </div>
                         <div className="text-center p-3 rounded-lg bg-white/5">
-                          <p className="text-xs text-slate-400 mb-1">하단</p>
+                          <p className="text-xs text-slate-400 mb-1">Lower</p>
                           <p className="text-sm font-semibold text-white">
                             ${formatPrice(data.bollingerBands.lower)}
                           </p>
@@ -490,17 +489,16 @@ export default function StockAnalysisCard({
                     <Crown className="w-6 h-6 text-amber-400 flex-shrink-0 mt-1" />
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold text-white mb-2">
-                        더 상세한 분석이 필요하신가요?
+                        Need more detailed analysis?
                       </h3>
                       <p className="text-slate-300 mb-4">
-                        Pro 플랜으로 업그레이드하고 RSI, MACD, 볼린저 밴드 등
-                        고급 기술적 지표를 확인하세요.
+                        Upgrade to Pro for RSI, MACD, Bollinger Bands, and more advanced technical indicators.
                       </p>
                       <Link
                         href="/pricing"
                         className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-medium hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105"
                       >
-                        Pro로 업그레이드
+                        Upgrade to Pro
                         <ArrowRight className="w-4 h-4" />
                       </Link>
                     </div>
@@ -514,7 +512,7 @@ export default function StockAnalysisCard({
                 className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/5 text-slate-300 font-medium hover:bg-white/10 transition-all duration-200"
               >
                 <RefreshCw className="w-4 h-4" />
-                새로고침
+                Refresh
               </button>
             </div>
           )}

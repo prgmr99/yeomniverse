@@ -2,23 +2,23 @@ import { createServerClient } from '@hyo/services/supabase';
 import { type NextRequest, NextResponse } from 'next/server';
 
 /**
- * 구독 취소 API 엔드포인트
+ * Unsubscribe API endpoint
  *
  * GET /api/unsubscribe?token=xxx
  *
- * 이메일의 구독 취소 링크를 클릭하면 이 엔드포인트로 이동하여
- * 구독자의 is_active를 false로 설정하고 확인 페이지를 반환합니다.
+ * When a user clicks the unsubscribe link in an email, this endpoint
+ * sets the subscriber's is_active to false and returns a confirmation page.
  */
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
   const token = searchParams.get('token');
 
-  // 토큰이 없는 경우
+  // No token provided
   if (!token) {
     return new NextResponse(
       generateHtmlPage({
-        title: '잘못된 요청',
-        message: '구독 취소 링크가 올바르지 않습니다.',
+        title: 'Invalid Request',
+        message: 'The unsubscribe link is not valid.',
         status: 'error',
       }),
       {
@@ -31,20 +31,20 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const supabase = createServerClient();
 
-    // 토큰으로 구독자 조회
+    // Look up subscriber by token
     const { data: subscriber, error: fetchError } = await supabase
       .from('subscribers')
       .select('id, email, is_active')
       .eq('unsubscribe_token', token)
       .single();
 
-    // 구독자를 찾을 수 없는 경우
+    // Subscriber not found
     if (fetchError || !subscriber) {
       console.error('Subscriber not found for token:', token);
       return new NextResponse(
         generateHtmlPage({
-          title: '구독자를 찾을 수 없습니다',
-          message: '유효하지 않거나 만료된 구독 취소 링크입니다.',
+          title: 'Subscriber Not Found',
+          message: 'This unsubscribe link is invalid or has expired.',
           status: 'error',
         }),
         {
@@ -54,12 +54,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    // 이미 구독 취소된 경우
+    // Already unsubscribed
     if (!subscriber.is_active) {
       return new NextResponse(
         generateHtmlPage({
-          title: '이미 구독이 취소되었습니다',
-          message: `${subscriber.email}은(는) 이미 구독이 취소된 상태입니다.`,
+          title: 'Already Unsubscribed',
+          message: `${subscriber.email} has already been unsubscribed.`,
           status: 'info',
         }),
         {
@@ -69,7 +69,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    // 구독 취소 처리
+    // Process unsubscription
     const { error: updateError } = await supabase
       .from('subscribers')
       .update({
@@ -82,9 +82,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       console.error('Failed to unsubscribe:', updateError);
       return new NextResponse(
         generateHtmlPage({
-          title: '오류가 발생했습니다',
+          title: 'An Error Occurred',
           message:
-            '구독 취소 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+            'An error occurred while processing your unsubscription. Please try again later.',
           status: 'error',
         }),
         {
@@ -94,12 +94,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    // 성공
+    // Success
     console.log(`✅ Unsubscribed: ${subscriber.email}`);
     return new NextResponse(
       generateHtmlPage({
-        title: '구독이 취소되었습니다',
-        message: `${subscriber.email}의 FinBrief 구독이 성공적으로 취소되었습니다. 더 이상 브리핑 이메일을 받지 않습니다.`,
+        title: 'Successfully Unsubscribed',
+        message: `${subscriber.email} has been successfully unsubscribed from FinBrief. You will no longer receive briefing emails.`,
         status: 'success',
         showResubscribeLink: true,
       }),
@@ -112,8 +112,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     console.error('Unsubscribe API error:', error);
     return new NextResponse(
       generateHtmlPage({
-        title: '서버 오류',
-        message: '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+        title: 'Server Error',
+        message: 'A server error occurred. Please try again later.',
         status: 'error',
       }),
       {
@@ -125,7 +125,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 }
 
 /**
- * HTML 페이지 생성 함수
+ * HTML page generator
  */
 interface HtmlPageOptions {
   title: string;
@@ -154,7 +154,7 @@ function generateHtmlPage(options: HtmlPageOptions): string {
   const emoji = statusEmojis[status];
 
   return `<!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -248,7 +248,7 @@ function generateHtmlPage(options: HtmlPageOptions): string {
   <div class="container">
     <div class="header">
       <h1>📊 FinBrief</h1>
-      <p>AI가 엄선한 재테크 뉴스</p>
+      <p>AI-curated financial news</p>
     </div>
 
     <div class="content">
@@ -261,13 +261,13 @@ function generateHtmlPage(options: HtmlPageOptions): string {
         showResubscribeLink
           ? `
       <div style="text-align: center; margin-top: 32px;">
-        <p style="color: #6b7280; margin-bottom: 16px;">다시 구독을 원하시나요?</p>
-        <a href="/" class="button">다시 구독하기</a>
+        <p style="color: #6b7280; margin-bottom: 16px;">Want to resubscribe?</p>
+        <a href="/" class="button">Resubscribe</a>
       </div>
       `
           : `
       <div style="text-align: center; margin-top: 32px;">
-        <a href="/" class="button">홈으로 돌아가기</a>
+        <a href="/" class="button">Go to Home</a>
       </div>
       `
       }

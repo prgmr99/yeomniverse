@@ -25,7 +25,7 @@ export async function GET(
 
     if (!query || query.trim().length === 0) {
       return NextResponse.json(
-        { error: '검색어를 입력해주세요.' },
+        { error: 'Please enter a search term.' },
         { status: 400 },
       );
     }
@@ -58,7 +58,7 @@ export async function GET(
   } catch (error) {
     console.error('Stock search error:', error);
     return NextResponse.json(
-      { error: '검색 중 오류가 발생했습니다.' },
+      { error: 'An error occurred while searching.' },
       { status: 500 },
     );
   }

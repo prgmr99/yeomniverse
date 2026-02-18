@@ -27,7 +27,7 @@ function LoginForm() {
     if (!email || !email.includes('@')) {
       setMessage({
         type: 'error',
-        text: '올바른 이메일 주소를 입력해주세요.',
+        text: 'Please enter a valid email address.',
       });
       return;
     }
@@ -47,19 +47,19 @@ function LoginForm() {
       if (!response.ok) {
         setMessage({
           type: 'error',
-          text: data.error || '오류가 발생했습니다.',
+          text: data.error || 'An error occurred.',
         });
       } else {
         setMessage({
           type: 'success',
-          text: '로그인 링크가 이메일로 전송되었습니다.',
+          text: 'A sign-in link has been sent to your email.',
         });
         setEmail('');
       }
     } catch (_error) {
       setMessage({
         type: 'error',
-        text: '서버와 통신 중 오류가 발생했습니다.',
+        text: 'A server communication error occurred.',
       });
     } finally {
       setIsLoading(false);
@@ -79,7 +79,7 @@ function LoginForm() {
             FinBrief
           </Link>
           <p className="text-finbrief-gray-500 text-lg">
-            매일 아침 핵심 금융 인사이트
+            Daily key financial insights
           </p>
         </div>
 
@@ -92,10 +92,10 @@ function LoginForm() {
           </div>
 
           <h1 className="text-2xl font-bold text-finbrief-black text-center mb-2">
-            로그인
+            Sign In
           </h1>
           <p className="text-finbrief-gray-500 text-center mb-6">
-            이메일 주소를 입력하시면 로그인 링크를 보내드립니다.
+            Enter your email and we'll send you a sign-in link.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -104,7 +104,7 @@ function LoginForm() {
                 htmlFor="email"
                 className="block text-sm font-medium text-finbrief-gray-600 mb-2"
               >
-                이메일
+                Email
               </label>
               <input
                 id="email"
@@ -142,11 +142,11 @@ function LoginForm() {
               {isLoading ? (
                 <>
                   <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                  전송 중...
+                  Sending...
                 </>
               ) : (
                 <>
-                  로그인 링크 전송
+                  Send Sign-in Link
                   <ArrowRight className="w-5 h-5" />
                 </>
               )}
@@ -160,7 +160,7 @@ function LoginForm() {
             </div>
             <div className="relative flex justify-center text-sm">
               <span className="px-4 bg-white/80 text-finbrief-gray-500">
-                처음 사용하시나요?
+                New to FinBrief?
               </span>
             </div>
           </div>
@@ -172,7 +172,7 @@ function LoginForm() {
           >
             <span className="flex items-center justify-center gap-2">
               <Sparkles className="w-5 h-5 text-finbrief-blue-400 group-hover:text-finbrief-blue-500 transition-colors" />
-              무료로 시작하기
+              Get Started Free
             </span>
           </Link>
         </div>
@@ -184,14 +184,14 @@ function LoginForm() {
               href="/"
               className="hover:text-finbrief-black transition-colors"
             >
-              홈
+              Home
             </Link>
             <span>•</span>
             <Link
               href="/pricing"
               className="hover:text-finbrief-black transition-colors"
             >
-              요금제
+              Pricing
             </Link>
           </div>
         </div>

@@ -6,18 +6,18 @@ export default function YeomniverseLanding() {
   const services = [
     {
       title: '효도티어',
-      subtitle: '부모님 탐구영역',
+      subtitle: 'Filial Piety Test',
       description:
-        '당신의 효도 등급은 몇 등급입니까? 2026학년도 대국민 효도능력시험으로 부모님과의 관계를 진단해보세요.',
+        'What is your filial piety grade? Take the 2026 National Filial Piety Test to assess your relationship with your parents.',
       href: 'https://hyodo-tier.yeomniverse.com',
       gradient: 'from-red-500 to-orange-500',
       bgColor: 'bg-red-50',
     },
     {
       title: 'FinBrief',
-      subtitle: 'AI 재테크 브리핑',
+      subtitle: 'AI Financial Briefing',
       description:
-        '30초 만에 읽는 AI 재테크 브리핑. 매일 아침 8시, 핵심 뉴스만 텔레그램으로 받아보세요.',
+        'AI-powered financial briefing you can read in 30 seconds. Get the essential news delivered to your Telegram every morning at 8 AM.',
       href: 'https://finbrief.yeomniverse.com',
       gradient: 'from-blue-500 to-cyan-500',
       bgColor: 'bg-blue-50',
@@ -27,7 +27,7 @@ export default function YeomniverseLanding() {
   return (
     <>
       <a href="#main-content" className="skip-link">
-        콘텐츠로 건너뛰기
+        Skip to content
       </a>
 
       {/* Fixed Galaxy Background */}
@@ -42,7 +42,7 @@ export default function YeomniverseLanding() {
             </span>
           </h1>
           <p className="text-lg md:text-xl text-gray-200 max-w-md">
-            다양한 디지털 서비스를 만나보세요
+            Explore our digital services
           </p>
         </section>
 
@@ -53,7 +53,7 @@ export default function YeomniverseLanding() {
               <Link
                 key={service.href}
                 href={service.href}
-                aria-label={`${service.title} - ${service.subtitle} 서비스 시작하기`}
+                aria-label={`${service.title} - ${service.subtitle} - Get started`}
                 className="group flex flex-col p-8 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/15 hover:border-white/30 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 <div className="mb-4">
@@ -74,7 +74,7 @@ export default function YeomniverseLanding() {
                 <div
                   className={`inline-flex items-center gap-2 text-sm font-bold bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent group-hover:gap-3 transition-all`}
                 >
-                  시작하기
+                  Get Started
                   <ArrowRight
                     aria-hidden="true"
                     className="w-4 h-4 text-gray-300 group-hover:text-white transition-colors"

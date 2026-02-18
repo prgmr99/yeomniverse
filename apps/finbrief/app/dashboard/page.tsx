@@ -75,10 +75,10 @@ export default function DashboardPage() {
         transition={{ duration: 0.5 }}
       >
         <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradientShift_3s_ease-in-out_infinite]">
-          대시보드
+          Dashboard
         </h1>
         <p className="mt-2 text-slate-400">
-          AI가 분석한 금융 뉴스를 한눈에 확인하세요
+          See AI-analyzed financial news at a glance
         </p>
       </motion.div>
 
@@ -94,7 +94,7 @@ export default function DashboardPage() {
             <Star className="w-6 h-6 text-emerald-400" />
           </div>
           <div className="text-3xl font-bold text-white">{watchlistCount}</div>
-          <div className="text-sm text-slate-400 mt-1">등록된 관심종목</div>
+          <div className="text-sm text-slate-400 mt-1">Watchlist Stocks</div>
         </motion.div>
 
         <motion.div
@@ -107,7 +107,7 @@ export default function DashboardPage() {
             <Clock className="w-6 h-6 text-teal-400" />
           </div>
           <div className="text-3xl font-bold text-white">08:00</div>
-          <div className="text-sm text-slate-400 mt-1">매일 브리핑 시간</div>
+          <div className="text-sm text-slate-400 mt-1">Daily Briefing Time</div>
         </motion.div>
 
         <motion.div
@@ -122,7 +122,7 @@ export default function DashboardPage() {
           <div className="text-3xl font-bold text-white capitalize">
             {subscription?.plan || 'Free'}
           </div>
-          <div className="text-sm text-slate-400 mt-1">현재 플랜</div>
+          <div className="text-sm text-slate-400 mt-1">Current Plan</div>
         </motion.div>
       </div>
 
@@ -140,23 +140,23 @@ export default function DashboardPage() {
             </h2>
             <p className="text-slate-300 mb-4">
               {isFree
-                ? '무료로 FinBrief의 기본 기능을 이용하세요'
-                : '모든 프리미엄 기능을 제한 없이 사용하세요'}
+                ? 'Enjoy the basic features of FinBrief for free'
+                : 'Use all premium features without limits'}
             </p>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm text-slate-300">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                 <span>
-                  관심종목: {watchlistCount}/{watchlistLimit}
+                  Watchlist: {watchlistCount}/{watchlistLimit}
                 </span>
               </div>
               {subscription?.renewalDate && (
                 <div className="flex items-center gap-2 text-sm text-slate-300">
                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                   <span>
-                    갱신일:{' '}
+                    Renewal:{' '}
                     {new Date(subscription.renewalDate).toLocaleDateString(
-                      'ko-KR',
+                      'en-US',
                     )}
                   </span>
                 </div>
@@ -169,7 +169,7 @@ export default function DashboardPage() {
               href="/pricing"
               className="group flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105"
             >
-              <span>Pro로 업그레이드</span>
+              <span>Upgrade to Pro</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           )}
@@ -184,12 +184,12 @@ export default function DashboardPage() {
         className="p-8 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10"
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-white">관심종목</h2>
+          <h2 className="text-2xl font-bold text-white">Watchlist</h2>
           <Link
             href="/dashboard/watchlist"
             className="text-sm text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1"
           >
-            전체 보기
+            View All
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -198,13 +198,13 @@ export default function DashboardPage() {
           <div className="text-center py-12">
             <Star className="w-12 h-12 text-slate-600 mx-auto mb-4" />
             <p className="text-slate-400 mb-4">
-              아직 등록된 관심종목이 없습니다
+              No stocks in your watchlist yet
             </p>
             <Link
               href="/dashboard/watchlist"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-500/20 text-emerald-400 font-medium hover:bg-emerald-500/30 transition-all duration-200"
             >
-              <Star className="w-4 h-4" />첫 종목 추가하기
+              <Star className="w-4 h-4" />Add your first stock
             </Link>
           </div>
         ) : (
@@ -241,7 +241,7 @@ export default function DashboardPage() {
       >
         <div className="flex items-center gap-3 mb-6">
           <Zap className="w-6 h-6 text-amber-400" />
-          <h2 className="text-2xl font-bold text-white">오늘의 브리핑</h2>
+          <h2 className="text-2xl font-bold text-white">Today's Briefing</h2>
         </div>
 
         <div className="space-y-4">
@@ -250,11 +250,10 @@ export default function DashboardPage() {
               <div className="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-emerald-400" />
               <div className="flex-1">
                 <h3 className="font-semibold text-white mb-2">
-                  AI 분석 준비 중
+                  AI Analysis in Progress
                 </h3>
                 <p className="text-sm text-slate-400 leading-relaxed">
-                  매일 새벽 AI가 100개 이상의 뉴스를 분석하고, 아침 8시에 가장
-                  중요한 3가지 소식을 전달합니다. 텔레그램으로 받아보세요!
+                  Every morning, AI analyzes 100+ articles and delivers the 3 most important stories at 8 AM. Get them on Telegram!
                 </p>
               </div>
             </div>
@@ -268,7 +267,7 @@ export default function DashboardPage() {
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 hover:scale-105"
             >
               <TrendingUp className="w-4 h-4" />
-              텔레그램 봇 시작하기
+              Start Telegram Bot
             </a>
           </div>
         </div>

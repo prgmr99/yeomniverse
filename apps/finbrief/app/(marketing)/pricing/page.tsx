@@ -11,29 +11,29 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
   {
-    question: '구독을 언제든 취소할 수 있나요?',
+    question: 'Can I cancel my subscription anytime?',
     answer:
-      '네, 언제든지 구독을 취소하실 수 있습니다. 결제일 기준으로 남은 기간까지는 서비스를 이용하실 수 있습니다.',
+      'Yes, you can cancel anytime. You will continue to have access until the end of your billing period.',
   },
   {
-    question: '무료 플랜에서 유료 플랜으로 업그레이드하면 어떻게 되나요?',
+    question: 'What happens when I upgrade from Free to a paid plan?',
     answer:
-      '즉시 유료 플랜의 모든 기능을 이용하실 수 있습니다. 관심종목 설정, 기술적 분석 등 프리미엄 기능이 활성화됩니다.',
+      'You get instant access to all paid features including watchlist, technical analysis, and more.',
   },
   {
-    question: '결제 방법은 무엇이 있나요?',
+    question: 'What payment methods are available?',
     answer:
-      '신용카드, 체크카드로 결제하실 수 있습니다. 안전한 결제 시스템 Lemon Squeezy를 통해 처리됩니다.',
+      'We accept credit and debit cards via Lemon Squeezy, our secure payment provider.',
   },
   {
-    question: 'Basic과 Pro의 차이점은 무엇인가요?',
+    question: "What's the difference between Basic and Pro?",
     answer:
-      'Basic은 3개의 관심종목과 기본 분석을 제공하며, Pro는 10개의 관심종목과 RSI, MACD 등 고급 기술적 분석, AI 심층 분석을 제공합니다.',
+      'Basic includes 3 watchlist stocks and standard analysis. Pro includes 10 watchlist stocks with RSI, MACD, Bollinger Bands, and AI deep analysis.',
   },
   {
-    question: '환불이 가능한가요?',
+    question: 'Can I get a refund?',
     answer:
-      '서비스 이용 후 7일 이내에 환불을 요청하실 수 있습니다. 단, 과도한 서비스 사용이 확인된 경우 환불이 제한될 수 있습니다.',
+      'You can request a refund within 7 days of purchase. Refunds may be limited in cases of excessive usage.',
   },
 ];
 
@@ -50,7 +50,7 @@ export default function PricingPage() {
     if (!email || !email.includes('@')) {
       setMessage({
         type: 'error',
-        text: '올바른 이메일 주소를 입력해주세요.',
+        text: 'Please enter a valid email address.',
       });
       return;
     }
@@ -70,7 +70,7 @@ export default function PricingPage() {
       if (!response.ok) {
         setMessage({
           type: 'error',
-          text: data.error || '오류가 발생했습니다.',
+          text: data.error || 'An error occurred.',
         });
       } else {
         window.location.href = data.checkoutUrl;
@@ -78,7 +78,7 @@ export default function PricingPage() {
     } catch (_error) {
       setMessage({
         type: 'error',
-        text: '서버와 통신 중 오류가 발생했습니다.',
+        text: 'A server communication error occurred.',
       });
     } finally {
       setIsLoading(false);
@@ -89,7 +89,7 @@ export default function PricingPage() {
     if (!email || !email.includes('@')) {
       setMessage({
         type: 'error',
-        text: '올바른 이메일 주소를 입력해주세요.',
+        text: 'Please enter a valid email address.',
       });
       return;
     }
@@ -103,12 +103,10 @@ export default function PricingPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-8 text-center">
         <div className="bg-white/60 backdrop-blur-md rounded-3xl p-8 sm:p-12 mx-auto max-w-4xl">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-finbrief-black mb-6">
-            <span className="text-gradient">똑똑한 투자</span>를 위한
-            <br />
-            완벽한 요금제
+            The perfect plan for <span className="text-gradient">smart investing</span>
           </h1>
           <p className="text-finbrief-gray-500 text-lg sm:text-xl max-w-2xl mx-auto mb-8">
-            매일 아침 핵심 금융 뉴스와 개인화된 투자 인사이트를 받아보세요.
+            Get daily financial news and personalized investment insights every morning.
           </p>
 
           {/* Email Input */}
@@ -145,14 +143,14 @@ export default function PricingPage() {
             name="Free"
             price={0}
             period="mo"
-            description="금융 뉴스 브리핑으로 시작하기"
+            description="Get started with financial news briefing"
             features={[
-              '일일 금융 브리핑',
-              '3개 주요 뉴스 요약',
-              '이메일 또는 텔레그램 전송',
-              '기본 시장 개요',
+              'Daily financial briefing',
+              '3 key news summaries',
+              'Email or Telegram delivery',
+              'Basic market overview',
             ]}
-            buttonText="무료로 시작하기"
+            buttonText="Get Started Free"
             onButtonClick={handleFreePlan}
           />
 
@@ -161,16 +159,16 @@ export default function PricingPage() {
             name="Basic"
             price={7}
             period="mo"
-            description="개인화된 투자 인사이트"
+            description="Personalized investment insights"
             features={[
-              'Free 플랜 모든 기능',
-              '관심종목 3개 설정',
-              '기본 종목 분석',
-              '개인화된 이메일 브리핑',
-              '종목별 뉴스 알림',
+              'All Free features',
+              '3 watchlist stocks',
+              'Basic stock analysis',
+              'Personalized email briefing',
+              'Stock news alerts',
             ]}
             highlighted={true}
-            buttonText="Basic 시작하기"
+            buttonText="Start Basic"
             onButtonClick={() => handleCheckout('basic')}
           />
 
@@ -179,16 +177,16 @@ export default function PricingPage() {
             name="Pro"
             price={20}
             period="mo"
-            description="전문가 수준의 심층 분석"
+            description="Expert-level deep analysis"
             features={[
-              'Basic 플랜 모든 기능',
-              '관심종목 10개 설정',
-              '기술적 분석 (RSI, MACD, 볼린저밴드)',
-              'AI 심층 분석 리포트',
-              '실시간 알림 (급등/급락)',
-              '프리미엄 투자 인사이트',
+              'All Basic features',
+              '10 watchlist stocks',
+              'Technical analysis (RSI, MACD, Bollinger Bands)',
+              'AI deep analysis reports',
+              'Real-time alerts (surges/drops)',
+              'Premium investment insights',
             ]}
-            buttonText="Pro 시작하기"
+            buttonText="Start Pro"
             onButtonClick={() => handleCheckout('pro')}
           />
         </div>
@@ -199,10 +197,10 @@ export default function PricingPage() {
         <div className="bg-white/50 backdrop-blur-sm rounded-3xl p-8 sm:p-12">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-finbrief-black mb-4">
-              자주 묻는 질문
+              Frequently Asked Questions
             </h2>
             <p className="text-finbrief-gray-500 text-lg">
-              궁금하신 사항을 확인해보세요.
+              Find answers to common questions.
             </p>
           </div>
 
@@ -243,23 +241,23 @@ export default function PricingPage() {
       <div className="border-t border-white/10 bg-cta-gradient">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            지금 바로 시작하세요
+            Get started now
           </h2>
           <p className="text-white/80 text-lg mb-8">
-            매일 아침 핵심 인사이트를 받아보고 더 나은 투자 결정을 하세요.
+            Get daily insights and make better investment decisions.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/auth/login"
               className="px-8 py-4 bg-white text-finbrief-blue-500 font-semibold rounded-xl hover:bg-white/90 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             >
-              무료로 시작하기
+              Get Started Free
             </a>
             <a
               href="/"
               className="px-8 py-4 bg-white/10 text-white font-semibold rounded-xl hover:bg-white/20 border border-white/20 hover:border-white/40 transition-all"
             >
-              더 알아보기
+              Learn More
             </a>
           </div>
         </div>
@@ -275,19 +273,19 @@ export default function PricingPage() {
                 href="/"
                 className="hover:text-finbrief-black transition-colors"
               >
-                홈
+                Home
               </a>
               <a
                 href="/pricing"
                 className="hover:text-finbrief-black transition-colors"
               >
-                요금제
+                Pricing
               </a>
               <a
                 href="/auth/login"
                 className="hover:text-finbrief-black transition-colors"
               >
-                로그인
+                Login
               </a>
             </div>
           </div>
@@ -300,7 +298,7 @@ export default function PricingPage() {
           <div className="bg-white/90 backdrop-blur-xl border border-white/30 rounded-2xl p-8 text-center">
             <div className="w-16 h-16 border-4 border-finbrief-blue-500/20 border-t-finbrief-blue-500 rounded-full animate-spin mx-auto mb-4"></div>
             <p className="text-finbrief-black font-semibold">
-              결제 페이지로 이동 중...
+              Redirecting to checkout...
             </p>
           </div>
         </div>

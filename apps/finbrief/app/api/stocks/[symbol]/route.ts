@@ -16,7 +16,7 @@ export async function GET(
 
     if (!symbol) {
       return NextResponse.json(
-        { error: '종목 코드가 필요합니다.' },
+        { error: 'Stock symbol is required.' },
         { status: 400 },
       );
     }
@@ -25,7 +25,7 @@ export async function GET(
 
     if (!quote) {
       return NextResponse.json(
-        { error: '종목 정보를 찾을 수 없습니다.' },
+        { error: 'Stock information not found.' },
         { status: 404 },
       );
     }
@@ -38,7 +38,7 @@ export async function GET(
   } catch (error) {
     console.error('Stock quote error:', error);
     return NextResponse.json(
-      { error: '종목 정보 조회 중 오류가 발생했습니다.' },
+      { error: 'An error occurred while fetching stock information.' },
       { status: 500 },
     );
   }

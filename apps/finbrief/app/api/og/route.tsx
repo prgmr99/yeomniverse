@@ -33,7 +33,7 @@ export async function GET() {
           marginBottom: 16,
         }}
       >
-        30초 만에 읽는 AI 재테크 브리핑
+        AI Financial Briefing in 30 Seconds
       </div>
       <div
         style={{
@@ -41,7 +41,7 @@ export async function GET() {
           color: 'rgba(255,255,255,0.8)',
         }}
       >
-        매일 아침 8시 텔레그램 배달
+        Delivered to Telegram every morning at 8 AM
       </div>
     </div>,
     {

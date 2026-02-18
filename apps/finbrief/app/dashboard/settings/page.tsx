@@ -62,7 +62,7 @@ export default function SettingsPage() {
         });
       }
     } catch (_error) {
-      setError('데이터를 불러오는데 실패했습니다.');
+      setError('Failed to load data.');
     } finally {
       setIsLoading(false);
     }
@@ -87,13 +87,13 @@ export default function SettingsPage() {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || '저장에 실패했습니다.');
+        throw new Error(data.error || 'Failed to save.');
       }
 
-      setSuccess('설정이 저장되었습니다.');
+      setSuccess('Settings saved.');
       setTimeout(() => setSuccess(''), 3000);
     } catch (error) {
-      setError(error instanceof Error ? error.message : '저장에 실패했습니다.');
+      setError(error instanceof Error ? error.message : 'Failed to save.');
     } finally {
       setIsSaving(false);
     }
@@ -108,7 +108,7 @@ export default function SettingsPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || '구독 관리 페이지로 이동할 수 없습니다.');
+        throw new Error(data.error || 'Unable to navigate to subscription management.');
       }
 
       window.location.href = data.portalUrl;
@@ -116,7 +116,7 @@ export default function SettingsPage() {
       setError(
         error instanceof Error
           ? error.message
-          : '구독 관리 페이지로 이동할 수 없습니다.',
+          : 'Unable to navigate to subscription management.',
       );
       setIsPortalLoading(false);
     }
@@ -147,9 +147,9 @@ export default function SettingsPage() {
         transition={{ duration: 0.5 }}
       >
         <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradientShift_3s_ease-in-out_infinite]">
-          설정
+          Settings
         </h1>
-        <p className="mt-2 text-slate-400">알림 및 환경 설정을 관리하세요</p>
+        <p className="mt-2 text-slate-400">Manage your notification and preferences</p>
       </motion.div>
 
       {/* Success Message */}
@@ -201,7 +201,7 @@ export default function SettingsPage() {
       >
         <div className="flex items-center gap-3 mb-6">
           <Bell className="w-6 h-6 text-emerald-400" />
-          <h2 className="text-2xl font-bold text-white">알림 설정</h2>
+          <h2 className="text-2xl font-bold text-white">Notification Settings</h2>
         </div>
 
         <div className="space-y-6">
@@ -209,10 +209,10 @@ export default function SettingsPage() {
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-white mb-1">
-                뉴스 알림
+                News Alerts
               </h3>
               <p className="text-sm text-slate-400">
-                관심종목 관련 중요 뉴스가 발생하면 알림을 받습니다
+                Get notified when important news about your watchlist stocks breaks
               </p>
             </div>
             <button
@@ -249,11 +249,11 @@ export default function SettingsPage() {
               <div className="flex items-center gap-2 mb-1">
                 <Mail className="w-5 h-5 text-slate-300" />
                 <h3 className="text-lg font-semibold text-white">
-                  이메일 알림
+                  Email Notifications
                 </h3>
               </div>
               <p className="text-sm text-slate-400">
-                이메일로 뉴스 알림을 받습니다
+                Receive news alerts via email
               </p>
             </div>
             <button
@@ -294,7 +294,7 @@ export default function SettingsPage() {
               <div className="flex items-center gap-2 mb-1">
                 <Send className="w-5 h-5 text-slate-300" />
                 <h3 className="text-lg font-semibold text-white">
-                  텔레그램 알림
+                  Telegram Notifications
                 </h3>
                 {!isPro && (
                   <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-semibold">
@@ -304,8 +304,8 @@ export default function SettingsPage() {
                 )}
               </div>
               <p className="text-sm text-slate-400">
-                텔레그램으로 실시간 뉴스 알림을 받습니다{' '}
-                {!isPro && '(Pro 전용)'}
+                Receive real-time news alerts via Telegram{' '}
+                {!isPro && '(Pro only)'}
               </p>
             </div>
             <button
@@ -356,10 +356,10 @@ export default function SettingsPage() {
                   transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                   className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
                 />
-                <span>저장 중...</span>
+                <span>Saving...</span>
               </div>
             ) : (
-              '설정 저장'
+              'Save Settings'
             )}
           </button>
         </div>
@@ -377,17 +377,16 @@ export default function SettingsPage() {
             <Crown className="w-6 h-6 text-amber-400 flex-shrink-0 mt-1" />
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-white mb-2">
-                Pro로 업그레이드
+                Upgrade to Pro
               </h3>
               <p className="text-slate-300 mb-4">
-                텔레그램 알림, 기술적 분석, 심층 리포트 등 프리미엄 기능을
-                이용하세요.
+                Unlock Telegram notifications, technical analysis, deep reports, and more premium features.
               </p>
               <a
                 href="/pricing"
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-medium hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105"
               >
-                플랜 보기
+                View Plans
               </a>
             </div>
           </div>
@@ -404,7 +403,7 @@ export default function SettingsPage() {
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-sm font-medium text-slate-400 mb-1">
-              현재 플랜
+              Current Plan
             </h3>
             <p className="text-xl font-bold text-white">
               {subscription?.planDisplayName}
@@ -424,12 +423,11 @@ export default function SettingsPage() {
         >
           <div className="flex items-center gap-3 mb-6">
             <CreditCard className="w-6 h-6 text-emerald-400" />
-            <h2 className="text-2xl font-bold text-white">구독 관리</h2>
+            <h2 className="text-2xl font-bold text-white">Subscription Management</h2>
           </div>
 
           <p className="text-slate-400 mb-6">
-            결제 수단 변경, 구독 취소, 인보이스 확인 등 구독 관련 설정을 관리할
-            수 있습니다.
+            Manage payment methods, cancel subscription, view invoices, and more.
           </p>
 
           <button
@@ -444,12 +442,12 @@ export default function SettingsPage() {
                   transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                   className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
                 />
-                <span>이동 중...</span>
+                <span>Redirecting...</span>
               </>
             ) : (
               <>
                 <CreditCard className="w-5 h-5" />
-                <span>구독 관리 포털 열기</span>
+                <span>Open Subscription Portal</span>
               </>
             )}
           </button>

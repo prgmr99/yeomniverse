@@ -25,8 +25,8 @@ export default function BriefingSample() {
         setData({
           briefings: [
             {
-              title: '데이터를 불러올 수 없습니다',
-              description: '잠시 후 다시 시도해주세요.',
+              title: 'Unable to load data',
+              description: 'Please try again later.',
               sentiment: 'neutral',
             },
           ],
@@ -67,17 +67,17 @@ export default function BriefingSample() {
         <div className="max-w-[980px] mx-auto">
           <div className="text-center mb-10">
             <p className="text-finbrief-gray-500 text-base font-medium tracking-wide uppercase mb-4">
-              미리보기
+              PREVIEW
             </p>
             <h2
               className="text-finbrief-black font-semibold"
               style={{ fontSize: '36px' }}
             >
-              오늘의 브리핑 샘플
+              Today's Briefing Sample
             </h2>
           </div>
           <div className="max-w-2xl mx-auto bg-finbrief-white rounded-3xl shadow-xl p-8 md:p-10">
-            <p className="text-center text-finbrief-gray-500">로딩 중...</p>
+            <p className="text-center text-finbrief-gray-500">Loading...</p>
           </div>
         </div>
       </section>
@@ -96,13 +96,13 @@ export default function BriefingSample() {
       <div className="max-w-[980px] mx-auto">
         <ScrollReveal className="text-center mb-10">
           <p className="text-finbrief-gray-500 text-base font-medium tracking-wide uppercase mb-4">
-            미리보기
+            PREVIEW
           </p>
           <h2
             className="text-finbrief-black font-semibold"
             style={{ fontSize: '36px' }}
           >
-            오늘의 브리핑 샘플
+            Today's Briefing Sample
           </h2>
         </ScrollReveal>
 

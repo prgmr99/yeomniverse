@@ -4,10 +4,10 @@ import { type NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
 const addWatchlistSchema = z.object({
-  symbol: z.string().min(1, '종목 코드를 입력해주세요.'),
-  name: z.string().min(1, '종목명을 입력해주세요.'),
+  symbol: z.string().min(1, 'Please enter a stock symbol.'),
+  name: z.string().min(1, 'Please enter a stock name.'),
   market: z.enum(['KOSPI', 'KOSDAQ', 'NYSE', 'NASDAQ'], {
-    message: '유효하지 않은 시장입니다.',
+    message: 'Invalid market.',
   }),
 });
 
@@ -53,7 +53,7 @@ export async function GET(
 
     if (authError || !user) {
       return NextResponse.json(
-        { error: '로그인이 필요합니다.' },
+        { error: 'Authentication required.' },
         { status: 401 },
       );
     }
@@ -69,7 +69,7 @@ export async function GET(
 
     if (subscriberError || !subscriber) {
       return NextResponse.json(
-        { error: '사용자 정보를 찾을 수 없습니다.' },
+        { error: 'User not found.' },
         { status: 404 },
       );
     }
@@ -103,7 +103,7 @@ export async function GET(
     if (watchlistError) {
       console.error('Watchlist fetch error:', watchlistError);
       return NextResponse.json(
-        { error: '관심 목록을 불러오는데 실패했습니다.' },
+        { error: 'Failed to load watchlist.' },
         { status: 500 },
       );
     }
@@ -117,7 +117,7 @@ export async function GET(
   } catch (error) {
     console.error('Watchlist GET error:', error);
     return NextResponse.json(
-      { error: '서버 오류가 발생했습니다.' },
+      { error: 'A server error occurred.' },
       { status: 500 },
     );
   }
@@ -137,7 +137,7 @@ export async function POST(
 
     if (authError || !user) {
       return NextResponse.json(
-        { error: '로그인이 필요합니다.' },
+        { error: 'Authentication required.' },
         { status: 401 },
       );
     }
@@ -150,7 +150,7 @@ export async function POST(
         {
           error:
             validation.error.issues[0]?.message ||
-            '입력값이 올바르지 않습니다.',
+            'Invalid input.',
         },
         { status: 400 },
       );
@@ -169,7 +169,7 @@ export async function POST(
 
     if (subscriberError || !subscriber) {
       return NextResponse.json(
-        { error: '사용자 정보를 찾을 수 없습니다.' },
+        { error: 'User not found.' },
         { status: 404 },
       );
     }
@@ -200,7 +200,7 @@ export async function POST(
     if (countError) {
       console.error('Count error:', countError);
       return NextResponse.json(
-        { error: '관심 목록 확인 중 오류가 발생했습니다.' },
+        { error: 'An error occurred while checking watchlist.' },
         { status: 500 },
       );
     }
@@ -208,7 +208,7 @@ export async function POST(
     if ((count || 0) >= limit) {
       return NextResponse.json(
         {
-          error: `관심 목록은 최대 ${limit}개까지 추가할 수 있습니다. 플랜을 업그레이드하세요.`,
+          error: `Watchlist is limited to ${limit} stocks. Please upgrade your plan.`,
           upgrade: true,
         },
         { status: 403 },
@@ -226,7 +226,7 @@ export async function POST(
 
     if (existing) {
       return NextResponse.json(
-        { error: '이미 관심 목록에 추가된 종목입니다.' },
+        { error: 'This stock is already in your watchlist.' },
         { status: 409 },
       );
     }
@@ -246,7 +246,7 @@ export async function POST(
     if (insertError || !newWatchlist) {
       console.error('Insert error:', insertError);
       return NextResponse.json(
-        { error: '관심 목록 추가 중 오류가 발생했습니다.' },
+        { error: 'An error occurred while adding to watchlist.' },
         { status: 500 },
       );
     }
@@ -258,7 +258,7 @@ export async function POST(
   } catch (error) {
     console.error('Watchlist POST error:', error);
     return NextResponse.json(
-      { error: '서버 오류가 발생했습니다.' },
+      { error: 'A server error occurred.' },
       { status: 500 },
     );
   }

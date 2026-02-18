@@ -11,23 +11,23 @@ const DOMAIN_URL =
 export const metadata: Metadata = {
   metadataBase: new URL(DOMAIN_URL),
   title: {
-    default: 'FinBrief | AI 재테크 브리핑',
+    default: 'FinBrief | AI Financial Briefing',
     template: '%s | FinBrief',
   },
   description:
-    '30초 만에 읽는 AI 재테크 브리핑. 매일 아침 8시, 핵심 금융 뉴스만 텔레그램으로 받아보세요. AI가 100개 뉴스를 분석하고 3가지만 선별합니다.',
+    'AI-powered financial briefing you can read in 30 seconds. Get the top 3 news picks from 100+ articles delivered to your Telegram every morning at 8 AM.',
   applicationName: 'FinBrief',
   keywords: [
-    'AI 금융 뉴스',
-    '재테크 브리핑',
-    '금융 뉴스 요약',
-    '텔레그램 금융 봇',
-    '투자 뉴스 AI',
-    '주식 뉴스 요약',
-    'AI 투자',
-    '재테크 뉴스',
-    '금융 AI',
-    '뉴스 큐레이션',
+    'AI financial news',
+    'financial briefing',
+    'news summary',
+    'Telegram finance bot',
+    'investment news AI',
+    'stock news summary',
+    'AI investing',
+    'finance news',
+    'financial AI',
+    'news curation',
   ],
   icons: {
     icon: [
@@ -72,27 +72,27 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'FinBrief | AI 재테크 브리핑',
+    title: 'FinBrief | AI Financial Briefing',
     description:
-      '30초 만에 읽는 AI 재테크 브리핑. AI가 100개 뉴스를 분석하고 3가지만 선별합니다.',
+      'AI-powered financial briefing in 30 seconds. AI analyzes 100+ articles and picks the top 3.',
     url: DOMAIN_URL,
     siteName: 'FinBrief',
-    locale: 'ko_KR',
+    locale: 'en_US',
     type: 'website',
     images: [
       {
         url: '/api/og',
         width: 1200,
         height: 630,
-        alt: 'FinBrief - AI 재테크 브리핑 서비스',
+        alt: 'FinBrief - AI Financial Briefing Service',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FinBrief | AI 재테크 브리핑',
+    title: 'FinBrief | AI Financial Briefing',
     description:
-      '30초 만에 읽는 AI 재테크 브리핑. 매일 아침 8시, 핵심 금융 뉴스만 텔레그램으로.',
+      'AI-powered financial briefing in 30 seconds. Top news delivered to your Telegram every morning at 8 AM.',
     images: ['/api/og'],
   },
   alternates: {
@@ -122,7 +122,7 @@ export default function RootLayout({
       width: 512,
       height: 512,
     },
-    description: '30초 만에 읽는 AI 재테크 브리핑',
+    description: 'AI-powered financial briefing in 30 seconds',
   };
 
   // SoftwareApplication schema for the AI service (NO AggregateRating - Google penalizes fabricated ratings)
@@ -135,30 +135,30 @@ export default function RootLayout({
     offers: {
       '@type': 'Offer',
       price: '0',
-      priceCurrency: 'KRW',
+      priceCurrency: 'USD',
     },
     description:
-      '30초 만에 읽는 AI 재테크 브리핑. 매일 아침 8시 텔레그램으로 핵심 금융 뉴스를 받아보세요.',
+      'AI-powered financial briefing in 30 seconds. Top news delivered to your Telegram every morning at 8 AM.',
   };
 
   // Service schema
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: 'AI 재테크 브리핑',
+    name: 'AI Financial Briefing',
     provider: {
       '@type': 'Organization',
       name: 'FinBrief',
     },
     description:
-      'AI가 100개의 금융 뉴스를 분석하고 가장 중요한 3가지만 선별하여 매일 아침 8시 텔레그램으로 전송합니다.',
+      'AI analyzes 100+ financial news articles and delivers the top 3 picks to your Telegram every morning at 8 AM.',
     serviceType: 'AI News Curation',
     areaServed: 'KR',
   };
 
   return (
     <html
-      lang="ko"
+      lang="en"
       className={`${serif.variable} ${sans.variable}`}
       suppressHydrationWarning
     >

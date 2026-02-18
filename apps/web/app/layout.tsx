@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: '%s | Yeomniverse',
   },
   description:
-    'Yeomniverse - 디지털 서비스 포털. 효도티어, FinBrief 등 다양한 서비스를 만나보세요.',
+    'Yeomniverse - A digital services portal. Explore Hyo-Tier, FinBrief, and more.',
   applicationName: 'Yeomniverse',
   icons: {
     icon: [
@@ -72,24 +72,24 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Yeomniverse',
-    description: 'Yeomniverse - 디지털 서비스 포털',
+    description: 'Yeomniverse - A digital services portal',
     url: DOMAIN_URL,
     siteName: 'Yeomniverse',
-    locale: 'ko_KR',
+    locale: 'en_US',
     type: 'website',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Yeomniverse - 효도티어, FinBrief 등 디지털 서비스',
+        alt: 'Yeomniverse - Digital services including Hyo-Tier, FinBrief',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Yeomniverse',
-    description: 'Yeomniverse - 디지털 서비스 포털',
+    description: 'Yeomniverse - A digital services portal',
     images: ['/og-image.png'],
   },
   alternates: {
@@ -131,7 +131,7 @@ export default function RootLayout({
       width: 512,
       height: 512,
     },
-    description: 'Yeomniverse - 디지털 서비스 포털',
+    description: 'Yeomniverse - A digital services portal',
   };
 
   // WebSite schema
@@ -141,7 +141,7 @@ export default function RootLayout({
     name: 'Yeomniverse',
     url: DOMAIN_URL,
     description:
-      'Yeomniverse - 디지털 서비스 포털. 효도티어, FinBrief 등 다양한 서비스를 만나보세요.',
+      'Yeomniverse - A digital services portal. Explore Hyo-Tier, FinBrief, and more.',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
@@ -154,7 +154,7 @@ export default function RootLayout({
 
   return (
     <html
-      lang="ko"
+      lang="en"
       className={`${serif.variable} ${sans.variable}`}
       suppressHydrationWarning
     >

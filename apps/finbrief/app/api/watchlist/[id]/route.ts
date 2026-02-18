@@ -24,7 +24,7 @@ export async function DELETE(
 
     if (authError || !user) {
       return NextResponse.json(
-        { error: '로그인이 필요합니다.' },
+        { error: 'Authentication required.' },
         { status: 401 },
       );
     }
@@ -32,7 +32,7 @@ export async function DELETE(
     const { id } = await params;
 
     if (!id) {
-      return NextResponse.json({ error: 'ID가 필요합니다.' }, { status: 400 });
+      return NextResponse.json({ error: 'ID is required.' }, { status: 400 });
     }
 
     const supabase = createServerClient();
@@ -46,7 +46,7 @@ export async function DELETE(
 
     if (subscriberError || !subscriber) {
       return NextResponse.json(
-        { error: '사용자 정보를 찾을 수 없습니다.' },
+        { error: 'User not found.' },
         { status: 404 },
       );
     }
@@ -63,19 +63,19 @@ export async function DELETE(
     if (updateError || !watchlist) {
       console.error('Delete error:', updateError);
       return NextResponse.json(
-        { error: '관심 목록 삭제 중 오류가 발생했습니다.' },
+        { error: 'An error occurred while deleting from watchlist.' },
         { status: 500 },
       );
     }
 
     return NextResponse.json({
       success: true,
-      message: '관심 목록에서 삭제되었습니다.',
+      message: 'Removed from watchlist.',
     });
   } catch (error) {
     console.error('Watchlist DELETE error:', error);
     return NextResponse.json(
-      { error: '서버 오류가 발생했습니다.' },
+      { error: 'A server error occurred.' },
       { status: 500 },
     );
   }

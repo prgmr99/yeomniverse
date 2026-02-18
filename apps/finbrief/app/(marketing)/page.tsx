@@ -87,7 +87,7 @@ function HeroSection() {
               '0 2px 4px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2), 0 8px 32px rgba(0,0,0,0.15)',
           }}
         >
-          30초 만에 읽는 AI 재테크 브리핑
+          AI Financial Briefing in 30 Seconds
         </motion.p>
 
         {/* CTA Button */}
@@ -105,7 +105,7 @@ function HeroSection() {
             className="inline-flex items-center gap-2 bg-white/90 backdrop-blur px-8 py-4 rounded-full text-lg font-medium hover:bg-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
             style={{ color: '#0071E3' }}
           >
-            무료로 시작하기
+            Get Started Free
             <ArrowRight className="w-5 h-5" />
           </a>
         </motion.div>
@@ -124,7 +124,7 @@ function HeroSection() {
           className="flex flex-col items-center gap-2"
           style={{ color: 'rgba(255,255,255,0.7)' }}
         >
-          <span className="text-sm">스크롤</span>
+          <span className="text-sm">Scroll</span>
           <ChevronDown className="w-5 h-5" />
         </motion.div>
       </motion.div>
@@ -148,7 +148,7 @@ function ValueProposition() {
               className="font-semibold text-finbrief-black"
               style={{ fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.2 }}
             >
-              AI가 <span className="text-gradient">100개의 뉴스</span>를 읽고,
+              AI reads <span className="text-gradient">100+ articles</span>,
             </p>
           </StaggerItem>
           <StaggerItem>
@@ -156,7 +156,7 @@ function ValueProposition() {
               className="font-semibold text-finbrief-black"
               style={{ fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.2 }}
             >
-              당신에게 꼭 필요한 <span className="text-gradient">3가지</span>만.
+              and picks just the <span className="text-gradient">top 3</span> for you.
             </p>
           </StaggerItem>
         </StaggerContainer>
@@ -166,7 +166,7 @@ function ValueProposition() {
             className="text-finbrief-gray-500 max-w-[680px] mx-auto"
             style={{ fontSize: 'clamp(18px, 2.5vw, 24px)' }}
           >
-            20년 경력 펀드매니저 수준의 큐레이션을 무료로 경험하세요.
+            Experience fund manager-level curation, for free.
           </p>
         </ScrollReveal>
       </div>
@@ -181,21 +181,21 @@ function FeatureShowcase() {
   const features = [
     {
       icon: Zap,
-      title: '30초 독해',
+      title: '30-Second Read',
       description:
-        '출근길 지하철에서, 점심시간 직전에 핵심만 빠르게 파악하세요.',
+        'Catch the key points quickly on your commute or before lunch.',
     },
     {
       icon: Brain,
-      title: 'AI 큐레이션',
+      title: 'AI Curation',
       description:
-        '최신 AI 기술로 수백 개의 뉴스를 분석하고 가장 중요한 정보만 선별합니다.',
+        'Cutting-edge AI analyzes hundreds of articles and picks only the most important.',
     },
     {
       icon: Target,
-      title: '맞춤 인사이트',
+      title: 'Tailored Insights',
       description:
-        '호재와 악재를 즉시 판단할 수 있는 명확한 시장 분석을 제공합니다.',
+        'Get clear market analysis to instantly judge bullish or bearish signals.',
     },
   ];
 
@@ -207,14 +207,14 @@ function FeatureShowcase() {
       <div className="max-w-[980px] mx-auto">
         <ScrollReveal>
           <p className="text-finbrief-gray-500 text-base font-medium tracking-wide uppercase mb-4">
-            핵심 기능
+            KEY FEATURES
           </p>
           <h2
             className="text-finbrief-white font-semibold mb-10"
             style={{ fontSize: 'clamp(36px, 5vw, 48px)', lineHeight: 1.15 }}
           >
-            더 스마트하게,
-            <br />더 빠르게
+            Smarter.
+            <br />Faster.
           </h2>
         </ScrollReveal>
 
@@ -252,9 +252,9 @@ function FeatureShowcase() {
 // ============================================
 function HowItWorks() {
   const steps = [
-    { number: '01', title: '매일 새벽, AI가 100+ 뉴스를 분석' },
-    { number: '02', title: '가장 중요한 3가지를 선별' },
-    { number: '03', title: '아침 8시, 텔레그램으로 전송' },
+    { number: '01', title: 'Every dawn, AI analyzes 100+ articles' },
+    { number: '02', title: 'Picks the 3 most important' },
+    { number: '03', title: 'Delivered via Telegram at 8 AM' },
   ];
 
   return (
@@ -265,13 +265,13 @@ function HowItWorks() {
       <div className="max-w-[980px] mx-auto">
         <ScrollReveal className="text-center mb-10">
           <p className="text-finbrief-gray-500 text-base font-medium tracking-wide uppercase mb-4">
-            작동 방식
+            HOW IT WORKS
           </p>
           <h2
             className="text-finbrief-black font-semibold"
             style={{ fontSize: '36px' }}
           >
-            이렇게 동작해요
+            Here's how it works
           </h2>
         </ScrollReveal>
 
@@ -335,11 +335,11 @@ function CTASection() {
         setEmail('');
       } else {
         const data = await response.json();
-        setError(data.error || '구독에 실패했습니다. 다시 시도해주세요.');
+        setError(data.error || 'Subscription failed. Please try again.');
       }
     } catch (error) {
-      setError('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-      console.error('구독 실패:', error);
+      setError('A network error occurred. Please try again later.');
+      console.error('Subscription failed:', error);
     } finally {
       setIsLoading(false);
     }
@@ -357,7 +357,7 @@ function CTASection() {
             className="text-finbrief-white mb-4"
             style={{ fontSize: 'clamp(32px, 6vw, 64px)' }}
           >
-            내일 아침부터 시작하세요
+            Start tomorrow morning
           </h2>
           <p
             className="mb-10 max-w-[680px] mx-auto"
@@ -366,7 +366,7 @@ function CTASection() {
               color: 'rgba(255,255,255,0.7)',
             }}
           >
-            매일 아침 8시, 텔레그램으로 배달됩니다
+            Delivered to your Telegram every morning at 8 AM
           </p>
         </ScrollReveal>
 
@@ -375,7 +375,7 @@ function CTASection() {
             <div className="flex flex-col sm:flex-row gap-4">
               <input
                 type="email"
-                placeholder="이메일 주소"
+                placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onFocus={() => {
@@ -405,13 +405,13 @@ function CTASection() {
                       }}
                       className="w-4 h-4 border-2 border-current border-t-transparent rounded-full"
                     />
-                    전송 중...
+                    Sending...
                   </>
                 ) : isSubmitted ? (
-                  '구독 완료!'
+                  'Subscribed!'
                 ) : (
                   <>
-                    무료 구독
+                    Subscribe Free
                     <Send className="w-4 h-4" />
                   </>
                 )}
@@ -424,7 +424,7 @@ function CTASection() {
                 animate={{ opacity: 1, y: 0 }}
                 className="mt-4 text-white/90 font-medium"
               >
-                이메일을 확인해주세요. 곧 첫 브리핑을 받아보실 수 있습니다!
+                Check your email. Your first briefing is on its way!
               </motion.p>
             )}
 
@@ -440,14 +440,14 @@ function CTASection() {
           </form>
 
           <p className="mt-8" style={{ color: 'rgba(255,255,255,0.6)' }}>
-            또는{' '}
+            or{' '}
             <a
               href="https://t.me/finbrief_news_bot"
               target="_blank"
               rel="noopener noreferrer"
               className="text-finbrief-white underline underline-offset-4 hover:no-underline transition-all"
             >
-              텔레그램 봇 바로 시작하기
+              Start the Telegram bot now
             </a>
           </p>
         </ScrollReveal>
@@ -467,19 +467,19 @@ function Footer() {
           <div className="text-gradient font-bold text-2xl">FinBrief</div>
           <div className="flex items-center gap-6 text-sm text-finbrief-gray-500">
             <a href="#" className="hover:text-finbrief-black transition-colors">
-              서비스 소개
+              About
             </a>
             <a
               href="/privacy"
               className="hover:text-finbrief-black transition-colors"
             >
-              개인정보처리방침
+              Privacy Policy
             </a>
             <a
               href="/terms"
               className="hover:text-finbrief-black transition-colors"
             >
-              이용약관
+              Terms of Service
             </a>
           </div>
         </div>

@@ -48,7 +48,7 @@ export function PricingCard({
             background: 'linear-gradient(135deg, #0071E3 0%, #5E5CE6 100%)',
           }}
         >
-          추천
+          Recommended
         </div>
       )}
 
@@ -69,7 +69,7 @@ export function PricingCard({
                 highlighted ? 'text-finbrief-black' : 'text-finbrief-black'
               }`}
             >
-              {price === 0 ? '무료' : `$${price}`}
+              {price === 0 ? 'Free' : `$${price}`}
             </span>
             {price > 0 && (
               <span className="text-finbrief-gray-500 text-sm">/ {period}</span>
@@ -149,7 +149,7 @@ export function PricingCard({
             }
           }}
         >
-          {isCurrentPlan ? '현재 플랜' : buttonText}
+          {isCurrentPlan ? 'Current Plan' : buttonText}
         </button>
       </div>
     </div>

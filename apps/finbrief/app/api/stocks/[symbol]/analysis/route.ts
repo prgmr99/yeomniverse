@@ -67,7 +67,7 @@ export async function GET(
 
     if (authError || !user) {
       return NextResponse.json(
-        { error: '로그인이 필요합니다.' },
+        { error: 'Authentication required.' },
         { status: 401 },
       );
     }
@@ -76,7 +76,7 @@ export async function GET(
 
     if (!symbol) {
       return NextResponse.json(
-        { error: '종목 코드가 필요합니다.' },
+        { error: 'Stock symbol is required.' },
         { status: 400 },
       );
     }
@@ -92,7 +92,7 @@ export async function GET(
 
     if (subscriberError || !subscriber) {
       return NextResponse.json(
-        { error: '사용자 정보를 찾을 수 없습니다.' },
+        { error: 'User not found.' },
         { status: 404 },
       );
     }
@@ -110,7 +110,7 @@ export async function GET(
     if (!subscription || !subscription.plans) {
       return NextResponse.json(
         {
-          error: '종목 분석은 Basic 또는 Pro 플랜에서 이용할 수 있습니다.',
+          error: 'Stock analysis is available on Basic or Pro plans.',
           upgrade: true,
         },
         { status: 403 },
@@ -124,7 +124,7 @@ export async function GET(
     if (!hasStockAnalysis) {
       return NextResponse.json(
         {
-          error: '종목 분석은 Basic 또는 Pro 플랜에서 이용할 수 있습니다.',
+          error: 'Stock analysis is available on Basic or Pro plans.',
           upgrade: true,
         },
         { status: 403 },
@@ -136,7 +136,7 @@ export async function GET(
 
     if (!quote) {
       return NextResponse.json(
-        { error: '종목 정보를 찾을 수 없습니다.' },
+        { error: 'Stock information not found.' },
         { status: 404 },
       );
     }
@@ -149,7 +149,7 @@ export async function GET(
 
     if (historicalData.length < 20) {
       return NextResponse.json(
-        { error: '충분한 과거 데이터가 없습니다.' },
+        { error: 'Not enough historical data.' },
         { status: 404 },
       );
     }
@@ -188,7 +188,7 @@ export async function GET(
   } catch (error) {
     console.error('Stock analysis error:', error);
     return NextResponse.json(
-      { error: '분석 중 오류가 발생했습니다.' },
+      { error: 'An error occurred during analysis.' },
       { status: 500 },
     );
   }

@@ -67,7 +67,7 @@ export default function WatchlistPage() {
         setSubscription(data);
       }
     } catch (_error) {
-      setError('데이터를 불러오는데 실패했습니다.');
+      setError('Failed to load data.');
     } finally {
       setIsLoading(false);
     }
@@ -95,7 +95,7 @@ export default function WatchlistPage() {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || '추가에 실패했습니다.');
+        throw new Error(data.error || 'Failed to add.');
       }
 
       // Reset form and refresh data
@@ -105,14 +105,14 @@ export default function WatchlistPage() {
       setShowAddForm(false);
       await fetchData();
     } catch (error) {
-      setError(error instanceof Error ? error.message : '추가에 실패했습니다.');
+      setError(error instanceof Error ? error.message : 'Failed to add.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('이 종목을 삭제하시겠습니까?')) return;
+    if (!confirm('Are you sure you want to delete this stock?')) return;
 
     try {
       const response = await fetch(`/api/watchlist/${id}`, {
@@ -120,12 +120,12 @@ export default function WatchlistPage() {
       });
 
       if (!response.ok) {
-        throw new Error('삭제에 실패했습니다.');
+        throw new Error('Failed to delete.');
       }
 
       await fetchData();
     } catch (error) {
-      setError(error instanceof Error ? error.message : '삭제에 실패했습니다.');
+      setError(error instanceof Error ? error.message : 'Failed to delete.');
     }
   };
 
@@ -157,10 +157,10 @@ export default function WatchlistPage() {
       >
         <div>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradientShift_3s_ease-in-out_infinite]">
-            관심종목
+            Watchlist
           </h1>
           <p className="mt-2 text-slate-400">
-            {watchlistCount}/{watchlistLimit}개 등록됨
+            {watchlistCount}/{watchlistLimit} registered
           </p>
         </div>
 
@@ -175,7 +175,7 @@ export default function WatchlistPage() {
           }`}
         >
           <Plus className="w-5 h-5" />
-          종목 추가
+          Add Stock
         </button>
       </motion.div>
 
@@ -214,17 +214,16 @@ export default function WatchlistPage() {
             <Crown className="w-6 h-6 text-amber-400 flex-shrink-0 mt-1" />
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-white mb-2">
-                관심종목 한도에 도달했습니다
+                Watchlist limit reached
               </h3>
               <p className="text-slate-300 mb-4">
-                Pro 플랜으로 업그레이드하면 무제한으로 종목을 추가할 수
-                있습니다.
+                Upgrade to Pro for unlimited watchlist stocks.
               </p>
               <Link
                 href="/pricing"
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-medium hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105"
               >
-                Pro로 업그레이드
+                Upgrade to Pro
               </Link>
             </div>
           </div>
@@ -249,7 +248,7 @@ export default function WatchlistPage() {
               className="w-full max-w-md p-8 rounded-2xl bg-slate-900 border border-white/10"
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-white">종목 추가</h2>
+                <h2 className="text-2xl font-bold text-white">Add Stock</h2>
                 <button
                   type="button"
                   onClick={() => setShowAddForm(false)}
@@ -265,14 +264,14 @@ export default function WatchlistPage() {
                     htmlFor="symbol"
                     className="block text-sm font-medium text-slate-300 mb-2"
                   >
-                    종목 코드
+                    Stock Symbol
                   </label>
                   <input
                     id="symbol"
                     type="text"
                     value={symbol}
                     onChange={(e) => setSymbol(e.target.value)}
-                    placeholder="예: AAPL, 005930"
+                    placeholder="e.g. AAPL, 005930"
                     required
                     className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-emerald-500/50 transition-colors"
                   />
@@ -283,14 +282,14 @@ export default function WatchlistPage() {
                     htmlFor="name"
                     className="block text-sm font-medium text-slate-300 mb-2"
                   >
-                    종목명
+                    Stock Name
                   </label>
                   <input
                     id="name"
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="예: Apple, 삼성전자"
+                    placeholder="e.g. Apple, Samsung"
                     required
                     className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-emerald-500/50 transition-colors"
                   />
@@ -301,7 +300,7 @@ export default function WatchlistPage() {
                     htmlFor="market"
                     className="block text-sm font-medium text-slate-300 mb-2"
                   >
-                    시장
+                    Market
                   </label>
                   <select
                     id="market"
@@ -327,7 +326,7 @@ export default function WatchlistPage() {
                     onClick={() => setShowAddForm(false)}
                     className="flex-1 px-6 py-3 rounded-xl bg-white/5 text-slate-300 font-medium hover:bg-white/10 transition-all duration-200"
                   >
-                    취소
+                    Cancel
                   </button>
                   <button
                     type="submit"
@@ -345,7 +344,7 @@ export default function WatchlistPage() {
                         className="w-5 h-5 mx-auto border-2 border-white border-t-transparent rounded-full"
                       />
                     ) : (
-                      '추가'
+                      'Add'
                     )}
                   </button>
                 </div>
@@ -365,17 +364,17 @@ export default function WatchlistPage() {
         >
           <Star className="w-16 h-16 text-slate-700 mx-auto mb-6" />
           <h3 className="text-xl font-semibold text-slate-300 mb-2">
-            아직 관심종목이 없습니다
+            No stocks in your watchlist yet
           </h3>
           <p className="text-slate-500 mb-8">
-            종목을 추가하고 맞춤형 분석을 받아보세요
+            Add stocks to get personalized analysis
           </p>
           <button
             type="button"
             onClick={() => setShowAddForm(true)}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105"
           >
-            <Plus className="w-5 h-5" />첫 종목 추가하기
+            <Plus className="w-5 h-5" />Add Your First Stock
           </button>
         </motion.div>
       ) : (
@@ -407,7 +406,7 @@ export default function WatchlistPage() {
                   className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500/20 text-red-400 text-sm font-medium hover:bg-red-500/30 transition-all duration-200"
                 >
                   <Trash2 className="w-4 h-4" />
-                  삭제
+                  Delete
                 </button>
                 <button
                   type="button"
@@ -417,7 +416,7 @@ export default function WatchlistPage() {
                   className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 text-emerald-400 text-sm font-medium hover:bg-emerald-500/30 transition-all duration-200"
                 >
                   <TrendingUp className="w-4 h-4" />
-                  분석 보기
+                  View Analysis
                 </button>
               </div>
             </motion.div>

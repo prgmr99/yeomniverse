@@ -45,9 +45,9 @@ export default function DashboardLayout({
   };
 
   const navItems = [
-    { href: '/dashboard', label: '대시보드', icon: LayoutDashboard },
-    { href: '/dashboard/watchlist', label: '관심종목', icon: Star },
-    { href: '/dashboard/settings', label: '설정', icon: Settings },
+    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/dashboard/watchlist', label: 'Watchlist', icon: Star },
+    { href: '/dashboard/settings', label: 'Settings', icon: Settings },
   ];
 
   if (isLoading) {
@@ -104,7 +104,7 @@ export default function DashboardLayout({
               className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-red-400 hover:bg-red-400/10 transition-all duration-200"
             >
               <LogOut className="w-4 h-4" />
-              로그아웃
+              Log Out
             </button>
           </div>
 
@@ -162,7 +162,7 @@ export default function DashboardLayout({
                     className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-400/10 transition-all duration-200"
                   >
                     <LogOut className="w-5 h-5" />
-                    <span className="font-medium">로그아웃</span>
+                    <span className="font-medium">Log Out</span>
                   </button>
                 </div>
               </nav>

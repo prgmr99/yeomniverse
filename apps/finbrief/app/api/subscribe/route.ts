@@ -5,7 +5,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
 const subscribeSchema = z.object({
-  email: z.string().email('올바른 이메일 주소를 입력해주세요.'),
+  email: z.string().email('Please enter a valid email address.'),
 });
 
 interface SuccessResponse {
@@ -34,7 +34,7 @@ export async function POST(
           success: false,
           error:
             validation.error.issues[0]?.message ||
-            '입력값이 올바르지 않습니다.',
+            'Invalid input.',
           code: 'VALIDATION_ERROR',
         },
         { status: 400 },
@@ -61,14 +61,14 @@ export async function POST(
 
         return NextResponse.json({
           success: true,
-          message: '구독이 다시 활성화되었습니다!',
+          message: 'Your subscription has been reactivated!',
         });
       }
 
       return NextResponse.json(
         {
           success: false,
-          error: '이미 구독 중인 이메일입니다.',
+          error: 'This email is already subscribed.',
           code: 'ALREADY_SUBSCRIBED',
         },
         { status: 409 },
@@ -86,7 +86,7 @@ export async function POST(
       return NextResponse.json(
         {
           success: false,
-          error: '구독 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+          error: 'An error occurred while processing your subscription. Please try again later.',
           code: 'DATABASE_ERROR',
         },
         { status: 500 },
@@ -105,7 +105,7 @@ export async function POST(
       const result = await resend.emails.send({
         from: fromEmail,
         to: normalizedEmail,
-        subject: '환영합니다! FinBrief 구독이 시작되었습니다',
+        subject: 'Welcome! Your FinBrief subscription has started',
         react: WelcomeEmail({
           unsubscribeToken: newSubscriber.unsubscribe_token,
         }),
@@ -124,14 +124,14 @@ export async function POST(
 
     return NextResponse.json({
       success: true,
-      message: '구독이 완료되었습니다! 환영 이메일을 확인해주세요.',
+      message: 'Subscription complete! Please check your email for a welcome message.',
     });
   } catch (error) {
     console.error('Subscribe API error:', error);
     return NextResponse.json(
       {
         success: false,
-        error: '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+        error: 'A server error occurred. Please try again later.',
         code: 'INTERNAL_ERROR',
       },
       { status: 500 },

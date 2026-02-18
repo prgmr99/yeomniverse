@@ -4,7 +4,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
 const loginSchema = z.object({
-  email: z.string().email('올바른 이메일 주소를 입력해주세요.'),
+  email: z.string().email('Please enter a valid email address.'),
 });
 
 export async function POST(request: NextRequest) {
@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
         {
           error:
             validation.error.issues[0]?.message ||
-            '입력값이 올바르지 않습니다.',
+            'Invalid input.',
         },
         { status: 400 },
       );
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
 
     if (!supabaseUrl || !supabaseAnonKey) {
       return NextResponse.json(
-        { error: 'Supabase가 구성되지 않았습니다.' },
+        { error: 'Supabase is not configured.' },
         { status: 500 },
       );
     }
@@ -67,19 +67,19 @@ export async function POST(request: NextRequest) {
       console.error('Magic link send error:', error);
       return NextResponse.json(
         {
-          error: '로그인 링크 전송에 실패했습니다. 잠시 후 다시 시도해주세요.',
+          error: 'Failed to send sign-in link. Please try again later.',
         },
         { status: 500 },
       );
     }
 
     return NextResponse.json({
-      message: '로그인 링크가 이메일로 전송되었습니다. 이메일을 확인해주세요.',
+      message: 'A sign-in link has been sent to your email. Please check your inbox.',
     });
   } catch (error) {
     console.error('Login API error:', error);
     return NextResponse.json(
-      { error: '서버 오류가 발생했습니다.' },
+      { error: 'A server error occurred.' },
       { status: 500 },
     );
   }
