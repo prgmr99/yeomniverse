@@ -3,10 +3,6 @@ import { getStockQuote } from '@/lib/finbrief/stock-collector';
 
 export const revalidate = 300; // Revalidate every 5 minutes
 
-interface ErrorResponse {
-  error: string;
-}
-
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ symbol: string }> },

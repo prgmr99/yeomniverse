@@ -37,41 +37,40 @@ export default function SettingsPage() {
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
 
-  const fetchData = async () => {
-    try {
-      const [settingsRes, subRes] = await Promise.all([
-        fetch('/api/settings'),
-        fetch('/api/subscription'),
-      ]);
-
-      if (settingsRes.ok) {
-        const data = await settingsRes.json();
-        setSettings({
-          newsAlertsEnabled: data.newsAlertsEnabled ?? true,
-          emailNotifications: data.emailNotifications ?? true,
-          telegramNotifications: data.telegramNotifications ?? false,
-        });
-      }
-
-      if (subRes.ok) {
-        const data = await subRes.json();
-        const planName = data.plan?.name || 'free';
-        setSubscription({
-          plan: planName,
-          planDisplayName: data.plan?.display_name || 'Free',
-        });
-      }
-    } catch (_error) {
-      setError('Failed to load data.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [settingsRes, subRes] = await Promise.all([
+          fetch('/api/settings'),
+          fetch('/api/subscription'),
+        ]);
+
+        if (settingsRes.ok) {
+          const data = await settingsRes.json();
+          setSettings({
+            newsAlertsEnabled: data.newsAlertsEnabled ?? true,
+            emailNotifications: data.emailNotifications ?? true,
+            telegramNotifications: data.telegramNotifications ?? false,
+          });
+        }
+
+        if (subRes.ok) {
+          const data = await subRes.json();
+          const planName = data.plan?.name || 'free';
+          setSubscription({
+            plan: planName,
+            planDisplayName: data.plan?.display_name || 'Free',
+          });
+        }
+      } catch (_error) {
+        setError('Failed to load data.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchData]);
+  }, []);
 
   const handleSave = async () => {
     setIsSaving(true);
@@ -187,6 +186,7 @@ export default function SettingsPage() {
               <p className="text-red-400 text-sm">{error}</p>
             </div>
             <button
+              type="button"
               onClick={() => setError('')}
               className="text-red-400 hover:text-red-300 transition-colors"
             >
@@ -223,6 +223,7 @@ export default function SettingsPage() {
               </p>
             </div>
             <button
+              type="button"
               onClick={() =>
                 setSettings((prev) => ({
                   ...prev,
@@ -264,6 +265,7 @@ export default function SettingsPage() {
               </p>
             </div>
             <button
+              type="button"
               onClick={() =>
                 settings.newsAlertsEnabled &&
                 setSettings((prev) => ({
@@ -316,6 +318,7 @@ export default function SettingsPage() {
               </p>
             </div>
             <button
+              type="button"
               onClick={() =>
                 isPro &&
                 settings.newsAlertsEnabled &&
@@ -352,6 +355,7 @@ export default function SettingsPage() {
         {/* Save Button */}
         <div className="mt-8 pt-6 border-t border-white/10">
           <button
+            type="button"
             onClick={handleSave}
             disabled={isSaving}
             className="w-full px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:scale-100"
@@ -442,6 +446,7 @@ export default function SettingsPage() {
           </p>
 
           <button
+            type="button"
             onClick={handleManageSubscription}
             disabled={isPortalLoading}
             className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/10 border border-white/20 text-white font-medium hover:bg-white/20 hover:border-white/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"

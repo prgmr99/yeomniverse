@@ -14,7 +14,7 @@ import {
   X,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface StockAnalysisCardProps {
   symbol: string;
@@ -65,7 +65,7 @@ export default function StockAnalysisCard({
   const [error, setError] = useState<string | null>(null);
   const [shouldUpgrade, setShouldUpgrade] = useState(false);
 
-  const fetchAnalysis = async () => {
+  const fetchAnalysis = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     setShouldUpgrade(false);
@@ -89,7 +89,7 @@ export default function StockAnalysisCard({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [symbol]);
 
   useEffect(() => {
     fetchAnalysis();
@@ -163,6 +163,7 @@ export default function StockAnalysisCard({
             </div>
             {onClose && (
               <button
+                type="button"
                 onClick={onClose}
                 className="p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all"
               >
@@ -224,6 +225,7 @@ export default function StockAnalysisCard({
               )}
 
               <button
+                type="button"
                 onClick={fetchAnalysis}
                 className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/5 text-slate-300 font-medium hover:bg-white/10 transition-all duration-200"
               >
@@ -510,6 +512,7 @@ export default function StockAnalysisCard({
 
               {/* Refresh Button */}
               <button
+                type="button"
                 onClick={fetchAnalysis}
                 className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/5 text-slate-300 font-medium hover:bg-white/10 transition-all duration-200"
               >

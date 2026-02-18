@@ -30,9 +30,14 @@ export async function getStockQuote(
   try {
     // Normalize Korean stock symbols
     const normalized = normalizeKoreanSymbol(symbol);
-    const querySymbol = normalized.isValid ? normalized.symbol! : symbol;
+    const querySymbol = normalized.isValid
+      ? (normalized.symbol ?? symbol)
+      : symbol;
 
-    const quote = (await yahooFinance.quote(querySymbol)) as any;
+    const quote = (await yahooFinance.quote(querySymbol)) as Record<
+      string,
+      unknown
+    >;
 
     if (!quote) {
       return null;
@@ -40,16 +45,20 @@ export async function getStockQuote(
 
     return {
       symbol: querySymbol,
-      name: quote.shortName || quote.longName || querySymbol,
-      regularMarketPrice: quote.regularMarketPrice || 0,
-      regularMarketChange: quote.regularMarketChange || 0,
-      regularMarketChangePercent: quote.regularMarketChangePercent || 0,
-      regularMarketVolume: quote.regularMarketVolume || 0,
-      regularMarketDayHigh: quote.regularMarketDayHigh || 0,
-      regularMarketDayLow: quote.regularMarketDayLow || 0,
-      fiftyTwoWeekHigh: quote.fiftyTwoWeekHigh || 0,
-      fiftyTwoWeekLow: quote.fiftyTwoWeekLow || 0,
-      currency: quote.currency || 'KRW',
+      name:
+        (quote.shortName as string) ||
+        (quote.longName as string) ||
+        querySymbol,
+      regularMarketPrice: (quote.regularMarketPrice as number) || 0,
+      regularMarketChange: (quote.regularMarketChange as number) || 0,
+      regularMarketChangePercent:
+        (quote.regularMarketChangePercent as number) || 0,
+      regularMarketVolume: (quote.regularMarketVolume as number) || 0,
+      regularMarketDayHigh: (quote.regularMarketDayHigh as number) || 0,
+      regularMarketDayLow: (quote.regularMarketDayLow as number) || 0,
+      fiftyTwoWeekHigh: (quote.fiftyTwoWeekHigh as number) || 0,
+      fiftyTwoWeekLow: (quote.fiftyTwoWeekLow as number) || 0,
+      currency: (quote.currency as string) || 'KRW',
     };
   } catch (error) {
     console.error(`Failed to fetch quote for ${symbol}:`, error);
@@ -64,20 +73,22 @@ export async function getHistoricalData(
 ): Promise<HistoricalData[]> {
   try {
     const normalized = normalizeKoreanSymbol(symbol);
-    const querySymbol = normalized.isValid ? normalized.symbol! : symbol;
+    const querySymbol = normalized.isValid
+      ? (normalized.symbol ?? symbol)
+      : symbol;
 
     const result = (await yahooFinance.historical(querySymbol, {
       period1,
       period2,
-    })) as any[];
+    })) as Record<string, unknown>[];
 
-    return result.map((item: any) => ({
-      date: item.date,
-      open: item.open,
-      high: item.high,
-      low: item.low,
-      close: item.close,
-      volume: item.volume,
+    return result.map((item: Record<string, unknown>) => ({
+      date: item.date as Date,
+      open: item.open as number,
+      high: item.high as number,
+      low: item.low as number,
+      close: item.close as number,
+      volume: item.volume as number,
     }));
   } catch (error) {
     console.error(`Failed to fetch historical data for ${symbol}:`, error);
@@ -89,15 +100,21 @@ export async function searchStocks(
   query: string,
 ): Promise<Array<{ symbol: string; name: string; exchange: string }>> {
   try {
-    const results = (await yahooFinance.search(query)) as any;
+    const results = (await yahooFinance.search(query)) as Record<
+      string,
+      unknown
+    >;
 
-    return results.quotes
-      .filter((q: any) => q.quoteType === 'EQUITY')
+    return (results.quotes as Record<string, unknown>[])
+      .filter((q: Record<string, unknown>) => q.quoteType === 'EQUITY')
       .slice(0, 10)
-      .map((q: any) => ({
-        symbol: q.symbol,
-        name: q.shortname || q.longname || q.symbol,
-        exchange: q.exchange || 'Unknown',
+      .map((q: Record<string, unknown>) => ({
+        symbol: q.symbol as string,
+        name:
+          (q.shortname as string) ||
+          (q.longname as string) ||
+          (q.symbol as string),
+        exchange: (q.exchange as string) || 'Unknown',
       }));
   } catch (error) {
     console.error(`Search failed for ${query}:`, error);

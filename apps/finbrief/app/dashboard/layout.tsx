@@ -100,6 +100,7 @@ export default function DashboardLayout({
           <div className="hidden md:flex items-center gap-4">
             <span className="text-sm text-slate-400">{user?.email}</span>
             <button
+              type="button"
               onClick={handleLogout}
               className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-red-400 hover:bg-red-400/10 transition-all duration-200"
             >
@@ -110,6 +111,7 @@ export default function DashboardLayout({
 
           {/* Mobile Menu Button */}
           <button
+            type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all"
           >
@@ -155,6 +157,7 @@ export default function DashboardLayout({
                     {user?.email}
                   </div>
                   <button
+                    type="button"
                     onClick={() => {
                       setIsMobileMenuOpen(false);
                       handleLogout();

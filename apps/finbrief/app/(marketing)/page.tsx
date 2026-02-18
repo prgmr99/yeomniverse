@@ -468,7 +468,10 @@ function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-gradient font-bold text-2xl">FinBrief</div>
           <div className="flex items-center gap-6 text-sm text-finbrief-gray-500">
-            <a href="#" className="hover:text-finbrief-black transition-colors">
+            <a
+              href="/about"
+              className="hover:text-finbrief-black transition-colors"
+            >
               About
             </a>
             <a

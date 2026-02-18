@@ -35,12 +35,24 @@ export function getLatestBriefing(): BriefingData {
   }
 }
 
+interface AnalysisNews {
+  title: string;
+  summary: string;
+  sentiment: string;
+}
+
+interface AnalysisData {
+  topNews: AnalysisNews[];
+  keywords: string[];
+  marketSentiment: string;
+}
+
 /**
  * Transforms an analysis object into BriefingData format
  */
-function transformToBriefingData(analysis: any): BriefingData {
+function transformToBriefingData(analysis: AnalysisData): BriefingData {
   return {
-    briefings: analysis.topNews.map((news: any) => ({
+    briefings: analysis.topNews.map((news: AnalysisNews) => ({
       title: news.title,
       description: news.summary,
       sentiment: mapSentiment(news.sentiment),

@@ -1,2 +1,10 @@
 {"t":0,"agent":"a22fec1","agent_type":"executor","event":"agent_start","parent_mode":"none"}
 {"t":0,"agent":"ac62020","agent_type":"executor","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"ac1ed14","agent_type":"executor","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"a054a52","agent_type":"executor","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"a22fec1","agent_type":"executor","event":"agent_stop","success":true,"duration_ms":50685}
+{"t":0,"agent":"ac62020","agent_type":"executor","event":"agent_stop","success":true,"duration_ms":58841}
+{"t":0,"agent":"ac1ed14","agent_type":"executor","event":"agent_stop","success":true,"duration_ms":67927}
+{"t":0,"agent":"a054a52","agent_type":"executor","event":"agent_stop","success":true,"duration_ms":91486}
+{"t":0,"agent":"system","event":"keyword_detected","keyword":"ralph"}
+{"t":0,"agent":"system","event":"mode_change","mode_from":"none","mode_to":"ralph"}

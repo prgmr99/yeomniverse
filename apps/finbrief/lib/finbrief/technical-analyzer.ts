@@ -162,7 +162,7 @@ export function interpretIndicators(
 
   // Bollinger Bands interpretation
   if (indicators.bollingerBands) {
-    const { upper, lower, middle } = indicators.bollingerBands;
+    const { upper, lower } = indicators.bollingerBands;
     if (currentPrice >= upper) {
       signals.push('Bollinger Bands: Upper band touch (potential overbought)');
       bearishCount++;
