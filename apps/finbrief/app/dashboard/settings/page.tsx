@@ -71,7 +71,7 @@ export default function SettingsPage() {
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchData]);
 
   const handleSave = async () => {
     setIsSaving(true);
@@ -108,7 +108,9 @@ export default function SettingsPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Unable to navigate to subscription management.');
+        throw new Error(
+          data.error || 'Unable to navigate to subscription management.',
+        );
       }
 
       window.location.href = data.portalUrl;
@@ -149,7 +151,9 @@ export default function SettingsPage() {
         <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradientShift_3s_ease-in-out_infinite]">
           Settings
         </h1>
-        <p className="mt-2 text-slate-400">Manage your notification and preferences</p>
+        <p className="mt-2 text-slate-400">
+          Manage your notification and preferences
+        </p>
       </motion.div>
 
       {/* Success Message */}
@@ -201,7 +205,9 @@ export default function SettingsPage() {
       >
         <div className="flex items-center gap-3 mb-6">
           <Bell className="w-6 h-6 text-emerald-400" />
-          <h2 className="text-2xl font-bold text-white">Notification Settings</h2>
+          <h2 className="text-2xl font-bold text-white">
+            Notification Settings
+          </h2>
         </div>
 
         <div className="space-y-6">
@@ -212,7 +218,8 @@ export default function SettingsPage() {
                 News Alerts
               </h3>
               <p className="text-sm text-slate-400">
-                Get notified when important news about your watchlist stocks breaks
+                Get notified when important news about your watchlist stocks
+                breaks
               </p>
             </div>
             <button
@@ -380,7 +387,8 @@ export default function SettingsPage() {
                 Upgrade to Pro
               </h3>
               <p className="text-slate-300 mb-4">
-                Unlock Telegram notifications, technical analysis, deep reports, and more premium features.
+                Unlock Telegram notifications, technical analysis, deep reports,
+                and more premium features.
               </p>
               <a
                 href="/pricing"
@@ -423,11 +431,14 @@ export default function SettingsPage() {
         >
           <div className="flex items-center gap-3 mb-6">
             <CreditCard className="w-6 h-6 text-emerald-400" />
-            <h2 className="text-2xl font-bold text-white">Subscription Management</h2>
+            <h2 className="text-2xl font-bold text-white">
+              Subscription Management
+            </h2>
           </div>
 
           <p className="text-slate-400 mb-6">
-            Manage payment methods, cancel subscription, view invoices, and more.
+            Manage payment methods, cancel subscription, view invoices, and
+            more.
           </p>
 
           <button

@@ -45,10 +45,7 @@ export async function DELETE(
       .single();
 
     if (subscriberError || !subscriber) {
-      return NextResponse.json(
-        { error: 'User not found.' },
-        { status: 404 },
-      );
+      return NextResponse.json({ error: 'User not found.' }, { status: 404 });
     }
 
     // Verify ownership and soft delete

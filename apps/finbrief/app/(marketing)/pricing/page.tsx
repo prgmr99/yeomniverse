@@ -103,10 +103,12 @@ export default function PricingPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-8 text-center">
         <div className="bg-white/60 backdrop-blur-md rounded-3xl p-8 sm:p-12 mx-auto max-w-4xl">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-finbrief-black mb-6">
-            The perfect plan for <span className="text-gradient">smart investing</span>
+            The perfect plan for{' '}
+            <span className="text-gradient">smart investing</span>
           </h1>
           <p className="text-finbrief-gray-500 text-lg sm:text-xl max-w-2xl mx-auto mb-8">
-            Get daily financial news and personalized investment insights every morning.
+            Get daily financial news and personalized investment insights every
+            morning.
           </p>
 
           {/* Email Input */}

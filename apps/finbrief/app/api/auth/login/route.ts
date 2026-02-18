@@ -15,9 +15,7 @@ export async function POST(request: NextRequest) {
     if (!validation.success) {
       return NextResponse.json(
         {
-          error:
-            validation.error.issues[0]?.message ||
-            'Invalid input.',
+          error: validation.error.issues[0]?.message || 'Invalid input.',
         },
         { status: 400 },
       );
@@ -74,7 +72,8 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({
-      message: 'A sign-in link has been sent to your email. Please check your inbox.',
+      message:
+        'A sign-in link has been sent to your email. Please check your inbox.',
     });
   } catch (error) {
     console.error('Login API error:', error);

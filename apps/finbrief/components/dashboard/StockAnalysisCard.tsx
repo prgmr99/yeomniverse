@@ -208,7 +208,8 @@ export default function StockAnalysisCard({
                         Stock analysis is a paid plan feature
                       </h3>
                       <p className="text-slate-300 mb-4">
-                        Upgrade to Basic or Pro for AI-powered technical analysis.
+                        Upgrade to Basic or Pro for AI-powered technical
+                        analysis.
                       </p>
                       <Link
                         href="/pricing"
@@ -492,7 +493,8 @@ export default function StockAnalysisCard({
                         Need more detailed analysis?
                       </h3>
                       <p className="text-slate-300 mb-4">
-                        Upgrade to Pro for RSI, MACD, Bollinger Bands, and more advanced technical indicators.
+                        Upgrade to Pro for RSI, MACD, Bollinger Bands, and more
+                        advanced technical indicators.
                       </p>
                       <Link
                         href="/pricing"

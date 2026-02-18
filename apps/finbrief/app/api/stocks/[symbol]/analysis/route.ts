@@ -91,10 +91,7 @@ export async function GET(
       .single();
 
     if (subscriberError || !subscriber) {
-      return NextResponse.json(
-        { error: 'User not found.' },
-        { status: 404 },
-      );
+      return NextResponse.json({ error: 'User not found.' }, { status: 404 });
     }
 
     // Get user's plan

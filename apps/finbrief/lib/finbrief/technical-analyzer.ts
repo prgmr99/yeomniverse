@@ -140,7 +140,9 @@ export function interpretIndicators(
       signals.push(`RSI ${indicators.rsi.toFixed(1)}: Oversold (buy signal)`);
       bullishCount++;
     } else if (indicators.rsi > 70) {
-      signals.push(`RSI ${indicators.rsi.toFixed(1)}: Overbought (sell signal)`);
+      signals.push(
+        `RSI ${indicators.rsi.toFixed(1)}: Overbought (sell signal)`,
+      );
       bearishCount++;
     } else {
       signals.push(`RSI ${indicators.rsi.toFixed(1)}: Neutral zone`);

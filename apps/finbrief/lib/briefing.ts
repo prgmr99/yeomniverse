@@ -66,7 +66,7 @@ function getFallbackData(): BriefingData {
   return {
     briefings: [
       {
-        title: 'Preparing today\'s briefing',
+        title: "Preparing today's briefing",
         description:
           'We are analyzing the latest financial news and will provide a briefing shortly. Please wait.',
         sentiment: 'neutral',

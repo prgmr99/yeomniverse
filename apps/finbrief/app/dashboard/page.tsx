@@ -204,7 +204,8 @@ export default function DashboardPage() {
               href="/dashboard/watchlist"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-500/20 text-emerald-400 font-medium hover:bg-emerald-500/30 transition-all duration-200"
             >
-              <Star className="w-4 h-4" />Add your first stock
+              <Star className="w-4 h-4" />
+              Add your first stock
             </Link>
           </div>
         ) : (
@@ -253,7 +254,8 @@ export default function DashboardPage() {
                   AI Analysis in Progress
                 </h3>
                 <p className="text-sm text-slate-400 leading-relaxed">
-                  Every morning, AI analyzes 100+ articles and delivers the 3 most important stories at 8 AM. Get them on Telegram!
+                  Every morning, AI analyzes 100+ articles and delivers the 3
+                  most important stories at 8 AM. Get them on Telegram!
                 </p>
               </div>
             </div>

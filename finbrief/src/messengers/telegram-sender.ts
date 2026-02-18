@@ -180,7 +180,7 @@ if (require.main === module) {
   }
   
   // 간단한 테스트 메시지
-  sendSimpleMessage(testChatId, '🎉 FinBrief 텔레그램 봇 테스트 성공!\n\n이제 AI 뉴스 브리핑을 받을 수 있습니다.')
+  sendSimpleMessage(testChatId, '🎉 FinBrief Telegram bot test successful!\n\nYou will now receive AI news briefings.')
     .then(() => {
       console.log('테스트 완료!');
       process.exit(0);

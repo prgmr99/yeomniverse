@@ -6,3 +6,5 @@ dist/
 data/*.json
 !data/.gitkeep
 !data/korean-stocks.json
+
+/.omc

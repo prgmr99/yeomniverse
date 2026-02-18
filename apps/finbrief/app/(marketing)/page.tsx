@@ -156,7 +156,8 @@ function ValueProposition() {
               className="font-semibold text-finbrief-black"
               style={{ fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.2 }}
             >
-              and picks just the <span className="text-gradient">top 3</span> for you.
+              and picks just the <span className="text-gradient">top 3</span>{' '}
+              for you.
             </p>
           </StaggerItem>
         </StaggerContainer>
@@ -214,7 +215,8 @@ function FeatureShowcase() {
             style={{ fontSize: 'clamp(36px, 5vw, 48px)', lineHeight: 1.15 }}
           >
             Smarter.
-            <br />Faster.
+            <br />
+            Faster.
           </h2>
         </ScrollReveal>
 

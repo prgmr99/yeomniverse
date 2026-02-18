@@ -121,15 +121,69 @@
   "hotPaths": [
     {
       "path": "src/analyzers/stock-ai-analyzer.ts",
-      "accessCount": 7,
-      "lastAccessed": 1771393177361,
+      "accessCount": 9,
+      "lastAccessed": 1771393236575,
       "type": "file"
     },
     {
       "path": "src/messengers/personalized-email-sender.ts",
-      "accessCount": 5,
-      "lastAccessed": 1771393138119,
+      "accessCount": 7,
+      "lastAccessed": 1771393238974,
       "type": "file"
+    },
+    {
+      "path": "src",
+      "accessCount": 5,
+      "lastAccessed": 1771393298311,
+      "type": "directory"
+    },
+    {
+      "path": "src/messengers/telegram-sender.ts",
+      "accessCount": 5,
+      "lastAccessed": 1771393361075,
+      "type": "file"
+    },
+    {
+      "path": "src/analyzers/gemini-analyzer.ts",
+      "accessCount": 3,
+      "lastAccessed": 1771393306153,
+      "type": "file"
+    },
+    {
+      "path": "src/messengers/email-sender.ts",
+      "accessCount": 2,
+      "lastAccessed": 1771393238135,
+      "type": "file"
+    },
+    {
+      "path": "src/messengers/stock-news-alerter.ts",
+      "accessCount": 2,
+      "lastAccessed": 1771393239807,
+      "type": "file"
+    },
+    {
+      "path": "src/analyzers/technical-analyzer.ts",
+      "accessCount": 2,
+      "lastAccessed": 1771393268515,
+      "type": "file"
+    },
+    {
+      "path": "src/utils/signal-filter.ts",
+      "accessCount": 2,
+      "lastAccessed": 1771393297389,
+      "type": "directory"
+    },
+    {
+      "path": "",
+      "accessCount": 1,
+      "lastAccessed": 1771393260493,
+      "type": "directory"
+    },
+    {
+      "path": "src/main.ts",
+      "accessCount": 1,
+      "lastAccessed": 1771393293014,
+      "type": "directory"
     }
   ],
   "userDirectives": []

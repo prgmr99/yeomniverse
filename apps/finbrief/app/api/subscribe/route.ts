@@ -32,9 +32,7 @@ export async function POST(
       return NextResponse.json(
         {
           success: false,
-          error:
-            validation.error.issues[0]?.message ||
-            'Invalid input.',
+          error: validation.error.issues[0]?.message || 'Invalid input.',
           code: 'VALIDATION_ERROR',
         },
         { status: 400 },
@@ -86,7 +84,8 @@ export async function POST(
       return NextResponse.json(
         {
           success: false,
-          error: 'An error occurred while processing your subscription. Please try again later.',
+          error:
+            'An error occurred while processing your subscription. Please try again later.',
           code: 'DATABASE_ERROR',
         },
         { status: 500 },
@@ -124,7 +123,8 @@ export async function POST(
 
     return NextResponse.json({
       success: true,
-      message: 'Subscription complete! Please check your email for a welcome message.',
+      message:
+        'Subscription complete! Please check your email for a welcome message.',
     });
   } catch (error) {
     console.error('Subscribe API error:', error);

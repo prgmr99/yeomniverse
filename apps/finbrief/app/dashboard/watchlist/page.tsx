@@ -374,7 +374,8 @@ export default function WatchlistPage() {
             onClick={() => setShowAddForm(true)}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105"
           >
-            <Plus className="w-5 h-5" />Add Your First Stock
+            <Plus className="w-5 h-5" />
+            Add Your First Stock
           </button>
         </motion.div>
       ) : (

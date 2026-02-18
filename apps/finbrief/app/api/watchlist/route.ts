@@ -68,10 +68,7 @@ export async function GET(
       .single();
 
     if (subscriberError || !subscriber) {
-      return NextResponse.json(
-        { error: 'User not found.' },
-        { status: 404 },
-      );
+      return NextResponse.json({ error: 'User not found.' }, { status: 404 });
     }
 
     // Get user's plan
@@ -148,9 +145,7 @@ export async function POST(
     if (!validation.success) {
       return NextResponse.json(
         {
-          error:
-            validation.error.issues[0]?.message ||
-            'Invalid input.',
+          error: validation.error.issues[0]?.message || 'Invalid input.',
         },
         { status: 400 },
       );
@@ -168,10 +163,7 @@ export async function POST(
       .single();
 
     if (subscriberError || !subscriber) {
-      return NextResponse.json(
-        { error: 'User not found.' },
-        { status: 404 },
-      );
+      return NextResponse.json({ error: 'User not found.' }, { status: 404 });
     }
 
     // Get user's plan
