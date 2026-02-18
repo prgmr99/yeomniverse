@@ -1,0 +1,136 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1771393102452,
+  "projectRoot": "/Users/yeomseungjun/Desktop/workplace/yeomniverse/finbrief",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": "npm test",
+    "lintCommand": null,
+    "devCommand": "npm run dev",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "test:rss": "ts-node src/collectors/rss-collector.ts",
+      "test:ai": "ts-node -r dotenv/config src/analyzers/gemini-analyzer.ts",
+      "test:telegram": "ts-node -r dotenv/config src/messengers/telegram-sender.ts",
+      "test:integration": "ts-node -r dotenv/config src/test-integration.ts",
+      "test:blog": "ts-node -r dotenv/config src/blog-publisher-example.ts",
+      "publish:blog": "RUN_ONCE=true ts-node -r dotenv/config src/blog-publisher-example.ts",
+      "send-briefing": "ts-node -r dotenv/config src/main.ts",
+      "dev": "ts-node -r dotenv/config src/main.ts",
+      "build": "tsc"
+    }
+  },
+  "conventions": {
+    "namingStyle": "camelCase",
+    "importStyle": "ES modules",
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "src"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "data": {
+      "path": "data",
+      "purpose": "Data files",
+      "fileCount": 5,
+      "lastAccessed": 1771393102444,
+      "keyFiles": [
+        "2026-01-23.json",
+        "2026-01-30.json",
+        "2026-02-02.json",
+        "korean-stocks.json"
+      ]
+    },
+    "dist": {
+      "path": "dist",
+      "purpose": "Distribution/build output",
+      "fileCount": 4,
+      "lastAccessed": 1771393102445,
+      "keyFiles": [
+        "blog-publisher-example.js",
+        "list-models.js",
+        "main.js",
+        "test-integration.js"
+      ]
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 1,
+      "lastAccessed": 1771393102445,
+      "keyFiles": [
+        "BLOG_PUBLISHING.md"
+      ]
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 4,
+      "lastAccessed": 1771393102445,
+      "keyFiles": [
+        "blog-publisher-example.ts",
+        "list-models.ts",
+        "main.ts",
+        "test-integration.ts"
+      ]
+    },
+    "dist/data": {
+      "path": "dist/data",
+      "purpose": "Data files",
+      "fileCount": 1,
+      "lastAccessed": 1771393102446,
+      "keyFiles": [
+        "korean-stocks.json"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "src/analyzers/stock-ai-analyzer.ts",
+      "accessCount": 7,
+      "lastAccessed": 1771393177361,
+      "type": "file"
+    },
+    {
+      "path": "src/messengers/personalized-email-sender.ts",
+      "accessCount": 5,
+      "lastAccessed": 1771393138119,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

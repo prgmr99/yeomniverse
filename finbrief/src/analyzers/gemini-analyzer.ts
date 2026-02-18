@@ -57,41 +57,41 @@ function generateAnalysisPrompt(newsItems: NewsItem[]): string {
     .join('\n');
   
   return `
-당신은 20년 경력의 펀드매니저이자 금융 전문가입니다.
-독자는 바쁜 직장인으로, 30초 만에 핵심만 파악해야 합니다.
+You are a fund manager with 20 years of experience and a financial expert.
+Your reader is a busy professional who needs to grasp the key points in 30 seconds.
 
-**임무:**
-다음 뉴스 목록에서 **가장 중요한 3개**만 선정하고, 각각에 대해 분석하세요.
+**Mission:**
+From the following news list, select only the **3 most important** items and analyze each one.
 
-**뉴스 목록:**
+**News List:**
 ${newsList}
 
-**분석 기준:**
-1. 투자 결정에 영향을 줄 수 있는 뉴스 우선
-2. 시의성과 파급력이 큰 뉴스
-3. 일반적인 홍보성 기사 제외
+**Selection Criteria:**
+1. Prioritize news that could influence investment decisions
+2. Focus on timely, high-impact news
+3. Exclude promotional or advertorial content
 
-**출력 형식:** 
-반드시 아래 JSON 형식으로만 응답하세요. 다른 텍스트는 포함하지 마세요.
+**Output Format:**
+You MUST respond ONLY in the JSON format below. Do not include any other text.
 
 {
   "topNews": [
     {
-      "title": "선정된 뉴스 제목",
-      "summary": "초등학생도 이해할 수 있는 3줄 요약 (각 줄은 한 문장, 총 3문장)",
-      "sentiment": "bull 또는 bear 또는 neutral 중 하나",
-      "reason": "왜 이 뉴스가 중요한지 한 문장"
+      "title": "Selected news headline",
+      "summary": "A 3-sentence summary that anyone can understand (one sentence per line, 3 sentences total)",
+      "sentiment": "one of: bull, bear, or neutral",
+      "reason": "One sentence explaining why this news matters"
     }
   ],
-  "keywords": ["#키워드1", "#키워드2", "#키워드3"],
-  "marketSentiment": "전체 시장 분위기를 한 줄로 요약"
+  "keywords": ["#keyword1", "#keyword2", "#keyword3"],
+  "marketSentiment": "A one-line summary of the overall market mood"
 }
 
-**주의사항:**
-- summary는 정확히 3개 문장으로 작성
-- sentiment는 "bull"(상승 요인), "bear"(하락 요인), "neutral"(중립) 중 하나만 선택
-- keywords는 오늘의 핵심 투자 키워드 3개 (# 포함)
-- JSON 형식만 출력, 추가 설명 금지
+**Rules:**
+- summary must be exactly 3 sentences
+- sentiment must be one of "bull" (bullish factor), "bear" (bearish factor), or "neutral"
+- keywords should be the 3 key investment keywords of the day (include #)
+- Output ONLY JSON, no additional explanation
 `;
 }
 
@@ -135,14 +135,14 @@ function parseAIResponse(response: string): AnalysisResult {
     return {
       topNews: [
         {
-          title: '분석 오류',
-          summary: 'AI 분석 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+          title: 'Analysis Error',
+          summary: 'An error occurred during AI analysis. Please try again later.',
           sentiment: 'neutral',
-          reason: '시스템 오류'
+          reason: 'System error'
         }
       ],
-      keywords: ['#재테크', '#투자', '#뉴스'],
-      marketSentiment: '분석 결과를 가져올 수 없습니다.'
+      keywords: ['#finance', '#investing', '#news'],
+      marketSentiment: 'Unable to retrieve analysis results.'
     };
   }
 }
@@ -151,17 +151,17 @@ function parseAIResponse(response: string): AnalysisResult {
  * 분석 결과를 사람이 읽기 좋은 형태로 포맷팅
  */
 export function formatAnalysisResult(analysis: AnalysisResult): string {
-  let output = '\n=== AI 분석 결과 ===\n\n';
-  
+  let output = '\n=== AI Analysis Results ===\n\n';
+
   analysis.topNews.forEach((news, idx) => {
     const emoji = news.sentiment === 'bull' ? '🐂' : news.sentiment === 'bear' ? '🐻' : '😐';
     output += `${idx + 1}. ${news.title} ${emoji}\n`;
-    output += `   요약: ${news.summary}\n`;
-    output += `   💡 중요한 이유: ${news.reason}\n\n`;
+    output += `   Summary: ${news.summary}\n`;
+    output += `   💡 Why it matters: ${news.reason}\n\n`;
   });
-  
-  output += `🔑 오늘의 키워드: ${analysis.keywords.join(' ')}\n`;
-  output += `📈 시장 분위기: ${analysis.marketSentiment}\n`;
+
+  output += `🔑 Today's Keywords: ${analysis.keywords.join(' ')}\n`;
+  output += `📈 Market Sentiment: ${analysis.marketSentiment}\n`;
   
   return output;
 }

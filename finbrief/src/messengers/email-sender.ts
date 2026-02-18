@@ -115,13 +115,13 @@ export async function sendEmailBriefing(
  * 이메일 제목 생성
  */
 function generateEmailSubject(): string {
-  const today = new Date().toLocaleDateString('ko-KR', {
+  const today = new Date().toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
     weekday: 'long'
   });
 
-  return `📊 FinBrief - ${today} 재테크 브리핑`;
+  return `📊 FinBrief - ${today} Financial Briefing`;
 }
 
 /**
@@ -132,7 +132,7 @@ function formatBriefingEmail(
   affiliateLinks: { text: string; url: string }[] | undefined,
   unsubscribeToken: string
 ): string {
-  const today = new Date().toLocaleDateString('ko-KR', {
+  const today = new Date().toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -153,7 +153,7 @@ function formatBriefingEmail(
         </p>
         <div style="background-color: #f3f4f6; padding: 16px; border-radius: 8px;">
           <p style="font-size: 14px; font-weight: 600; color: #6b7280; margin: 0 0 8px 0;">
-            💡 왜 중요한가?
+            💡 Why it matters
           </p>
           <p style="font-size: 14px; line-height: 1.6; color: #4b5563; margin: 0;">
             ${escapeHtml(news.reason)}
@@ -184,7 +184,7 @@ function formatBriefingEmail(
     affiliateLinksHtml = `
       <div style="margin-top: 32px; padding: 24px; background-color: #fef3c7; border-radius: 8px;">
         <h3 style="font-size: 18px; font-weight: 700; color: #92400e; margin: 0 0 16px 0;">
-          💰 추천 정보
+          💰 Recommended
         </h3>
         <ul style="margin: 0; padding-left: 20px; color: #78350f;">
           ${linksHtml}
@@ -199,11 +199,11 @@ function formatBriefingEmail(
   // 전체 HTML 구조
   return `
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FinBrief - 오늘의 재테크 브리핑</title>
+  <title>FinBrief - Today's Financial Briefing</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; background-color: #f9fafb;">
   <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
@@ -213,7 +213,7 @@ function formatBriefingEmail(
         📊 FinBrief
       </h1>
       <p style="font-size: 16px; color: #e0e7ff; margin: 0;">
-        오늘의 재테크 브리핑
+        Today's Financial Briefing
       </p>
       <p style="font-size: 14px; color: #c7d2fe; margin: 8px 0 0 0;">
         ${today}
@@ -228,7 +228,7 @@ function formatBriefingEmail(
       <!-- 오늘의 키워드 -->
       <div style="margin-bottom: 32px;">
         <h3 style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 16px 0;">
-          🔑 오늘의 키워드
+          🔑 Today's Keywords
         </h3>
         <div>
           ${keywordsHtml}
@@ -238,7 +238,7 @@ function formatBriefingEmail(
       <!-- 시장 분위기 -->
       <div style="margin-bottom: 32px; padding: 24px; background-color: #f0fdf4; border-left: 4px solid #10b981; border-radius: 8px;">
         <h3 style="font-size: 18px; font-weight: 700; color: #065f46; margin: 0 0 12px 0;">
-          📈 시장 분위기
+          📈 Market Sentiment
         </h3>
         <p style="font-size: 16px; line-height: 1.6; color: #047857; margin: 0;">
           ${escapeHtml(analysis.marketSentiment)}
@@ -252,14 +252,14 @@ function formatBriefingEmail(
     <!-- Footer -->
     <div style="padding: 24px; background-color: #f3f4f6; text-align: center; border-top: 1px solid #e5e7eb;">
       <p style="font-size: 14px; color: #6b7280; margin: 0 0 8px 0;">
-        <strong>FinBrief</strong> | AI가 엄선한 재테크 뉴스
+        <strong>FinBrief</strong> | AI-curated financial news
       </p>
       <p style="font-size: 12px; color: #9ca3af; margin: 0;">
-        읽기 시간: 약 30초
+        Reading time: ~30 seconds
       </p>
       <div style="margin-top: 16px;">
         <a href="${unsubscribeUrl}" style="font-size: 12px; color: #6b7280; text-decoration: underline;">
-          구독 해지
+          Unsubscribe
         </a>
       </div>
     </div>
@@ -306,23 +306,23 @@ export function getContextualAffiliateLinks(keywords: string[]): { text: string;
   const links: { text: string; url: string }[] = [];
 
   // 키워드 기반 추천
-  if (keywords.some(k => k.includes('금리') || k.includes('예금'))) {
+  if (keywords.some(k => k.includes('금리') || k.includes('예금') || k.includes('rate') || k.includes('savings'))) {
     links.push({
-      text: '📊 지금 가장 높은 예금 금리 비교하기',
+      text: '📊 Compare the best savings rates now',
       url: 'https://example.com/parking-account'
     });
   }
 
-  if (keywords.some(k => k.includes('주식') || k.includes('투자') || k.includes('AI'))) {
+  if (keywords.some(k => k.includes('주식') || k.includes('투자') || k.includes('AI') || k.includes('stock') || k.includes('invest'))) {
     links.push({
-      text: '📚 투자 필독서: 돈의 속성',
+      text: '📚 Must-read investing book: The Psychology of Money',
       url: 'https://example.com/books'
     });
   }
 
-  if (keywords.some(k => k.includes('부동산'))) {
+  if (keywords.some(k => k.includes('부동산') || k.includes('real estate') || k.includes('property'))) {
     links.push({
-      text: '🏠 부동산 투자 가이드',
+      text: '🏠 Real estate investment guide',
       url: 'https://example.com/realestate'
     });
   }
@@ -330,7 +330,7 @@ export function getContextualAffiliateLinks(keywords: string[]): { text: string;
   // 기본 링크 (키워드 매칭 없을 시)
   if (links.length === 0) {
     links.push({
-      text: '💡 재테크 필수 체크리스트',
+      text: '💡 Essential finance checklist',
       url: 'https://example.com/checklist'
     });
   }

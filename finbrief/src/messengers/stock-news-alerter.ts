@@ -41,26 +41,26 @@ function generateAlertEmailHtml(matches: MatchedNews[], unsubscribeUrl: string):
       <p style="font-size: 14px; color: #4b5563; margin: 0; line-height: 1.5;">
         ${escapeHtml(match.news.contentSnippet || '')}
       </p>
-      ${match.news.link ? `<a href="${match.news.link}" style="display: inline-block; margin-top: 8px; font-size: 14px; color: #2563eb;">자세히 보기 →</a>` : ''}
+      ${match.news.link ? `<a href="${match.news.link}" style="display: inline-block; margin-top: 8px; font-size: 14px; color: #2563eb;">Read more →</a>` : ''}
     </div>
   `).join('');
 
   return `
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FinBrief - 관심종목 뉴스 알림</title>
+  <title>FinBrief - Watchlist News Alert</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; background-color: #f3f4f6;">
   <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
     <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 24px; text-align: center;">
       <h1 style="font-size: 24px; font-weight: 700; color: #ffffff; margin: 0;">
-        🔔 관심종목 뉴스 알림
+        🔔 Watchlist News Alert
       </h1>
       <p style="font-size: 14px; color: #d1fae5; margin: 8px 0 0 0;">
-        내 관심종목과 관련된 새로운 뉴스가 있습니다
+        New articles related to your watchlist stocks
       </p>
     </div>
     <div style="padding: 24px;">
@@ -68,7 +68,7 @@ function generateAlertEmailHtml(matches: MatchedNews[], unsubscribeUrl: string):
     </div>
     <div style="padding: 16px 24px; background-color: #f3f4f6; text-align: center;">
       <p style="font-size: 12px; color: #6b7280; margin: 0;">
-        <a href="${unsubscribeUrl}" style="color: #6b7280; text-decoration: underline;">알림 설정 변경</a>
+        <a href="${unsubscribeUrl}" style="color: #6b7280; text-decoration: underline;">Change alert settings</a>
       </p>
     </div>
   </div>
@@ -85,10 +85,10 @@ async function sendTelegramAlert(chatId: string, matches: MatchedNews[]): Promis
   }
 
   const message = matches.map(match =>
-    `🔔 *${match.matchedStock.name}* 관련 뉴스\n\n` +
+    `🔔 *${match.matchedStock.name}* News\n\n` +
     `📰 ${match.news.title}\n\n` +
     `${match.news.contentSnippet || ''}\n\n` +
-    (match.news.link ? `[자세히 보기](${match.news.link})` : '')
+    (match.news.link ? `[Read more](${match.news.link})` : '')
   ).join('\n\n---\n\n');
 
   const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
@@ -189,7 +189,7 @@ export async function sendStockNewsAlerts(
       await resend.emails.send({
         from: fromEmail,
         to: subscriber.email,
-        subject: `🔔 FinBrief - ${newMatches.length}개의 관심종목 뉴스`,
+        subject: `🔔 FinBrief - ${newMatches.length} Watchlist News Alert${newMatches.length > 1 ? 's' : ''}`,
         html: emailHtml,
       });
       emailsSent++;

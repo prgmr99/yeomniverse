@@ -19,27 +19,26 @@ export async function analyzeStockWithAI(
 ): Promise<AIAnalysisResult> {
   const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
-  const prompt = `당신은 20년 경력의 기술적 분석 전문가입니다.
+  const prompt = `You are a technical analysis expert with 20 years of experience.
 
-다음 주식의 기술적 지표를 분석하세요:
-- 종목: ${quote.symbol} (${quote.name})
-- 현재가: ${quote.regularMarketPrice.toLocaleString()}원 (${quote.regularMarketChangePercent >= 0 ? '+' : ''}${quote.regularMarketChangePercent.toFixed(2)}%)
+Analyze the following stock's technical indicators:
+- Symbol: ${quote.symbol} (${quote.name})
+- Current Price: ${quote.regularMarketPrice.toLocaleString()} (${quote.regularMarketChangePercent >= 0 ? '+' : ''}${quote.regularMarketChangePercent.toFixed(2)}%)
 - RSI(14): ${indicators.rsi?.toFixed(2) || 'N/A'}
 - MACD: ${indicators.macd?.MACD.toFixed(2) || 'N/A'}, Signal: ${indicators.macd?.signal.toFixed(2) || 'N/A'}
-- 볼린저밴드: 상단 ${indicators.bollingerBands?.upper.toFixed(0) || 'N/A'}, 하단 ${indicators.bollingerBands?.lower.toFixed(0) || 'N/A'}
-- 5일선: ${indicators.sma.sma5?.toFixed(0) || 'N/A'}, 20일선: ${indicators.sma.sma20?.toFixed(0) || 'N/A'}, 60일선: ${indicators.sma.sma60?.toFixed(0) || 'N/A'}
-- 거래량: 20일 평균 대비 ${indicators.volumeRatio?.toFixed(0) || 'N/A'}%
+- Bollinger Bands: Upper ${indicators.bollingerBands?.upper.toFixed(0) || 'N/A'}, Lower ${indicators.bollingerBands?.lower.toFixed(0) || 'N/A'}
+- SMA 5: ${indicators.sma.sma5?.toFixed(0) || 'N/A'}, SMA 20: ${indicators.sma.sma20?.toFixed(0) || 'N/A'}, SMA 60: ${indicators.sma.sma60?.toFixed(0) || 'N/A'}
+- Volume: ${indicators.volumeRatio?.toFixed(0) || 'N/A'}% vs 20-day average
 
-${relatedNews && relatedNews.length > 0 ? `관련 뉴스:
-${relatedNews.map(n => `- ${n.title} (${n.sentiment})`).join('\n')}` : ''}
+${relatedNews && relatedNews.length > 0 ? `Related News:\n${relatedNews.map(n => `- ${n.title} (${n.sentiment})`).join('\n')}` : ''}
 
-다음 JSON 형식으로만 응답하세요 (다른 텍스트 없이):
+Respond ONLY in the following JSON format (no other text):
 {
   "signal": "buy" | "hold" | "sell",
   "strength": 1-5,
-  "summary": "한 줄 요약 (50자 이내)",
-  "analysis": "3줄 상세 분석 (150자 이내)",
-  "keyPoints": ["포인트1", "포인트2", "포인트3"]
+  "summary": "One-line summary (under 100 characters)",
+  "analysis": "3-line detailed analysis (under 300 characters)",
+  "keyPoints": ["point1", "point2", "point3"]
 }`;
 
   try {
@@ -58,7 +57,7 @@ ${relatedNews.map(n => `- ${n.title} (${n.sentiment})`).join('\n')}` : ''}
     return {
       signal: ['buy', 'hold', 'sell'].includes(parsed.signal) ? parsed.signal : 'hold',
       strength: Math.min(5, Math.max(1, parsed.strength || 3)),
-      summary: parsed.summary?.slice(0, 100) || '분석 결과를 생성하지 못했습니다.',
+      summary: parsed.summary?.slice(0, 100) || 'Failed to generate analysis results.',
       analysis: parsed.analysis?.slice(0, 300) || '',
       keyPoints: Array.isArray(parsed.keyPoints) ? parsed.keyPoints.slice(0, 5) : [],
     };
@@ -67,7 +66,7 @@ ${relatedNews.map(n => `- ${n.title} (${n.sentiment})`).join('\n')}` : ''}
     return {
       signal: 'hold',
       strength: 3,
-      summary: '기술적 분석 중 오류가 발생했습니다.',
+      summary: 'An error occurred during technical analysis.',
       analysis: '',
       keyPoints: [],
     };
@@ -82,19 +81,19 @@ export async function generateBriefAnalysis(
   const signals: string[] = [];
 
   if (indicators.rsi !== null) {
-    if (indicators.rsi < 30) signals.push('RSI 과매도');
-    else if (indicators.rsi > 70) signals.push('RSI 과매수');
+    if (indicators.rsi < 30) signals.push('RSI Oversold');
+    else if (indicators.rsi > 70) signals.push('RSI Overbought');
   }
 
   if (indicators.macd) {
     if (indicators.macd.MACD > indicators.macd.signal) {
-      signals.push('MACD 매수신호');
+      signals.push('MACD Buy Signal');
     } else {
-      signals.push('MACD 매도신호');
+      signals.push('MACD Sell Signal');
     }
   }
 
-  const trend = quote.regularMarketChangePercent >= 0 ? '상승' : '하락';
+  const trend = quote.regularMarketChangePercent >= 0 ? 'Up' : 'Down';
 
-  return `${quote.name} ${quote.regularMarketPrice.toLocaleString()}원 (${trend} ${Math.abs(quote.regularMarketChangePercent).toFixed(1)}%) | ${signals.join(', ') || '중립'}`;
+  return `${quote.name} ${quote.regularMarketPrice.toLocaleString()} (${trend} ${Math.abs(quote.regularMarketChangePercent).toFixed(1)}%) | ${signals.join(', ') || 'Neutral'}`;
 }

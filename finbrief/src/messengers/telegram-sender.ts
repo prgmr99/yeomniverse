@@ -52,50 +52,50 @@ function formatBriefingMessage(
   analysis: AnalysisResult,
   affiliateLinks?: { text: string; url: string }[]
 ): string {
-  const today = new Date().toLocaleDateString('ko-KR', {
+  const today = new Date().toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
     weekday: 'long'
   });
-  
-  let message = `📊 *FinBrief - 오늘의 재테크 브리핑*\n`;
+
+  let message = `📊 *FinBrief - Today's Financial Briefing*\n`;
   message += `${today}\n\n`;
-  
+
   // 주요 뉴스 3개
   analysis.topNews.forEach((news, idx) => {
     const emoji = getSentimentEmoji(news.sentiment);
-    
+
     message += `*${idx + 1}. ${news.title}* ${emoji}\n\n`;
     message += `${news.summary}\n\n`;
-    message += `💡 *왜 중요한가?*\n${news.reason}\n\n`;
-    
+    message += `💡 *Why it matters*\n${news.reason}\n\n`;
+
     // 마지막 뉴스가 아니면 줄바꿈 추가
     if (idx < analysis.topNews.length - 1) {
       message += `\n`;
     }
   });
-  
+
   // 오늘의 키워드
-  message += `🔑 *오늘의 키워드*\n`;
+  message += `🔑 *Today's Keywords*\n`;
   message += `${analysis.keywords.join(' ')}\n\n`;
-  
+
   // 시장 분위기
-  message += `📈 *시장 분위기*\n`;
+  message += `📈 *Market Sentiment*\n`;
   message += `${analysis.marketSentiment}\n\n`;
-  
+
   // 제휴 링크 (옵션)
   if (affiliateLinks && affiliateLinks.length > 0) {
-    message += `\n💰 *추천 정보*\n`;
+    message += `\n💰 *Recommended*\n`;
     affiliateLinks.forEach(link => {
       message += `• [${link.text}](${link.url})\n`;
     });
     message += `\n`;
   }
-  
+
   // 푸터
-  message += `\n_FinBrief | AI가 엄선한 재테크 뉴스_\n`;
-  message += `_읽기 시간: 약 30초_`;
+  message += `\n_FinBrief | AI-curated financial news_\n`;
+  message += `_Reading time: ~30 seconds_`;
   
   return message;
 }
@@ -123,31 +123,31 @@ export function getContextualAffiliateLinks(keywords: string[]): { text: string;
   const links: { text: string; url: string }[] = [];
   
   // 키워드 기반 추천
-  if (keywords.some(k => k.includes('금리') || k.includes('예금'))) {
+  if (keywords.some(k => k.includes('금리') || k.includes('예금') || k.includes('rate') || k.includes('savings'))) {
     links.push({
-      text: '📊 지금 가장 높은 예금 금리 비교하기',
+      text: '📊 Compare the best savings rates now',
       url: 'https://example.com/parking-account'
     });
   }
-  
-  if (keywords.some(k => k.includes('주식') || k.includes('투자') || k.includes('AI'))) {
+
+  if (keywords.some(k => k.includes('주식') || k.includes('투자') || k.includes('AI') || k.includes('stock') || k.includes('invest'))) {
     links.push({
-      text: '📚 투자 필독서: 돈의 속성',
+      text: '📚 Must-read investing book: The Psychology of Money',
       url: 'https://example.com/books'
     });
   }
-  
-  if (keywords.some(k => k.includes('부동산'))) {
+
+  if (keywords.some(k => k.includes('부동산') || k.includes('real estate') || k.includes('property'))) {
     links.push({
-      text: '🏠 부동산 투자 가이드',
+      text: '🏠 Real estate investment guide',
       url: 'https://example.com/realestate'
     });
   }
-  
+
   // 기본 링크 (키워드 매칭 없을 시)
   if (links.length === 0) {
     links.push({
-      text: '💡 재테크 필수 체크리스트',
+      text: '💡 Essential finance checklist',
       url: 'https://example.com/checklist'
     });
   }

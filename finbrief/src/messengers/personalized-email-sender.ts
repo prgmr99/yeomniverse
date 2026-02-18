@@ -168,7 +168,7 @@ function generatePersonalizedEmailHtml(options: {
     watchlistHtml = `
       <div style="margin-bottom: 32px;">
         <h3 style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 16px 0;">
-          📌 내 관심 종목
+          📌 My Watchlist
         </h3>
         ${stocksHtml}
       </div>
@@ -183,11 +183,11 @@ function generatePersonalizedEmailHtml(options: {
 
   return `
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FinBrief - ${date} 브리핑</title>
+  <title>FinBrief - ${date} Briefing</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; background-color: #f9fafb;">
   <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
@@ -200,7 +200,7 @@ function generatePersonalizedEmailHtml(options: {
         📊 FinBrief
       </h1>
       <p style="font-size: 16px; color: #e0e7ff; margin: 0;">
-        ${isPaid ? '맞춤 재테크 브리핑' : '오늘의 재테크 브리핑'}
+        ${isPaid ? 'Personalized Financial Briefing' : 'Today\'s Financial Briefing'}
       </p>
       <p style="font-size: 14px; color: #c7d2fe; margin: 8px 0 0 0;">
         ${date}
@@ -215,7 +215,7 @@ function generatePersonalizedEmailHtml(options: {
       <!-- 주요 뉴스 -->
       <div style="margin-bottom: 32px;">
         <h3 style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 16px 0;">
-          📰 주요 뉴스
+          📰 Top News
         </h3>
         ${newsItemsHtml}
       </div>
@@ -223,7 +223,7 @@ function generatePersonalizedEmailHtml(options: {
       <!-- 오늘의 키워드 -->
       <div style="margin-bottom: 32px;">
         <h3 style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 16px 0;">
-          🔑 오늘의 키워드
+          🔑 Today's Keywords
         </h3>
         <div>
           ${keywordsHtml}
@@ -233,7 +233,7 @@ function generatePersonalizedEmailHtml(options: {
       <!-- 시장 분위기 -->
       <div style="margin-bottom: 32px; padding: 24px; background-color: #f0fdf4; border-left: 4px solid #10b981; border-radius: 8px;">
         <h3 style="font-size: 18px; font-weight: 700; color: #065f46; margin: 0 0 12px 0;">
-          📈 시장 분위기
+          📈 Market Sentiment
         </h3>
         <p style="font-size: 16px; line-height: 1.6; color: #047857; margin: 0;">
           ${escapeHtml(marketSentiment)}
@@ -243,7 +243,7 @@ function generatePersonalizedEmailHtml(options: {
       <!-- CTA -->
       <div style="text-align: center; margin-top: 32px;">
         <a href="${dashboardUrl}" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 16px;">
-          대시보드에서 더 보기
+          View more on Dashboard
         </a>
       </div>
     </div>
@@ -251,11 +251,11 @@ function generatePersonalizedEmailHtml(options: {
     <!-- Footer -->
     <div style="padding: 24px; background-color: #f3f4f6; text-align: center; border-top: 1px solid #e5e7eb;">
       <p style="font-size: 14px; color: #6b7280; margin: 0 0 8px 0;">
-        <strong>FinBrief</strong> | AI가 엄선한 재테크 뉴스
+        <strong>FinBrief</strong> | AI-curated financial news
       </p>
       <div style="margin-top: 16px;">
         <a href="${unsubscribeUrl}" style="font-size: 12px; color: #6b7280; text-decoration: underline;">
-          구독 해지
+          Unsubscribe
         </a>
       </div>
     </div>
@@ -302,7 +302,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
 
   // Format date
   const today = new Date();
-  const dateStr = today.toLocaleDateString('ko-KR', {
+  const dateStr = today.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -334,7 +334,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
         resend.emails.send({
           from: fromEmail,
           to: sub.email,
-          subject: `📊 FinBrief - ${dateStr} 재테크 브리핑`,
+          subject: `📊 FinBrief - ${dateStr} Financial Briefing`,
           html: generatePersonalizedEmailHtml({
             date: dateStr,
             planName: 'free',
@@ -390,7 +390,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
 
               rsi = indicators.rsi || undefined;
               if (indicators.macd) {
-                macdSignal = indicators.macd.MACD > indicators.macd.signal ? 'MACD 매수신호' : 'MACD 매도신호';
+                macdSignal = indicators.macd.MACD > indicators.macd.signal ? 'MACD Buy Signal' : 'MACD Sell Signal';
               }
 
               aiSummary = await generateBriefAnalysis(quote, indicators);
@@ -404,15 +404,15 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
               // Simple trend based on SMA crossover
               if (indicators.sma.sma5 && indicators.sma.sma20) {
                 if (indicators.sma.sma5 > indicators.sma.sma20) {
-                  trendSignal = '상승 추세 (5일선 > 20일선)';
+                  trendSignal = 'Uptrend (5-day SMA > 20-day SMA)';
                 } else if (indicators.sma.sma5 < indicators.sma.sma20) {
-                  trendSignal = '하락 추세 (5일선 < 20일선)';
+                  trendSignal = 'Downtrend (5-day SMA < 20-day SMA)';
                 } else {
-                  trendSignal = '중립';
+                  trendSignal = 'Neutral';
                 }
               } else {
                 // Fallback to simple price change
-                trendSignal = quote.regularMarketChangePercent >= 0 ? '상승 추세' : '하락 추세';
+                trendSignal = quote.regularMarketChangePercent >= 0 ? 'Uptrend' : 'Downtrend';
               }
             }
 
@@ -434,7 +434,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
         return resend.emails.send({
           from: fromEmail,
           to: sub.email,
-          subject: `📊 FinBrief - ${dateStr} 맞춤 브리핑`,
+          subject: `📊 FinBrief - ${dateStr} Personalized Briefing`,
           html: generatePersonalizedEmailHtml({
             date: dateStr,
             planName: plan?.name || 'basic',
