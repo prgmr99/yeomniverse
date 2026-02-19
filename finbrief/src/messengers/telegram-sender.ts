@@ -1,5 +1,6 @@
 import TelegramBot from 'node-telegram-bot-api';
 import { AnalysisResult } from '../types/news.types';
+import { getContextualAffiliateLinks, getRandomInspirationalQuote } from '../shared/briefing-content';
 
 /**
  * 텔레그램 메시지 발송기
@@ -97,6 +98,10 @@ function formatBriefingMessage(
   message += `_FinBrief -- Institutional-grade intelligence, delivered daily._\n`;
   message += `_30-second read_`;
 
+  const quote = getRandomInspirationalQuote();
+  message += `\n${SEP}\n`;
+  message += `_${quote}_`;
+
   return message;
 }
 
@@ -116,44 +121,7 @@ function getSentimentTag(sentiment: 'bull' | 'bear' | 'neutral'): string {
   }
 }
 
-/**
- * 맥락 기반 제휴 링크 생성
- */
-export function getContextualAffiliateLinks(keywords: string[]): { text: string; url: string }[] {
-  const links: { text: string; url: string }[] = [];
-  
-  // 키워드 기반 추천
-  if (keywords.some(k => k.includes('금리') || k.includes('예금') || k.includes('rate') || k.includes('savings'))) {
-    links.push({
-      text: 'Compare leading savings rates',
-      url: 'https://example.com/parking-account'
-    });
-  }
-
-  if (keywords.some(k => k.includes('주식') || k.includes('투자') || k.includes('AI') || k.includes('stock') || k.includes('invest'))) {
-    links.push({
-      text: 'Recommended: The Psychology of Money',
-      url: 'https://example.com/books'
-    });
-  }
-
-  if (keywords.some(k => k.includes('부동산') || k.includes('real estate') || k.includes('property'))) {
-    links.push({
-      text: 'Real estate investment guide',
-      url: 'https://example.com/realestate'
-    });
-  }
-
-  // 기본 링크 (키워드 매칭 없을 시)
-  if (links.length === 0) {
-    links.push({
-      text: 'Essential finance checklist',
-      url: 'https://example.com/checklist'
-    });
-  }
-  
-  return links;
-}
+export { getContextualAffiliateLinks } from '../shared/briefing-content';
 
 /**
  * 간단한 텍스트 메시지 전송 (테스트용)

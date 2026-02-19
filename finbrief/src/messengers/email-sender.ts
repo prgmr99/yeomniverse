@@ -1,6 +1,8 @@
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
 import { AnalysisResult } from '../types/news.types';
+import { getContextualAffiliateLinks, getRandomInspirationalQuote } from '../shared/briefing-content';
+export { getContextualAffiliateLinks } from '../shared/briefing-content';
 
 /**
  * 이메일 메시지 발송기
@@ -132,6 +134,7 @@ function formatBriefingEmail(
   affiliateLinks: { text: string; url: string }[] | undefined,
   unsubscribeToken: string
 ): string {
+  const quote = getRandomInspirationalQuote();
   const today = new Date().toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -251,6 +254,13 @@ function formatBriefingEmail(
 
       <!-- 제휴 링크 -->
       ${affiliateLinksHtml}
+
+      <!-- Quote of the Day -->
+      <div style="margin-top: 32px; padding: 24px; border-top: 1px solid #e2e8f0; text-align: center;">
+        <p style="font-size: 14px; color: #64748b; font-style: italic; line-height: 1.7; margin: 0;">
+          ${escapeHtml(quote)}
+        </p>
+      </div>
     </div>
 
     <!-- Footer -->
@@ -311,45 +321,6 @@ function escapeHtml(text: string): string {
     "'": '&#039;'
   };
   return text.replace(/[&<>"']/g, m => map[m]);
-}
-
-/**
- * 맥락 기반 제휴 링크 생성
- */
-export function getContextualAffiliateLinks(keywords: string[]): { text: string; url: string }[] {
-  const links: { text: string; url: string }[] = [];
-
-  // 키워드 기반 추천
-  if (keywords.some(k => k.includes('금리') || k.includes('예금') || k.includes('rate') || k.includes('savings'))) {
-    links.push({
-      text: 'Compare leading savings rates',
-      url: 'https://example.com/parking-account'
-    });
-  }
-
-  if (keywords.some(k => k.includes('주식') || k.includes('투자') || k.includes('AI') || k.includes('stock') || k.includes('invest'))) {
-    links.push({
-      text: 'Recommended: The Psychology of Money',
-      url: 'https://example.com/books'
-    });
-  }
-
-  if (keywords.some(k => k.includes('부동산') || k.includes('real estate') || k.includes('property'))) {
-    links.push({
-      text: 'Real estate investment guide',
-      url: 'https://example.com/realestate'
-    });
-  }
-
-  // 기본 링크 (키워드 매칭 없을 시)
-  if (links.length === 0) {
-    links.push({
-      text: 'Essential finance checklist',
-      url: 'https://example.com/checklist'
-    });
-  }
-
-  return links;
 }
 
 // 테스트 실행 (이 파일을 직접 실행할 때)
