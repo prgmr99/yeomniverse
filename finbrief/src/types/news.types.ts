@@ -17,6 +17,15 @@ export interface AnalysisResult {
   marketSentiment: string;
 }
 
+/** A NewsItem enriched with importance scoring metadata */
+export interface ScoredNewsItem extends NewsItem {
+  importanceScore: number;
+  crossSourceCount: number;
+  sourceCredibility: number;
+  recencyScore: number;
+  contentSignal: number;
+}
+
 export interface FearGreedIndex {
   score: number;
   rating: string;

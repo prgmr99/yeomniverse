@@ -5,6 +5,7 @@ import { calculateTechnicalIndicators } from '../analyzers/technical-analyzer';
 import { generateBriefAnalysis } from '../analyzers/stock-ai-analyzer';
 import type { AnalysisResult, FearGreedIndex } from '../types/news.types';
 import { escapeHtml, generateFearGreedHtmlCard } from '../shared/briefing-content';
+import { TIER_ARTICLE_COUNT, type PlanTier } from '../config/briefing-config';
 
 const BATCH_SIZE = 10;
 const BATCH_DELAY_MS = 1000;
@@ -352,7 +353,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGr
           html: generatePersonalizedEmailHtml({
             date: dateStr,
             planName: 'free',
-            topNews: analysis.topNews.map(n => ({
+            topNews: analysis.topNews.slice(0, TIER_ARTICLE_COUNT.free).map(n => ({
               title: n.title,
               summary: n.summary,
               sentiment: n.sentiment as 'bull' | 'bear' | 'neutral',
@@ -374,6 +375,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGr
     await Promise.allSettled(
       batch.map(async sub => {
         const plan = planMap.get(sub.plan_id || '');
+        const tierCount = TIER_ARTICLE_COUNT[(plan?.name || 'basic') as PlanTier] || TIER_ARTICLE_COUNT.basic;
         const isPro = plan?.name === 'pro';
 
         // Get user's watchlist
@@ -454,7 +456,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGr
             date: dateStr,
             planName: plan?.name || 'basic',
             watchlist: validWatchlist as WatchlistStock[],
-            topNews: analysis.topNews.map(n => ({
+            topNews: analysis.topNews.slice(0, tierCount).map(n => ({
               title: n.title,
               summary: n.summary,
               sentiment: n.sentiment as 'bull' | 'bear' | 'neutral',

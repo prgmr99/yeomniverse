@@ -1,25 +1,23 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import type { AnalysisResult, NewsItem } from "../types/news.types";
+import type { AnalysisResult, NewsItem, ScoredNewsItem } from "../types/news.types";
+import { DEFAULT_ARTICLE_COUNT } from "../config/briefing-config";
 
-/**
- * AI 뉴스 분석기 (Google Gemini)
- * 수집된 뉴스를 분석하여 핵심 인사이트를 추출합니다.
- */
-
-// Gemini API 초기화
+// Gemini API init
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 /**
- * 뉴스 목록을 AI로 분석
+ * Analyzes news items using Gemini AI.
+ * Accepts both plain NewsItem[] and ScoredNewsItem[] (backward-compatible).
  *
- * @param newsItems 분석할 뉴스 아이템 배열
- * @returns 분석 결과 (상위 3개 뉴스, 키워드, 시장 분위기)
+ * @param newsItems News items to analyze (optionally scored)
+ * @param topNewsCount Number of top articles to select
  */
 export async function analyzeNews(
 	newsItems: NewsItem[],
+	topNewsCount: number = DEFAULT_ARTICLE_COUNT,
 ): Promise<AnalysisResult> {
 	try {
-		console.log("🤖 Starting AI analysis...");
+		console.log(`[AI] Starting analysis (selecting top ${topNewsCount})...`);
 
 		if (!process.env.GEMINI_API_KEY) {
 			throw new Error(
@@ -27,39 +25,49 @@ export async function analyzeNews(
 			);
 		}
 
-		// Gemini 2.5 Flash 모델 사용 (무료 티어, 빠르고 정확)
 		const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-
-		// 프롬프트 생성
-		const prompt = generateAnalysisPrompt(newsItems);
-
-		// AI 분석 요청
+		const prompt = generateAnalysisPrompt(newsItems, topNewsCount);
 		const result = await model.generateContent(prompt);
 		const response = result.response.text();
 
-		console.log("📝 AI response received");
+		console.log("[AI] Response received");
 
-		// JSON 파싱 (마크다운 코드 블록 제거)
 		const analysisResult = parseAIResponse(response);
 
 		console.log(
-			`✅ Analysis complete: ${analysisResult.topNews.length} top news items selected`,
+			`[AI] Analysis complete: ${analysisResult.topNews.length} top news items selected`,
 		);
 
 		return analysisResult;
 	} catch (error) {
-		console.error("❌ AI analysis failed:", error);
+		console.error("[AI] Analysis failed:", error);
 		throw error;
 	}
 }
 
 /**
- * AI 분석용 프롬프트 생성
+ * Generates the analysis prompt. If items have importanceScore (ScoredNewsItem),
+ * includes source and score context for the AI.
  */
-function generateAnalysisPrompt(newsItems: NewsItem[]): string {
+function generateAnalysisPrompt(newsItems: NewsItem[], topNewsCount: number): string {
+	const hasScores = newsItems.length > 0 && 'importanceScore' in newsItems[0];
+
 	const newsList = newsItems
-		.map((item, idx) => `${idx + 1}. ${item.title}`)
+		.map((item, idx) => {
+			if (hasScores) {
+				const scored = item as ScoredNewsItem;
+				return `${idx + 1}. [${scored.source || 'Unknown'} | Score: ${scored.importanceScore}] ${scored.title}`;
+			}
+			return `${idx + 1}. ${item.title}`;
+		})
 		.join("\n");
+
+	const scoreContext = hasScores
+		? `
+**Importance Scores:**
+Each article has a pre-computed importance score (0-100) based on source credibility, cross-source corroboration, recency, and content depth. Use these as advisory input -- a high score suggests broad coverage and reliable sourcing, but your editorial judgment on materiality takes precedence.
+`
+		: '';
 
 	return `
 You are a senior market strategist with three decades on Wall Street. You have managed institutional portfolios through multiple market cycles. You write the way Warren Buffett writes shareholder letters: every word earns its place, conviction is expressed through clarity rather than superlatives, and you never waste your reader's time.
@@ -67,8 +75,8 @@ You are a senior market strategist with three decades on Wall Street. You have m
 Your reader is a professional investor who needs the signal, not the noise.
 
 **Task:**
-From the news list below, select the 3 items with the greatest potential to move capital allocation decisions in the next 1-4 weeks. Analyze each one.
-
+From the news list below, select the ${topNewsCount} items with the greatest potential to move capital allocation decisions in the next 1-4 weeks. Analyze each one. Rank them in descending order of materiality -- the first item should be the most important.
+${scoreContext}
 **News List:**
 ${newsList}
 
@@ -95,27 +103,27 @@ Respond ONLY with the JSON below. No preamble, no commentary.
 
 **Rules:**
 - All text fields MUST be in English
+- topNews MUST contain exactly ${topNewsCount} items, ranked by materiality (most important first)
 - summary must be exactly 3 sentences
 - sentiment must be one of "bull", "bear", or "neutral"
 - keywords: the 3 most investable themes of the day (include #)
 - Write with authority. No "could potentially", no "it remains to be seen", no "investors should keep an eye on". State your view.
+- Do NOT include the [Source | Score: N] prefix in your output titles or any output field. These annotations are input metadata only.
 - Output ONLY valid JSON
 `;
 }
 
 /**
- * AI 응답을 파싱하여 AnalysisResult 객체로 변환
+ * Parses AI response to AnalysisResult.
  */
 function parseAIResponse(response: string): AnalysisResult {
 	try {
-		// JSON 코드 블록 제거 (```json ... ``` 형태)
 		let jsonText = response.trim();
 
 		const jsonMatch = jsonText.match(/```json\n([\s\S]*?)\n```/);
 		if (jsonMatch) {
 			jsonText = jsonMatch[1];
 		} else {
-			// 코드 블록이 없으면 중괄호 사이 내용 추출
 			const bracketMatch = jsonText.match(/{[\s\S]*}/);
 			if (bracketMatch) {
 				jsonText = bracketMatch[0];
@@ -124,7 +132,6 @@ function parseAIResponse(response: string): AnalysisResult {
 
 		const parsed = JSON.parse(jsonText);
 
-		// 유효성 검증
 		if (!parsed.topNews || !Array.isArray(parsed.topNews)) {
 			throw new Error("topNews is not an array.");
 		}
@@ -138,7 +145,6 @@ function parseAIResponse(response: string): AnalysisResult {
 		console.error("AI response parsing failed:", error);
 		console.error("Original response:", response);
 
-		// 파싱 실패 시 기본값 반환
 		return {
 			topNews: [
 				{
@@ -156,7 +162,7 @@ function parseAIResponse(response: string): AnalysisResult {
 }
 
 /**
- * 분석 결과를 사람이 읽기 좋은 형태로 포맷팅
+ * Formats analysis result for console output.
  */
 export function formatAnalysisResult(analysis: AnalysisResult): string {
   let output = '\n=== FinBrief Analysis Results ===\n\n';
@@ -176,24 +182,23 @@ export function formatAnalysisResult(analysis: AnalysisResult): string {
   return output;
 }
 
-// 테스트 실행 (이 파일을 직접 실행할 때)
+// Standalone test
 if (require.main === module) {
-	// 테스트용 더미 데이터
 	const dummyNews: NewsItem[] = [
 		{
-			title: "한국은행, 기준금리 동결 결정",
+			title: "BOK holds rates steady amid global uncertainty",
 			link: "https://example.com/1",
 			pubDate: new Date().toISOString(),
 			source: "Test",
 		},
 		{
-			title: "삼성전자, 반도체 수출 증가세",
+			title: "Samsung semiconductor exports rise sharply",
 			link: "https://example.com/2",
 			pubDate: new Date().toISOString(),
 			source: "Test",
 		},
 		{
-			title: "비트코인 가격 급등, 5천만원 돌파",
+			title: "Bitcoin surges past 50M KRW milestone",
 			link: "https://example.com/3",
 			pubDate: new Date().toISOString(),
 			source: "Test",

@@ -23,7 +23,8 @@ const STOP_WORDS = new Set([
   'this', 'that', 'from', 'up', 'be', 'has', 'have', 'had', 'not',
 ]);
 
-function significantWords(title: string): Set<string> {
+/** Exported for use by news-scorer.ts. STOP_WORDS remains private (captured by closure). */
+export function significantWords(title: string): Set<string> {
   return new Set(
     title
       .toLowerCase()
@@ -192,9 +193,11 @@ export function filterReliableNews(newsItems: NewsItem[]): NewsItem[] {
 }
 
 /**
- * Collects news from all sources in parallel, filters, and deduplicates.
+ * Internal shared pipeline: fetch, filter, deduplicate.
+ * Returns both deduplicated and pre-dedup (reliable-filtered) lists.
+ * The pre-dedup list is needed by the news scorer for cross-source detection.
  */
-export async function collectAllNews(): Promise<NewsItem[]> {
+async function collectAndProcess(): Promise<{ deduplicated: NewsItem[]; raw: NewsItem[] }> {
   const results = await Promise.allSettled([
     fetchGoogleFinanceNews(),
     fetchInvestingComNews(),
@@ -217,7 +220,24 @@ export async function collectAllNews(): Promise<NewsItem[]> {
     ` → after deduplication: ${deduplicated.length}\n`
   );
 
+  return { deduplicated, raw: reliable };
+}
+
+/**
+ * Collects news from all sources in parallel, filters, and deduplicates.
+ * Backward-compatible: returns only the deduplicated list.
+ */
+export async function collectAllNews(): Promise<NewsItem[]> {
+  const { deduplicated } = await collectAndProcess();
   return deduplicated;
+}
+
+/**
+ * Same as collectAllNews but also returns the pre-dedup (reliable-filtered) list.
+ * Used by the scoring pipeline for cross-source coverage detection.
+ */
+export async function collectAllNewsWithRaw(): Promise<{ deduplicated: NewsItem[]; raw: NewsItem[] }> {
+  return collectAndProcess();
 }
 
 // Standalone test
