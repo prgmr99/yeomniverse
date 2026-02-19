@@ -1,6 +1,7 @@
 import TelegramBot from 'node-telegram-bot-api';
-import { AnalysisResult } from '../types/news.types';
+import { AnalysisResult, FearGreedIndex } from '../types/news.types';
 import { getContextualAffiliateLinks, getRandomInspirationalQuote } from '../shared/briefing-content';
+import { getFearGreedLabel, getFearGreedBar } from '../collectors/fear-greed-collector';
 
 /**
  * 텔레그램 메시지 발송기
@@ -20,44 +21,43 @@ const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN || '', { polling: fal
 export async function sendDailyBriefing(
   chatId: string,
   analysis: AnalysisResult,
-  affiliateLinks?: { text: string; url: string }[]
+  affiliateLinks?: { text: string; url: string }[],
+  fearGreed?: FearGreedIndex | null
 ): Promise<void> {
   try {
-    console.log('📤 Creating Telegram message...');
-    
+    console.log('[Telegram] Creating message...');
+
     if (!process.env.TELEGRAM_BOT_TOKEN) {
       throw new Error('TELEGRAM_BOT_TOKEN is not set.');
     }
-    
-    // 메시지 포맷팅
-    const message = formatBriefingMessage(analysis, affiliateLinks);
-    
-    // 텔레그램 전송
+
+    const message = formatBriefingMessage(analysis, affiliateLinks, fearGreed);
+
     await bot.sendMessage(chatId, message, {
       parse_mode: 'Markdown',
-      disable_web_page_preview: true // 링크 미리보기 끄기
+      disable_web_page_preview: true,
     });
-    
-    console.log('✅ Telegram message sent successfully!');
-    
+
+    console.log('[Telegram] Message sent successfully.');
   } catch (error) {
-    console.error('❌ Telegram send failed:', error);
+    console.error('[Telegram] Send failed:', error);
     throw error;
   }
 }
 
 /**
- * 브리핑 메시지 포맷팅 (Markdown 형식)
+ * Formats the daily briefing as a Telegram Markdown message.
  */
 function formatBriefingMessage(
   analysis: AnalysisResult,
-  affiliateLinks?: { text: string; url: string }[]
+  affiliateLinks?: { text: string; url: string }[],
+  fearGreed?: FearGreedIndex | null
 ): string {
   const today = new Date().toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-    weekday: 'long'
+    weekday: 'long',
   });
 
   const SEP = '──────────────────────';
@@ -65,6 +65,15 @@ function formatBriefingMessage(
   let message = `*FINBRIEF | MORNING BRIEF*\n`;
   message += `${today}\n`;
   message += `${SEP}\n\n`;
+
+  // Fear & Greed Index section
+  if (fearGreed) {
+    const label = getFearGreedLabel(fearGreed.score);
+    const bar = getFearGreedBar(fearGreed.score);
+    message += `*FEAR & GREED INDEX*\n`;
+    message += `${bar}  —  ${label}\n`;
+    message += `${SEP}\n\n`;
+  }
 
   analysis.topNews.forEach((news, idx) => {
     const tag = getSentimentTag(news.sentiment);
@@ -80,9 +89,7 @@ function formatBriefingMessage(
   });
 
   message += `${SEP}\n\n`;
-
   message += `*Key Themes:* ${analysis.keywords.join(' | ')}\n\n`;
-
   message += `*Market Outlook:* ${analysis.marketSentiment}\n\n`;
 
   if (affiliateLinks && affiliateLinks.length > 0) {

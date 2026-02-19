@@ -1,7 +1,12 @@
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
-import { AnalysisResult } from '../types/news.types';
-import { getContextualAffiliateLinks, getRandomInspirationalQuote } from '../shared/briefing-content';
+import { AnalysisResult, FearGreedIndex } from '../types/news.types';
+import {
+  getContextualAffiliateLinks,
+  getRandomInspirationalQuote,
+  escapeHtml,
+  generateFearGreedHtmlCard,
+} from '../shared/briefing-content';
 export { getContextualAffiliateLinks } from '../shared/briefing-content';
 
 /**
@@ -22,7 +27,8 @@ interface Subscriber {
  */
 export async function sendEmailBriefing(
   analysis: AnalysisResult,
-  affiliateLinks?: { text: string; url: string }[]
+  affiliateLinks?: { text: string; url: string }[],
+  fearGreed?: FearGreedIndex | null
 ): Promise<{ success: boolean; emailsSent: number; error?: string }> {
   try {
     console.log('📧 이메일 발송 준비 중...');
@@ -71,7 +77,7 @@ export async function sendEmailBriefing(
 
     // 배치 이메일 발송
     const emailPromises = subscribers.map((subscriber: Subscriber) => {
-      const htmlContent = formatBriefingEmail(analysis, affiliateLinks, subscriber.unsubscribe_token);
+      const htmlContent = formatBriefingEmail(analysis, affiliateLinks, subscriber.unsubscribe_token, fearGreed);
 
       return resend.emails.send({
         from: process.env.RESEND_FROM_EMAIL!,
@@ -132,7 +138,8 @@ function generateEmailSubject(): string {
 function formatBriefingEmail(
   analysis: AnalysisResult,
   affiliateLinks: { text: string; url: string }[] | undefined,
-  unsubscribeToken: string
+  unsubscribeToken: string,
+  fearGreed?: FearGreedIndex | null
 ): string {
   const quote = getRandomInspirationalQuote();
   const today = new Date().toLocaleDateString('en-US', {
@@ -229,6 +236,9 @@ function formatBriefingEmail(
 
     <!-- Content -->
     <div style="padding: 32px 24px;">
+      <!-- Fear & Greed Index -->
+      ${generateFearGreedHtmlCard(fearGreed)}
+
       <!-- 주요 뉴스 -->
       ${newsItemsHtml}
 
@@ -307,20 +317,6 @@ function getSentimentStyle(sentiment: 'bull' | 'bear' | 'neutral'): string {
     default:
       return 'background-color: #f3f4f6; color: #374151;';
   }
-}
-
-/**
- * HTML 이스케이프 처리
- */
-function escapeHtml(text: string): string {
-  const map: { [key: string]: string } = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#039;'
-  };
-  return text.replace(/[&<>"']/g, m => map[m]);
 }
 
 // 테스트 실행 (이 파일을 직접 실행할 때)

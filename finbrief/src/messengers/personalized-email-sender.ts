@@ -3,7 +3,8 @@ import { createClient } from '@supabase/supabase-js';
 import { getStockQuote, getHistoricalData } from '../collectors/stock-collector';
 import { calculateTechnicalIndicators } from '../analyzers/technical-analyzer';
 import { generateBriefAnalysis } from '../analyzers/stock-ai-analyzer';
-import type { AnalysisResult } from '../types/news.types';
+import type { AnalysisResult, FearGreedIndex } from '../types/news.types';
+import { escapeHtml, generateFearGreedHtmlCard } from '../shared/briefing-content';
 
 const BATCH_SIZE = 10;
 const BATCH_DELAY_MS = 1000;
@@ -52,17 +53,6 @@ function delay(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function escapeHtml(text: string): string {
-  const map: { [key: string]: string } = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#039;'
-  };
-  return text.replace(/[&<>"']/g, m => map[m]);
-}
-
 function getSentimentLabel(sentiment: 'bull' | 'bear' | 'neutral'): string {
   switch (sentiment) {
     case 'bull':
@@ -98,8 +88,9 @@ function generatePersonalizedEmailHtml(options: {
   unsubscribeToken: string;
   dashboardUrl: string;
   watchlist?: WatchlistStock[];
+  fearGreed?: FearGreedIndex | null;
 }): string {
-  const { date, planName, topNews, keywords, marketSentiment, unsubscribeToken, dashboardUrl, watchlist } = options;
+  const { date, planName, topNews, keywords, marketSentiment, unsubscribeToken, dashboardUrl, watchlist, fearGreed } = options;
 
   const isPro = planName === 'pro';
   const isBasic = planName === 'basic';
@@ -226,6 +217,9 @@ function generatePersonalizedEmailHtml(options: {
 
     <!-- Content -->
     <div style="padding: 32px 24px;">
+      <!-- Fear & Greed Index -->
+      ${generateFearGreedHtmlCard(fearGreed)}
+
       <!-- 워치리스트 (유료만) -->
       ${watchlistHtml}
 
@@ -285,7 +279,7 @@ function generatePersonalizedEmailHtml(options: {
   `.trim();
 }
 
-export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promise<void> {
+export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGreed?: FearGreedIndex | null): Promise<void> {
   // 환경 변수 검증
   if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
     console.warn('⚠️ Supabase not configured, skipping personalized emails.');
@@ -367,6 +361,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
             marketSentiment: analysis.marketSentiment,
             unsubscribeToken: sub.unsubscribe_token,
             dashboardUrl: `${dashboardUrl}/dashboard`,
+            fearGreed,
           }),
         })
       )
@@ -468,6 +463,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
             marketSentiment: analysis.marketSentiment,
             unsubscribeToken: sub.unsubscribe_token,
             dashboardUrl: `${dashboardUrl}/dashboard`,
+            fearGreed,
           }),
         });
       })

@@ -1,4 +1,5 @@
 import { collectAllNews } from './collectors/rss-collector';
+import { fetchFearGreedIndex } from './collectors/fear-greed-collector';
 import { analyzeNews, formatAnalysisResult } from './analyzers/gemini-analyzer';
 import { sendDailyBriefing, getContextualAffiliateLinks } from './messengers/telegram-sender';
 import { sendEmailBriefing } from './messengers/email-sender';
@@ -16,16 +17,21 @@ async function main() {
   console.log('='.repeat(50));
   
   try {
-    // Step 1: 뉴스 수집
-    console.log('\n📰 Step 1: Collecting news...\n');
-    const newsItems = await collectAllNews();
-    
+    // Step 1: Collect news + Fear & Greed Index in parallel
+    console.log('\n[Step 1] Collecting news and market indicators...\n');
+    const [newsItems, fearGreedIndex] = await Promise.all([
+      collectAllNews(),
+      fetchFearGreedIndex(),
+    ]);
+
+    console.log(`[Fear & Greed] ${fearGreedIndex ? `Score: ${fearGreedIndex.score} (${fearGreedIndex.rating})` : 'Unavailable'}`);
+
     if (newsItems.length === 0) {
       throw new Error('No news collected.');
     }
-    
-    // Step 2: AI 분석
-    console.log('\n🤖 Step 2: Running AI analysis...\n');
+
+    // Step 2: AI analysis
+    console.log('\n[Step 2] Running AI analysis...\n');
     const analysis = await analyzeNews(newsItems);
     
     // 콘솔에 분석 결과 출력
@@ -33,40 +39,37 @@ async function main() {
     console.log(formatAnalysisResult(analysis));
     console.log('='.repeat(50));
     
-    // Step 3: 제휴 링크 생성
+    // Step 3: Affiliate links
     const affiliateLinks = getContextualAffiliateLinks(analysis.keywords);
-    
-    // Step 4: 텔레그램 발송
+
+    // Step 4: Telegram
     const chatId = process.env.TELEGRAM_CHAT_ID;
 
     if (!chatId) {
-      console.warn('⚠️ TELEGRAM_CHAT_ID not set, skipping Telegram delivery.');
+      console.warn('[Step 4] TELEGRAM_CHAT_ID not set, skipping Telegram delivery.');
     } else {
-      console.log('\n📤 Step 4: Sending Telegram message...\n');
-      await sendDailyBriefing(chatId, analysis, affiliateLinks);
+      console.log('\n[Step 4] Sending Telegram message...\n');
+      await sendDailyBriefing(chatId, analysis, affiliateLinks, fearGreedIndex);
     }
 
-    // Step 5: 개인화 이메일 발송 (구독 플랜별 분기)
-    console.log('\n📧 Step 5: Sending personalized emails...\n');
+    // Step 5: Email
+    console.log('\n[Step 5] Sending emails...\n');
 
-    // Check if personalized sending is enabled
     const usePersonalizedEmails = process.env.USE_PERSONALIZED_EMAILS === 'true';
 
     if (usePersonalizedEmails) {
-      // New personalized email flow
-      await sendPersonalizedBriefings(analysis);
+      await sendPersonalizedBriefings(analysis, fearGreedIndex);
     } else {
-      // Legacy email flow (fallback)
-      const emailResult = await sendEmailBriefing(analysis, affiliateLinks);
+      const emailResult = await sendEmailBriefing(analysis, affiliateLinks, fearGreedIndex);
       console.log(`  Emails sent: ${emailResult.emailsSent}`);
     }
 
     // Step 5.5: Stock News Alerts (Basic/Pro users with watchlists)
-    console.log('\n🔔 Step 5.5: Sending watchlist news alerts...\n');
+    console.log('\n[Step 5.5] Sending watchlist news alerts...\n');
     const alertResult = await sendStockNewsAlerts(newsItems);
     console.log(`  News alerts sent: ${alertResult.emailsSent} emails`);
 
-    // Step 6: JSON 파일로 저장
+    // Step 6: Save JSON
     const today = new Date().toISOString().split('T')[0];
     const outputPath = path.join(__dirname, '..', 'data', `${today}.json`);
 
@@ -74,17 +77,18 @@ async function main() {
       date: today,
       timestamp: new Date().toISOString(),
       newsCount: newsItems.length,
-      analysis: analysis,
-      affiliateLinks: affiliateLinks,
+      fearGreedIndex,
+      analysis,
+      affiliateLinks,
       sentToTelegram: !!chatId,
       usePersonalizedEmails,
       alertsSent: alertResult.emailsSent,
     };
-    
+
     fs.writeFileSync(outputPath, JSON.stringify(output, null, 2), 'utf-8');
-    console.log(`\n💾 Results saved: ${outputPath}`);
-    
-    console.log('\n✅ Daily briefing complete!');
+    console.log(`\n[Step 6] Results saved: ${outputPath}`);
+
+    console.log('\nDaily briefing complete.');
     
   } catch (error) {
     console.error('\n❌ Daily briefing failed:', error);

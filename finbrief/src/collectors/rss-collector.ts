@@ -1,148 +1,190 @@
 import Parser from 'rss-parser';
 import { NewsItem } from '../types/news.types';
 
-/**
- * RSS 뉴스 수집기
- * 구글 뉴스, 네이버 증권 등에서 재테크 관련 뉴스를 수집합니다.
- */
+const parser = new Parser({
+  headers: {
+    'User-Agent':
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+  },
+});
 
-const parser = new Parser();
+// Source priority for deduplication (lower index = higher priority)
+const SOURCE_PRIORITY = ['Bloomberg', 'Reuters', 'CNBC', 'Investing.com', 'MarketWatch', 'Google News'];
+
+function sourcePriority(source: string): number {
+  const idx = SOURCE_PRIORITY.findIndex(s => source.includes(s));
+  return idx === -1 ? SOURCE_PRIORITY.length : idx;
+}
+
+// English stop words to strip before comparing titles
+const STOP_WORDS = new Set([
+  'the', 'a', 'an', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by',
+  'and', 'or', 'but', 'as', 'is', 'are', 'was', 'were', 'it', 'its',
+  'this', 'that', 'from', 'up', 'be', 'has', 'have', 'had', 'not',
+]);
+
+function significantWords(title: string): Set<string> {
+  return new Set(
+    title
+      .toLowerCase()
+      .replace(/[^\w\s]/g, '')
+      .split(/\s+/)
+      .filter(w => w.length > 1 && !STOP_WORDS.has(w))
+  );
+}
 
 /**
- * 구글 뉴스 금융 섹션에서 뉴스 수집
+ * Deduplicates news items across sources using title word-overlap.
+ * When two titles share >60% of their significant words, keeps the higher-priority source.
  */
-export async function fetchGoogleFinanceNews(): Promise<NewsItem[]> {
+export function deduplicateNews(items: NewsItem[]): NewsItem[] {
+  const kept: NewsItem[] = [];
+
+  for (const item of items) {
+    const words = significantWords(item.title);
+    if (words.size === 0) {
+      kept.push(item);
+      continue;
+    }
+
+    const duplicateIdx = kept.findIndex(existing => {
+      const existingWords = significantWords(existing.title);
+      if (existingWords.size === 0) return false;
+      const intersection = [...words].filter(w => existingWords.has(w)).length;
+      const union = new Set([...words, ...existingWords]).size;
+      return intersection / union >= 0.6;
+    });
+
+    if (duplicateIdx === -1) {
+      kept.push(item);
+    } else {
+      // Keep the higher-priority source
+      const existing = kept[duplicateIdx];
+      if (sourcePriority(item.source || '') < sourcePriority(existing.source || '')) {
+        kept[duplicateIdx] = item;
+      }
+    }
+  }
+
+  return kept;
+}
+
+/**
+ * Generic RSS fetch helper. Sets source on every item.
+ * Returns [] on failure so Promise.allSettled callers are unaffected.
+ */
+async function fetchRssFeed(
+  url: string,
+  sourceName: string,
+  maxItems = 20
+): Promise<NewsItem[]> {
   try {
-    console.log('📰 구글 뉴스 수집 시작...');
-    
-    // 구글 뉴스 RSS: 재테크 관련 최근 1일 뉴스
-    // URL 인코딩 처리
-    const searchQuery = encodeURIComponent('재테크 OR 주식 OR 투자 when:1d');
-    const rssUrl = `https://news.google.com/rss/search?q=${searchQuery}&hl=ko&gl=KR&ceid=KR:ko`;
-    
-    const feed = await parser.parseURL(rssUrl);
-    
-    const newsItems: NewsItem[] = feed.items.slice(0, 20).map(item => ({
+    const feed = await parser.parseURL(url);
+    return feed.items.slice(0, maxItems).map(item => ({
       title: item.title || '',
       link: item.link || '',
       pubDate: item.pubDate || new Date().toISOString(),
       contentSnippet: item.contentSnippet || item.content,
-      source: 'Google News'
+      source: sourceName,
     }));
-    
-    console.log(`✅ ${newsItems.length}개의 뉴스를 수집했습니다.`);
-    return newsItems;
-    
-  } catch (error) {
-    console.error('❌ 구글 뉴스 수집 실패:', error);
-    throw error;
+  } catch (err) {
+    console.warn(`[RSS] Failed to fetch ${sourceName}: ${(err as Error).message}`);
+    return [];
   }
 }
 
-/**
- * 네이버 증권 뉴스 수집 (현재 비활성화)
- * 네이버에서 RSS 서비스를 종료하여 비활성화됨
- */
+export async function fetchGoogleFinanceNews(): Promise<NewsItem[]> {
+  console.log('[RSS] Fetching Google News...');
+  const searchQuery = encodeURIComponent('재테크 OR 주식 OR 투자 when:1d');
+  const url = `https://news.google.com/rss/search?q=${searchQuery}&hl=ko&gl=KR&ceid=KR:ko`;
+  const items = await fetchRssFeed(url, 'Google News', 20);
+  console.log(`[RSS] Google News: ${items.length} items`);
+  return items;
+}
+
+export async function fetchInvestingComNews(): Promise<NewsItem[]> {
+  console.log('[RSS] Fetching Investing.com...');
+  // news_14.rss = economy/market analysis. news.rss returns SEC filings.
+  const items = await fetchRssFeed('https://www.investing.com/rss/news_14.rss', 'Investing.com', 15);
+  console.log(`[RSS] Investing.com: ${items.length} items`);
+  return items;
+}
+
+export async function fetchCNBCNews(): Promise<NewsItem[]> {
+  console.log('[RSS] Fetching CNBC...');
+  const items = await fetchRssFeed(
+    'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114',
+    'CNBC',
+    20
+  );
+  console.log(`[RSS] CNBC: ${items.length} items`);
+  return items;
+}
+
+export async function fetchMarketWatchNews(): Promise<NewsItem[]> {
+  console.log('[RSS] Fetching MarketWatch...');
+  const items = await fetchRssFeed(
+    'https://feeds.content.dowjones.io/public/rss/mw_topstories',
+    'MarketWatch',
+    15
+  );
+  console.log(`[RSS] MarketWatch: ${items.length} items`);
+  return items;
+}
+
 export async function fetchNaverStockNews(): Promise<NewsItem[]> {
-  // 네이버 증권 RSS가 더 이상 작동하지 않음 (HTML 페이지 반환)
-  // 구글 뉴스가 이미 한국 금융 뉴스를 충분히 제공함
-  console.log('📰 네이버 증권 뉴스: RSS 서비스 종료로 건너뜀');
+  // Naver RSS service terminated — returns HTML, not RSS
   return [];
 }
 
 /**
- * 블로그 도메인 필터링
- * 개인 블로그 URL을 제거합니다.
- */
-export function filterBlogNews(newsItems: NewsItem[]): NewsItem[] {
-  const blogDomains = [
-    'tistory.com',
-    'blog.naver.com',
-    'post.naver.com',
-    'velog.io',
-    'brunch.co.kr',
-    'medium.com',
-    'notion.site',
-    'github.io',
-    'wordpress.com',
-    'blogspot.com',
-    'daum.net/blog',
-    'egloos.com'
-  ];
-
-  return newsItems.filter(item => {
-    const hasBlogDomain = blogDomains.some(domain =>
-      item.link.includes(domain)
-    );
-    return !hasBlogDomain;
-  });
-}
-
-/**
- * 광고성 기사 필터링
- * 특정 키워드가 포함된 기사를 제거합니다.
+ * Filters ad/sponsored content by Korean keywords (Google News only).
  */
 export function filterAdNews(newsItems: NewsItem[]): NewsItem[] {
-  const adKeywords = [
-    '이벤트',
-    '할인',
-    '쿠폰',
-    '광고',
-    '[PR]',
-    '협찬',
-    '제공:'
-  ];
+  const adKeywords = ['이벤트', '할인', '쿠폰', '광고', '[PR]', '협찬', '제공:'];
+  return newsItems.filter(
+    item => !adKeywords.some(keyword => item.title.includes(keyword))
+  );
+}
 
-  return newsItems.filter(item => {
-    const hasAdKeyword = adKeywords.some(keyword =>
-      item.title.includes(keyword)
-    );
-    return !hasAdKeyword;
-  });
+export function filterBlogNews(newsItems: NewsItem[]): NewsItem[] {
+  const blogDomains = [
+    'tistory.com', 'blog.naver.com', 'post.naver.com', 'velog.io',
+    'brunch.co.kr', 'medium.com', 'notion.site', 'github.io',
+    'wordpress.com', 'blogspot.com', 'daum.net/blog', 'egloos.com',
+  ];
+  return newsItems.filter(
+    item => !blogDomains.some(domain => item.link.includes(domain))
+  );
 }
 
 /**
- * 신뢰할 수 있는 언론사 필터링
- * 구글 뉴스 RSS의 타이틀에서 출처명을 추출하여 필터링합니다.
- * 타이틀 형식: "뉴스 제목 - 출처명"
+ * Filters to reliable sources.
+ * - Non-Google-News items: source is set by the collector → trusted, pass through.
+ * - Google News items: extract source from "Title - Source" format and check whitelist.
  */
 export function filterReliableNews(newsItems: NewsItem[]): NewsItem[] {
   const reliableSources = [
-    '한국경제', '한경',
-    '매일경제', '매경',
-    '조선비즈', '조선일보',
-    '연합뉴스', '연합',
-    '뉴스1',
-    '이데일리',
-    '머니투데이',
-    '서울경제',
-    '아시아경제',
-    '파이낸셜뉴스',
-    '뉴시스',
-    'SBS', 'SBSCNBC',
-    'MBC',
-    'KBS',
-    'JTBC',
-    'YTN',
-    '한국경제TV', '한경TV', '와우TV',
-    'Bloomberg',
-    'Reuters',
-    '문화일보',
-    '중앙일보',
-    '동아일보',
-    '헤럴드경제'
+    '한국경제', '한경', '매일경제', '매경', '조선비즈', '조선일보',
+    '연합뉴스', '연합', '뉴스1', '이데일리', '머니투데이', '서울경제',
+    '아시아경제', '파이낸셜뉴스', '뉴시스', 'SBS', 'SBSCNBC', 'MBC',
+    'KBS', 'JTBC', 'YTN', '한국경제TV', '한경TV', '와우TV', 'Bloomberg',
+    'Reuters', '문화일보', '중앙일보', '동아일보', '헤럴드경제',
+    // International sources added via direct collectors
+    'CNBC', 'MarketWatch', 'Investing.com',
   ];
 
   return newsItems.filter(item => {
-    // 타이틀에서 마지막 " - " 이후의 출처명 추출
-    const lastDashIndex = item.title.lastIndexOf(' - ');
-    if (lastDashIndex === -1) {
-      return false; // 출처명이 없으면 제외
+    // Non-Google-News items come from trusted collectors directly — pass through
+    if (item.source && item.source !== 'Google News') {
+      return true;
     }
 
-    const sourceName = item.title.substring(lastDashIndex + 3).trim();
+    // Google News: extract "Title - SourceName" format
+    const lastDashIndex = item.title.lastIndexOf(' - ');
+    if (lastDashIndex === -1) return false;
 
-    // 신뢰할 수 있는 출처명에 포함되는지 확인 (대소문자 구분 없이)
+    const sourceName = item.title.substring(lastDashIndex + 3).trim();
     return reliableSources.some(reliable =>
       sourceName.toLowerCase().includes(reliable.toLowerCase())
     );
@@ -150,35 +192,44 @@ export function filterReliableNews(newsItems: NewsItem[]): NewsItem[] {
 }
 
 /**
- * 모든 소스에서 뉴스 수집 (통합)
+ * Collects news from all sources in parallel, filters, and deduplicates.
  */
 export async function collectAllNews(): Promise<NewsItem[]> {
-  const [googleNews] = await Promise.all([
+  const results = await Promise.allSettled([
     fetchGoogleFinanceNews(),
-    // 추후 다른 소스 추가 가능
+    fetchInvestingComNews(),
+    fetchCNBCNews(),
+    fetchMarketWatchNews(),
   ]);
 
-  const allNews = [...googleNews];
+  const allNews = results
+    .filter((r): r is PromiseFulfilledResult<NewsItem[]> => r.status === 'fulfilled')
+    .flatMap(r => r.value);
+
   const withoutAds = filterAdNews(allNews);
-  const reliableNews = filterReliableNews(withoutAds);
+  const reliable = filterReliableNews(withoutAds);
+  const deduplicated = deduplicateNews(reliable);
 
-  console.log(`\n📊 총 ${allNews.length}개 수집 → 광고 필터: ${withoutAds.length}개 → 신뢰 언론사 필터: ${reliableNews.length}개\n`);
+  console.log(
+    `\n[RSS] Collected: ${allNews.length} total` +
+    ` → after ad filter: ${withoutAds.length}` +
+    ` → after source filter: ${reliable.length}` +
+    ` → after deduplication: ${deduplicated.length}\n`
+  );
 
-  return reliableNews;
+  return deduplicated;
 }
 
-// 테스트 실행 (이 파일을 직접 실행할 때)
+// Standalone test
 if (require.main === module) {
-  fetchGoogleFinanceNews().then(news => {
-    console.log('\n=== 수집된 뉴스 목록 ===\n');
+  collectAllNews().then(news => {
+    console.log('\n=== Collected News ===\n');
     news.forEach((item, idx) => {
-      console.log(`${idx + 1}. ${item.title}`);
-      console.log(`   🔗 링크: ${item.link}`);
-      console.log(`   🕒 시간: ${item.pubDate}`);
-      console.log(`   📌 출처: ${item.source}\n`);
+      console.log(`${idx + 1}. [${item.source}] ${item.title}`);
+      console.log(`   ${item.link}\n`);
     });
-  }).catch(error => {
-    console.error('실행 중 에러:', error);
+  }).catch(err => {
+    console.error('Error:', err);
     process.exit(1);
   });
 }
