@@ -63,16 +63,29 @@ function escapeHtml(text: string): string {
   return text.replace(/[&<>"']/g, m => map[m]);
 }
 
-function getSentimentEmoji(sentiment: 'bull' | 'bear' | 'neutral'): string {
+function getSentimentLabel(sentiment: 'bull' | 'bear' | 'neutral'): string {
   switch (sentiment) {
     case 'bull':
-      return '🐂';
+      return 'BULLISH';
     case 'bear':
-      return '🐻';
+      return 'BEARISH';
     case 'neutral':
-      return '😐';
+      return 'NEUTRAL';
     default:
-      return '📰';
+      return '';
+  }
+}
+
+function getSentimentStyle(sentiment: 'bull' | 'bear' | 'neutral'): string {
+  switch (sentiment) {
+    case 'bull':
+      return 'background-color: #dcfce7; color: #166534;';
+    case 'bear':
+      return 'background-color: #fef2f2; color: #991b1b;';
+    case 'neutral':
+      return 'background-color: #f3f4f6; color: #374151;';
+    default:
+      return 'background-color: #f3f4f6; color: #374151;';
   }
 }
 
@@ -94,12 +107,16 @@ function generatePersonalizedEmailHtml(options: {
 
   // 주요 뉴스 HTML 생성
   const newsItemsHtml = topNews.map((news, idx) => {
-    const emoji = getSentimentEmoji(news.sentiment);
+    const sentimentLabel = getSentimentLabel(news.sentiment);
+    const sentimentStyle = getSentimentStyle(news.sentiment);
     return `
       <div style="margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #e5e7eb;">
-        <h2 style="font-size: 20px; font-weight: 700; color: #111827; margin: 0 0 16px 0;">
-          ${idx + 1}. ${escapeHtml(news.title)} ${emoji}
+        <h2 style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 4px 0;">
+          ${idx + 1}. ${escapeHtml(news.title)}
         </h2>
+        <span style="display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; padding: 2px 8px; border-radius: 3px; margin-bottom: 12px; ${sentimentStyle}">
+          ${sentimentLabel}
+        </span>
         <p style="font-size: 16px; line-height: 1.6; color: #374151; margin: 0;">
           ${escapeHtml(news.summary)}
         </p>
@@ -133,7 +150,7 @@ function generatePersonalizedEmailHtml(options: {
         // Basic plan: Show simple trend signal
         technicalHtml = `
           <div style="margin-top: 8px; font-size: 12px; color: #6b7280;">
-            📊 ${stock.trendSignal}
+            ${stock.trendSignal}
           </div>
         `;
       }
@@ -142,7 +159,7 @@ function generatePersonalizedEmailHtml(options: {
       if (isPro && stock.aiSummary) {
         aiSummaryHtml = `
           <div style="margin-top: 8px; padding: 8px; background-color: #f9fafb; border-radius: 4px; font-size: 13px; color: #4b5563;">
-            🤖 ${escapeHtml(stock.aiSummary)}
+            ${escapeHtml(stock.aiSummary)}
           </div>
         `;
       }
@@ -168,7 +185,7 @@ function generatePersonalizedEmailHtml(options: {
     watchlistHtml = `
       <div style="margin-bottom: 32px;">
         <h3 style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 16px 0;">
-          📌 My Watchlist
+          My Watchlist
         </h3>
         ${stocksHtml}
       </div>
@@ -187,22 +204,22 @@ function generatePersonalizedEmailHtml(options: {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FinBrief - ${date} Briefing</title>
+  <title>FinBrief | Morning Brief</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; background-color: #f9fafb;">
   <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
     <!-- Header -->
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 32px 24px; text-align: center;">
-      <div style="display: inline-block; background-color: ${planBadgeColor}; color: white; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 4px; margin-bottom: 12px;">
+    <div style="background-color: #0f172a; padding: 32px 24px; text-align: center;">
+      <div style="display: inline-block; background-color: ${planBadgeColor}; color: white; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 4px; margin-bottom: 12px; letter-spacing: 0.5px;">
         ${planBadgeText}
       </div>
-      <h1 style="font-size: 28px; font-weight: 800; color: #ffffff; margin: 0 0 8px 0;">
-        📊 FinBrief
+      <h1 style="font-size: 24px; font-weight: 700; color: #ffffff; margin: 0 0 4px 0; letter-spacing: 1px; font-family: Georgia, 'Times New Roman', serif;">
+        FINBRIEF
       </h1>
-      <p style="font-size: 16px; color: #e0e7ff; margin: 0;">
-        ${isPaid ? 'Personalized Financial Briefing' : 'Today\'s Financial Briefing'}
+      <p style="font-size: 14px; color: #94a3b8; margin: 0; letter-spacing: 0.5px;">
+        ${isPaid ? 'Personalized Morning Brief' : 'Morning Brief'}
       </p>
-      <p style="font-size: 14px; color: #c7d2fe; margin: 8px 0 0 0;">
+      <p style="font-size: 13px; color: #64748b; margin: 8px 0 0 0;">
         ${date}
       </p>
     </div>
@@ -214,16 +231,16 @@ function generatePersonalizedEmailHtml(options: {
 
       <!-- 주요 뉴스 -->
       <div style="margin-bottom: 32px;">
-        <h3 style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 16px 0;">
-          📰 Top News
+        <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0 0 16px 0; letter-spacing: 0.3px;">
+          Top News
         </h3>
         ${newsItemsHtml}
       </div>
 
       <!-- 오늘의 키워드 -->
       <div style="margin-bottom: 32px;">
-        <h3 style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 16px 0;">
-          🔑 Today's Keywords
+        <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0 0 16px 0; letter-spacing: 0.3px;">
+          Key Themes
         </h3>
         <div>
           ${keywordsHtml}
@@ -231,11 +248,11 @@ function generatePersonalizedEmailHtml(options: {
       </div>
 
       <!-- 시장 분위기 -->
-      <div style="margin-bottom: 32px; padding: 24px; background-color: #f0fdf4; border-left: 4px solid #10b981; border-radius: 8px;">
-        <h3 style="font-size: 18px; font-weight: 700; color: #065f46; margin: 0 0 12px 0;">
-          📈 Market Sentiment
+      <div style="margin-bottom: 32px; padding: 24px; background-color: #f8fafc; border-left: 4px solid #1e293b; border-radius: 4px;">
+        <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0 0 12px 0; letter-spacing: 0.3px;">
+          MARKET OUTLOOK
         </h3>
-        <p style="font-size: 16px; line-height: 1.6; color: #047857; margin: 0;">
+        <p style="font-size: 15px; line-height: 1.6; color: #334155; margin: 0; font-style: italic;">
           ${escapeHtml(marketSentiment)}
         </p>
       </div>
@@ -249,12 +266,15 @@ function generatePersonalizedEmailHtml(options: {
     </div>
 
     <!-- Footer -->
-    <div style="padding: 24px; background-color: #f3f4f6; text-align: center; border-top: 1px solid #e5e7eb;">
-      <p style="font-size: 14px; color: #6b7280; margin: 0 0 8px 0;">
-        <strong>FinBrief</strong> | AI-curated financial news
+    <div style="padding: 24px; background-color: #f8fafc; text-align: center; border-top: 1px solid #e2e8f0;">
+      <p style="font-size: 13px; color: #64748b; margin: 0 0 4px 0;">
+        <strong>FinBrief</strong> -- Institutional-grade intelligence, delivered daily.
+      </p>
+      <p style="font-size: 11px; color: #94a3b8; margin: 0;">
+        30-second read
       </p>
       <div style="margin-top: 16px;">
-        <a href="${unsubscribeUrl}" style="font-size: 12px; color: #6b7280; text-decoration: underline;">
+        <a href="${unsubscribeUrl}" style="font-size: 11px; color: #94a3b8; text-decoration: underline;">
           Unsubscribe
         </a>
       </div>
@@ -268,12 +288,12 @@ function generatePersonalizedEmailHtml(options: {
 export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promise<void> {
   // 환경 변수 검증
   if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    console.warn('⚠️ Supabase 설정이 누락되어 개인화 이메일을 건너뜁니다.');
+    console.warn('⚠️ Supabase not configured, skipping personalized emails.');
     return;
   }
 
   if (!process.env.RESEND_API_KEY) {
-    console.warn('⚠️ RESEND_API_KEY가 설정되지 않아 개인화 이메일을 건너뜁니다.');
+    console.warn('⚠️ RESEND_API_KEY not set, skipping personalized emails.');
     return;
   }
 
@@ -334,7 +354,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
         resend.emails.send({
           from: fromEmail,
           to: sub.email,
-          subject: `📊 FinBrief - ${dateStr} Financial Briefing`,
+          subject: `FinBrief | Morning Brief -- ${dateStr}`,
           html: generatePersonalizedEmailHtml({
             date: dateStr,
             planName: 'free',
@@ -434,7 +454,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult): Promi
         return resend.emails.send({
           from: fromEmail,
           to: sub.email,
-          subject: `📊 FinBrief - ${dateStr} Personalized Briefing`,
+          subject: `FinBrief | Morning Brief -- ${dateStr}`,
           html: generatePersonalizedEmailHtml({
             date: dateStr,
             planName: plan?.name || 'basic',

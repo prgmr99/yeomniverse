@@ -144,6 +144,12 @@
       "type": "file"
     },
     {
+      "path": "src/publishers/content-transformer.ts",
+      "accessCount": 4,
+      "lastAccessed": 1771479873532,
+      "type": "file"
+    },
+    {
       "path": "src/analyzers/gemini-analyzer.ts",
       "accessCount": 3,
       "lastAccessed": 1771393306153,

@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { filterNewsByWatchlist, MatchedNews, WatchlistItem } from '../collectors/news-filter';
 import type { NewsItem } from '../types/news.types';
 import { KOREAN_STOCK_MAPPING } from '../utils/korean-stock-symbols';
@@ -77,6 +78,49 @@ function generateAlertEmailHtml(matches: MatchedNews[], unsubscribeUrl: string):
   `.trim();
 }
 
+async function translateNewsToEnglish(matches: MatchedNews[]): Promise<MatchedNews[]> {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    console.warn('GEMINI_API_KEY not set, skipping translation');
+    return matches;
+  }
+
+  try {
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+
+    const prompt = `Translate the following news items to English. Return ONLY a JSON array in this format:
+[{"title": "English title", "contentSnippet": "English snippet"}]
+
+News items:
+${JSON.stringify(matches.map(m => ({ title: m.news.title, contentSnippet: m.news.contentSnippet || '' })))}
+
+Rules:
+- Translate ALL text to English
+- Keep proper nouns and stock names as-is
+- Return ONLY the JSON array, no other text`;
+
+    const result = await model.generateContent(prompt);
+    const text = result.response.text().trim();
+
+    // Strip markdown code fences if present
+    const jsonText = text.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '');
+    const translated: Array<{ title: string; contentSnippet: string }> = JSON.parse(jsonText);
+
+    return matches.map((match, i) => ({
+      ...match,
+      news: {
+        ...match.news,
+        title: translated[i]?.title ?? match.news.title,
+        contentSnippet: translated[i]?.contentSnippet ?? match.news.contentSnippet,
+      },
+    }));
+  } catch (error) {
+    console.error('Translation failed, using original content:', error);
+    return matches;
+  }
+}
+
 async function sendTelegramAlert(chatId: string, matches: MatchedNews[]): Promise<void> {
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   if (!botToken) {
@@ -84,7 +128,9 @@ async function sendTelegramAlert(chatId: string, matches: MatchedNews[]): Promis
     return;
   }
 
-  const message = matches.map(match =>
+  const translatedMatches = await translateNewsToEnglish(matches);
+
+  const message = translatedMatches.map(match =>
     `🔔 *${match.matchedStock.name}* News\n\n` +
     `📰 ${match.news.title}\n\n` +
     `${match.news.contentSnippet || ''}\n\n` +

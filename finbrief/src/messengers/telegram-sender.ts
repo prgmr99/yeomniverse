@@ -22,10 +22,10 @@ export async function sendDailyBriefing(
   affiliateLinks?: { text: string; url: string }[]
 ): Promise<void> {
   try {
-    console.log('📤 텔레그램 메시지 생성 중...');
+    console.log('📤 Creating Telegram message...');
     
     if (!process.env.TELEGRAM_BOT_TOKEN) {
-      throw new Error('TELEGRAM_BOT_TOKEN이 설정되지 않았습니다.');
+      throw new Error('TELEGRAM_BOT_TOKEN is not set.');
     }
     
     // 메시지 포맷팅
@@ -37,10 +37,10 @@ export async function sendDailyBriefing(
       disable_web_page_preview: true // 링크 미리보기 끄기
     });
     
-    console.log('✅ 텔레그램 메시지 발송 완료!');
+    console.log('✅ Telegram message sent successfully!');
     
   } catch (error) {
-    console.error('❌ 텔레그램 발송 실패:', error);
+    console.error('❌ Telegram send failed:', error);
     throw error;
   }
 }
@@ -59,60 +59,60 @@ function formatBriefingMessage(
     weekday: 'long'
   });
 
-  let message = `📊 *FinBrief - Today's Financial Briefing*\n`;
-  message += `${today}\n\n`;
+  const SEP = '──────────────────────';
 
-  // 주요 뉴스 3개
+  let message = `*FINBRIEF | MORNING BRIEF*\n`;
+  message += `${today}\n`;
+  message += `${SEP}\n\n`;
+
   analysis.topNews.forEach((news, idx) => {
-    const emoji = getSentimentEmoji(news.sentiment);
+    const tag = getSentimentTag(news.sentiment);
 
-    message += `*${idx + 1}. ${news.title}* ${emoji}\n\n`;
+    message += `*${idx + 1}. ${news.title}*\n`;
+    message += `${tag}\n\n`;
     message += `${news.summary}\n\n`;
-    message += `💡 *Why it matters*\n${news.reason}\n\n`;
+    message += `_Significance:_ ${news.reason}\n\n`;
 
-    // 마지막 뉴스가 아니면 줄바꿈 추가
     if (idx < analysis.topNews.length - 1) {
-      message += `\n`;
+      message += `${SEP}\n\n`;
     }
   });
 
-  // 오늘의 키워드
-  message += `🔑 *Today's Keywords*\n`;
-  message += `${analysis.keywords.join(' ')}\n\n`;
+  message += `${SEP}\n\n`;
 
-  // 시장 분위기
-  message += `📈 *Market Sentiment*\n`;
-  message += `${analysis.marketSentiment}\n\n`;
+  message += `*Key Themes:* ${analysis.keywords.join(' | ')}\n\n`;
 
-  // 제휴 링크 (옵션)
+  message += `*Market Outlook:* ${analysis.marketSentiment}\n\n`;
+
   if (affiliateLinks && affiliateLinks.length > 0) {
-    message += `\n💰 *Recommended*\n`;
+    message += `${SEP}\n\n`;
+    message += `*Further Reading*\n`;
     affiliateLinks.forEach(link => {
       message += `• [${link.text}](${link.url})\n`;
     });
     message += `\n`;
   }
 
-  // 푸터
-  message += `\n_FinBrief | AI-curated financial news_\n`;
-  message += `_Reading time: ~30 seconds_`;
-  
+  message += `${SEP}\n`;
+  message += `_FinBrief -- Institutional-grade intelligence, delivered daily._\n`;
+  message += `_30-second read_`;
+
   return message;
 }
 
 /**
  * 감정에 따른 이모지 반환
  */
-function getSentimentEmoji(sentiment: 'bull' | 'bear' | 'neutral'): string {
+function getSentimentTag(sentiment: 'bull' | 'bear' | 'neutral'): string {
   switch (sentiment) {
     case 'bull':
-      return '🐂';
+      return '[BULLISH]';
     case 'bear':
-      return '🐻';
+      return '[BEARISH]';
     case 'neutral':
-      return '😐';
+      return '[NEUTRAL]';
     default:
-      return '📰';
+      return '';
   }
 }
 
@@ -125,21 +125,21 @@ export function getContextualAffiliateLinks(keywords: string[]): { text: string;
   // 키워드 기반 추천
   if (keywords.some(k => k.includes('금리') || k.includes('예금') || k.includes('rate') || k.includes('savings'))) {
     links.push({
-      text: '📊 Compare the best savings rates now',
+      text: 'Compare leading savings rates',
       url: 'https://example.com/parking-account'
     });
   }
 
   if (keywords.some(k => k.includes('주식') || k.includes('투자') || k.includes('AI') || k.includes('stock') || k.includes('invest'))) {
     links.push({
-      text: '📚 Must-read investing book: The Psychology of Money',
+      text: 'Recommended: The Psychology of Money',
       url: 'https://example.com/books'
     });
   }
 
   if (keywords.some(k => k.includes('부동산') || k.includes('real estate') || k.includes('property'))) {
     links.push({
-      text: '🏠 Real estate investment guide',
+      text: 'Real estate investment guide',
       url: 'https://example.com/realestate'
     });
   }
@@ -147,7 +147,7 @@ export function getContextualAffiliateLinks(keywords: string[]): { text: string;
   // 기본 링크 (키워드 매칭 없을 시)
   if (links.length === 0) {
     links.push({
-      text: '💡 Essential finance checklist',
+      text: 'Essential finance checklist',
       url: 'https://example.com/checklist'
     });
   }
@@ -161,9 +161,9 @@ export function getContextualAffiliateLinks(keywords: string[]): { text: string;
 export async function sendSimpleMessage(chatId: string, text: string): Promise<void> {
   try {
     await bot.sendMessage(chatId, text);
-    console.log('✅ 메시지 발송 성공');
+    console.log('✅ Message sent successfully');
   } catch (error) {
-    console.error('❌ 메시지 발송 실패:', error);
+    console.error('❌ Message send failed:', error);
     throw error;
   }
 }
@@ -175,18 +175,18 @@ if (require.main === module) {
   const testChatId = process.env.TELEGRAM_CHAT_ID || '';
   
   if (!testChatId) {
-    console.error('❌ TELEGRAM_CHAT_ID가 설정되지 않았습니다.');
+    console.error('❌ TELEGRAM_CHAT_ID is not set.');
     process.exit(1);
   }
   
   // 간단한 테스트 메시지
-  sendSimpleMessage(testChatId, '🎉 FinBrief Telegram bot test successful!\n\nYou will now receive AI news briefings.')
+  sendSimpleMessage(testChatId, 'FinBrief connection verified. You will receive daily morning briefs.')
     .then(() => {
-      console.log('테스트 완료!');
+      console.log('Test complete!');
       process.exit(0);
     })
     .catch(error => {
-      console.error('테스트 실패:', error);
+      console.error('Test failed:', error);
       process.exit(1);
     });
 }

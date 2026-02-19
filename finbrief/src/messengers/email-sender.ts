@@ -121,7 +121,7 @@ function generateEmailSubject(): string {
     weekday: 'long'
   });
 
-  return `📊 FinBrief - ${today} Financial Briefing`;
+  return `FinBrief | Morning Brief -- ${today}`;
 }
 
 /**
@@ -141,19 +141,23 @@ function formatBriefingEmail(
 
   // 주요 뉴스 HTML 생성
   const newsItemsHtml = analysis.topNews.map((news, idx) => {
-    const emoji = getSentimentEmoji(news.sentiment);
+    const sentimentLabel = getSentimentLabel(news.sentiment);
+    const sentimentStyle = getSentimentStyle(news.sentiment);
 
     return `
       <div style="margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #e5e7eb;">
-        <h2 style="font-size: 20px; font-weight: 700; color: #111827; margin: 0 0 16px 0;">
-          ${idx + 1}. ${escapeHtml(news.title)} ${emoji}
+        <h2 style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 4px 0;">
+          ${idx + 1}. ${escapeHtml(news.title)}
         </h2>
+        <span style="display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; padding: 2px 8px; border-radius: 3px; margin-bottom: 12px; ${sentimentStyle}">
+          ${sentimentLabel}
+        </span>
         <p style="font-size: 16px; line-height: 1.6; color: #374151; margin: 0 0 16px 0;">
           ${escapeHtml(news.summary)}
         </p>
-        <div style="background-color: #f3f4f6; padding: 16px; border-radius: 8px;">
-          <p style="font-size: 14px; font-weight: 600; color: #6b7280; margin: 0 0 8px 0;">
-            💡 Why it matters
+        <div style="background-color: #f8fafc; padding: 16px; border-radius: 4px; border-left: 3px solid #64748b;">
+          <p style="font-size: 13px; font-weight: 700; color: #475569; margin: 0 0 6px 0; letter-spacing: 0.3px;">
+            Significance
           </p>
           <p style="font-size: 14px; line-height: 1.6; color: #4b5563; margin: 0;">
             ${escapeHtml(news.reason)}
@@ -182,11 +186,11 @@ function formatBriefingEmail(
       .join('');
 
     affiliateLinksHtml = `
-      <div style="margin-top: 32px; padding: 24px; background-color: #fef3c7; border-radius: 8px;">
-        <h3 style="font-size: 18px; font-weight: 700; color: #92400e; margin: 0 0 16px 0;">
-          💰 Recommended
+      <div style="margin-top: 32px; padding: 24px; background-color: #f8fafc; border-radius: 4px; border: 1px solid #e2e8f0;">
+        <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0 0 16px 0;">
+          Further Reading
         </h3>
-        <ul style="margin: 0; padding-left: 20px; color: #78350f;">
+        <ul style="margin: 0; padding-left: 20px; color: #334155;">
           ${linksHtml}
         </ul>
       </div>
@@ -203,19 +207,19 @@ function formatBriefingEmail(
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FinBrief - Today's Financial Briefing</title>
+  <title>FinBrief | Morning Brief</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; background-color: #f9fafb;">
   <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
     <!-- Header -->
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 32px 24px; text-align: center;">
-      <h1 style="font-size: 28px; font-weight: 800; color: #ffffff; margin: 0 0 8px 0;">
-        📊 FinBrief
+    <div style="background-color: #0f172a; padding: 32px 24px; text-align: center;">
+      <h1 style="font-size: 24px; font-weight: 700; color: #ffffff; margin: 0 0 4px 0; letter-spacing: 1px; font-family: Georgia, 'Times New Roman', serif;">
+        FINBRIEF
       </h1>
-      <p style="font-size: 16px; color: #e0e7ff; margin: 0;">
-        Today's Financial Briefing
+      <p style="font-size: 14px; color: #94a3b8; margin: 0; letter-spacing: 0.5px;">
+        Morning Brief
       </p>
-      <p style="font-size: 14px; color: #c7d2fe; margin: 8px 0 0 0;">
+      <p style="font-size: 13px; color: #64748b; margin: 8px 0 0 0;">
         ${today}
       </p>
     </div>
@@ -227,8 +231,8 @@ function formatBriefingEmail(
 
       <!-- 오늘의 키워드 -->
       <div style="margin-bottom: 32px;">
-        <h3 style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 16px 0;">
-          🔑 Today's Keywords
+        <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0 0 16px 0; letter-spacing: 0.3px;">
+          Key Themes
         </h3>
         <div>
           ${keywordsHtml}
@@ -236,11 +240,11 @@ function formatBriefingEmail(
       </div>
 
       <!-- 시장 분위기 -->
-      <div style="margin-bottom: 32px; padding: 24px; background-color: #f0fdf4; border-left: 4px solid #10b981; border-radius: 8px;">
-        <h3 style="font-size: 18px; font-weight: 700; color: #065f46; margin: 0 0 12px 0;">
-          📈 Market Sentiment
+      <div style="margin-bottom: 32px; padding: 24px; background-color: #f8fafc; border-left: 4px solid #1e293b; border-radius: 4px;">
+        <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0 0 12px 0; letter-spacing: 0.3px;">
+          MARKET OUTLOOK
         </h3>
-        <p style="font-size: 16px; line-height: 1.6; color: #047857; margin: 0;">
+        <p style="font-size: 15px; line-height: 1.6; color: #334155; margin: 0; font-style: italic;">
           ${escapeHtml(analysis.marketSentiment)}
         </p>
       </div>
@@ -250,15 +254,15 @@ function formatBriefingEmail(
     </div>
 
     <!-- Footer -->
-    <div style="padding: 24px; background-color: #f3f4f6; text-align: center; border-top: 1px solid #e5e7eb;">
-      <p style="font-size: 14px; color: #6b7280; margin: 0 0 8px 0;">
-        <strong>FinBrief</strong> | AI-curated financial news
+    <div style="padding: 24px; background-color: #f8fafc; text-align: center; border-top: 1px solid #e2e8f0;">
+      <p style="font-size: 13px; color: #64748b; margin: 0 0 4px 0;">
+        <strong>FinBrief</strong> -- Institutional-grade intelligence, delivered daily.
       </p>
-      <p style="font-size: 12px; color: #9ca3af; margin: 0;">
-        Reading time: ~30 seconds
+      <p style="font-size: 11px; color: #94a3b8; margin: 0;">
+        30-second read
       </p>
       <div style="margin-top: 16px;">
-        <a href="${unsubscribeUrl}" style="font-size: 12px; color: #6b7280; text-decoration: underline;">
+        <a href="${unsubscribeUrl}" style="font-size: 11px; color: #94a3b8; text-decoration: underline;">
           Unsubscribe
         </a>
       </div>
@@ -269,19 +273,29 @@ function formatBriefingEmail(
   `.trim();
 }
 
-/**
- * 감정에 따른 이모지 반환
- */
-function getSentimentEmoji(sentiment: 'bull' | 'bear' | 'neutral'): string {
+function getSentimentLabel(sentiment: 'bull' | 'bear' | 'neutral'): string {
   switch (sentiment) {
     case 'bull':
-      return '🐂';
+      return 'BULLISH';
     case 'bear':
-      return '🐻';
+      return 'BEARISH';
     case 'neutral':
-      return '😐';
+      return 'NEUTRAL';
     default:
-      return '📰';
+      return '';
+  }
+}
+
+function getSentimentStyle(sentiment: 'bull' | 'bear' | 'neutral'): string {
+  switch (sentiment) {
+    case 'bull':
+      return 'background-color: #dcfce7; color: #166534;';
+    case 'bear':
+      return 'background-color: #fef2f2; color: #991b1b;';
+    case 'neutral':
+      return 'background-color: #f3f4f6; color: #374151;';
+    default:
+      return 'background-color: #f3f4f6; color: #374151;';
   }
 }
 
@@ -308,21 +322,21 @@ export function getContextualAffiliateLinks(keywords: string[]): { text: string;
   // 키워드 기반 추천
   if (keywords.some(k => k.includes('금리') || k.includes('예금') || k.includes('rate') || k.includes('savings'))) {
     links.push({
-      text: '📊 Compare the best savings rates now',
+      text: 'Compare leading savings rates',
       url: 'https://example.com/parking-account'
     });
   }
 
   if (keywords.some(k => k.includes('주식') || k.includes('투자') || k.includes('AI') || k.includes('stock') || k.includes('invest'))) {
     links.push({
-      text: '📚 Must-read investing book: The Psychology of Money',
+      text: 'Recommended: The Psychology of Money',
       url: 'https://example.com/books'
     });
   }
 
   if (keywords.some(k => k.includes('부동산') || k.includes('real estate') || k.includes('property'))) {
     links.push({
-      text: '🏠 Real estate investment guide',
+      text: 'Real estate investment guide',
       url: 'https://example.com/realestate'
     });
   }
@@ -330,7 +344,7 @@ export function getContextualAffiliateLinks(keywords: string[]): { text: string;
   // 기본 링크 (키워드 매칭 없을 시)
   if (links.length === 0) {
     links.push({
-      text: '💡 Essential finance checklist',
+      text: 'Essential finance checklist',
       url: 'https://example.com/checklist'
     });
   }
