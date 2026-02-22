@@ -153,7 +153,10 @@ export default function BriefingSample() {
                   </span>
                 ))}
               </div>
-              <p className="text-sm text-finbrief-gray-500">{data.summary}</p>
+              <p className="text-sm font-medium text-finbrief-black">
+                <span className="font-bold">Summary: </span>
+                {data.summary}
+              </p>
             </div>
           </div>
         </ScrollReveal>
