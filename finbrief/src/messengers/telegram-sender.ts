@@ -1,7 +1,7 @@
 import TelegramBot from 'node-telegram-bot-api';
 import { AnalysisResult, FearGreedIndex } from '../types/news.types';
 import { getContextualAffiliateLinks, getRandomInspirationalQuote } from '../shared/briefing-content';
-import { getFearGreedLabel, getFearGreedBar } from '../collectors/fear-greed-collector';
+import { getFearGreedLabel, getFearGreedBar, getFearGreedZoneEmoji } from '../collectors/fear-greed-collector';
 
 /**
  * 텔레그램 메시지 발송기
@@ -60,19 +60,17 @@ function formatBriefingMessage(
     weekday: 'long',
   });
 
-  const SEP = '──────────────────────';
-
   let message = `*FINBRIEF | MORNING BRIEF*\n`;
-  message += `${today}\n`;
-  message += `${SEP}\n\n`;
+  message += `${today}\n\n`;
 
   // Fear & Greed Index section
   if (fearGreed) {
     const label = getFearGreedLabel(fearGreed.score);
     const bar = getFearGreedBar(fearGreed.score);
+    const zoneEmoji = getFearGreedZoneEmoji(fearGreed.score);
     message += `*FEAR & GREED INDEX*\n`;
-    message += `${bar}  —  ${label}\n`;
-    message += `${SEP}\n\n`;
+    message += `${zoneEmoji} ${fearGreed.score}/100  ${label}\n`;
+    message += `${bar}\n\n`;
   }
 
   analysis.topNews.forEach((news, idx) => {
@@ -82,18 +80,12 @@ function formatBriefingMessage(
     message += `${tag}\n\n`;
     message += `${news.summary}\n\n`;
     message += `_Significance:_ ${news.reason}\n\n`;
-
-    if (idx < analysis.topNews.length - 1) {
-      message += `${SEP}\n\n`;
-    }
   });
 
-  message += `${SEP}\n\n`;
   message += `*Key Themes:* ${analysis.keywords.join(' | ')}\n\n`;
   message += `*Market Outlook:* ${analysis.marketSentiment}\n\n`;
 
   if (affiliateLinks && affiliateLinks.length > 0) {
-    message += `${SEP}\n\n`;
     message += `*Further Reading*\n`;
     affiliateLinks.forEach(link => {
       message += `• [${link.text}](${link.url})\n`;
@@ -101,13 +93,11 @@ function formatBriefingMessage(
     message += `\n`;
   }
 
-  message += `${SEP}\n`;
   message += `_FinBrief -- Institutional-grade intelligence, delivered daily._\n`;
   message += `_30-second read_`;
 
   const quote = getRandomInspirationalQuote();
-  message += `\n${SEP}\n`;
-  message += `_${quote}_`;
+  message += `\n\n_${quote}_`;
 
   return message;
 }

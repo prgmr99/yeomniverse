@@ -50,13 +50,25 @@ export function getFearGreedLabel(score: number): string {
 }
 
 /**
- * Returns a text-based progress bar for Telegram.
- * Example: [========--] 82
+ * Returns the zone emoji for a given score.
+ */
+export function getFearGreedZoneEmoji(score: number): string {
+  if (score <= 24) return '🔴';
+  if (score <= 44) return '🟠';
+  if (score <= 55) return '🟡';
+  if (score <= 74) return '🟢';
+  return '🔵';
+}
+
+/**
+ * Returns an emoji-based progress bar for Telegram.
+ * Example: 🟢🟢🟢🟢🟢🟢🟢🟢⬜⬜
  */
 export function getFearGreedBar(score: number): string {
   const filled = Math.round(score / 10);
   const empty = 10 - filled;
-  return `[${'='.repeat(filled)}${'-'.repeat(empty)}] ${score}`;
+  const emoji = getFearGreedZoneEmoji(score);
+  return `${emoji.repeat(filled)}${'⬜'.repeat(empty)}`;
 }
 
 // Standalone test
