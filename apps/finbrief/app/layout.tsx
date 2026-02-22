@@ -18,16 +18,16 @@ export const metadata: Metadata = {
     'AI-powered financial briefing you can read in 30 seconds. Get the top 3 news picks from 100+ articles delivered to your Telegram every morning at 8 AM.',
   applicationName: 'FinBrief',
   keywords: [
-    'AI financial news',
-    'financial briefing',
-    'news summary',
+    'AI financial news briefing',
+    'daily market summary',
     'Telegram finance bot',
-    'investment news AI',
-    'stock news summary',
-    'AI investing',
-    'finance news',
-    'financial AI',
-    'news curation',
+    'stock market news AI',
+    'automated investing insights',
+    'financial news digest',
+    'AI stock analysis',
+    'morning market briefing',
+    'investment news curation',
+    'AI portfolio insights',
   ],
   icons: {
     icon: [
@@ -123,6 +123,9 @@ export default function RootLayout({
       height: 512,
     },
     description: 'AI-powered financial briefing in 30 seconds',
+    sameAs: [
+      'https://t.me/finbrief_news_bot',
+    ],
   };
 
   // SoftwareApplication schema for the AI service (NO AggregateRating - Google penalizes fabricated ratings)
@@ -139,6 +142,7 @@ export default function RootLayout({
     },
     description:
       'AI-powered financial briefing in 30 seconds. Top news delivered to your Telegram every morning at 8 AM.',
+    inLanguage: 'en',
   };
 
   // Service schema
@@ -153,7 +157,8 @@ export default function RootLayout({
     description:
       'AI analyzes 100+ financial news articles and delivers the top 3 picks to your Telegram every morning at 8 AM.',
     serviceType: 'AI News Curation',
-    areaServed: 'KR',
+    areaServed: 'Worldwide',
+    inLanguage: 'en',
   };
 
   return (

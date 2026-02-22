@@ -27,6 +27,15 @@ export const metadata: Metadata = {
   },
   description:
     'Yeomniverse - A digital services portal. Explore Hyo-Tier, FinBrief, and more.',
+  keywords: [
+    'Yeomniverse',
+    'digital services',
+    'AI financial briefing',
+    'personality quiz',
+    'FinBrief',
+    'Hyo-Tier',
+    'online tools',
+  ],
   applicationName: 'Yeomniverse',
   icons: {
     icon: [
@@ -131,7 +140,8 @@ export default function RootLayout({
       width: 512,
       height: 512,
     },
-    description: 'Yeomniverse - A digital services portal',
+    description:
+      'Yeomniverse is a digital services company building AI-powered tools and apps, including FinBrief (AI financial briefing) and Hyo-Tier (personality quiz).',
   };
 
   // WebSite schema
@@ -141,7 +151,7 @@ export default function RootLayout({
     name: 'Yeomniverse',
     url: DOMAIN_URL,
     description:
-      'Yeomniverse - A digital services portal. Explore Hyo-Tier, FinBrief, and more.',
+      'Yeomniverse - A digital services portal. Discover FinBrief for daily AI financial briefings and Hyo-Tier for personality quizzes.',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
