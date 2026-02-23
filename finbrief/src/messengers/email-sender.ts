@@ -1,11 +1,12 @@
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
-import { AnalysisResult, FearGreedIndex } from '../types/news.types';
+import { AnalysisResult, FearGreedIndex, OneWayIndex } from '../types/news.types';
 import {
   getContextualAffiliateLinks,
   getRandomInspirationalQuote,
   escapeHtml,
   generateFearGreedHtmlCard,
+  generateOneWayHtmlCard,
 } from '../shared/briefing-content';
 export { getContextualAffiliateLinks } from '../shared/briefing-content';
 
@@ -28,7 +29,8 @@ interface Subscriber {
 export async function sendEmailBriefing(
   analysis: AnalysisResult,
   affiliateLinks?: { text: string; url: string }[],
-  fearGreed?: FearGreedIndex | null
+  fearGreed?: FearGreedIndex | null,
+  oneWay?: OneWayIndex | null
 ): Promise<{ success: boolean; emailsSent: number; error?: string }> {
   try {
     console.log('📧 이메일 발송 준비 중...');
@@ -77,7 +79,7 @@ export async function sendEmailBriefing(
 
     // 배치 이메일 발송
     const emailPromises = subscribers.map((subscriber: Subscriber) => {
-      const htmlContent = formatBriefingEmail(analysis, affiliateLinks, subscriber.unsubscribe_token, fearGreed);
+      const htmlContent = formatBriefingEmail(analysis, affiliateLinks, subscriber.unsubscribe_token, fearGreed, oneWay);
 
       return resend.emails.send({
         from: process.env.RESEND_FROM_EMAIL!,
@@ -139,7 +141,8 @@ function formatBriefingEmail(
   analysis: AnalysisResult,
   affiliateLinks: { text: string; url: string }[] | undefined,
   unsubscribeToken: string,
-  fearGreed?: FearGreedIndex | null
+  fearGreed?: FearGreedIndex | null,
+  oneWay?: OneWayIndex | null
 ): string {
   const quote = getRandomInspirationalQuote();
   const today = new Date().toLocaleDateString('en-US', {
@@ -238,6 +241,9 @@ function formatBriefingEmail(
     <div style="padding: 32px 24px;">
       <!-- Fear & Greed Index -->
       ${generateFearGreedHtmlCard(fearGreed)}
+
+      <!-- One-Way Index -->
+      ${generateOneWayHtmlCard(oneWay)}
 
       <!-- 주요 뉴스 -->
       ${newsItemsHtml}

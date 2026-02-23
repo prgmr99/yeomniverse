@@ -3,8 +3,8 @@ import { createClient } from '@supabase/supabase-js';
 import { getStockQuote, getHistoricalData } from '../collectors/stock-collector';
 import { calculateTechnicalIndicators } from '../analyzers/technical-analyzer';
 import { generateBriefAnalysis } from '../analyzers/stock-ai-analyzer';
-import type { AnalysisResult, FearGreedIndex } from '../types/news.types';
-import { escapeHtml, generateFearGreedHtmlCard } from '../shared/briefing-content';
+import type { AnalysisResult, FearGreedIndex, OneWayIndex } from '../types/news.types';
+import { escapeHtml, generateFearGreedHtmlCard, generateOneWayHtmlCard } from '../shared/briefing-content';
 import { TIER_ARTICLE_COUNT, type PlanTier } from '../config/briefing-config';
 
 const BATCH_SIZE = 10;
@@ -90,8 +90,9 @@ function generatePersonalizedEmailHtml(options: {
   dashboardUrl: string;
   watchlist?: WatchlistStock[];
   fearGreed?: FearGreedIndex | null;
+  oneWay?: OneWayIndex | null;
 }): string {
-  const { date, planName, topNews, keywords, marketSentiment, unsubscribeToken, dashboardUrl, watchlist, fearGreed } = options;
+  const { date, planName, topNews, keywords, marketSentiment, unsubscribeToken, dashboardUrl, watchlist, fearGreed, oneWay } = options;
 
   const isPro = planName === 'pro';
   const isBasic = planName === 'basic';
@@ -221,6 +222,9 @@ function generatePersonalizedEmailHtml(options: {
       <!-- Fear & Greed Index -->
       ${generateFearGreedHtmlCard(fearGreed)}
 
+      <!-- One-Way Index -->
+      ${generateOneWayHtmlCard(oneWay)}
+
       <!-- 워치리스트 (유료만) -->
       ${watchlistHtml}
 
@@ -280,7 +284,7 @@ function generatePersonalizedEmailHtml(options: {
   `.trim();
 }
 
-export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGreed?: FearGreedIndex | null): Promise<void> {
+export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGreed?: FearGreedIndex | null, oneWay?: OneWayIndex | null): Promise<void> {
   // 환경 변수 검증
   if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
     console.warn('⚠️ Supabase not configured, skipping personalized emails.');
@@ -363,6 +367,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGr
             unsubscribeToken: sub.unsubscribe_token,
             dashboardUrl: `${dashboardUrl}/dashboard`,
             fearGreed,
+            oneWay,
           }),
         })
       )
@@ -466,6 +471,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGr
             unsubscribeToken: sub.unsubscribe_token,
             dashboardUrl: `${dashboardUrl}/dashboard`,
             fearGreed,
+            oneWay,
           }),
         });
       })

@@ -2,6 +2,7 @@ import { collectAllNewsWithRaw } from './collectors/rss-collector';
 import { fetchFearGreedIndex } from './collectors/fear-greed-collector';
 import { scoreNews } from './analyzers/news-scorer';
 import { analyzeNews, formatAnalysisResult } from './analyzers/gemini-analyzer';
+import { calculateOneWayIndex, recalcWithFearGreed } from './analyzers/oneway-analyzer';
 import { sendDailyBriefing, getContextualAffiliateLinks } from './messengers/telegram-sender';
 import { sendEmailBriefing } from './messengers/email-sender';
 import { sendPersonalizedBriefings } from './messengers/personalized-email-sender';
@@ -15,14 +16,21 @@ async function main() {
   console.log('='.repeat(50));
 
   try {
-    // Step 1: Collect news + Fear & Greed Index in parallel
+    // Step 1: Collect news + Fear & Greed Index + One-Way Index in parallel
     console.log('\n[Step 1] Collecting news and market indicators...\n');
-    const [{ deduplicated: newsItems, raw: rawItems }, fearGreedIndex] = await Promise.all([
+    const [{ deduplicated: newsItems, raw: rawItems }, fearGreedIndex, rawOneWayIndex] = await Promise.all([
       collectAllNewsWithRaw(),
       fetchFearGreedIndex(),
+      calculateOneWayIndex(),
     ]);
 
+    // Recalculate one-way index with Fear & Greed score if both available
+    const oneWayIndex = rawOneWayIndex && fearGreedIndex
+      ? recalcWithFearGreed(rawOneWayIndex, fearGreedIndex.score)
+      : rawOneWayIndex;
+
     console.log(`[Fear & Greed] ${fearGreedIndex ? `Score: ${fearGreedIndex.score} (${fearGreedIndex.rating})` : 'Unavailable'}`);
+    console.log(`[One-Way Index] ${oneWayIndex ? `Score: ${oneWayIndex.score}/100 (${oneWayIndex.label}) ${oneWayIndex.direction}` : 'Unavailable'}`);
 
     if (newsItems.length === 0) {
       throw new Error('No news collected.');
@@ -55,7 +63,7 @@ async function main() {
         ...analysis,
         topNews: analysis.topNews.slice(0, DEFAULT_ARTICLE_COUNT),
       };
-      await sendDailyBriefing(chatId, telegramAnalysis, affiliateLinks, fearGreedIndex);
+      await sendDailyBriefing(chatId, telegramAnalysis, affiliateLinks, fearGreedIndex, oneWayIndex);
     }
 
     // Step 5: Email (personalized sender handles per-tier slicing internally)
@@ -64,14 +72,14 @@ async function main() {
     const usePersonalizedEmails = process.env.USE_PERSONALIZED_EMAILS === 'true';
 
     if (usePersonalizedEmails) {
-      await sendPersonalizedBriefings(analysis, fearGreedIndex);
+      await sendPersonalizedBriefings(analysis, fearGreedIndex, oneWayIndex);
     } else {
       // Legacy email gets the default count
       const legacyAnalysis = {
         ...analysis,
         topNews: analysis.topNews.slice(0, DEFAULT_ARTICLE_COUNT),
       };
-      const emailResult = await sendEmailBriefing(legacyAnalysis, affiliateLinks, fearGreedIndex);
+      const emailResult = await sendEmailBriefing(legacyAnalysis, affiliateLinks, fearGreedIndex, oneWayIndex);
       console.log(`  Emails sent: ${emailResult.emailsSent}`);
     }
 
@@ -89,6 +97,7 @@ async function main() {
       timestamp: new Date().toISOString(),
       newsCount: newsItems.length,
       fearGreedIndex,
+      oneWayIndex,
       analysis,
       affiliateLinks,
       sentToTelegram: !!chatId,

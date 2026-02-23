@@ -31,3 +31,18 @@ export interface FearGreedIndex {
   rating: string;
   timestamp: string;
 }
+
+export interface OneWayIndex {
+  score: number;
+  direction: 'bull' | 'bear' | 'neutral';
+  label: string;
+  components: {
+    adx: number;
+    maAlignment: number;
+    rsiTrend: number;
+    bbWidth: number;
+    vix: number;
+    volume: number;
+    fearGreed: number;
+  };
+}

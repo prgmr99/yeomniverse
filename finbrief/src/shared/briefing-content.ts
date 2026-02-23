@@ -1,5 +1,6 @@
-import { FearGreedIndex } from '../types/news.types';
+import { FearGreedIndex, OneWayIndex } from '../types/news.types';
 import { getFearGreedLabel } from '../collectors/fear-greed-collector';
+import { getOneWayLabel } from '../analyzers/oneway-analyzer';
 
 /**
  * Shared HTML escape utility — single source of truth for all email templates.
@@ -59,6 +60,72 @@ export function generateFearGreedHtmlCard(fearGreed: FearGreedIndex | null | und
       <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
         <tr>${scaleLabels}</tr>
       </table>
+    </div>
+  `.trim();
+}
+
+/**
+ * Generates a One-Way Index gauge card for HTML email templates.
+ * Returns an empty string when data is unavailable.
+ */
+export function generateOneWayHtmlCard(oneWay: OneWayIndex | null | undefined): string {
+  if (!oneWay) return '';
+
+  const score = oneWay.score;
+  const label = getOneWayLabel(score);
+  const dirArrow = oneWay.direction === 'bull' ? '&#x2191;' : oneWay.direction === 'bear' ? '&#x2193;' : '&#x2192;';
+  const dirLabel = oneWay.direction === 'bull' ? 'Bull' : oneWay.direction === 'bear' ? 'Bear' : 'Neutral';
+
+  // 5-segment intensity gauge: gray → yellow → orange → red → deep red
+  const zoneColor = (zone: number): string => {
+    const threshold = zone * 20;
+    const active = score >= threshold;
+    const colors = ['#d1d5db', '#eab308', '#f97316', '#ef4444', '#7c2d12'];
+    return active ? colors[zone] : '#e5e7eb';
+  };
+
+  const segments = [0, 1, 2, 3, 4]
+    .map(
+      z =>
+        `<td style="padding: 0; width: 20%;"><div style="height: 8px; background-color: ${zoneColor(z)}; border-radius: ${z === 0 ? '4px 0 0 4px' : z === 4 ? '0 4px 4px 0' : '0'};"></div></td>`
+    )
+    .join('');
+
+  const scaleLabels = ['No Trend', 'Weak', 'Moderate', 'Strong', 'Extreme']
+    .map(
+      lbl =>
+        `<td style="padding: 0; width: 20%; text-align: center; font-size: 10px; color: #9ca3af; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;">${lbl}</td>`
+    )
+    .join('');
+
+  const componentItems = [
+    { name: 'ADX', value: oneWay.components.adx },
+    { name: 'MA', value: oneWay.components.maAlignment },
+    { name: 'RSI', value: oneWay.components.rsiTrend },
+    { name: 'BB', value: oneWay.components.bbWidth },
+    { name: 'VIX', value: oneWay.components.vix },
+    { name: 'Vol', value: oneWay.components.volume },
+  ];
+
+  const componentHtml = componentItems
+    .map(c => `<span style="font-size: 11px; color: #64748b;">${c.name}: ${c.value}</span>`)
+    .join(' &nbsp;&middot;&nbsp; ');
+
+  return `
+    <div style="margin-bottom: 32px; padding: 20px 24px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #7c2d12; border-radius: 4px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px;">
+        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.8px; color: #64748b; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;">ONE-WAY INDEX</span>
+        <span style="font-size: 22px; font-weight: 700; color: #1e293b; font-family: Georgia, 'Times New Roman', serif;">${dirArrow} ${score} <span style="font-size: 13px; font-weight: 500; color: #475569;">&mdash; ${escapeHtml(label)} (${dirLabel})</span></span>
+      </div>
+      <table width="100%" cellpadding="0" cellspacing="2" style="border-collapse: separate; border-spacing: 2px; margin-bottom: 4px;">
+        <tr>${segments}</tr>
+      </table>
+      <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 10px;">
+        <tr>${scaleLabels}</tr>
+      </table>
+      <div style="text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;">
+        ${componentHtml}
+      </div>
     </div>
   `.trim();
 }

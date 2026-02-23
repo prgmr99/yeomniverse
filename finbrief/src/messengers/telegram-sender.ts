@@ -1,7 +1,8 @@
 import TelegramBot from 'node-telegram-bot-api';
-import { AnalysisResult, FearGreedIndex } from '../types/news.types';
+import { AnalysisResult, FearGreedIndex, OneWayIndex } from '../types/news.types';
 import { getContextualAffiliateLinks, getRandomInspirationalQuote } from '../shared/briefing-content';
 import { getFearGreedLabel, getFearGreedBar, getFearGreedZoneEmoji } from '../collectors/fear-greed-collector';
+import { getOneWayLabel, getOneWayBar, getOneWayDirectionEmoji } from '../analyzers/oneway-analyzer';
 
 /**
  * 텔레그램 메시지 발송기
@@ -22,7 +23,8 @@ export async function sendDailyBriefing(
   chatId: string,
   analysis: AnalysisResult,
   affiliateLinks?: { text: string; url: string }[],
-  fearGreed?: FearGreedIndex | null
+  fearGreed?: FearGreedIndex | null,
+  oneWay?: OneWayIndex | null
 ): Promise<void> {
   try {
     console.log('[Telegram] Creating message...');
@@ -31,7 +33,7 @@ export async function sendDailyBriefing(
       throw new Error('TELEGRAM_BOT_TOKEN is not set.');
     }
 
-    const message = formatBriefingMessage(analysis, affiliateLinks, fearGreed);
+    const message = formatBriefingMessage(analysis, affiliateLinks, fearGreed, oneWay);
 
     await bot.sendMessage(chatId, message, {
       parse_mode: 'Markdown',
@@ -51,7 +53,8 @@ export async function sendDailyBriefing(
 function formatBriefingMessage(
   analysis: AnalysisResult,
   affiliateLinks?: { text: string; url: string }[],
-  fearGreed?: FearGreedIndex | null
+  fearGreed?: FearGreedIndex | null,
+  oneWay?: OneWayIndex | null
 ): string {
   const today = new Date().toLocaleDateString('en-US', {
     year: 'numeric',
@@ -71,6 +74,17 @@ function formatBriefingMessage(
     message += `*FEAR & GREED INDEX*\n`;
     message += `${zoneEmoji} ${fearGreed.score}/100  ${label}\n`;
     message += `${bar}\n\n`;
+  }
+
+  // One-Way Market Index section
+  if (oneWay) {
+    const dirEmoji = getOneWayDirectionEmoji(oneWay.direction, oneWay.score);
+    const dirLabel = oneWay.direction === 'bull' ? 'Bull' : oneWay.direction === 'bear' ? 'Bear' : 'Neutral';
+    const bar = getOneWayBar(oneWay.score);
+    message += `*ONE-WAY INDEX*\n`;
+    message += `${dirEmoji} ${oneWay.score}/100  ${oneWay.label} (${dirLabel})\n`;
+    message += `${bar}\n`;
+    message += `ADX ${oneWay.components.adx} | MA ${oneWay.components.maAlignment} | RSI ${oneWay.components.rsiTrend} | VIX ${oneWay.components.vix}\n\n`;
   }
 
   analysis.topNews.forEach((news, idx) => {
