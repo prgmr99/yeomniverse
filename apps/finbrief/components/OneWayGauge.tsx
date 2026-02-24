@@ -1,6 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
 
 interface OneWayGaugeProps {
   score: number;
@@ -86,12 +87,14 @@ export default function OneWayGauge({ score, direction, label }: OneWayGaugeProp
   const fillPercent = Math.max(0, Math.min(100, score));
   const activeColor = getIntensityColor(score);
   const intensityLabel = getIntensityLabel(score);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
 
   const directionColor =
     direction === 'bull' ? '#34C759' : direction === 'bear' ? '#FF3B30' : '#86868B';
 
   return (
-    <div className="h-full p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col gap-5">
+    <div ref={ref} className="h-full p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col gap-5">
       <div className="flex items-center justify-between">
         <p className="text-finbrief-gray-500 text-sm font-medium tracking-wide uppercase">
           One-Way Market Index
@@ -121,32 +124,34 @@ export default function OneWayGauge({ score, direction, label }: OneWayGaugeProp
 
       <p className="text-finbrief-gray-500 text-sm -mt-2">{label}</p>
 
-      {/* 5-segment gauge bar */}
-      <div className="relative h-3 rounded-full overflow-hidden flex gap-0.5">
-        {INTENSITY_ZONES.map((zone) => (
-          <div
-            key={zone.label}
-            className="flex-1 rounded-full"
-            style={{ backgroundColor: `${zone.color}33` }}
+      <div className="mt-auto flex flex-col gap-5">
+        {/* 5-segment gauge bar */}
+        <div className="relative h-3 rounded-full overflow-hidden flex gap-0.5">
+          {INTENSITY_ZONES.map((zone) => (
+            <div
+              key={zone.label}
+              className="flex-1 rounded-full"
+              style={{ backgroundColor: `${zone.color}33` }}
+            />
+          ))}
+          {/* Fill overlay */}
+          <motion.div
+            className="absolute inset-y-0 left-0 rounded-full"
+            style={{ backgroundColor: activeColor }}
+            initial={{ width: 0 }}
+            animate={{ width: isInView ? `${fillPercent}%` : 0 }}
+            transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
           />
-        ))}
-        {/* Fill overlay */}
-        <motion.div
-          className="absolute inset-y-0 left-0 rounded-full"
-          style={{ backgroundColor: activeColor }}
-          initial={{ width: 0 }}
-          animate={{ width: `${fillPercent}%` }}
-          transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
-        />
-      </div>
+        </div>
 
-      {/* Scale labels */}
-      <div className="flex justify-between text-xs text-finbrief-gray-500">
-        <span>0</span>
-        <span>No Trend</span>
-        <span>Moderate</span>
-        <span>Extreme</span>
-        <span>100</span>
+        {/* Scale labels */}
+        <div className="flex justify-between text-xs text-finbrief-gray-500">
+          <span>0</span>
+          <span>No Trend</span>
+          <span>Moderate</span>
+          <span>Extreme</span>
+          <span>100</span>
+        </div>
       </div>
     </div>
   );
