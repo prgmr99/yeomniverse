@@ -102,7 +102,7 @@ Respond ONLY with the JSON below. No preamble, no commentary.
 }
 
 **Rules:**
-- All text fields MUST be in English
+- Write in the same language as the majority of the source articles. If most sources are Korean, write in Korean. If most sources are English, write in English. Do NOT force translation — accuracy in the source language is more valuable than a poor translation.
 - topNews MUST contain exactly ${topNewsCount} items, ranked by materiality (most important first)
 - summary must be exactly 3 sentences
 - sentiment must be one of "bull", "bear", or "neutral"

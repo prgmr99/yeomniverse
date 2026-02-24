@@ -112,6 +112,54 @@ function mapSentiment(sentiment: string): 'bullish' | 'bearish' | 'neutral' {
 }
 
 /**
+ * Reads and returns a specific date's briefing from public/data/{date}.json.
+ *
+ * @returns BriefingData | null - Briefing data or null if not found
+ */
+export function getBriefingByDate(date: string): BriefingData | null {
+  try {
+    const filePath = path.join(process.cwd(), `public/data/${date}.json`);
+    if (!fs.existsSync(filePath)) return null;
+
+    const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    const briefing = transformToBriefingData(data.analysis);
+    return {
+      ...briefing,
+      fearGreed: data.fearGreedIndex
+        ? { score: data.fearGreedIndex.score, rating: data.fearGreedIndex.rating }
+        : undefined,
+      oneWay: data.oneWayIndex
+        ? {
+            score: data.oneWayIndex.score,
+            direction: data.oneWayIndex.direction,
+            label: data.oneWayIndex.label,
+            components: data.oneWayIndex.components,
+          }
+        : undefined,
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Returns all available briefing dates (YYYY-MM-DD) from public/data/.
+ */
+export function getAvailableBriefingDates(): string[] {
+  try {
+    const dataDir = path.join(process.cwd(), 'public/data');
+    if (!fs.existsSync(dataDir)) return [];
+    return fs
+      .readdirSync(dataDir)
+      .filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f))
+      .map((f) => f.replace('.json', ''))
+      .sort((a, b) => b.localeCompare(a)); // newest first
+  } catch {
+    return [];
+  }
+}
+
+/**
  * Fallback dummy data
  */
 function getFallbackData(): BriefingData {

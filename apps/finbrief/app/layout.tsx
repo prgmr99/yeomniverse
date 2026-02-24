@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import './globals.css';
 import './finbrief.css';
 import { GoogleAnalytics } from '@hyo/ui';
@@ -125,6 +124,8 @@ export default function RootLayout({
     description: 'AI-powered financial briefing in 30 seconds',
     sameAs: [
       'https://t.me/finbrief_news_bot',
+      'https://github.com/yeomseungjun',
+      'https://yeomniverse.com',
     ],
   };
 
@@ -171,27 +172,21 @@ export default function RootLayout({
         {children}
         <GoogleAnalytics />
 
-        {/* Structured Data Schemas */}
-        <Script
-          id="organization-schema"
+        {/* Structured Data Schemas - plain <script> for SSR visibility to crawlers */}
+        <script
           type="application/ld+json"
-          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationSchema),
           }}
         />
-        <Script
-          id="software-app-schema"
+        <script
           type="application/ld+json"
-          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(softwareAppSchema),
           }}
         />
-        <Script
-          id="service-schema"
+        <script
           type="application/ld+json"
-          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(serviceSchema),
           }}

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 
 const DOMAIN_URL =
   process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://finbrief.yeomniverse.com';
@@ -135,16 +134,12 @@ export default function PricingLayout({
   return (
     <>
       {children}
-      <Script
-        id="faq-schema"
+      <script
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <Script
-        id="product-schema"
+      <script
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
     </>

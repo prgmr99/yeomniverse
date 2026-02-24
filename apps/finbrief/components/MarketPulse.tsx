@@ -22,8 +22,6 @@ const SAMPLE_ONE_WAY = {
 };
 
 export default function MarketPulse({ data, isLoading }: MarketPulseProps) {
-	const isSampleData = !data?.fearGreed && !data?.oneWay;
-
 	const fearGreed = data?.fearGreed ?? SAMPLE_FEAR_GREED;
 	const oneWay = data?.oneWay ?? SAMPLE_ONE_WAY;
 

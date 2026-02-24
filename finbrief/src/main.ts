@@ -88,7 +88,7 @@ async function main() {
     const alertResult = await sendStockNewsAlerts(newsItems);
     console.log(`  News alerts sent: ${alertResult.emailsSent} emails`);
 
-    // Step 6: Save JSON
+    // Step 6: Save JSON (full internal data)
     const today = new Date().toISOString().split('T')[0];
     const outputPath = path.join(__dirname, '..', 'data', `${today}.json`);
 
@@ -107,6 +107,31 @@ async function main() {
 
     fs.writeFileSync(outputPath, JSON.stringify(output, null, 2), 'utf-8');
     console.log(`\n[Step 6] Results saved: ${outputPath}`);
+
+    // Step 6b: Save public JSON (no operational metadata for web exposure)
+    const publicDataDir = path.join(__dirname, '..', 'data', 'public');
+    if (!fs.existsSync(publicDataDir)) {
+      fs.mkdirSync(publicDataDir, { recursive: true });
+    }
+
+    const publicOutputPath = path.join(publicDataDir, `${today}.json`);
+    // Detect output language: if more than half of topNews titles contain Korean characters, mark as Korean
+    const koreanPattern = /[\uAC00-\uD7AF]/;
+    const koreanCount = analysis.topNews.filter((n) => koreanPattern.test(n.title)).length;
+    const outputLanguage = koreanCount > analysis.topNews.length / 2 ? 'ko' : 'en';
+
+    const publicOutput = {
+      date: today,
+      timestamp: new Date().toISOString(),
+      newsCount: newsItems.length,
+      outputLanguage,
+      fearGreedIndex,
+      oneWayIndex,
+      analysis,
+    };
+
+    fs.writeFileSync(publicOutputPath, JSON.stringify(publicOutput, null, 2), 'utf-8');
+    console.log(`[Step 6b] Public JSON saved: ${publicOutputPath}`);
 
     console.log('\nDaily briefing complete.');
 

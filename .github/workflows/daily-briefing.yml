@@ -45,26 +45,27 @@ jobs:
           USE_PERSONALIZED_EMAILS: 'true'
         run: npm run send-briefing
       
-      - name: Copy data to landing page
+      - name: Copy data to web app
         run: |
           # Get today's date
           TODAY=$(date +%Y-%m-%d)
 
-          # Create directory if not exists
+          # Create directories if not exists
           mkdir -p apps/finbrief/public/data
 
-          # Copy today's briefing to latest.json
-          if [ -f "finbrief/data/$TODAY.json" ]; then
-            cp "finbrief/data/$TODAY.json" apps/finbrief/public/data/latest.json
-            echo "✅ Copied finbrief/data/$TODAY.json to apps/finbrief/public/data/latest.json"
+          # Copy today's public briefing to latest.json and date-stamped file
+          if [ -f "finbrief/data/public/$TODAY.json" ]; then
+            cp "finbrief/data/public/$TODAY.json" apps/finbrief/public/data/latest.json
+            cp "finbrief/data/public/$TODAY.json" "apps/finbrief/public/data/$TODAY.json"
+            echo "✅ Copied public JSON to apps/finbrief/public/data/latest.json and $TODAY.json"
           else
-            echo "⚠️ No briefing file found for $TODAY"
+            echo "⚠️ No public briefing file found for $TODAY"
           fi
 
       - name: Commit and push data
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add finbrief/data/ apps/finbrief/public/data/latest.json
+          git add finbrief/data/ apps/finbrief/public/data/
           git diff --quiet && git diff --staged --quiet || git commit -m "chore: update daily briefing data $(date +'%Y-%m-%d') [skip ci]"
           git push

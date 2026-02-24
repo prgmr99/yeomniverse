@@ -1,9 +1,5 @@
-'use client';
-
-import { LiquidEther } from '@/components/backgrounds';
 import Header from '@/components/Header';
-
-const LIQUID_ETHER_COLORS = ['#0077B6', '#00B4D8', '#90E0EF'];
+import LiquidEtherIsland from '@/components/backgrounds/LiquidEtherIsland';
 
 export default function MarketingLayout({
   children,
@@ -12,20 +8,16 @@ export default function MarketingLayout({
 }) {
   return (
     <>
-      {/* Fixed Background */}
-      <div className="fixed inset-0 -z-10" style={{ willChange: 'transform' }}>
-        <LiquidEther
-          colors={LIQUID_ETHER_COLORS}
-          resolution={0.35}
-          autoDemo={true}
-          autoSpeed={0.3}
-          autoIntensity={1.5}
-          mouseForce={15}
-          cursorSize={80}
-          disableInteraction={true}
-          iterationsPoisson={16}
-          iterationsViscous={16}
-        />
+      {/* Fixed Background - CSS gradient shows immediately, WebGL replaces after hydration */}
+      <div
+        className="fixed inset-0 -z-10"
+        style={{
+          willChange: 'transform',
+          background:
+            'linear-gradient(135deg, #0077B6 0%, #00B4D8 50%, #90E0EF 100%)',
+        }}
+      >
+        <LiquidEtherIsland />
       </div>
       <Header />
       {children}
