@@ -10,6 +10,20 @@ export const metadata: Metadata = {
   description:
     'Browse the complete archive of AI-curated daily financial briefings. Each entry includes top market news analysis, Fear & Greed Index, and One-Way Market Index readings.',
   alternates: { canonical: `${DOMAIN}/briefing` },
+  openGraph: {
+    title: 'Daily Market Briefing Archive | FinBrief',
+    description:
+      'AI-curated daily financial briefings with Fear & Greed Index and One-Way Market Index readings. Browse the full archive.',
+    url: `${DOMAIN}/briefing`,
+    images: [{ url: '/api/og', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Daily Market Briefing Archive | FinBrief',
+    description:
+      'AI-curated daily financial briefings with Fear & Greed Index and One-Way Market Index readings.',
+    images: ['/api/og'],
+  },
 };
 
 function getScoreColor(score: number): string {

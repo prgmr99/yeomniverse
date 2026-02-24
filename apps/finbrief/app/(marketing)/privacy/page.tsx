@@ -14,6 +14,14 @@ export const metadata: Metadata = {
     description:
       'Learn how FinBrief handles your personal data, what we collect, and how we protect your information.',
     url: `${DOMAIN}/privacy`,
+    images: [{ url: '/api/og', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Privacy Policy | FinBrief',
+    description:
+      'FinBrief Privacy Policy — how we collect, use, and protect your personal information when you use our AI-powered financial briefing service.',
+    images: ['/api/og'],
   },
 };
 

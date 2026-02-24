@@ -14,6 +14,14 @@ export const metadata: Metadata = {
     description:
       'Read the Terms of Service for FinBrief, including subscription terms, financial disclaimers, and usage conditions.',
     url: `${DOMAIN}/terms`,
+    images: [{ url: '/api/og', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Terms of Service | FinBrief',
+    description:
+      'FinBrief Terms of Service — the rules and conditions for using our AI-powered financial briefing service.',
+    images: ['/api/og'],
   },
 };
 

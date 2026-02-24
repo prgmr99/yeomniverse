@@ -27,6 +27,12 @@ export const metadata: Metadata = {
     'morning market briefing',
     'investment news curation',
     'AI portfolio insights',
+    'AI 금융 뉴스 브리핑',
+    '주식 시장 뉴스 요약',
+    '텔레그램 금융 봇',
+    'AI 주식 분석',
+    '매일 아침 시장 브리핑',
+    '투자 뉴스 큐레이션',
   ],
   icons: {
     icon: [
@@ -77,6 +83,7 @@ export const metadata: Metadata = {
     url: DOMAIN_URL,
     siteName: 'FinBrief',
     locale: 'en_US',
+    alternateLocale: ['ko_KR'],
     type: 'website',
     images: [
       {

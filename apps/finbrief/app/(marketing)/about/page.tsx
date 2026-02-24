@@ -14,6 +14,14 @@ export const metadata: Metadata = {
     description:
       'FinBrief uses Google Gemini AI to analyze financial news and the proprietary One-Way Market Index to quantify trend conditions. Read our methodology and editorial standards.',
     url: `${DOMAIN}/about`,
+    images: [{ url: '/api/og', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About FinBrief | AI Financial Briefing Service',
+    description:
+      'Learn about FinBrief — an AI-powered financial briefing service that analyzes 100+ news sources daily and delivers curated market insights via Telegram. Built with transparency about our AI methodology.',
+    images: ['/api/og'],
   },
 };
 
