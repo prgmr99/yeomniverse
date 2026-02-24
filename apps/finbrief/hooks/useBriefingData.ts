@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { BriefingData } from '@/lib/briefing';
 
 export function useBriefingData() {

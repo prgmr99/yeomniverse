@@ -91,7 +91,8 @@
 
   /* Brushed stripe + cool-silver gradient (from TicketRow METAL_LIGHT) */
   background:
-    linear-gradient(0deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px) 0 0 / 100% 3px,
+    linear-gradient(0deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px) 0 0 /
+    100% 3px,
     linear-gradient(
       155deg,
       #f6f7fa 0%,
@@ -118,7 +119,7 @@
 
 /* Shimmer sweep on hover */
 .btn-metal::after {
-  content: '';
+  content: "";
   position: absolute;
   top: -10%;
   left: -80%;
@@ -142,7 +143,8 @@
 
 .btn-metal:hover {
   background:
-    linear-gradient(0deg, rgba(255, 255, 255, 0.10) 1px, transparent 1px) 0 0 / 100% 3px,
+    linear-gradient(0deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px) 0 0 /
+    100% 3px,
     linear-gradient(
       155deg,
       #f8f9fc 0%,

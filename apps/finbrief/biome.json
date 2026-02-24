@@ -29,11 +29,11 @@
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noArrayIndexKey": "off",
+        "noArrayIndexKey": "error",
         "noExplicitAny": "warn"
       },
       "security": {
-        "noDangerouslySetInnerHtml": "off"
+        "noDangerouslySetInnerHtml": "error"
       },
       "a11y": {
         "useButtonType": "warn",
@@ -46,6 +46,18 @@
       }
     }
   },
+  "overrides": [
+    {
+      "includes": ["components/JsonLd.tsx"],
+      "linter": {
+        "rules": {
+          "security": {
+            "noDangerouslySetInnerHtml": "off"
+          }
+        }
+      }
+    }
+  ],
   "javascript": {
     "formatter": {
       "quoteStyle": "single",

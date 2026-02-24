@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { JsonLd } from '@/components/JsonLd';
 
 const DOMAIN_URL =
   process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://finbrief.yeomniverse.com';
@@ -20,7 +21,14 @@ export const metadata: Metadata = {
     description:
       'Start free with daily AI financial briefings. Upgrade for personalized watchlist, RSI/MACD analysis, and AI deep analysis reports.',
     url: `${DOMAIN_URL}/pricing`,
-    images: [{ url: '/api/og', width: 1200, height: 630, alt: 'FinBrief Pricing Plans' }],
+    images: [
+      {
+        url: '/api/og',
+        width: 1200,
+        height: 630,
+        alt: 'FinBrief Pricing Plans',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -116,7 +124,8 @@ export default function PricingLayout({
         priceValidUntil: '2027-12-31',
         availability: 'https://schema.org/InStock',
         url: `${DOMAIN_URL}/pricing`,
-        description: 'Personalized investment insights with 3 watchlist stocks.',
+        description:
+          'Personalized investment insights with 3 watchlist stocks.',
       },
       {
         '@type': 'Offer',
@@ -126,7 +135,8 @@ export default function PricingLayout({
         priceValidUntil: '2027-12-31',
         availability: 'https://schema.org/InStock',
         url: `${DOMAIN_URL}/pricing`,
-        description: 'Expert-level deep analysis with 10 watchlist stocks, RSI, MACD, and AI reports.',
+        description:
+          'Expert-level deep analysis with 10 watchlist stocks, RSI, MACD, and AI reports.',
       },
     ],
   };
@@ -134,14 +144,8 @@ export default function PricingLayout({
   return (
     <>
       {children}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
-      />
+      <JsonLd data={faqSchema} />
+      <JsonLd data={productSchema} />
     </>
   );
 }

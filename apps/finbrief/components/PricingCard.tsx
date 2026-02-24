@@ -78,8 +78,8 @@ export function PricingCard({
         </div>
 
         <ul className="space-y-4 mb-8">
-          {features.map((feature, index) => (
-            <li key={index} className="flex items-start gap-3">
+          {features.map((feature) => (
+            <li key={feature} className="flex items-start gap-3">
               <div
                 className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5 ${
                   highlighted ? '' : 'bg-finbrief-blue-500/20'

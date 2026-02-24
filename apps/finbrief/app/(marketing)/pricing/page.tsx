@@ -209,7 +209,7 @@ export default function PricingPage() {
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div
-                key={index}
+                key={faq.question}
                 className="bg-white/80 backdrop-blur-xl border border-white/30 rounded-xl overflow-hidden transition-all duration-300 hover:border-finbrief-blue-500/30"
               >
                 <button

@@ -48,15 +48,20 @@ export default function BriefingArchivePage() {
   return (
     <main className="min-h-screen text-white pt-32 pb-20 px-6">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Daily Briefing Archive</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          Daily Briefing Archive
+        </h1>
         <p className="text-white/60 mb-12 text-lg max-w-2xl">
-          AI-curated market analysis delivered every morning at 8 AM KST. Each briefing
-          includes the One-Way Market Index, Fear & Greed reading, and top financial news.
+          AI-curated market analysis delivered every morning at 8 AM KST. Each
+          briefing includes the One-Way Market Index, Fear & Greed reading, and
+          top financial news.
         </p>
 
         {dates.length === 0 ? (
           <div className="p-8 rounded-2xl bg-white/5 border border-white/10 text-center">
-            <p className="text-white/40">No briefings available yet. Check back after the first daily run.</p>
+            <p className="text-white/40">
+              No briefings available yet. Check back after the first daily run.
+            </p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -70,7 +75,9 @@ export default function BriefingArchivePage() {
                 >
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
-                      <span className="font-mono text-white/50 text-sm">{date}</span>
+                      <span className="font-mono text-white/50 text-sm">
+                        {date}
+                      </span>
                       {briefing?.oneWay && (
                         <span
                           className="text-xs font-semibold px-2.5 py-1 rounded-full"

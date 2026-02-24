@@ -41,16 +41,15 @@ const INTENSITY_ZONES = [
   { label: 'Extreme', color: 'var(--gauge-extreme)' },
 ];
 
-function DirectionArrow({ direction }: { direction: 'bull' | 'bear' | 'neutral' }) {
+function DirectionArrow({
+  direction,
+}: {
+  direction: 'bull' | 'bear' | 'neutral';
+}) {
   if (direction === 'bull') {
     return (
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        aria-label="Bullish"
-      >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <title>Bullish</title>
         <path d="M12 5L19 12H5L12 5Z" fill="#34C759" />
         <rect x="10" y="12" width="4" height="7" fill="#34C759" />
       </svg>
@@ -58,32 +57,32 @@ function DirectionArrow({ direction }: { direction: 'bull' | 'bear' | 'neutral' 
   }
   if (direction === 'bear') {
     return (
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        aria-label="Bearish"
-      >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <title>Bearish</title>
         <path d="M12 19L5 12H19L12 19Z" fill="#FF3B30" />
         <rect x="10" y="5" width="4" height="7" fill="#FF3B30" />
       </svg>
     );
   }
   return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-label="Neutral"
-    >
-      <path d="M5 12H19M14 7L19 12L14 17" stroke="#86868B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <title>Neutral</title>
+      <path
+        d="M5 12H19M14 7L19 12L14 17"
+        stroke="#86868B"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 
-export default function OneWayGauge({ score, direction, label }: OneWayGaugeProps) {
+export default function OneWayGauge({
+  score,
+  direction,
+  label,
+}: OneWayGaugeProps) {
   const fillPercent = Math.max(0, Math.min(100, score));
   const activeColor = getIntensityColor(score);
   const intensityLabel = getIntensityLabel(score);
@@ -91,10 +90,17 @@ export default function OneWayGauge({ score, direction, label }: OneWayGaugeProp
   const isInView = useInView(ref, { once: true, margin: '-50px' });
 
   const directionColor =
-    direction === 'bull' ? '#34C759' : direction === 'bear' ? '#FF3B30' : '#86868B';
+    direction === 'bull'
+      ? '#34C759'
+      : direction === 'bear'
+        ? '#FF3B30'
+        : '#86868B';
 
   return (
-    <div ref={ref} className="h-full p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col gap-5">
+    <div
+      ref={ref}
+      className="h-full p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col gap-5"
+    >
       <div className="flex items-center justify-between">
         <p className="text-finbrief-gray-500 text-sm font-medium tracking-wide uppercase">
           One-Way Market Index
@@ -116,8 +122,14 @@ export default function OneWayGauge({ score, direction, label }: OneWayGaugeProp
         </span>
         <div className="flex items-center gap-2 mb-2">
           <DirectionArrow direction={direction} />
-          <span style={{ color: directionColor, fontSize: '14px', fontWeight: 600 }}>
-            {direction === 'bull' ? 'Bull' : direction === 'bear' ? 'Bear' : 'Neutral'}
+          <span
+            style={{ color: directionColor, fontSize: '14px', fontWeight: 600 }}
+          >
+            {direction === 'bull'
+              ? 'Bull'
+              : direction === 'bear'
+                ? 'Bear'
+                : 'Neutral'}
           </span>
         </div>
       </div>

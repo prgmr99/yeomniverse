@@ -1,5 +1,5 @@
-import Header from '@/components/Header';
 import LiquidEtherIsland from '@/components/backgrounds/LiquidEtherIsland';
+import Header from '@/components/Header';
 
 export default function MarketingLayout({
   children,

@@ -34,7 +34,11 @@ export async function GET() {
   const directionArrow =
     direction === 'bull' ? '▲' : direction === 'bear' ? '▼' : '→';
   const directionColor =
-    direction === 'bull' ? '#34C759' : direction === 'bear' ? '#FF3B30' : '#86868B';
+    direction === 'bull'
+      ? '#34C759'
+      : direction === 'bear'
+        ? '#FF3B30'
+        : '#86868B';
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="160" viewBox="0 0 300 160">
   <defs>

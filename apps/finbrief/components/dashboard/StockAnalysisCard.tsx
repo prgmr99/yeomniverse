@@ -317,9 +317,9 @@ export default function StockAnalysisCard({
                     { label: '5-Day', value: data.sma.sma5 },
                     { label: '20-Day', value: data.sma.sma20 },
                     { label: '60-Day', value: data.sma.sma60 },
-                  ].map((item, index) => (
+                  ].map((item) => (
                     <div
-                      key={index}
+                      key={item.label}
                       className="text-center p-3 rounded-lg bg-white/5"
                     >
                       <p className="text-xs text-slate-400 mb-1">
@@ -350,9 +350,9 @@ export default function StockAnalysisCard({
                     </h3>
                   </div>
                   <ul className="space-y-2">
-                    {data.signals.map((signal, index) => (
+                    {data.signals.map((signal) => (
                       <li
-                        key={index}
+                        key={signal}
                         className="flex items-start gap-3 text-sm text-slate-300"
                       >
                         <div className="w-1.5 h-1.5 rounded-full bg-teal-400 mt-2 flex-shrink-0" />

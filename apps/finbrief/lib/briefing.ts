@@ -49,7 +49,10 @@ export function getLatestBriefing(): BriefingData {
     return {
       ...briefing,
       fearGreed: data.fearGreedIndex
-        ? { score: data.fearGreedIndex.score, rating: data.fearGreedIndex.rating }
+        ? {
+            score: data.fearGreedIndex.score,
+            rating: data.fearGreedIndex.rating,
+          }
         : undefined,
       oneWay: data.oneWayIndex
         ? {
@@ -126,7 +129,10 @@ export function getBriefingByDate(date: string): BriefingData | null {
     return {
       ...briefing,
       fearGreed: data.fearGreedIndex
-        ? { score: data.fearGreedIndex.score, rating: data.fearGreedIndex.rating }
+        ? {
+            score: data.fearGreedIndex.score,
+            rating: data.fearGreedIndex.rating,
+          }
         : undefined,
       oneWay: data.oneWayIndex
         ? {

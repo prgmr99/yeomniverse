@@ -11,12 +11,12 @@ import {
 } from 'lucide-react';
 import { useRef, useState } from 'react';
 import BriefingSample from '@/components/BriefingSample';
-import MarketPulse from '@/components/MarketPulse';
 import {
   ScrollReveal,
   StaggerContainer,
   StaggerItem,
 } from '@/components/landing';
+import MarketPulse from '@/components/MarketPulse';
 import { useBriefingData } from '@/hooks/useBriefingData';
 import './finbrief.css';
 

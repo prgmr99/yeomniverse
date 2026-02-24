@@ -1,56 +1,56 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 export default function Header() {
-	const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-	useEffect(() => {
-		let ticking = false;
-		const handleScroll = () => {
-			if (!ticking) {
-				ticking = true;
-				requestAnimationFrame(() => {
-					setIsScrolled(window.scrollY > 50);
-					ticking = false;
-				});
-			}
-		};
-		window.addEventListener("scroll", handleScroll, { passive: true });
-		return () => window.removeEventListener("scroll", handleScroll);
-	}, []);
+  useEffect(() => {
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 50);
+          ticking = false;
+        });
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-	return (
-		<header
-			className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,backdrop-filter] duration-500 ${
-				isScrolled ? "bg-white/80 backdrop-blur-xl" : "bg-transparent"
-			}`}
-		>
-			<nav className="max-w-[1200px] mx-auto px-6 py-4 flex items-center justify-between">
-				{/* Logo */}
-				<motion.a
-					href="/"
-					initial={{ opacity: 0, x: -20 }}
-					animate={{ opacity: 1, x: 0 }}
-					transition={{ duration: 0.6 }}
-					className={`text-2xl font-bold transition-all duration-300 ${
-						isScrolled ? "text-gradient" : "text-white"
-					}`}
-					style={
-						!isScrolled
-							? {
-									textShadow:
-										"0 2px 4px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2)",
-								}
-							: {}
-					}
-				>
-					FinBrief
-				</motion.a>
+  return (
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,backdrop-filter] duration-500 ${
+        isScrolled ? 'bg-white/80 backdrop-blur-xl' : 'bg-transparent'
+      }`}
+    >
+      <nav className="max-w-[1200px] mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Logo */}
+        <motion.a
+          href="/"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          className={`text-2xl font-bold transition-all duration-300 ${
+            isScrolled ? 'text-gradient' : 'text-white'
+          }`}
+          style={
+            !isScrolled
+              ? {
+                  textShadow:
+                    '0 2px 4px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2)',
+                }
+              : {}
+          }
+        >
+          FinBrief
+        </motion.a>
 
-				{/* Desktop Navigation */}
-				{/* <motion.div
+        {/* Desktop Navigation */}
+        {/* <motion.div
 					initial={{ opacity: 0, y: -10 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.6, delay: 0.1 }}
@@ -68,8 +68,8 @@ export default function Header() {
 					</NavLink>
 				</motion.div> */}
 
-				{/* Mobile Menu Button */}
-				{/* <motion.button
+        {/* Mobile Menu Button */}
+        {/* <motion.button
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					transition={{ duration: 0.6, delay: 0.1 }}
@@ -83,10 +83,10 @@ export default function Header() {
 				>
 					{isMenuOpen ? <X size={24} /> : <Menu size={24} />}
 				</motion.button> */}
-			</nav>
+      </nav>
 
-			{/* Mobile Menu */}
-			{/* <AnimatePresence>
+      {/* Mobile Menu */}
+      {/* <AnimatePresence>
 				{isMenuOpen && (
 					<motion.div
 						initial={{ opacity: 0, height: 0 }}
@@ -121,8 +121,8 @@ export default function Header() {
 					</motion.div>
 				)}
 			</AnimatePresence> */}
-		</header>
-	);
+    </header>
+  );
 }
 
 // interface NavLinkProps {

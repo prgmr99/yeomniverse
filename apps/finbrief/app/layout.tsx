@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import './finbrief.css';
 import { GoogleAnalytics } from '@hyo/ui';
+import { JsonLd } from '@/components/JsonLd';
 import { sans, serif } from './fonts';
 
 const DOMAIN_URL =
@@ -180,24 +181,9 @@ export default function RootLayout({
         <GoogleAnalytics />
 
         {/* Structured Data Schemas - plain <script> for SSR visibility to crawlers */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(softwareAppSchema),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(serviceSchema),
-          }}
-        />
+        <JsonLd data={organizationSchema} />
+        <JsonLd data={softwareAppSchema} />
+        <JsonLd data={serviceSchema} />
       </body>
     </html>
   );

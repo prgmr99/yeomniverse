@@ -16,18 +16,18 @@
   --finbrief-neutral: #86868b;
 
   /* Fear & Greed gauge zones */
-  --gauge-extreme-fear: #FF3B30;
-  --gauge-fear: #FF9500;
-  --gauge-neutral: #FFD60A;
-  --gauge-greed: #34C759;
-  --gauge-extreme-greed: #007AFF;
+  --gauge-extreme-fear: #ff3b30;
+  --gauge-fear: #ff9500;
+  --gauge-neutral: #ffd60a;
+  --gauge-greed: #34c759;
+  --gauge-extreme-greed: #007aff;
 
   /* One-Way gauge zones */
-  --gauge-no-trend: #86868B;
-  --gauge-weak: #FFD60A;
-  --gauge-moderate: #FF9500;
-  --gauge-strong: #FF3B30;
-  --gauge-extreme: #AF52DE;
+  --gauge-no-trend: #86868b;
+  --gauge-weak: #ffd60a;
+  --gauge-moderate: #ff9500;
+  --gauge-strong: #ff3b30;
+  --gauge-extreme: #af52de;
 }
 
 /* Keyframes */
@@ -105,7 +105,8 @@
 
   /* Brushed stripe + cool-silver gradient (from TicketRow METAL_LIGHT) */
   background:
-    linear-gradient(0deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px) 0 0 / 100% 3px,
+    linear-gradient(0deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px) 0 0 /
+    100% 3px,
     linear-gradient(
       155deg,
       #f6f7fa 0%,
@@ -132,7 +133,7 @@
 
 /* Shimmer sweep on hover */
 .btn-metal::after {
-  content: '';
+  content: "";
   position: absolute;
   top: -10%;
   left: -80%;
@@ -156,7 +157,8 @@
 
 .btn-metal:hover {
   background:
-    linear-gradient(0deg, rgba(255, 255, 255, 0.10) 1px, transparent 1px) 0 0 / 100% 3px,
+    linear-gradient(0deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px) 0 0 /
+    100% 3px,
     linear-gradient(
       155deg,
       #f8f9fc 0%,

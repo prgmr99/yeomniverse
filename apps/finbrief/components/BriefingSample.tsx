@@ -1,7 +1,7 @@
 'use client';
 
-import type { BriefingData } from '@/lib/briefing';
 import { ScrollReveal } from '@/components/landing';
+import type { BriefingData } from '@/lib/briefing';
 
 interface BriefingSampleProps {
   data: BriefingData | null;
@@ -29,7 +29,10 @@ const sentimentStyles = {
   },
 };
 
-export default function BriefingSample({ data, isLoading }: BriefingSampleProps) {
+export default function BriefingSample({
+  data,
+  isLoading,
+}: BriefingSampleProps) {
   if (isLoading) {
     return (
       <section
@@ -81,11 +84,11 @@ export default function BriefingSample({ data, isLoading }: BriefingSampleProps)
         <ScrollReveal delay={0.2}>
           <div className="max-w-2xl mx-auto bg-finbrief-white rounded-3xl shadow-xl p-8 md:p-10">
             <div className="space-y-6">
-              {data.briefings.map((item, index) => {
+              {data.briefings.map((item) => {
                 const style = sentimentStyles[item.sentiment];
                 return (
                   <div
-                    key={index}
+                    key={item.title}
                     className="p-5 rounded-2xl border"
                     style={{
                       backgroundColor: style.bg,

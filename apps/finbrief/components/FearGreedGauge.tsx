@@ -40,7 +40,10 @@ export default function FearGreedGauge({ score, rating }: FearGreedGaugeProps) {
   const isInView = useInView(ref, { once: true, margin: '-50px' });
 
   return (
-    <div ref={ref} className="h-full p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col gap-5">
+    <div
+      ref={ref}
+      className="h-full p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col gap-5"
+    >
       <div className="flex items-center justify-between">
         <p className="text-finbrief-gray-500 text-sm font-medium tracking-wide uppercase">
           Fear & Greed Index
