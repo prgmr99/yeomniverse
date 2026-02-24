@@ -251,7 +251,8 @@ export default function PricingPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/auth/login"
-              className="px-8 py-4 bg-white text-finbrief-blue-500 font-semibold rounded-xl hover:bg-white/90 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              className="btn-metal px-8 py-4 rounded-xl"
+              style={{ color: '#0071E3' }}
             >
               Get Started Free
             </a>

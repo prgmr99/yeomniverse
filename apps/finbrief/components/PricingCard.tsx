@@ -117,8 +117,8 @@ export function PricingCard({
             isCurrentPlan
               ? 'bg-finbrief-gray-500/20 text-finbrief-gray-500 cursor-not-allowed'
               : highlighted
-                ? 'text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5'
-                : 'bg-finbrief-blue-500/10 text-finbrief-blue-500 hover:bg-finbrief-blue-500/20 border border-finbrief-blue-500/30'
+                ? 'text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 cursor-pointer'
+                : 'btn-metal rounded-xl cursor-pointer'
           }`}
           style={
             highlighted && !isCurrentPlan
@@ -129,23 +129,19 @@ export function PricingCard({
                     '0 4px 6px -1px rgba(41, 151, 255, 0.3), 0 2px 4px -2px rgba(0, 113, 227, 0.3)',
                 }
               : !highlighted && !isCurrentPlan
-                ? { borderColor: 'rgba(0, 113, 227, 0.3)' }
+                ? { color: '#0071E3' }
                 : {}
           }
           onMouseEnter={(e) => {
             if (highlighted && !isCurrentPlan) {
               e.currentTarget.style.boxShadow =
                 '0 10px 15px -3px rgba(41, 151, 255, 0.4), 0 4px 6px -4px rgba(0, 113, 227, 0.4)';
-            } else if (!isCurrentPlan) {
-              e.currentTarget.style.borderColor = 'rgba(0, 113, 227, 0.5)';
             }
           }}
           onMouseLeave={(e) => {
             if (highlighted && !isCurrentPlan) {
               e.currentTarget.style.boxShadow =
                 '0 4px 6px -1px rgba(41, 151, 255, 0.3), 0 2px 4px -2px rgba(0, 113, 227, 0.3)';
-            } else if (!isCurrentPlan) {
-              e.currentTarget.style.borderColor = 'rgba(0, 113, 227, 0.3)';
             }
           }}
         >

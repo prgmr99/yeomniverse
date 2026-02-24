@@ -102,7 +102,7 @@ function HeroSection() {
         >
           <a
             href="#subscribe"
-            className="inline-flex items-center gap-2 bg-white/90 px-8 py-4 rounded-full text-lg font-medium hover:bg-white transition-colors duration-300 hover:scale-105 hover:shadow-lg"
+            className="btn-metal inline-flex items-center gap-2 px-8 py-4 rounded-full text-base"
             style={{ color: '#0071E3' }}
           >
             Get Started Free
@@ -393,7 +393,7 @@ function CTASection() {
               <button
                 type="submit"
                 disabled={isLoading || isSubmitted}
-                className="inline-flex items-center justify-center gap-2 bg-finbrief-white px-8 py-4 rounded-full font-semibold hover:bg-white/90 transition-colors duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="btn-metal inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{ color: '#0071E3' }}
               >
                 {isLoading ? (

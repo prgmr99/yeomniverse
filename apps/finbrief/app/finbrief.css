@@ -79,3 +79,113 @@
 .border-finbrief-gray-200 {
   border-color: var(--finbrief-gray-200);
 }
+
+/* ── Premium Metal Button ── */
+.btn-metal {
+  position: relative;
+  overflow: hidden;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+
+  /* Brushed stripe + cool-silver gradient (from TicketRow METAL_LIGHT) */
+  background:
+    linear-gradient(0deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px) 0 0 / 100% 3px,
+    linear-gradient(
+      155deg,
+      #f6f7fa 0%,
+      #eaecf2 18%,
+      #f8f9fb 35%,
+      #e2e5ee 52%,
+      #eef0f5 68%,
+      #fafbfc 82%,
+      #e6e9f0 100%
+    );
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+
+  border: none;
+  color: #1a1a1a;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+  transition:
+    transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.28s ease;
+}
+
+/* Shimmer sweep on hover */
+.btn-metal::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -80%;
+  width: 55%;
+  height: 120%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 100%
+  );
+  transform: skewX(-15deg);
+  transition: left 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.btn-metal:hover::after {
+  left: 140%;
+}
+
+.btn-metal:hover {
+  background:
+    linear-gradient(0deg, rgba(255, 255, 255, 0.10) 1px, transparent 1px) 0 0 / 100% 3px,
+    linear-gradient(
+      155deg,
+      #f8f9fc 0%,
+      #eceff5 18%,
+      #fafbfd 35%,
+      #e6e9f2 52%,
+      #f0f3f8 68%,
+      #fcfdfe 82%,
+      #e8ebf2 100%
+    );
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.16),
+    0 12px 36px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+  transform: scale(1.035) translateY(-2px);
+}
+
+.btn-metal:active {
+  transform: scale(0.972) translateY(0px);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    inset 0 2px 6px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition-duration: 0.1s;
+}
+
+.btn-metal:disabled,
+.btn-metal[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-metal:disabled:hover,
+.btn-metal[disabled]:hover {
+  transform: none;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+}
+
+.btn-metal:disabled::after,
+.btn-metal[disabled]::after {
+  display: none;
+}
