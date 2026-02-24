@@ -11,21 +11,26 @@ import {
 } from 'lucide-react';
 import { useRef, useState } from 'react';
 import BriefingSample from '@/components/BriefingSample';
+import MarketPulse from '@/components/MarketPulse';
 import {
   ScrollReveal,
   StaggerContainer,
   StaggerItem,
 } from '@/components/landing';
+import { useBriefingData } from '@/hooks/useBriefingData';
 import './finbrief.css';
 
 export default function FinBriefPage() {
+  const { data, isLoading } = useBriefingData();
+
   return (
     <main className="relative">
       <HeroSection />
       <ValueProposition />
       <FeatureShowcase />
       <HowItWorks />
-      <BriefingSample />
+      <MarketPulse data={data} isLoading={isLoading} />
+      <BriefingSample data={data} isLoading={isLoading} />
       <CTASection />
       <Footer />
     </main>

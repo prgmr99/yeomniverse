@@ -1,63 +1,35 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import type { BriefingData } from '@/lib/briefing';
 import { ScrollReveal } from '@/components/landing';
 
-type BriefingData = {
-  briefings: Array<{
-    title: string;
-    description: string;
-    sentiment: 'bullish' | 'bearish' | 'neutral';
-  }>;
-  tags: string[];
-  summary: string;
+interface BriefingSampleProps {
+  data: BriefingData | null;
+  isLoading: boolean;
+}
+
+const sentimentStyles = {
+  bullish: {
+    label: 'BULLISH',
+    color: '#3182F6',
+    bg: 'rgba(49, 130, 246, 0.1)',
+    border: 'rgba(49, 130, 246, 0.2)',
+  },
+  bearish: {
+    label: 'BEARISH',
+    color: '#FF3B30',
+    bg: 'rgba(255, 59, 48, 0.1)',
+    border: 'rgba(255, 59, 48, 0.2)',
+  },
+  neutral: {
+    label: 'NEUTRAL',
+    color: '#86868B',
+    bg: 'rgba(134, 134, 139, 0.1)',
+    border: 'rgba(134, 134, 139, 0.2)',
+  },
 };
 
-export default function BriefingSample() {
-  const [data, setData] = useState<BriefingData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('/api/briefing/latest')
-      .then((res) => res.json())
-      .then((json) => setData(json))
-      .catch(() => {
-        setData({
-          briefings: [
-            {
-              title: 'Unable to load data',
-              description: 'Please try again later.',
-              sentiment: 'neutral',
-            },
-          ],
-          tags: [],
-          summary: '',
-        });
-      })
-      .finally(() => setIsLoading(false));
-  }, []);
-
-  const sentimentStyles = {
-    bullish: {
-      label: 'BULLISH',
-      color: '#3182F6',
-      bg: 'rgba(49, 130, 246, 0.1)',
-      border: 'rgba(49, 130, 246, 0.2)',
-    },
-    bearish: {
-      label: 'BEARISH',
-      color: '#FF3B30',
-      bg: 'rgba(255, 59, 48, 0.1)',
-      border: 'rgba(255, 59, 48, 0.2)',
-    },
-    neutral: {
-      label: 'NEUTRAL',
-      color: '#86868B',
-      bg: 'rgba(134, 134, 139, 0.1)',
-      border: 'rgba(134, 134, 139, 0.2)',
-    },
-  };
-
+export default function BriefingSample({ data, isLoading }: BriefingSampleProps) {
   if (isLoading) {
     return (
       <section

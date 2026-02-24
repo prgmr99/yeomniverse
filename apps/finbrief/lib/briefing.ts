@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-interface BriefingData {
+export interface BriefingData {
   briefings: Array<{
     title: string;
     description: string;
@@ -9,6 +9,23 @@ interface BriefingData {
   }>;
   tags: string[];
   summary: string;
+  fearGreed?: {
+    score: number;
+    rating: string;
+  };
+  oneWay?: {
+    score: number;
+    direction: 'bull' | 'bear' | 'neutral';
+    label: string;
+    components?: {
+      adx: number;
+      maAlignment: number;
+      rsiTrend: number;
+      bbWidth: number;
+      vix: number;
+      volume: number;
+    };
+  };
 }
 
 /**
@@ -28,7 +45,30 @@ export function getLatestBriefing(): BriefingData {
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     const data = JSON.parse(fileContent);
 
-    return transformToBriefingData(data.analysis);
+    const briefing = transformToBriefingData(data.analysis);
+    return {
+      ...briefing,
+      fearGreed: data.fearGreedIndex
+        ? { score: data.fearGreedIndex.score, rating: data.fearGreedIndex.rating }
+        : undefined,
+      oneWay: data.oneWayIndex
+        ? {
+            score: data.oneWayIndex.score,
+            direction: data.oneWayIndex.direction,
+            label: data.oneWayIndex.label,
+            components: data.oneWayIndex.components
+              ? {
+                  adx: data.oneWayIndex.components.adx,
+                  maAlignment: data.oneWayIndex.components.maAlignment,
+                  rsiTrend: data.oneWayIndex.components.rsiTrend,
+                  bbWidth: data.oneWayIndex.components.bbWidth,
+                  vix: data.oneWayIndex.components.vix,
+                  volume: data.oneWayIndex.components.volume,
+                }
+              : undefined,
+          }
+        : undefined,
+    };
   } catch (error) {
     console.error('Error loading briefing data:', error);
     return getFallbackData();
