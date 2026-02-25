@@ -1,4 +1,4 @@
-# 🌌 Yeomniverse
+# Yeomniverse
 
 <div align="center">
   <p>
@@ -8,42 +8,39 @@
 
 ---
 
-## 🌟 Services
+## Services
 
-### 💯 Hyodo-Tier
+### Hyodo-Tier
 **2026 National Filial Piety Aptitude Test**
 
-A fun personality quiz that tests your relationship with your parents.
+A personality quiz that evaluates your relationship with your parents.
 
-- 14 entertaining questions
-- 8 unique personality type results
-- KakaoTalk sharing feature
-- Mobile-optimized design
+- 14 thought-provoking questions
+- 8 unique personality type classifications
+- KakaoTalk sharing integration
+- Mobile-optimized interface
 
-👉 [Visit Hyodo-Tier](https://hyodo-tier.yeomniverse.com)
+[Visit Hyodo-Tier](https://hyodo-tier.yeomniverse.com)
 
 ---
 
-### 📈 FinBrief
+### FinBrief
 **Daily Morning Financial Market Summary**
 
-Get AI-curated global financial news delivered to your Telegram every morning.
+AI-curated global financial news delivered to your Telegram every morning.
 
-- Automatically sent daily at 8 AM
-- Gemini AI-powered news summaries
-- Curated from major financial media
+- Daily delivery at 8 AM
+- Gemini AI-powered summaries
+- Curated from major financial media sources
 - Telegram notification service
 
-👉 [Subscribe to FinBrief](https://finbrief.yeomniverse.com)
+[Subscribe to FinBrief](https://finbrief.yeomniverse.com)
 
 ---
 
-## 📬 Contact
+## Contact
 
-Feel free to reach out with any questions or suggestions.
+Questions or suggestions? Feel free to reach out.
 
 - GitHub: [@prgmr99](https://github.com/prgmr99)
 - Email: johnyeom24@naver.com
-
----
-
