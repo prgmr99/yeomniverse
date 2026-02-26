@@ -5,6 +5,7 @@ import {
   ArrowRight,
   Brain,
   ChevronDown,
+  MessageCircle,
   Send,
   Target,
   Zap,
@@ -367,7 +368,7 @@ function CTASection() {
             Start tomorrow morning
           </h2>
           <p
-            className="mb-10 max-w-[680px] mx-auto"
+            className="mb-12 max-w-[680px] mx-auto"
             style={{
               fontSize: 'clamp(18px, 2.5vw, 24px)',
               color: 'rgba(255,255,255,0.7)',
@@ -378,85 +379,175 @@ function CTASection() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.2}>
-          <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <input
-                type="email"
-                placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                onFocus={() => {
-                  if (isSubmitted) {
-                    setIsSubmitted(false);
-                    setError('');
-                  }
-                }}
-                disabled={isLoading}
-                required
-                className="flex-1 px-6 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-white/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              />
-              <button
-                type="submit"
-                disabled={isLoading || isSubmitted}
-                className="btn-metal inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ color: '#0071E3' }}
+          {/* Mobile: stacked. Desktop: 3-col grid with "or" divider in the middle */}
+          <div className="flex flex-col md:grid md:grid-cols-[1fr_auto_1fr] md:items-stretch gap-6 max-w-[860px] mx-auto">
+            {/* Telegram Card */}
+            <div
+              className="flex flex-col items-center text-center rounded-2xl p-8 border"
+              style={{
+                background: 'rgba(41, 128, 185, 0.15)',
+                borderColor: 'rgba(41, 128, 185, 0.4)',
+              }}
+            >
+              <div
+                className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
+                style={{ background: 'rgba(41, 128, 185, 0.3)' }}
               >
-                {isLoading ? (
-                  <>
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{
-                        duration: 1,
-                        repeat: Infinity,
-                        ease: 'linear',
-                      }}
-                      className="w-4 h-4 border-2 border-current border-t-transparent rounded-full"
-                    />
-                    Sending...
-                  </>
-                ) : isSubmitted ? (
-                  'Subscribed!'
-                ) : (
-                  <>
-                    Subscribe Free
-                    <Send className="w-4 h-4" />
-                  </>
-                )}
-              </button>
+                <MessageCircle className="w-7 h-7 text-white" />
+              </div>
+              <h3
+                className="text-finbrief-white font-semibold mb-2"
+                style={{ fontSize: 'clamp(18px, 2vw, 22px)' }}
+              >
+                Telegram Bot
+              </h3>
+              <p
+                className="mb-6 flex-1"
+                style={{
+                  fontSize: 'clamp(14px, 1.5vw, 16px)',
+                  color: 'rgba(255,255,255,0.65)',
+                }}
+              >
+                Instant delivery straight to your Telegram. Every morning at 8
+                AM, no inbox required.
+              </p>
+              <a
+                href="https://t.me/finbrief_news_bot"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold transition-all w-full"
+                style={{
+                  background: '#2980B9',
+                  color: '#fff',
+                  boxShadow: '0 2px 16px rgba(41,128,185,0.4)',
+                }}
+              >
+                <MessageCircle className="w-4 h-4" />
+                Start Telegram Bot
+              </a>
             </div>
 
-            {isSubmitted && (
-              <motion.p
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-4 text-white/90 font-medium"
+            {/* Divider — horizontal on mobile, vertical on desktop */}
+            <div className="flex md:flex-col items-center gap-3 md:gap-4 md:py-8">
+              <div
+                className="flex-1 h-px md:h-auto md:w-px"
+                style={{ background: 'rgba(255,255,255,0.15)' }}
+              />
+              <span
+                className="px-3 py-1 rounded-full text-sm font-medium shrink-0"
+                style={{
+                  color: 'rgba(255,255,255,0.5)',
+                  background: 'rgba(255,255,255,0.07)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                }}
               >
-                Check your email. Your first briefing is on its way!
-              </motion.p>
-            )}
+                or
+              </span>
+              <div
+                className="flex-1 h-px md:h-auto md:w-px"
+                style={{ background: 'rgba(255,255,255,0.15)' }}
+              />
+            </div>
 
-            {error && (
-              <motion.p
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-4 text-red-300 font-medium"
-              >
-                {error}
-              </motion.p>
-            )}
-          </form>
-
-          <p className="mt-8" style={{ color: 'rgba(255,255,255,0.6)' }}>
-            or{' '}
-            <a
-              href="https://t.me/finbrief_news_bot"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-finbrief-white underline underline-offset-4 hover:no-underline transition-all"
+            {/* Email Card */}
+            <div
+              className="flex flex-col items-center text-center rounded-2xl p-8 border"
+              style={{
+                background: 'rgba(255,255,255,0.05)',
+                borderColor: 'rgba(255,255,255,0.15)',
+              }}
             >
-              Start the Telegram bot now
-            </a>
-          </p>
+              <div
+                className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
+                style={{ background: 'rgba(255,255,255,0.1)' }}
+              >
+                <Send className="w-7 h-7 text-white" />
+              </div>
+              <h3
+                className="text-finbrief-white font-semibold mb-2"
+                style={{ fontSize: 'clamp(18px, 2vw, 22px)' }}
+              >
+                Email Digest
+              </h3>
+              <p
+                className="mb-6"
+                style={{
+                  fontSize: 'clamp(14px, 1.5vw, 16px)',
+                  color: 'rgba(255,255,255,0.65)',
+                }}
+              >
+                Prefer your inbox? Get the same daily briefing delivered to your
+                email every morning.
+              </p>
+              <form onSubmit={handleSubmit} className="w-full">
+                <div className="flex flex-col gap-3">
+                  <input
+                    type="email"
+                    placeholder="Email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onFocus={() => {
+                      if (isSubmitted) {
+                        setIsSubmitted(false);
+                        setError('');
+                      }
+                    }}
+                    disabled={isLoading}
+                    required
+                    className="w-full px-5 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-white/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  />
+                  <button
+                    type="submit"
+                    disabled={isLoading || isSubmitted}
+                    className="btn-metal inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed w-full"
+                    style={{ color: '#0071E3' }}
+                  >
+                    {isLoading ? (
+                      <>
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{
+                            duration: 1,
+                            repeat: Infinity,
+                            ease: 'linear',
+                          }}
+                          className="w-4 h-4 border-2 border-current border-t-transparent rounded-full"
+                        />
+                        Sending...
+                      </>
+                    ) : isSubmitted ? (
+                      'Subscribed!'
+                    ) : (
+                      <>
+                        Subscribe Free
+                        <Send className="w-4 h-4" />
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {isSubmitted && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-4 text-white/90 font-medium text-sm"
+                  >
+                    Check your email. Your first briefing is on its way!
+                  </motion.p>
+                )}
+
+                {error && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-4 text-red-300 font-medium text-sm"
+                  >
+                    {error}
+                  </motion.p>
+                )}
+              </form>
+            </div>
+          </div>
         </ScrollReveal>
       </div>
     </section>
