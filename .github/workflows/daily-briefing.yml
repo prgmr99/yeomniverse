@@ -1,10 +1,10 @@
 name: Daily FinBrief
 
 on:
-  # 매일 한국시간 오전 8시 실행 (UTC 23:00 = KST 08:00)
-  # GitHub Actions scheduled workflows require recent repository activity
+  # 매일 한국시간 오전 7시 30분 실행 (UTC 22:30 = KST 07:30)
+  # GitHub Actions cron은 10~30분 지연이 있어 실제 발송은 ~08:00 KST
   schedule:
-    - cron: '0 23 * * *'
+    - cron: '30 22 * * *'
   
   # 수동 실행 옵션
   workflow_dispatch:
