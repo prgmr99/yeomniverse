@@ -181,7 +181,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       sendDiscordNotification(subscriberName, subscriberNumber),
       sendTelegramMessage(
         chatId,
-        `🎉 FinBrief에 오신 것을 환영합니다!\n\n매일 아침 8시, AI가 분석한 금융 브리핑을 받아보세요.\n\n✅ 구독이 완료되었습니다. (${subscriberNumber}번째 구독자)`,
+        '🎉 Welcome to FinBrief!\n\nGet your AI-powered financial briefing every morning at 8 AM.\n\n✅ You are now subscribed.',
       ),
     ]);
 
