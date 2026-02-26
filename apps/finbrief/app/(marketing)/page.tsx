@@ -415,12 +415,7 @@ function CTASection() {
                 href="https://t.me/finbrief_news_bot"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold transition-all w-full"
-                style={{
-                  background: '#2980B9',
-                  color: '#fff',
-                  boxShadow: '0 2px 16px rgba(41,128,185,0.4)',
-                }}
+                className="btn-metal btn-metal--blue inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full cursor-pointer w-full"
               >
                 <MessageCircle className="w-4 h-4" />
                 Start Telegram Bot
