@@ -33,7 +33,7 @@ export default function YeomniverseLanding() {
       {/* Fixed Galaxy Background */}
       <GalaxyBackground />
 
-      <main id="main-content" className="min-h-screen relative">
+      <main id="main-content" className="min-h-screen relative flex flex-col">
         {/* Hero Section */}
         <section className="flex flex-col items-center justify-center px-6 py-20 text-center">
           <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-4">
@@ -86,7 +86,7 @@ export default function YeomniverseLanding() {
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-white/10 py-8 text-center text-sm text-gray-400">
+        <footer className="mt-auto border-t border-white/10 py-8 text-center text-sm text-gray-400">
           <p>2026 Yeomniverse. All rights reserved.</p>
         </footer>
       </main>
