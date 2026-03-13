@@ -46,7 +46,7 @@ export default function YeomniverseLanding() {
         {/* Hero Section */}
         <section className="flex flex-col items-center justify-center px-6 py-20 text-center">
           <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-4">
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent drop-shadow-2xl">
+            <span className="text-white drop-shadow-2xl">
               Yeomniverse
             </span>
           </h1>
