@@ -38,6 +38,19 @@ AI-curated global financial news delivered to your Telegram every morning.
 
 ---
 
+### NeuroTrade
+**Simulated Financial Trading Game**
+
+A web-based educational trading simulator where players analyze fictional news events to predict market movements and manage a digital portfolio.
+
+- News-driven dynamic market engine
+- 5-day trading cycle simulation
+- Interactive portfolio dashboard with candlestick charts
+- Bilingual support (English / Korean)
+- Day-end market impact summaries
+
+---
+
 ## Contact
 
 Questions or suggestions? Feel free to reach out.
