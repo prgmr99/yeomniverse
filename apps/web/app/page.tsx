@@ -22,6 +22,15 @@ export default function YeomniverseLanding() {
       gradient: 'from-blue-500 to-cyan-500',
       bgColor: 'bg-blue-50',
     },
+    {
+      title: 'NeuroTrade',
+      subtitle: 'Simulated Financial Trading',
+      description:
+        'A web-based educational trading simulator where players analyze fictional news events to predict market movements.',
+      href: 'https://neuro-trade.yeomniverse.com',
+      gradient: 'from-emerald-400 to-green-500',
+      bgColor: 'bg-green-50',
+    },
   ];
 
   return (
@@ -47,8 +56,8 @@ export default function YeomniverseLanding() {
         </section>
 
         {/* Services Grid */}
-        <section className="max-w-4xl mx-auto px-6 pb-20">
-          <div className="grid md:grid-cols-2 gap-6">
+        <section className="max-w-6xl mx-auto px-6 pb-20 w-full">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service) => (
               <Link
                 key={service.href}
