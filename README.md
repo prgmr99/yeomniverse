@@ -49,7 +49,7 @@ A web-based educational trading simulator where players analyze fictional news e
 - Bilingual support (English / Korean)
 - Day-end market impact summaries
 
-[Visit NeuroTrade](https://neurotrade.yeomniverse.com)
+[Visit NeuroTrade](https://neuro-trade.yeomniverse.com)
 
 ---
 
