@@ -1,15 +1,21 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpRight, Sparkles, X } from 'lucide-react';
+import { ArrowUpRight, X } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 const Spline = dynamic(() => import('@splinetool/react-spline'), {
   ssr: false,
   loading: () => (
-    <div className="absolute inset-0 bg-gradient-to-b from-[#05060a] via-[#0a0c14] to-black" />
+    <div className="absolute inset-0 animate-pulse bg-[radial-gradient(ellipse_at_center,#0a0c14_0%,#05060a_50%,#000_100%)]" />
   ),
 });
 
@@ -25,14 +31,14 @@ type Service = {
 
 type Props = {
   services: Service[];
+  children: ReactNode;
 };
 
 const SPLINE_SCENE =
   'https://prod.spline.design/yEWkAjJuCo873kcF/scene.splinecode';
 
-export default function SplineExperience({ services }: Props) {
+export default function SplineExperience({ services, children }: Props) {
   const [open, setOpen] = useState(false);
-  const [sceneReady, setSceneReady] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const openReveal = useCallback(() => setOpen(true), []);
@@ -66,11 +72,7 @@ export default function SplineExperience({ services }: Props) {
         className="fixed inset-0 z-0 overflow-hidden bg-black"
         aria-hidden="true"
       >
-        <Spline
-          scene={SPLINE_SCENE}
-          onLoad={() => setSceneReady(true)}
-          onSplineMouseDown={openReveal}
-        />
+        <Spline scene={SPLINE_SCENE} onSplineMouseDown={openReveal} />
         {/* Subtle gradient vignette to keep hero text legible */}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.7)_100%)]" />
         {/* Bottom fade to anchor the laptop glow */}
@@ -82,48 +84,19 @@ export default function SplineExperience({ services }: Props) {
         `pointer-events-none` on the section so clicks pass through to the
         Spline canvas beneath (so the laptop stays clickable). Only actual
         interactive children re-enable pointer events with `pointer-events-auto`.
+        Hero copy (badge, h1, subtitle) is server-rendered via `children` so it
+        paints on first HTML, independent of JS hydration.
       */}
       <section className="pointer-events-none relative z-10 flex min-h-screen flex-col items-center px-6 pt-16 text-center md:pt-20">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.18em] text-white/70 backdrop-blur-md"
-        >
-          <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />A digital craft
-          universe
-        </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-6 text-5xl font-black tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)] md:text-7xl lg:text-8xl"
-        >
-          Yeomniverse
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-5 max-w-xl text-base leading-relaxed text-white/80 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] md:text-lg"
-        >
-          Three worlds of digital craft, orbiting one idea.
-        </motion.p>
+        {children}
 
         {/* Spacer pushes the CTA down so it lands near the laptop */}
         <div className="flex-1" />
 
-        {/* CTA anchored above the laptop */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: sceneReady ? 1 : 0, y: sceneReady ? 0 : 12 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mb-[18vh] flex flex-col items-center gap-3"
-        >
+        {/* CTA anchored above the laptop — visible immediately, no scene gating */}
+        <div className="mb-[6vh] flex flex-col items-center gap-3 md:mb-[18vh]">
           <p
-            className="flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/60 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] md:text-xs"
+            className="hidden items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/60 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] md:flex md:text-xs"
             aria-hidden="true"
           >
             <span className="inline-block h-px w-6 bg-white/40" />
@@ -141,7 +114,7 @@ export default function SplineExperience({ services }: Props) {
               className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
             />
           </button>
-        </motion.div>
+        </div>
 
         {/* Footer stays anchored */}
         <footer className="relative z-10 w-full border-t border-white/10 py-6 text-center text-xs text-white/40">
@@ -157,7 +130,7 @@ export default function SplineExperience({ services }: Props) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-50 flex items-center justify-center px-4 py-10"
+            className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto overscroll-contain px-4 py-10 md:items-center"
             role="dialog"
             aria-modal="true"
             aria-labelledby="services-reveal-title"
@@ -167,7 +140,7 @@ export default function SplineExperience({ services }: Props) {
               type="button"
               aria-label="Close services"
               onClick={closeReveal}
-              className="absolute inset-0 bg-black/70 backdrop-blur-md"
+              className="fixed inset-0 bg-black/70 backdrop-blur-md"
             />
 
             {/* Panel */}

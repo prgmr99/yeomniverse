@@ -168,6 +168,22 @@ export default function RootLayout({
       className={`${serif.variable} ${sans.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        {/* Spline hero: warm up CDN connections and prefetch the scene file
+            so the 3D canvas can paint as soon as the runtime hydrates. */}
+        <link
+          rel="preconnect"
+          href="https://prod.spline.design"
+          crossOrigin=""
+        />
+        <link rel="preconnect" href="https://unpkg.com" crossOrigin="" />
+        <link
+          rel="preload"
+          as="fetch"
+          href="https://prod.spline.design/yEWkAjJuCo873kcF/scene.splinecode"
+          crossOrigin=""
+        />
+      </head>
       <body
         className="min-h-screen font-sans antialiased"
         suppressHydrationWarning
