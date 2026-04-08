@@ -168,7 +168,26 @@ export default function RootLayout({
       className={`${serif.variable} ${sans.variable}`}
       suppressHydrationWarning
     >
-      <body className="min-h-screen font-sans antialiased">
+      <body
+        className="min-h-screen font-sans antialiased"
+        suppressHydrationWarning
+      >
+        {/* Spline hero: warm up CDN connections and prefetch the scene file
+            so the 3D canvas can paint as soon as the runtime hydrates.
+            React 19 hoists these resource hints into <head> automatically. */}
+        <link
+          rel="preconnect"
+          href="https://prod.spline.design"
+          crossOrigin=""
+        />
+        <link rel="preconnect" href="https://unpkg.com" crossOrigin="" />
+        <link
+          rel="preload"
+          as="fetch"
+          href="https://prod.spline.design/yEWkAjJuCo873kcF/scene.splinecode"
+          crossOrigin=""
+        />
+
         {children}
 
         <Analytics />
