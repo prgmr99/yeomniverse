@@ -168,7 +168,10 @@ export default function RootLayout({
       className={`${serif.variable} ${sans.variable}`}
       suppressHydrationWarning
     >
-      <body className="min-h-screen font-sans antialiased">
+      <body
+        className="min-h-screen font-sans antialiased"
+        suppressHydrationWarning
+      >
         {children}
 
         <Analytics />
