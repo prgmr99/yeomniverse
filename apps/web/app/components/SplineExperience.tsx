@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight, X } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import type { Application } from '@splinetool/runtime';
 import {
   type ReactNode,
   useCallback,
@@ -39,10 +40,15 @@ const SPLINE_SCENE =
 
 export default function SplineExperience({ services, children }: Props) {
   const [open, setOpen] = useState(false);
+  const [splineLoaded, setSplineLoaded] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const openReveal = useCallback(() => setOpen(true), []);
   const closeReveal = useCallback(() => setOpen(false), []);
+  const onSplineLoad = useCallback((splineApp: Application) => {
+    splineApp.renderOnDemand = true;
+    setSplineLoaded(true);
+  }, []);
 
   // ESC to close + lock body scroll when modal is open
   useEffect(() => {
@@ -69,10 +75,15 @@ export default function SplineExperience({ services, children }: Props) {
         clicks fall through to the canvas (laptop stays interactive).
       */}
       <div
-        className="fixed inset-0 z-0 overflow-hidden bg-black"
+        className={`fixed inset-0 z-0 overflow-hidden bg-black will-change-transform ${open ? 'invisible' : 'visible'}`}
         aria-hidden="true"
+        style={{ contain: 'strict' }}
       >
-        <Spline scene={SPLINE_SCENE} onSplineMouseDown={openReveal} />
+        <Spline
+          scene={SPLINE_SCENE}
+          onSplineMouseDown={openReveal}
+          onLoad={onSplineLoad}
+        />
         {/* Subtle gradient vignette to keep hero text legible */}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.7)_100%)]" />
         {/* Bottom fade to anchor the laptop glow */}
@@ -135,12 +146,12 @@ export default function SplineExperience({ services, children }: Props) {
             aria-modal="true"
             aria-labelledby="services-reveal-title"
           >
-            {/* Scrim */}
+            {/* Scrim — solid overlay instead of backdrop-blur for perf */}
             <button
               type="button"
               aria-label="Close services"
               onClick={closeReveal}
-              className="fixed inset-0 bg-black/70 backdrop-blur-md"
+              className="fixed inset-0 bg-black/80"
             />
 
             {/* Panel */}
@@ -167,7 +178,7 @@ export default function SplineExperience({ services, children }: Props) {
                   ref={closeButtonRef}
                   type="button"
                   onClick={closeReveal}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/80 backdrop-blur-md transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-[#0d0f17]/80 text-white/80 transition hover:bg-[#13151f] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                   aria-label="Close"
                 >
                   <X className="h-5 w-5" aria-hidden="true" />
@@ -189,7 +200,7 @@ export default function SplineExperience({ services, children }: Props) {
                     <Link
                       href={service.href}
                       aria-label={`${service.title} — ${service.subtitle}`}
-                      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0d0f17]/90 p-7 transition duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-[#13151f]/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                     >
                       {/* Accent glow */}
                       <div
