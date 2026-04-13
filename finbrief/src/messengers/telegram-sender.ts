@@ -92,7 +92,7 @@ function formatBriefingMessage(
     message += `*${idx + 1}. ${news.title}*\n`;
     message += `${tag}\n\n`;
     message += `${news.summary}\n\n`;
-    message += `_Significance:_ ${news.reason}\n\n`;
+    message += `_${locale.significance}:_ ${news.reason}\n\n`;
   });
 
   message += `*${locale.keyThemes}:* ${analysis.keywords.join(' | ')}\n\n`;
