@@ -26,14 +26,25 @@ export const metadata: Metadata = {
     template: '%s | Yeomniverse',
   },
   description:
-    'Yeomniverse - A digital services portal. Explore Hyo-Tier, FinBrief, and more.',
+    '어버이날 특집! 나는 효자일까 효녀일까? 효도능력시험으로 나의 효도 티어를 확인해보세요. Yeomniverse - 효도티어, FinBrief 등 다양한 디지털 서비스를 만나보세요.',
   keywords: [
     'Yeomniverse',
-    'digital services',
+    '효도티어',
+    '효도능력시험',
+    '어버이날',
+    '어버이날 테스트',
+    '어버이날 선물',
+    '효도 테스트',
+    '효자',
+    '효녀',
+    '부모님께 효도',
+    '카네이션',
+    '5월 어버이날',
+    'Hyo-Tier',
+    'FinBrief',
     'AI financial briefing',
     'personality quiz',
-    'FinBrief',
-    'Hyo-Tier',
+    'digital services',
     'online tools',
   ],
   applicationName: 'Yeomniverse',
@@ -80,25 +91,25 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Yeomniverse',
-    description: 'Yeomniverse - A digital services portal',
+    title: '어버이날 효도능력시험 | 효도티어 - Yeomniverse',
+    description: '어버이날 특집! 나는 효자일까 효녀일까? 효도능력시험으로 나의 효도 티어를 확인해보세요.',
     url: DOMAIN_URL,
     siteName: 'Yeomniverse',
-    locale: 'en_US',
+    locale: 'ko_KR',
     type: 'website',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Yeomniverse - Digital services including Hyo-Tier, FinBrief',
+        alt: '어버이날 효도능력시험 - 효도티어 | Yeomniverse',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Yeomniverse',
-    description: 'Yeomniverse - A digital services portal',
+    title: '어버이날 효도능력시험 | 효도티어 - Yeomniverse',
+    description: '어버이날 특집! 나는 효자일까 효녀일까? 효도능력시험으로 나의 효도 티어를 확인해보세요.',
     images: ['/og-image.png'],
   },
   alternates: {
@@ -164,7 +175,7 @@ export default function RootLayout({
 
   return (
     <html
-      lang="en"
+      lang="ko"
       className={`${serif.variable} ${sans.variable}`}
       suppressHydrationWarning
     >

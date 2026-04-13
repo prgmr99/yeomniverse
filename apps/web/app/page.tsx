@@ -6,7 +6,7 @@ const services = [
 		title: "효도티어",
 		subtitle: "Filial Piety Test",
 		description:
-			"What is your filial piety grade? Take the 2026 National Filial Piety Test to assess your relationship with your parents.",
+			"어버이날 특집 🌸 나는 효자일까 효녀일까? 2026 효도능력시험으로 부모님과 나의 관계를 테스트해보세요.",
 		href: "https://hyodo-tier.yeomniverse.com",
 		accent: "from-red-400 to-orange-400",
 		glow: "bg-orange-500/40",
