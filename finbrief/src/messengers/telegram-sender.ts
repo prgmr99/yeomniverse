@@ -1,8 +1,9 @@
 import TelegramBot from 'node-telegram-bot-api';
 import { AnalysisResult, FearGreedIndex, OneWayIndex } from '../types/news.types';
-import { getContextualAffiliateLinks, getRandomInspirationalQuote } from '../shared/briefing-content';
+import { getContextualAffiliateLinks } from '../shared/briefing-content';
 import { getFearGreedLabel, getFearGreedBar, getFearGreedZoneEmoji } from '../collectors/fear-greed-collector';
 import { getOneWayLabel, getOneWayBar, getOneWayDirectionEmoji } from '../analyzers/oneway-analyzer';
+import { getLocale, getRandomQuote, getSentimentTag, getDirectionLabel, formatDate } from '../i18n';
 
 /**
  * 텔레그램 메시지 발송기
@@ -24,7 +25,8 @@ export async function sendDailyBriefing(
   analysis: AnalysisResult,
   affiliateLinks?: { text: string; url: string }[],
   fearGreed?: FearGreedIndex | null,
-  oneWay?: OneWayIndex | null
+  oneWay?: OneWayIndex | null,
+  lang?: string
 ): Promise<void> {
   try {
     console.log('[Telegram] Creating message...');
@@ -33,7 +35,7 @@ export async function sendDailyBriefing(
       throw new Error('TELEGRAM_BOT_TOKEN is not set.');
     }
 
-    const message = formatBriefingMessage(analysis, affiliateLinks, fearGreed, oneWay);
+    const message = formatBriefingMessage(analysis, affiliateLinks, fearGreed, oneWay, lang);
 
     await bot.sendMessage(chatId, message, {
       parse_mode: 'Markdown',
@@ -54,16 +56,13 @@ function formatBriefingMessage(
   analysis: AnalysisResult,
   affiliateLinks?: { text: string; url: string }[],
   fearGreed?: FearGreedIndex | null,
-  oneWay?: OneWayIndex | null
+  oneWay?: OneWayIndex | null,
+  lang?: string
 ): string {
-  const today = new Date().toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    weekday: 'long',
-  });
+  const locale = getLocale(lang);
+  const today = formatDate(new Date(), lang);
 
-  let message = `*FINBRIEF | MORNING BRIEF*\n`;
+  let message = `*${locale.brandName} | ${locale.morningBrief}*\n`;
   message += `${today}\n\n`;
 
   // Fear & Greed Index section
@@ -71,7 +70,7 @@ function formatBriefingMessage(
     const label = getFearGreedLabel(fearGreed.score);
     const bar = getFearGreedBar(fearGreed.score);
     const zoneEmoji = getFearGreedZoneEmoji(fearGreed.score);
-    message += `*FEAR & GREED INDEX*\n`;
+    message += `*${locale.fearGreedTitle}*\n`;
     message += `${zoneEmoji} ${fearGreed.score}/100  ${label}\n`;
     message += `${bar}\n\n`;
   }
@@ -79,16 +78,16 @@ function formatBriefingMessage(
   // One-Way Market Index section
   if (oneWay) {
     const dirEmoji = getOneWayDirectionEmoji(oneWay.direction, oneWay.score);
-    const dirLabel = oneWay.direction === 'bull' ? 'Bull' : oneWay.direction === 'bear' ? 'Bear' : 'Neutral';
+    const dirLabel = getDirectionLabel(oneWay.direction, lang);
     const bar = getOneWayBar(oneWay.score);
-    message += `*ONE-WAY INDEX*\n`;
+    message += `*${locale.oneWayTitle}*\n`;
     message += `${dirEmoji} ${oneWay.score}/100  ${oneWay.label} (${dirLabel})\n`;
     message += `${bar}\n`;
     message += `ADX ${oneWay.components.adx} | MA ${oneWay.components.maAlignment} | RSI ${oneWay.components.rsiTrend} | VIX ${oneWay.components.vix}\n\n`;
   }
 
   analysis.topNews.forEach((news, idx) => {
-    const tag = getSentimentTag(news.sentiment);
+    const tag = getSentimentTag(news.sentiment, lang);
 
     message += `*${idx + 1}. ${news.title}*\n`;
     message += `${tag}\n\n`;
@@ -96,41 +95,26 @@ function formatBriefingMessage(
     message += `_Significance:_ ${news.reason}\n\n`;
   });
 
-  message += `*Key Themes:* ${analysis.keywords.join(' | ')}\n\n`;
-  message += `*Market Outlook:* ${analysis.marketSentiment}\n\n`;
+  message += `*${locale.keyThemes}:* ${analysis.keywords.join(' | ')}\n\n`;
+  message += `*${locale.marketOutlook}:* ${analysis.marketSentiment}\n\n`;
 
   if (affiliateLinks && affiliateLinks.length > 0) {
-    message += `*Further Reading*\n`;
+    message += `*${locale.furtherReading}*\n`;
     affiliateLinks.forEach(link => {
       message += `• [${link.text}](${link.url})\n`;
     });
     message += `\n`;
   }
 
-  message += `_FinBrief -- Institutional-grade intelligence, delivered daily._\n`;
-  message += `_30-second read_`;
+  message += `_FinBrief -- ${locale.tagline}_\n`;
+  message += `_${locale.readTime}_`;
 
-  const quote = getRandomInspirationalQuote();
+  const quote = getRandomQuote(lang);
   message += `\n\n_${quote}_`;
 
   return message;
 }
 
-/**
- * 감정에 따른 이모지 반환
- */
-function getSentimentTag(sentiment: 'bull' | 'bear' | 'neutral'): string {
-  switch (sentiment) {
-    case 'bull':
-      return '[BULLISH]';
-    case 'bear':
-      return '[BEARISH]';
-    case 'neutral':
-      return '[NEUTRAL]';
-    default:
-      return '';
-  }
-}
 
 export { getContextualAffiliateLinks } from '../shared/briefing-content';
 

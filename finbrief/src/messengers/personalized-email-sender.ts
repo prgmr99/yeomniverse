@@ -5,6 +5,7 @@ import { calculateTechnicalIndicators } from '../analyzers/technical-analyzer';
 import { generateBriefAnalysis } from '../analyzers/stock-ai-analyzer';
 import type { AnalysisResult, FearGreedIndex, OneWayIndex } from '../types/news.types';
 import { escapeHtml, generateFearGreedHtmlCard, generateOneWayHtmlCard } from '../shared/briefing-content';
+import { getLocale, getSentimentLabel, formatDate } from '../i18n';
 import { TIER_ARTICLE_COUNT, type PlanTier } from '../config/briefing-config';
 
 const BATCH_SIZE = 10;
@@ -54,19 +55,6 @@ function delay(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function getSentimentLabel(sentiment: 'bull' | 'bear' | 'neutral'): string {
-  switch (sentiment) {
-    case 'bull':
-      return 'BULLISH';
-    case 'bear':
-      return 'BEARISH';
-    case 'neutral':
-      return 'NEUTRAL';
-    default:
-      return '';
-  }
-}
-
 function getSentimentStyle(sentiment: 'bull' | 'bear' | 'neutral'): string {
   switch (sentiment) {
     case 'bull':
@@ -91,8 +79,10 @@ function generatePersonalizedEmailHtml(options: {
   watchlist?: WatchlistStock[];
   fearGreed?: FearGreedIndex | null;
   oneWay?: OneWayIndex | null;
+  lang?: string;
 }): string {
-  const { date, planName, topNews, keywords, marketSentiment, unsubscribeToken, dashboardUrl, watchlist, fearGreed, oneWay } = options;
+  const { date, planName, topNews, keywords, marketSentiment, unsubscribeToken, dashboardUrl, watchlist, fearGreed, oneWay, lang } = options;
+  const locale = getLocale(lang);
 
   const isPro = planName === 'pro';
   const isBasic = planName === 'basic';
@@ -100,7 +90,7 @@ function generatePersonalizedEmailHtml(options: {
 
   // 주요 뉴스 HTML 생성
   const newsItemsHtml = topNews.map((news, idx) => {
-    const sentimentLabel = getSentimentLabel(news.sentiment);
+    const sentimentLabel = getSentimentLabel(news.sentiment, lang);
     const sentimentStyle = getSentimentStyle(news.sentiment);
     return `
       <div style="margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #e5e7eb;">
@@ -178,7 +168,7 @@ function generatePersonalizedEmailHtml(options: {
     watchlistHtml = `
       <div style="margin-bottom: 32px;">
         <h3 style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 16px 0;">
-          My Watchlist
+          ${locale.myWatchlist}
         </h3>
         ${stocksHtml}
       </div>
@@ -187,17 +177,17 @@ function generatePersonalizedEmailHtml(options: {
 
   // 플랜 배지
   const planBadgeColor = planName === 'pro' ? '#7c3aed' : planName === 'basic' ? '#2563eb' : '#6b7280';
-  const planBadgeText = planName === 'pro' ? 'PRO' : planName === 'basic' ? 'BASIC' : 'FREE';
+  const planBadgeText = planName === 'pro' ? locale.planPro : planName === 'basic' ? locale.planBasic : locale.planFree;
 
   const unsubscribeUrl = `${dashboardUrl.replace('/dashboard', '')}/api/unsubscribe?token=${unsubscribeToken}`;
 
   return `
 <!DOCTYPE html>
-<html lang="en">
+<html lang="${lang || 'en'}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FinBrief | Morning Brief</title>
+  <title>${locale.brandName} | ${locale.morningBrief}</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; background-color: #f9fafb;">
   <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
@@ -207,10 +197,10 @@ function generatePersonalizedEmailHtml(options: {
         ${planBadgeText}
       </div>
       <h1 style="font-size: 24px; font-weight: 700; color: #ffffff; margin: 0 0 4px 0; letter-spacing: 1px; font-family: Georgia, 'Times New Roman', serif;">
-        FINBRIEF
+        ${locale.brandName}
       </h1>
       <p style="font-size: 14px; color: #94a3b8; margin: 0; letter-spacing: 0.5px;">
-        ${isPaid ? 'Personalized Morning Brief' : 'Morning Brief'}
+        ${isPaid ? locale.personalizedMorningBrief : locale.morningBrief}
       </p>
       <p style="font-size: 13px; color: #64748b; margin: 8px 0 0 0;">
         ${date}
@@ -220,10 +210,10 @@ function generatePersonalizedEmailHtml(options: {
     <!-- Content -->
     <div style="padding: 32px 24px;">
       <!-- Fear & Greed Index -->
-      ${generateFearGreedHtmlCard(fearGreed)}
+      ${generateFearGreedHtmlCard(fearGreed, lang)}
 
       <!-- One-Way Index -->
-      ${generateOneWayHtmlCard(oneWay)}
+      ${generateOneWayHtmlCard(oneWay, lang)}
 
       <!-- 워치리스트 (유료만) -->
       ${watchlistHtml}
@@ -231,7 +221,7 @@ function generatePersonalizedEmailHtml(options: {
       <!-- 주요 뉴스 -->
       <div style="margin-bottom: 32px;">
         <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0 0 16px 0; letter-spacing: 0.3px;">
-          Top News
+          ${locale.topNews}
         </h3>
         ${newsItemsHtml}
       </div>
@@ -239,7 +229,7 @@ function generatePersonalizedEmailHtml(options: {
       <!-- 오늘의 키워드 -->
       <div style="margin-bottom: 32px;">
         <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0 0 16px 0; letter-spacing: 0.3px;">
-          Key Themes
+          ${locale.keyThemes}
         </h3>
         <div>
           ${keywordsHtml}
@@ -249,7 +239,7 @@ function generatePersonalizedEmailHtml(options: {
       <!-- 시장 분위기 -->
       <div style="margin-bottom: 32px; padding: 24px; background-color: #f8fafc; border-left: 4px solid #1e293b; border-radius: 4px;">
         <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0 0 12px 0; letter-spacing: 0.3px;">
-          MARKET OUTLOOK
+          ${locale.marketOutlook}
         </h3>
         <p style="font-size: 15px; line-height: 1.6; color: #334155; margin: 0; font-style: italic;">
           ${escapeHtml(marketSentiment)}
@@ -259,7 +249,7 @@ function generatePersonalizedEmailHtml(options: {
       <!-- CTA -->
       <div style="text-align: center; margin-top: 32px;">
         <a href="${dashboardUrl}" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 16px;">
-          View more on Dashboard
+          ${locale.viewDashboard}
         </a>
       </div>
     </div>
@@ -267,14 +257,14 @@ function generatePersonalizedEmailHtml(options: {
     <!-- Footer -->
     <div style="padding: 24px; background-color: #f8fafc; text-align: center; border-top: 1px solid #e2e8f0;">
       <p style="font-size: 13px; color: #64748b; margin: 0 0 4px 0;">
-        <strong>FinBrief</strong> -- Institutional-grade intelligence, delivered daily.
+        <strong>${locale.brandName}</strong> -- ${locale.tagline}
       </p>
       <p style="font-size: 11px; color: #94a3b8; margin: 0;">
-        30-second read
+        ${locale.readTime}
       </p>
       <div style="margin-top: 16px;">
         <a href="${unsubscribeUrl}" style="font-size: 11px; color: #94a3b8; text-decoration: underline;">
-          Unsubscribe
+          ${locale.unsubscribe}
         </a>
       </div>
     </div>
@@ -284,7 +274,7 @@ function generatePersonalizedEmailHtml(options: {
   `.trim();
 }
 
-export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGreed?: FearGreedIndex | null, oneWay?: OneWayIndex | null): Promise<void> {
+export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGreed?: FearGreedIndex | null, oneWay?: OneWayIndex | null, lang?: string): Promise<void> {
   // 환경 변수 검증
   if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
     console.warn('⚠️ Supabase not configured, skipping personalized emails.');
@@ -320,13 +310,9 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGr
   const planMap = new Map<string, Plan>(plans?.map((p: Plan) => [p.id, p]) || []);
 
   // Format date
+  const locale = getLocale(lang);
   const today = new Date();
-  const dateStr = today.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    weekday: 'long',
-  });
+  const dateStr = formatDate(today, lang);
 
   // Group subscribers by plan type
   const freeSubscribers: Subscriber[] = [];
@@ -353,7 +339,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGr
         resend.emails.send({
           from: fromEmail,
           to: sub.email,
-          subject: `FinBrief | Morning Brief -- ${dateStr}`,
+          subject: `${locale.brandName} | ${locale.morningBrief} -- ${dateStr}`,
           html: generatePersonalizedEmailHtml({
             date: dateStr,
             planName: 'free',
@@ -368,6 +354,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGr
             dashboardUrl: `${dashboardUrl}/dashboard`,
             fearGreed,
             oneWay,
+            lang,
           }),
         })
       )
@@ -412,7 +399,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGr
 
               rsi = indicators.rsi || undefined;
               if (indicators.macd) {
-                macdSignal = indicators.macd.MACD > indicators.macd.signal ? 'MACD Buy Signal' : 'MACD Sell Signal';
+                macdSignal = indicators.macd.MACD > indicators.macd.signal ? locale.macdBuySignal : locale.macdSellSignal;
               }
 
               aiSummary = await generateBriefAnalysis(quote, indicators);
@@ -426,15 +413,15 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGr
               // Simple trend based on SMA crossover
               if (indicators.sma.sma5 && indicators.sma.sma20) {
                 if (indicators.sma.sma5 > indicators.sma.sma20) {
-                  trendSignal = 'Uptrend (5-day SMA > 20-day SMA)';
+                  trendSignal = locale.uptrendSma;
                 } else if (indicators.sma.sma5 < indicators.sma.sma20) {
-                  trendSignal = 'Downtrend (5-day SMA < 20-day SMA)';
+                  trendSignal = locale.downtrendSma;
                 } else {
-                  trendSignal = 'Neutral';
+                  trendSignal = locale.directionNeutral;
                 }
               } else {
                 // Fallback to simple price change
-                trendSignal = quote.regularMarketChangePercent >= 0 ? 'Uptrend' : 'Downtrend';
+                trendSignal = quote.regularMarketChangePercent >= 0 ? locale.directionBull : locale.directionBear;
               }
             }
 
@@ -456,7 +443,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGr
         return resend.emails.send({
           from: fromEmail,
           to: sub.email,
-          subject: `FinBrief | Morning Brief -- ${dateStr}`,
+          subject: `${locale.brandName} | ${locale.morningBrief} -- ${dateStr}`,
           html: generatePersonalizedEmailHtml({
             date: dateStr,
             planName: plan?.name || 'basic',
@@ -472,6 +459,7 @@ export async function sendPersonalizedBriefings(analysis: AnalysisResult, fearGr
             dashboardUrl: `${dashboardUrl}/dashboard`,
             fearGreed,
             oneWay,
+            lang,
           }),
         });
       })

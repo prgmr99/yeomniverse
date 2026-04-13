@@ -7,13 +7,14 @@ import { sendDailyBriefing, getContextualAffiliateLinks } from './messengers/tel
 import { sendEmailBriefing } from './messengers/email-sender';
 import { sendPersonalizedBriefings } from './messengers/personalized-email-sender';
 import { sendStockNewsAlerts } from './messengers/stock-news-alerter';
-import { DEFAULT_ARTICLE_COUNT, MAX_ARTICLE_COUNT } from './config/briefing-config';
+import { DEFAULT_ARTICLE_COUNT, MAX_ARTICLE_COUNT, BRIEFING_LANGUAGE } from './config/briefing-config';
 import * as fs from 'fs';
 import * as path from 'path';
 
 async function main() {
   console.log('FinBrief Daily Briefing Started\n');
   console.log('='.repeat(50));
+  console.log(`[Config] Language: ${BRIEFING_LANGUAGE}`);
 
   try {
     // Step 1: Collect news + Fear & Greed Index + One-Way Index in parallel
@@ -42,14 +43,14 @@ async function main() {
 
     // Step 2: AI analysis with max count (will be sliced per tier in messengers)
     console.log(`\n[Step 2] Running AI analysis (top ${MAX_ARTICLE_COUNT})...\n`);
-    const analysis = await analyzeNews(scoredItems, MAX_ARTICLE_COUNT);
+    const analysis = await analyzeNews(scoredItems, MAX_ARTICLE_COUNT, BRIEFING_LANGUAGE);
 
     console.log('\n' + '='.repeat(50));
     console.log(formatAnalysisResult(analysis));
     console.log('='.repeat(50));
 
     // Step 3: Affiliate links
-    const affiliateLinks = getContextualAffiliateLinks(analysis.keywords);
+    const affiliateLinks = getContextualAffiliateLinks(analysis.keywords, BRIEFING_LANGUAGE);
 
     // Step 4: Telegram (uses DEFAULT_ARTICLE_COUNT slice)
     const chatId = process.env.TELEGRAM_CHAT_ID;
@@ -63,7 +64,7 @@ async function main() {
         ...analysis,
         topNews: analysis.topNews.slice(0, DEFAULT_ARTICLE_COUNT),
       };
-      await sendDailyBriefing(chatId, telegramAnalysis, affiliateLinks, fearGreedIndex, oneWayIndex);
+      await sendDailyBriefing(chatId, telegramAnalysis, affiliateLinks, fearGreedIndex, oneWayIndex, BRIEFING_LANGUAGE);
     }
 
     // Step 5: Email (personalized sender handles per-tier slicing internally)
@@ -72,14 +73,14 @@ async function main() {
     const usePersonalizedEmails = process.env.USE_PERSONALIZED_EMAILS === 'true';
 
     if (usePersonalizedEmails) {
-      await sendPersonalizedBriefings(analysis, fearGreedIndex, oneWayIndex);
+      await sendPersonalizedBriefings(analysis, fearGreedIndex, oneWayIndex, BRIEFING_LANGUAGE);
     } else {
       // Legacy email gets the default count
       const legacyAnalysis = {
         ...analysis,
         topNews: analysis.topNews.slice(0, DEFAULT_ARTICLE_COUNT),
       };
-      const emailResult = await sendEmailBriefing(legacyAnalysis, affiliateLinks, fearGreedIndex, oneWayIndex);
+      const emailResult = await sendEmailBriefing(legacyAnalysis, affiliateLinks, fearGreedIndex, oneWayIndex, BRIEFING_LANGUAGE);
       console.log(`  Emails sent: ${emailResult.emailsSent}`);
     }
 
@@ -115,10 +116,7 @@ async function main() {
     }
 
     const publicOutputPath = path.join(publicDataDir, `${today}.json`);
-    // Detect output language: if more than half of topNews titles contain Korean characters, mark as Korean
-    const koreanPattern = /[\uAC00-\uD7AF]/;
-    const koreanCount = analysis.topNews.filter((n) => koreanPattern.test(n.title)).length;
-    const outputLanguage = koreanCount > analysis.topNews.length / 2 ? 'ko' : 'en';
+    const outputLanguage = BRIEFING_LANGUAGE;
 
     const publicOutput = {
       date: today,

@@ -15,6 +15,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 export async function analyzeNews(
 	newsItems: NewsItem[],
 	topNewsCount: number = DEFAULT_ARTICLE_COUNT,
+	lang?: string,
 ): Promise<AnalysisResult> {
 	try {
 		console.log(`[AI] Starting analysis (selecting top ${topNewsCount})...`);
@@ -26,7 +27,7 @@ export async function analyzeNews(
 		}
 
 		const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-		const prompt = generateAnalysisPrompt(newsItems, topNewsCount);
+		const prompt = generateAnalysisPrompt(newsItems, topNewsCount, lang);
 		const result = await model.generateContent(prompt);
 		const response = result.response.text();
 
@@ -49,7 +50,7 @@ export async function analyzeNews(
  * Generates the analysis prompt. If items have importanceScore (ScoredNewsItem),
  * includes source and score context for the AI.
  */
-function generateAnalysisPrompt(newsItems: NewsItem[], topNewsCount: number): string {
+function generateAnalysisPrompt(newsItems: NewsItem[], topNewsCount: number, lang?: string): string {
 	const hasScores = newsItems.length > 0 && 'importanceScore' in newsItems[0];
 
 	const newsList = newsItems
@@ -102,7 +103,7 @@ Respond ONLY with the JSON below. No preamble, no commentary.
 }
 
 **Rules:**
-- Write in the same language as the majority of the source articles. If most sources are Korean, write in Korean. If most sources are English, write in English. Do NOT force translation — accuracy in the source language is more valuable than a poor translation.
+- ${lang === 'ko' ? 'Write ALL output (titles, summaries, reasons, keywords, marketSentiment) in Korean.' : lang === 'en' ? 'Write ALL output (titles, summaries, reasons, keywords, marketSentiment) in English.' : 'Write in the same language as the majority of the source articles. If most sources are Korean, write in Korean. If most sources are English, write in English. Do NOT force translation — accuracy in the source language is more valuable than a poor translation.'}
 - topNews MUST contain exactly ${topNewsCount} items, ranked by materiality (most important first)
 - summary must be exactly 3 sentences
 - sentiment must be one of "bull", "bear", or "neutral"

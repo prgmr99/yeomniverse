@@ -3,11 +3,11 @@ import { createClient } from '@supabase/supabase-js';
 import { AnalysisResult, FearGreedIndex, OneWayIndex } from '../types/news.types';
 import {
   getContextualAffiliateLinks,
-  getRandomInspirationalQuote,
   escapeHtml,
   generateFearGreedHtmlCard,
   generateOneWayHtmlCard,
 } from '../shared/briefing-content';
+import { getLocale, getSentimentLabel, getRandomQuote, formatDate, formatDateShort } from '../i18n';
 export { getContextualAffiliateLinks } from '../shared/briefing-content';
 
 /**
@@ -30,7 +30,8 @@ export async function sendEmailBriefing(
   analysis: AnalysisResult,
   affiliateLinks?: { text: string; url: string }[],
   fearGreed?: FearGreedIndex | null,
-  oneWay?: OneWayIndex | null
+  oneWay?: OneWayIndex | null,
+  lang?: string
 ): Promise<{ success: boolean; emailsSent: number; error?: string }> {
   try {
     console.log('📧 이메일 발송 준비 중...');
@@ -75,11 +76,11 @@ export async function sendEmailBriefing(
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     // 이메일 제목 생성
-    const subject = generateEmailSubject();
+    const subject = generateEmailSubject(lang);
 
     // 배치 이메일 발송
     const emailPromises = subscribers.map((subscriber: Subscriber) => {
-      const htmlContent = formatBriefingEmail(analysis, affiliateLinks, subscriber.unsubscribe_token, fearGreed, oneWay);
+      const htmlContent = formatBriefingEmail(analysis, affiliateLinks, subscriber.unsubscribe_token, fearGreed, oneWay, lang);
 
       return resend.emails.send({
         from: process.env.RESEND_FROM_EMAIL!,
@@ -124,14 +125,10 @@ export async function sendEmailBriefing(
 /**
  * 이메일 제목 생성
  */
-function generateEmailSubject(): string {
-  const today = new Date().toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    weekday: 'long'
-  });
-
-  return `FinBrief | Morning Brief -- ${today}`;
+function generateEmailSubject(lang?: string): string {
+  const locale = getLocale(lang);
+  const dateStr = formatDateShort(new Date(), lang);
+  return `${locale.brandName} | ${locale.morningBrief} -- ${dateStr}`;
 }
 
 /**
@@ -142,19 +139,16 @@ function formatBriefingEmail(
   affiliateLinks: { text: string; url: string }[] | undefined,
   unsubscribeToken: string,
   fearGreed?: FearGreedIndex | null,
-  oneWay?: OneWayIndex | null
+  oneWay?: OneWayIndex | null,
+  lang?: string
 ): string {
-  const quote = getRandomInspirationalQuote();
-  const today = new Date().toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    weekday: 'long'
-  });
+  const locale = getLocale(lang);
+  const quote = getRandomQuote(lang);
+  const today = formatDate(new Date(), lang);
 
   // 주요 뉴스 HTML 생성
   const newsItemsHtml = analysis.topNews.map((news, idx) => {
-    const sentimentLabel = getSentimentLabel(news.sentiment);
+    const sentimentLabel = getSentimentLabel(news.sentiment, lang);
     const sentimentStyle = getSentimentStyle(news.sentiment);
 
     return `
@@ -170,7 +164,7 @@ function formatBriefingEmail(
         </p>
         <div style="background-color: #f8fafc; padding: 16px; border-radius: 4px; border-left: 3px solid #64748b;">
           <p style="font-size: 13px; font-weight: 700; color: #475569; margin: 0 0 6px 0; letter-spacing: 0.3px;">
-            Significance
+            ${locale.significance}
           </p>
           <p style="font-size: 14px; line-height: 1.6; color: #4b5563; margin: 0;">
             ${escapeHtml(news.reason)}
@@ -201,7 +195,7 @@ function formatBriefingEmail(
     affiliateLinksHtml = `
       <div style="margin-top: 32px; padding: 24px; background-color: #f8fafc; border-radius: 4px; border: 1px solid #e2e8f0;">
         <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0 0 16px 0;">
-          Further Reading
+          ${locale.furtherReading}
         </h3>
         <ul style="margin: 0; padding-left: 20px; color: #334155;">
           ${linksHtml}
@@ -216,21 +210,21 @@ function formatBriefingEmail(
   // 전체 HTML 구조
   return `
 <!DOCTYPE html>
-<html lang="en">
+<html lang="${lang || 'en'}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FinBrief | Morning Brief</title>
+  <title>${locale.brandName} | ${locale.morningBrief}</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; background-color: #f9fafb;">
   <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
     <!-- Header -->
     <div style="background-color: #0f172a; padding: 32px 24px; text-align: center;">
       <h1 style="font-size: 24px; font-weight: 700; color: #ffffff; margin: 0 0 4px 0; letter-spacing: 1px; font-family: Georgia, 'Times New Roman', serif;">
-        FINBRIEF
+        ${locale.brandName}
       </h1>
       <p style="font-size: 14px; color: #94a3b8; margin: 0; letter-spacing: 0.5px;">
-        Morning Brief
+        ${locale.morningBrief}
       </p>
       <p style="font-size: 13px; color: #64748b; margin: 8px 0 0 0;">
         ${today}
@@ -240,10 +234,10 @@ function formatBriefingEmail(
     <!-- Content -->
     <div style="padding: 32px 24px;">
       <!-- Fear & Greed Index -->
-      ${generateFearGreedHtmlCard(fearGreed)}
+      ${generateFearGreedHtmlCard(fearGreed, lang)}
 
       <!-- One-Way Index -->
-      ${generateOneWayHtmlCard(oneWay)}
+      ${generateOneWayHtmlCard(oneWay, lang)}
 
       <!-- 주요 뉴스 -->
       ${newsItemsHtml}
@@ -251,7 +245,7 @@ function formatBriefingEmail(
       <!-- 오늘의 키워드 -->
       <div style="margin-bottom: 32px;">
         <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0 0 16px 0; letter-spacing: 0.3px;">
-          Key Themes
+          ${locale.keyThemes}
         </h3>
         <div>
           ${keywordsHtml}
@@ -261,7 +255,7 @@ function formatBriefingEmail(
       <!-- 시장 분위기 -->
       <div style="margin-bottom: 32px; padding: 24px; background-color: #f8fafc; border-left: 4px solid #1e293b; border-radius: 4px;">
         <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0 0 12px 0; letter-spacing: 0.3px;">
-          MARKET OUTLOOK
+          ${locale.marketOutlook}
         </h3>
         <p style="font-size: 15px; line-height: 1.6; color: #334155; margin: 0; font-style: italic;">
           ${escapeHtml(analysis.marketSentiment)}
@@ -282,14 +276,14 @@ function formatBriefingEmail(
     <!-- Footer -->
     <div style="padding: 24px; background-color: #f8fafc; text-align: center; border-top: 1px solid #e2e8f0;">
       <p style="font-size: 13px; color: #64748b; margin: 0 0 4px 0;">
-        <strong>FinBrief</strong> -- Institutional-grade intelligence, delivered daily.
+        <strong>${locale.brandName}</strong> -- ${locale.tagline}
       </p>
       <p style="font-size: 11px; color: #94a3b8; margin: 0;">
-        30-second read
+        ${locale.readTime}
       </p>
       <div style="margin-top: 16px;">
         <a href="${unsubscribeUrl}" style="font-size: 11px; color: #94a3b8; text-decoration: underline;">
-          Unsubscribe
+          ${locale.unsubscribe}
         </a>
       </div>
     </div>
@@ -297,19 +291,6 @@ function formatBriefingEmail(
 </body>
 </html>
   `.trim();
-}
-
-function getSentimentLabel(sentiment: 'bull' | 'bear' | 'neutral'): string {
-  switch (sentiment) {
-    case 'bull':
-      return 'BULLISH';
-    case 'bear':
-      return 'BEARISH';
-    case 'neutral':
-      return 'NEUTRAL';
-    default:
-      return '';
-  }
 }
 
 function getSentimentStyle(sentiment: 'bull' | 'bear' | 'neutral'): string {

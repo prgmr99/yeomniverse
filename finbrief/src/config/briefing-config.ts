@@ -1,3 +1,7 @@
+import type { SupportedLanguage } from '../i18n/types';
+
+export const BRIEFING_LANGUAGE: SupportedLanguage = (process.env.BRIEFING_LANGUAGE as SupportedLanguage) || 'en';
+
 /** Tier-based article count defaults */
 export const TIER_ARTICLE_COUNT = {
   free: 3,
