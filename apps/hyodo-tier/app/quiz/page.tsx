@@ -2,9 +2,9 @@
 
 import { Loading } from '@hyo/ui';
 import { type Effects, QUESTIONS } from '@hyo/utils'; // 데이터 불러오기
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation'; // 라우터
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import ProgressBar from '@/components/quiz/ProgressBar';
 import { useQuizStore } from '@/store/useQuizStore'; // 스토어 불러오기
 
@@ -27,7 +27,10 @@ const variants = {
 function QuizContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const prefersReducedMotion = useReducedMotion();
   const [direction, setDirection] = useState(1); // 1: 다음, -1: 이전
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Zustand에서 필요한 상태와 액션 꺼내오기
   const { currentStep, answers, nextStep, prevStep, setAnswer, resetQuiz } =
@@ -39,14 +42,34 @@ function QuizContent() {
   // 퀴즈가 모두 끝났는지 체크
   const isFinished = currentStep >= QUESTIONS.length;
 
+  // 문제가 바뀌면 선택 상태 초기화
+  // biome-ignore lint/correctness/useExhaustiveDependencies: reset selection when step changes
+  useEffect(() => {
+    setSelectedIndex(null);
+  }, [currentStep]);
+
+  // 컴포넌트 언마운트 시 타이머 정리
+  useEffect(() => {
+    return () => {
+      if (advanceTimer.current) clearTimeout(advanceTimer.current);
+    };
+  }, []);
+
   // 답변 클릭 핸들러
   const handleOptionClick = (index: number, effects: Effects) => {
-    // 1. 점수 저장 (answers 배열도 업데이트됨)
-    setAnswer(index, effects);
-    setDirection(1); // 앞으로 가기
+    // 이미 선택 중이면 무시 (double-advance 방지)
+    if (selectedIndex !== null) return;
 
-    // 2. URL 업데이트 -> useEffect에서 감지하여 nextStep() 호출
-    router.push(`/quiz?step=${currentStep + 1}`);
+    setSelectedIndex(index);
+
+    advanceTimer.current = setTimeout(() => {
+      // 1. 점수 저장 (answers 배열도 업데이트됨)
+      setAnswer(index, effects);
+      setDirection(1); // 앞으로 가기
+
+      // 2. URL 업데이트 -> useEffect에서 감지하여 nextStep() 호출
+      router.push(`/quiz?step=${currentStep + 1}`);
+    }, 280);
   };
 
   // URL 쿼리 파라미터와 스토어 상태 동기화
@@ -105,10 +128,13 @@ function QuizContent() {
             key={currentStep}
             custom={direction}
             variants={variants}
-            initial="enter"
+            initial={prefersReducedMotion ? false : 'enter'}
             animate="center"
             exit="exit"
-            transition={{ duration: 0.4, ease: 'easeInOut' }}
+            transition={{
+              duration: prefersReducedMotion ? 0 : 0.4,
+              ease: 'easeInOut',
+            }}
             className="space-y-8"
           >
             {/* 질문 텍스트 */}
@@ -123,20 +149,39 @@ function QuizContent() {
 
             {/* 선택지 목록 */}
             <div className="space-y-3">
-              {currentQuestion.options.map((option, index) => (
-                <button
-                  type="button"
-                  key={index}
-                  onClick={() => handleOptionClick(index, option.effects)}
-                  className="w-full text-left p-5 rounded-xl border-2 border-stone-200 bg-white/60 hover:bg-stone-100 hover:border-omr active:scale-[0.98] active:bg-stone-200 transition-all group flex items-center justify-between shadow-sm"
-                >
-                  <span className="font-sans text-ink/90 text-lg group-hover:font-medium">
-                    {option.text}
-                  </span>
-                  {/* OMR 마킹 느낌의 체크박스 */}
-                  <div className="w-6 h-6 rounded-full border-2 border-stone-300 group-hover:border-grading group-hover:bg-grading transition-colors" />
-                </button>
-              ))}
+              {currentQuestion.options.map((option, index) => {
+                const isSelected = index === selectedIndex;
+                return (
+                  <button
+                    type="button"
+                    key={index}
+                    onClick={() => handleOptionClick(index, option.effects)}
+                    aria-pressed={index === selectedIndex}
+                    aria-disabled={
+                      selectedIndex !== null && index !== selectedIndex
+                    }
+                    className={`w-full text-left p-5 rounded-xl border-2 transition-all group flex items-center justify-between shadow-sm ${
+                      isSelected
+                        ? 'border-grading bg-grading/10 active:scale-[0.98]'
+                        : 'border-stone-200 bg-white/60 hover:bg-stone-100 hover:border-omr active:scale-[0.98] active:bg-stone-200'
+                    }`}
+                  >
+                    <span
+                      className={`font-sans text-lg ${isSelected ? 'text-ink font-medium' : 'text-ink/90 group-hover:font-medium'}`}
+                    >
+                      {option.text}
+                    </span>
+                    {/* OMR 마킹 느낌의 체크박스 */}
+                    <div
+                      className={`w-6 h-6 rounded-full border-2 transition-all ${
+                        isSelected
+                          ? 'bg-grading border-grading scale-110'
+                          : 'border-stone-300 group-hover:border-grading group-hover:bg-grading'
+                      }`}
+                    />
+                  </button>
+                );
+              })}
             </div>
           </motion.div>
         </AnimatePresence>

@@ -90,3 +90,11 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-stamp-move {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}

@@ -30,6 +30,11 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const resultId = searchParams.get('result') || 'UNICORN';
 
+    const interest = Number(searchParams.get('interest')) || 0;
+    const intimacy = Number(searchParams.get('intimacy')) || 0;
+    const expression = Number(searchParams.get('expression')) || 0;
+    const hasScores = interest !== 0 || intimacy !== 0 || expression !== 0;
+
     // 결과 데이터 가져오기
     const result = RESULTS[resultId];
     if (!result) {
@@ -168,6 +173,55 @@ export async function GET(req: NextRequest) {
             >
               &quot;{result.subtitle}&quot;
             </div>
+
+            {/* 점수 필 — 세 점수가 모두 0이면 숨김 */}
+            {hasScores && (
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '20px',
+                  marginTop: '24px',
+                }}
+              >
+                {[
+                  { label: '관심도', value: interest },
+                  { label: '친밀도', value: intimacy },
+                  { label: '표현력', value: expression },
+                ].map((pill) => (
+                  <div
+                    key={pill.label}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      padding: '16px 28px',
+                      borderRadius: '16px',
+                      backgroundColor: 'rgba(255,255,255,0.85)',
+                      minWidth: '120px',
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: 36,
+                        fontWeight: 900,
+                        color: '#1c1917',
+                      }}
+                    >
+                      {pill.value}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: 16,
+                        color: '#57534e',
+                        marginTop: 4,
+                      }}
+                    >
+                      {pill.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

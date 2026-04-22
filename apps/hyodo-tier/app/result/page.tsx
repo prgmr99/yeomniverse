@@ -1,7 +1,7 @@
 'use client';
 
 import { Loading } from '@hyo/ui';
-import { Home, RotateCcw, Share2 } from 'lucide-react';
+import { BookOpen, CalendarPlus, Heart, RotateCcw, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useMemo, useState } from 'react';
@@ -10,10 +10,41 @@ import { calculateResult } from '@/lib/calculateResult';
 import { RESULTS } from '@/lib/resultData';
 import { useQuizStore } from '@/store/useQuizStore';
 
+function buildICS(fatherDob: string, motherDob: string): string {
+  const toEvent = (label: string, yymmdd: string) => {
+    const mm = yymmdd.slice(2, 4);
+    const dd = yymmdd.slice(4, 6);
+    const year = new Date().getFullYear();
+    const dtStart = `${year}${mm}${dd}`;
+    return [
+      'BEGIN:VEVENT',
+      `SUMMARY:${label} 생신 🌸`,
+      `DTSTART;VALUE=DATE:${dtStart}`,
+      'RRULE:FREQ=YEARLY',
+      'DESCRIPTION:효도티어에서 저장한 부모님 생신 알림',
+      'END:VEVENT',
+    ].join('\r\n');
+  };
+  return [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Hyo-Tier//Parents Birthday//KO',
+    toEvent('아버지', fatherDob),
+    toEvent('어머니', motherDob),
+    'END:VCALENDAR',
+  ].join('\r\n');
+}
+
 function ResultContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { scores: storeScores, flags, resetQuiz, currentStep } = useQuizStore();
+  const {
+    scores: storeScores,
+    flags,
+    resetQuiz,
+    currentStep,
+    birthdays,
+  } = useQuizStore();
   const [isReady, setIsReady] = useState(false); // 클라이언트 렌더링 준비 여부
 
   // 1. 쿼리 파라미터 파싱 (공유된 결과인 경우)
@@ -56,6 +87,12 @@ function ResultContent() {
     <main className="min-h-screen flex flex-col items-center py-10 px-6 animate-fade-in space-y-8 pb-20">
       {/* 1. 결과 등급 (도장 애니메이션) */}
       <div className="relative w-full text-center py-8 border-b-2 border-dashed border-ink/20">
+        <span
+          className="absolute top-3 right-3 text-2xl rotate-12 select-none"
+          aria-hidden="true"
+        >
+          🌸
+        </span>
         <p className="text-sm font-serif text-ink/60 mb-2 font-bold">
           2026학년도 효도능력시험 성적표
         </p>
@@ -144,6 +181,46 @@ function ResultContent() {
           <Share2 className="w-5 h-5" /> 부모님께 공유하기
         </button>
 
+        {!sharedResultId && (
+          <div className="w-full space-y-3 pt-2">
+            <button
+              type="button"
+              className="w-full bg-grading/10 text-grading border-2 border-grading/30 py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-grading/20 transition-all"
+              onClick={async () => {
+                const message =
+                  '엄마, 아빠. 오늘 효도티어 테스트를 해봤어요. 평소에 표현은 잘 못했지만, 두 분께 정말 감사하고 사랑한다고 꼭 전하고 싶었어요. 항상 건강하세요. 🌸';
+                await navigator.clipboard.writeText(message);
+                alert(
+                  '마음을 담은 메시지가 복사됐어요. 부모님께 카톡으로 붙여넣어 보내보세요.',
+                );
+              }}
+            >
+              <Heart className="w-5 h-5" /> 어머니/아버지께 마음 전하기
+            </button>
+
+            {birthdays.father.length === 6 && birthdays.mother.length === 6 && (
+              <button
+                type="button"
+                className="w-full bg-white border-2 border-stone-300 text-ink py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-50 transition-all"
+                onClick={() => {
+                  const ics = buildICS(birthdays.father, birthdays.mother);
+                  const blob = new Blob([ics], {
+                    type: 'text/calendar;charset=utf-8',
+                  });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = '부모님생신.ics';
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}
+              >
+                <CalendarPlus className="w-5 h-5" /> 부모님 생신 캘린더에 저장
+              </button>
+            )}
+          </div>
+        )}
+
         <div className="grid grid-cols-2 gap-3">
           <Link
             href="/"
@@ -154,11 +231,10 @@ function ResultContent() {
           </Link>
 
           <Link
-            href="/"
-            onClick={resetQuiz}
+            href="/blog"
             className="bg-white border-2 border-stone-200 text-ink py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-50"
           >
-            <Home className="w-4 h-4" /> 홈으로
+            <BookOpen className="w-4 h-4" /> 효도 블로그 보기
           </Link>
         </div>
       </div>
@@ -198,7 +274,7 @@ function ScoreBar({
           style={{ width: `${percent}%` }}
         />
       </div>
-      <span className="w-8 opacity-50">{score}</span>
+      <span className="w-8 opacity-70 font-bold">{score}</span>
     </div>
   );
 }

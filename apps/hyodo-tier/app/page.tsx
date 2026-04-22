@@ -3,32 +3,38 @@
 import { AlertCircle, BookOpen, ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Script from 'next/script';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { useQuizStore } from '@/store/useQuizStore';
 
 export default function Home() {
   const router = useRouter();
-  const [name, setName] = useState('');
+  const { setBirthdays } = useQuizStore();
   const [fatherDob, setFatherDob] = useState('');
   const [motherDob, setMotherDob] = useState('');
   const [error, setError] = useState('');
 
+  const daysUntilParentsDay = useMemo(() => {
+    const target = new Date('2026-05-08T00:00:00+09:00');
+    const now = new Date();
+    return Math.max(
+      0,
+      Math.ceil((target.getTime() - now.getTime()) / 86400000),
+    );
+  }, []);
+
   const handleStart = (e: React.MouseEvent) => {
-    if (!name.trim()) {
-      e.preventDefault();
-      setError('성명을 입력해주세요.');
-      return;
-    }
     if (fatherDob.length !== 6 || motherDob.length !== 6) {
       e.preventDefault();
-      setError('부모님의 주민번호 앞자리(6자리)를 정확히 입력해주세요.');
+      setError('부모님 생년월일 6자리(YYMMDD)를 정확히 입력해주세요.');
       return;
     }
     setError('');
+    setBirthdays(fatherDob, motherDob);
     router.push('/quiz');
   };
 
   const handleDontKnow = () => {
-    router.push('/result?result=UNFILIAL');
+    router.push('/quiz');
   };
 
   const faqSchema = {
@@ -67,6 +73,12 @@ export default function Home() {
       <section className="flex flex-col items-center justify-center w-full pt-8">
         {/* 상단: 시험 정보 헤더 */}
         <div className="w-full border-b-2 border-ink pb-4 mb-4">
+          <span className="inline-flex items-center gap-1 text-[11px] font-sans font-bold bg-grading/10 text-grading px-2 py-0.5 rounded-full mb-2">
+            🌸{' '}
+            {daysUntilParentsDay > 0
+              ? `어버이날 D-${daysUntilParentsDay}`
+              : '어버이날입니다'}
+          </span>
           <p className="text-sm font-serif font-bold tracking-widest mb-1">
             제1교시
           </p>
@@ -101,18 +113,6 @@ export default function Home() {
         <div className="w-full space-y-6">
           {/* 입력 폼: 시험지 스타일로 변경 */}
           <div className="flex flex-col items-center justify-center gap-3 text-ink font-serif">
-            {/* 성명 입력 */}
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-m">성명:</span>
-              <input
-                type="text"
-                placeholder="홍길동"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-24 bg-transparent border-b-2 border-ink text-center text-lg placeholder:text-ink/20 focus:outline-none focus:border-grading transition-colors"
-              />
-            </div>
-
             {/* 수험번호 입력 */}
             <div className="flex flex-col items-center gap-1">
               <div className="flex items-center gap-2">
@@ -121,7 +121,7 @@ export default function Home() {
                   <input
                     type="text"
                     maxLength={6}
-                    placeholder="앞 6자리"
+                    placeholder="父 YYMMDD"
                     value={fatherDob}
                     onChange={(e) =>
                       setFatherDob(e.target.value.replace(/[^0-9]/g, ''))
@@ -132,7 +132,7 @@ export default function Home() {
                   <input
                     type="text"
                     maxLength={6}
-                    placeholder="뒤 6자리"
+                    placeholder="母 YYMMDD"
                     value={motherDob}
                     onChange={(e) =>
                       setMotherDob(e.target.value.replace(/[^0-9]/g, ''))
@@ -140,11 +140,6 @@ export default function Home() {
                     className="w-24 bg-transparent border-b-2 border-ink text-center text-m tracking-widest placeholder:text-ink/20 focus:outline-none focus:border-grading transition-colors"
                   />
                 </div>
-              </div>
-              {/* 힌트 텍스트 */}
-              <div className="flex gap-4 text-[10px] opacity-50 pl-16">
-                <span className="w-24 text-center">(父 생신)</span>
-                <span className="w-24 text-center">(母 생신)</span>
               </div>
             </div>
 
@@ -170,11 +165,11 @@ export default function Home() {
               onClick={handleDontKnow}
               className="text-xs text-ink/50 underline hover:text-grading transition-colors"
             >
-              부모님 생신을 모르겠어요... (응시 포기)
+              부모님 생신을 모르겠어요... 그래도 응시하기
             </button>
           </div>
 
-          <p className="text-xs text-ink/40 mt-4">
+          <p className="text-xs text-ink/60 mt-4">
             Designed by Hyo-Do-Tier Committee. 2026
           </p>
         </div>
@@ -237,7 +232,7 @@ export default function Home() {
           </div>
         </div>
 
-        <p className="text-xs text-ink/30 pt-4 border-t border-ink/5">
+        <p className="text-xs text-ink/60 pt-4 border-t border-ink/5">
           본 서비스는 엔터테인먼트 목적으로 제작되었으며, 전문적인 심리 상담
           결과를 대체할 수 없습니다.
         </p>

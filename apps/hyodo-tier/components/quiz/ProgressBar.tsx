@@ -9,7 +9,7 @@ export default function ProgressBar({ current, total }: ProgressBarProps) {
 
   return (
     <div className="w-full px-6 py-4">
-      <div className="flex justify-between text-xs font-serif text-ink/50 mb-1">
+      <div className="flex justify-between text-xs font-serif text-ink/70 mb-1">
         <span>제 {current + 1} 문항</span>
         <span>
           {current + 1} / {total}
