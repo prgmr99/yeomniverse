@@ -177,15 +177,24 @@ export const QUESTIONS: Question[] = [
 	},
 	{
 		id: 9,
-		q: "부모님과 단둘이 1박 2일 여행을 가야 한다면?",
+		q: "부모님의 손을 마지막으로 꼭 잡아드린 적은 언제인가요?",
 		options: [
-			{ text: "오히려 좋아! 맛집 내가 다 찾아놈", effects: { intimacy: 20 } },
 			{
-				text: "효도 관광... 어색하지만 모시고 간다",
-				effects: { intimacy: 10, expression: 5 },
+				text: "요즘도 수시로 잡는다 (스킨십 자연스러움)",
+				effects: { intimacy: 15, expression: 15 },
 			},
-			{ text: "비용 전액 지원해 주면 고려해 봄", effects: { intimacy: 0 } }, // 자본주의
-			{ text: "절대 불가. 상상만 해도 숨 막힘", effects: { intimacy: -20 } },
+			{
+				text: "명절이나 특별한 날엔 잠깐 잡는다",
+				effects: { intimacy: 8, expression: 5 },
+			},
+			{
+				text: "기억이 잘 안 난다 (꽤 오래된 듯)",
+				effects: { intimacy: 0, expression: -5 },
+			},
+			{
+				text: "성인이 된 뒤로는 잡아본 적이 없다",
+				effects: { intimacy: -10, expression: -10, tsundere: 5 },
+			},
 		],
 	},
 	{
@@ -211,13 +220,22 @@ export const QUESTIONS: Question[] = [
 	// --- PART 3. 심화 탐구 (가치관) ---
 	{
 		id: 11,
-		q: "부모님의 현재 카카오톡 프사 배경을 알고 있나요?",
+		q: "부모님이 혼자 계시는 시간, 주로 무엇을 하시는지 아시나요?",
 		options: [
-			{ text: "나(자식) 혹은 손주 사진이다", effects: { intimacy: 10 } },
-			{ text: "꽃, 산, 자연 풍경, 명언이다", effects: { interest: 5 } },
-			{ text: "아무것도 없는 기본 프로필", effects: { interest: 5 } },
 			{
-				text: "본 지 오래돼서 모르겠다",
+				text: "하루 루틴(TV/텃밭/산책 등)을 시간대별로 안다",
+				effects: { interest: 20, intimacy: 10 },
+			},
+			{
+				text: "TV 보시겠지… 정도로 어림잡는다",
+				effects: { interest: 8 },
+			},
+			{
+				text: "스마트폰? 자세히는 모른다",
+				effects: { interest: 3, intimacy: -5 },
+			},
+			{
+				text: "한 번도 상상해본 적이 없다",
 				effects: { interest: -10, intimacy: -10 },
 			},
 		],
@@ -237,12 +255,24 @@ export const QUESTIONS: Question[] = [
 	},
 	{
 		id: 13,
-		q: "부모님이 가장 행복해 보일 때는 언제인가요?",
+		q: "부모님이 요즘 가장 두려워하시는 일이 뭔지 아시나요?",
 		options: [
-			{ text: "두툼한 용돈/비싼 선물 드릴 때", effects: { expression: 10 } }, // 자본주의
-			{ text: "나랑 맛있는 거 먹고 수다 떨 때", effects: { intimacy: 15 } },
-			{ text: "내 승진/합격 소식 자랑하실 때", effects: { interest: 5 } },
-			{ text: "솔직히 잘 모르겠다", effects: { interest: -10, intimacy: -10 } },
+			{
+				text: "건강·노화에 대한 불안을 들은 적 있다",
+				effects: { interest: 15, intimacy: 15 },
+			},
+			{
+				text: "자식에게 짐이 될까 걱정하신다",
+				effects: { interest: 10, intimacy: 10 },
+			},
+			{
+				text: "노후·경제적 문제를 자주 말씀하신다",
+				effects: { interest: 5, expression: 5 }, // 금융치료 분기 유지
+			},
+			{
+				text: "생각해본 적도, 들어본 적도 없다",
+				effects: { interest: -10, intimacy: -10 },
+			},
 		],
 	},
 	{
