@@ -31,10 +31,23 @@ function QuizContent() {
   const [direction, setDirection] = useState(1); // 1: 다음, -1: 이전
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastSyncedStep = useRef<number | null>(null);
 
   // Zustand에서 필요한 상태와 액션 꺼내오기
   const { currentStep, answers, nextStep, prevStep, setAnswer, resetQuiz } =
     useQuizStore();
+
+  // 하이드레이션 완료 여부 추적
+  const [hydrated, setHydrated] = useState(() =>
+    useQuizStore.persist.hasHydrated(),
+  );
+
+  useEffect(() => {
+    const unsub = useQuizStore.persist.onFinishHydration(() => {
+      setHydrated(true);
+    });
+    return unsub;
+  }, []);
 
   // 부모 결과 파라미터 (parent→child 공유 흐름 유지)
   const parentParams = useMemo(() => {
@@ -90,8 +103,11 @@ function QuizContent() {
 
   // URL 쿼리 파라미터와 스토어 상태 동기화
   useEffect(() => {
+    if (!hydrated) return;
     const stepParam = searchParams.get('step');
     const stepFromUrl = stepParam ? Number.parseInt(stepParam, 10) : 0;
+    if (stepFromUrl === lastSyncedStep.current) return;
+    lastSyncedStep.current = stepFromUrl;
 
     // 1. 뒤로가기 감지 (URL 스텝 < 현재 스텝)
     if (stepFromUrl < currentStep) {
@@ -119,11 +135,13 @@ function QuizContent() {
     nextStep,
     router,
     parentParams,
+    hydrated,
   ]);
 
-  // 컴포넌트 마운트 시 퀴즈 초기화
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <컴포넌트 마운트>
+  // 컴포넌트 마운트 시 퀴즈 초기화 (하이드레이션 완료 후에만 실행)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional mount-reset gated on hydration
   useEffect(() => {
+    if (!hydrated) return;
     if (currentStep === 0) {
       resetQuiz();
       // URL 초기화 — 부모 공유 파라미터는 보존해야 함
@@ -133,7 +151,7 @@ function QuizContent() {
       router.replace(initialUrl);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [hydrated]);
 
   // 결과 페이지 이동 처리
   useEffect(() => {

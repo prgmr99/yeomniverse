@@ -128,7 +128,7 @@ export default function Home() {
                 <span className="font-bold text-m">수험번호:</span>
                 <div className="flex items-center gap-1">
                   <input
-                    type="text"
+                    type="tel"
                     maxLength={6}
                     placeholder="父 YYMMDD"
                     value={fatherDob}
@@ -139,7 +139,7 @@ export default function Home() {
                   />
                   <span className="font-bold">-</span>
                   <input
-                    type="text"
+                    type="tel"
                     maxLength={6}
                     placeholder="母 YYMMDD"
                     value={motherDob}
@@ -182,7 +182,7 @@ export default function Home() {
           <div className="pt-2">
             <Link
               href="/parent"
-              className="inline-flex items-center gap-2 border border-ink/20 bg-white/60 text-ink/70 px-4 py-3 rounded-lg text-sm hover:bg-white/80 hover:text-ink transition-all"
+              className="flex items-center justify-center gap-2 w-full border border-ink/20 bg-white/60 text-ink/70 px-4 py-3 rounded-lg text-sm hover:bg-white/80 hover:text-ink transition-all"
             >
               <Users className="w-4 h-4 text-grading" />
               부모님이세요? 🌸 → 2교시 자녀 탐구영역 응시하러 가기

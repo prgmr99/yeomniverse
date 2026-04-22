@@ -22,6 +22,18 @@ function ParentResultContent() {
   } = useParentQuizStore();
   const [isReady, setIsReady] = useState(false);
 
+  // 하이드레이션 완료 여부 추적
+  const [hydrated, setHydrated] = useState(() =>
+    useParentQuizStore.persist.hasHydrated(),
+  );
+
+  useEffect(() => {
+    const unsub = useParentQuizStore.persist.onFinishHydration(() => {
+      setHydrated(true);
+    });
+    return unsub;
+  }, []);
+
   const sharedResultId = searchParams.get('result');
   const sharedScores = useMemo(
     () => ({
@@ -51,13 +63,14 @@ function ParentResultContent() {
   );
 
   useEffect(() => {
+    if (!hydrated) return;
     if (!sharedResultId && currentStep === 0) {
       router.replace('/parent');
     } else {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsReady(true);
     }
-  }, [currentStep, router, sharedResultId]);
+  }, [hydrated, currentStep, router, sharedResultId]);
 
   if (!isReady) return <Loading />;
 
@@ -222,7 +235,7 @@ function ScoreBar({
 
   return (
     <div className="flex items-center gap-3 text-xs">
-      <span className="w-20 font-bold opacity-70 text-right">{label}</span>
+      <span className="w-24 font-bold opacity-70 text-right">{label}</span>
       <div className="flex-1 h-3 bg-stone-200 rounded-full overflow-hidden">
         <div
           className={`h-full ${color} rounded-full`}

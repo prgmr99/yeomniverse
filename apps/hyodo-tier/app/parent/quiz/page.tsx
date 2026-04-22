@@ -31,9 +31,22 @@ function ParentQuizContent() {
   const [direction, setDirection] = useState(1);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastSyncedStep = useRef<number | null>(null);
 
   const { currentStep, answers, nextStep, prevStep, setAnswer, resetQuiz } =
     useParentQuizStore();
+
+  // 하이드레이션 완료 여부 추적
+  const [hydrated, setHydrated] = useState(() =>
+    useParentQuizStore.persist.hasHydrated(),
+  );
+
+  useEffect(() => {
+    const unsub = useParentQuizStore.persist.onFinishHydration(() => {
+      setHydrated(true);
+    });
+    return unsub;
+  }, []);
 
   const currentQuestion = PARENT_QUESTIONS[currentStep];
   const isFinished = currentStep >= PARENT_QUESTIONS.length;
@@ -62,8 +75,11 @@ function ParentQuizContent() {
   };
 
   useEffect(() => {
+    if (!hydrated) return;
     const stepParam = searchParams.get('step');
     const stepFromUrl = stepParam ? Number.parseInt(stepParam, 10) : 0;
+    if (stepFromUrl === lastSyncedStep.current) return;
+    lastSyncedStep.current = stepFromUrl;
 
     if (stepFromUrl < currentStep) {
       setDirection(-1);
@@ -77,15 +93,24 @@ function ParentQuizContent() {
     } else if (stepFromUrl > currentStep) {
       router.replace(`/parent/quiz?step=${currentStep}`);
     }
-  }, [searchParams, currentStep, answers.length, prevStep, nextStep, router]);
+  }, [
+    searchParams,
+    currentStep,
+    answers.length,
+    prevStep,
+    nextStep,
+    router,
+    hydrated,
+  ]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <컴포넌트 마운트>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional mount-reset gated on hydration
   useEffect(() => {
+    if (!hydrated) return;
     if (currentStep === 0) {
       resetQuiz();
       router.replace('/parent/quiz?step=0');
     }
-  }, []);
+  }, [hydrated]);
 
   useEffect(() => {
     if (isFinished) {

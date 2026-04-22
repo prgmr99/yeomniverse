@@ -48,6 +48,18 @@ function ResultContent() {
   } = useQuizStore();
   const [isReady, setIsReady] = useState(false); // 클라이언트 렌더링 준비 여부
 
+  // 하이드레이션 완료 여부 추적 (세션스토리지 → Zustand 복원 완료 전에 리다이렉트 방지)
+  const [hydrated, setHydrated] = useState(() =>
+    useQuizStore.persist.hasHydrated(),
+  );
+
+  useEffect(() => {
+    const unsub = useQuizStore.persist.onFinishHydration(() => {
+      setHydrated(true);
+    });
+    return unsub;
+  }, []);
+
   // 1. 쿼리 파라미터 파싱 (공유된 결과인 경우)
   const sharedResultId = searchParams.get('result');
   const sharedScores = useMemo(
@@ -82,10 +94,11 @@ function ResultContent() {
     }),
     [searchParams],
   );
-  const parentName = searchParams.get('pname');
+  const parentName = (searchParams.get('pname') || '').slice(0, 10) || null;
 
   // 3. 예외 처리: 퀴즈를 안 풀고 접근했으면 홈으로 보냄 (단, 공유된 링크는 제외)
   useEffect(() => {
+    if (!hydrated) return;
     // 공유된 결과가 없고, 푼 문제도 0개면 비정상 접근
     if (!sharedResultId && currentStep === 0) {
       router.replace('/');
@@ -93,7 +106,7 @@ function ResultContent() {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsReady(true);
     }
-  }, [currentStep, router, sharedResultId]);
+  }, [hydrated, currentStep, router, sharedResultId]);
 
   if (!isReady) return <Loading />; // 리다이렉트 중 깜빡임 방지 및 푸터 점프 방지
 
@@ -371,7 +384,7 @@ function MiniBar({
           style={{ width: `${percent}%` }}
         />
       </div>
-      <span className="w-5 text-ink/50 font-bold">{score}</span>
+      <span className="w-6 text-ink/50 font-bold">{score}</span>
     </div>
   );
 }
@@ -393,7 +406,7 @@ function ScoreBar({
 
   return (
     <div className="flex items-center gap-3 text-xs">
-      <span className="w-20 font-bold opacity-70 text-right">{label}</span>
+      <span className="w-24 font-bold opacity-70 text-right">{label}</span>
       <div className="flex-1 h-3 bg-stone-200 rounded-full overflow-hidden">
         <div
           className={`h-full ${color} rounded-full`}

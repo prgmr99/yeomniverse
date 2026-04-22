@@ -129,7 +129,7 @@ export default function ParentHome() {
                   />
                   <span className="font-bold">-</span>
                   <input
-                    type="text"
+                    type="tel"
                     maxLength={6}
                     placeholder="YYMMDD"
                     value={childBirthday}
@@ -171,7 +171,7 @@ export default function ParentHome() {
           <div className="pt-2">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 border border-ink/20 bg-white/60 text-ink/70 px-4 py-3 rounded-lg text-sm hover:bg-white/80 hover:text-ink transition-all"
+              className="flex items-center justify-center gap-2 w-full border border-ink/20 bg-white/60 text-ink/70 px-4 py-3 rounded-lg text-sm hover:bg-white/80 hover:text-ink transition-all"
             >
               <Users className="w-4 h-4 text-grading" />
               자식이세요? → 1교시 부모님 탐구영역 응시하러 가기

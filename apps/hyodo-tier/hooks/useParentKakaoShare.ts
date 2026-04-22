@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 export const useParentKakaoShare = (
   resultType: string,
   resultTitle: string,
@@ -7,6 +5,11 @@ export const useParentKakaoShare = (
   childName?: string,
 ) => {
   const shareKakao = async () => {
+    const kakaoKey = process.env.NEXT_PUBLIC_KAKAO_JS_KEY;
+    if (window.Kakao && !window.Kakao.isInitialized() && kakaoKey) {
+      window.Kakao.init(kakaoKey);
+    }
+
     const baseUrl =
       typeof window !== 'undefined'
         ? window.location.origin
@@ -64,14 +67,6 @@ export const useParentKakaoShare = (
       alert(`링크를 복사해서 공유하세요: ${shareUrl}`);
     }
   };
-
-  // 카카오 SDK 초기화
-  useEffect(() => {
-    const kakaoKey = process.env.NEXT_PUBLIC_KAKAO_JS_KEY;
-    if (window.Kakao && !window.Kakao.isInitialized() && kakaoKey) {
-      window.Kakao.init(kakaoKey);
-    }
-  }, []);
 
   return { shareKakao };
 };
