@@ -1,5 +1,6 @@
 import { ImageResponse } from 'next/og';
 import type { NextRequest } from 'next/server';
+import { PARENT_RESULTS } from '@/lib/parentResultData';
 import { RESULTS } from '@/lib/resultData';
 
 export const runtime = 'edge';
@@ -18,7 +19,12 @@ const bgColorMap: Record<string, string> = {
 };
 
 // 등급 결정 함수
-function getGrade(resultId: string): string {
+function getGrade(resultId: string, mode: string): string {
+  if (mode === 'parent') {
+    if (resultId === 'UNICORN_PARENT') return '1등급';
+    if (resultId === 'LODGER_PARENT') return '9등급';
+    return '등급외';
+  }
   if (resultId === 'UNICORN') return '1등급';
   if (resultId === 'LODGER') return '9등급';
   if (resultId === 'UNFILIAL') return '등급외';
@@ -29,20 +35,22 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const resultId = searchParams.get('result') || 'UNICORN';
+    const mode = searchParams.get('mode') === 'parent' ? 'parent' : 'child';
 
     const interest = Number(searchParams.get('interest')) || 0;
     const intimacy = Number(searchParams.get('intimacy')) || 0;
     const expression = Number(searchParams.get('expression')) || 0;
     const hasScores = interest !== 0 || intimacy !== 0 || expression !== 0;
 
-    // 결과 데이터 가져오기
-    const result = RESULTS[resultId];
+    // 결과 데이터 가져오기 (mode에 따라 분기)
+    const result =
+      mode === 'parent' ? PARENT_RESULTS[resultId] : RESULTS[resultId];
     if (!result) {
       return new Response('Result not found', { status: 404 });
     }
 
     const bgColor = bgColorMap[result.imageColor] || '#f5f5f4';
-    const grade = getGrade(resultId);
+    const grade = getGrade(resultId, mode);
 
     // 한글 폰트 로드
     const fontData = await fetch(
@@ -100,7 +108,9 @@ export async function GET(req: NextRequest) {
               fontWeight: 500,
             }}
           >
-            2026학년도 대국민 효도능력시험
+            {mode === 'parent'
+              ? '2026학년도 효도능력시험 · 부모편'
+              : '2026학년도 대국민 효도능력시험'}
           </div>
         </div>
 
@@ -243,7 +253,9 @@ export async function GET(req: NextRequest) {
             boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
           }}
         >
-          <span>너도 테스트 하러가기 →</span>
+          <span>
+            {mode === 'parent' ? '자식도 풀러가기 →' : '너도 테스트 하러가기 →'}
+          </span>
         </div>
       </div>,
       {

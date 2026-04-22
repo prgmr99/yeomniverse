@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useKakaoShare } from '@/hooks/useKakaoShare';
 import { calculateResult } from '@/lib/calculateResult';
+import { PARENT_RESULTS } from '@/lib/parentResultData';
 import { RESULTS } from '@/lib/resultData';
 import { useQuizStore } from '@/store/useQuizStore';
 
@@ -69,6 +70,19 @@ function ResultContent() {
   }, [sharedResultId, storeScores, flags]);
 
   const { shareKakao } = useKakaoShare(result.id, result.title, scores);
+
+  // 부모 결과 비교 (parent 파라미터가 있을 때)
+  const parentResultId = searchParams.get('parent');
+  const parentResult = parentResultId ? PARENT_RESULTS[parentResultId] : null;
+  const parentScores = useMemo(
+    () => ({
+      interest: Number(searchParams.get('pi')) || 0,
+      intimacy: Number(searchParams.get('pn')) || 0,
+      expression: Number(searchParams.get('pe')) || 0,
+    }),
+    [searchParams],
+  );
+  const parentName = searchParams.get('pname');
 
   // 3. 예외 처리: 퀴즈를 안 풀고 접근했으면 홈으로 보냄 (단, 공유된 링크는 제외)
   useEffect(() => {
@@ -137,6 +151,93 @@ function ResultContent() {
           ))}
         </div>
       </div>
+
+      {/* 2-b. 부모님 vs 나 비교 카드 (parent 파라미터가 있을 때만) */}
+      {parentResult && (
+        <div className="w-full bg-amber-50/60 border border-ink/10 rounded-2xl p-5 space-y-4 shadow-sm">
+          <h3 className="font-serif font-bold text-base text-ink flex items-center gap-2">
+            🧐 부모님 vs 나
+            {parentName && (
+              <span className="text-xs text-ink/50 font-sans font-normal">
+                ({parentName}님 부모님)
+              </span>
+            )}
+          </h3>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-white/70 rounded-xl p-3 border border-ink/10 space-y-1 text-center">
+              <p className="text-[10px] text-ink/50 font-bold">부모님</p>
+              <p className="text-sm font-serif font-bold text-ink leading-snug break-keep">
+                {parentResult.title}
+              </p>
+              <div className="space-y-1 mt-2">
+                <MiniBar
+                  label="관심"
+                  score={parentScores.interest}
+                  color="bg-blue-300"
+                />
+                <MiniBar
+                  label="친밀"
+                  score={parentScores.intimacy}
+                  color="bg-pink-300"
+                />
+                <MiniBar
+                  label="표현"
+                  score={parentScores.expression}
+                  color="bg-yellow-300"
+                />
+              </div>
+            </div>
+            <div className="bg-white/70 rounded-xl p-3 border border-ink/10 space-y-1 text-center">
+              <p className="text-[10px] text-ink/50 font-bold">나</p>
+              <p className="text-sm font-serif font-bold text-ink leading-snug break-keep">
+                {result.title}
+              </p>
+              <div className="space-y-1 mt-2">
+                <MiniBar
+                  label="관심"
+                  score={scores.interest}
+                  color="bg-blue-300"
+                />
+                <MiniBar
+                  label="친밀"
+                  score={scores.intimacy}
+                  color="bg-pink-300"
+                />
+                <MiniBar
+                  label="표현"
+                  score={scores.expression}
+                  color="bg-yellow-300"
+                />
+              </div>
+            </div>
+          </div>
+          <p className="text-xs text-ink/60 leading-relaxed text-center">
+            {(() => {
+              const childTotal =
+                scores.interest + scores.intimacy + scores.expression;
+              const parentTotal =
+                parentScores.interest +
+                parentScores.intimacy +
+                parentScores.expression;
+              if (childTotal > parentTotal) {
+                return '당신이 부모님보다 서로를 더 잘 알고 있어요. 놀라운 결과네요.';
+              }
+              if (parentTotal - childTotal > 20) {
+                return '부모님은 당신에 대해 이만큼 알고 계셨어요. 당신은...?';
+              }
+              return '서로 비슷한 온도로 아시는군요. 나란히 한 발씩 더 가까워져 봐요.';
+            })()}
+          </p>
+          <div className="text-center">
+            <Link
+              href="/parent"
+              className="text-xs text-grading underline hover:text-ink transition-colors"
+            >
+              부모님도 시험 보러 보내기 →
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* 3. 닥터의 처방전 */}
       <div className="w-full bg-white p-6 rounded-xl border border-stone-200 shadow-sm space-y-3">
@@ -247,6 +348,31 @@ export default function ResultPage() {
     <Suspense fallback={<Loading />}>
       <ResultContent />
     </Suspense>
+  );
+}
+
+// 비교 카드용 미니 점수 게이지
+function MiniBar({
+  label,
+  score,
+  color,
+}: {
+  label: string;
+  score: number;
+  color: string;
+}) {
+  const percent = Math.min(Math.max((score / 100) * 100, 5), 100);
+  return (
+    <div className="flex items-center gap-1 text-[10px]">
+      <span className="w-6 text-right text-ink/50 font-bold">{label}</span>
+      <div className="flex-1 h-1.5 bg-stone-200 rounded-full overflow-hidden">
+        <div
+          className={`h-full ${color} rounded-full`}
+          style={{ width: `${percent}%` }}
+        />
+      </div>
+      <span className="w-5 text-ink/50 font-bold">{score}</span>
+    </div>
   );
 }
 

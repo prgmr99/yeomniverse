@@ -1,12 +1,12 @@
 'use client';
 
 import { Loading } from '@hyo/ui';
-import { type Effects, QUESTIONS } from '@hyo/utils'; // 데이터 불러오기
+import { type Effects, PARENT_QUESTIONS } from '@hyo/utils';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { useRouter, useSearchParams } from 'next/navigation'; // 라우터
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import ProgressBar from '@/components/quiz/ProgressBar';
-import { useQuizStore } from '@/store/useQuizStore'; // 스토어 불러오기
+import { useParentQuizStore } from '@/store/useParentQuizStore';
 
 // 애니메이션 변형 정의
 const variants = {
@@ -24,136 +24,82 @@ const variants = {
   }),
 };
 
-function QuizContent() {
+function ParentQuizContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const prefersReducedMotion = useReducedMotion();
-  const [direction, setDirection] = useState(1); // 1: 다음, -1: 이전
+  const [direction, setDirection] = useState(1);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Zustand에서 필요한 상태와 액션 꺼내오기
   const { currentStep, answers, nextStep, prevStep, setAnswer, resetQuiz } =
-    useQuizStore();
+    useParentQuizStore();
 
-  // 부모 결과 파라미터 (parent→child 공유 흐름 유지)
-  const parentParams = useMemo(() => {
-    const parent = searchParams.get('parent');
-    if (!parent) return '';
-    const entries = ['parent', 'pi', 'pn', 'pe', 'pname']
-      .map((k) => {
-        const v = searchParams.get(k);
-        return v ? `${k}=${encodeURIComponent(v)}` : '';
-      })
-      .filter(Boolean);
-    return entries.join('&');
-  }, [searchParams]);
+  const currentQuestion = PARENT_QUESTIONS[currentStep];
+  const isFinished = currentStep >= PARENT_QUESTIONS.length;
 
-  // 현재 보여줄 질문 데이터
-  const currentQuestion = QUESTIONS[currentStep];
-
-  // 퀴즈가 모두 끝났는지 체크
-  const isFinished = currentStep >= QUESTIONS.length;
-
-  // 문제가 바뀌면 선택 상태 초기화
   // biome-ignore lint/correctness/useExhaustiveDependencies: reset selection when step changes
   useEffect(() => {
     setSelectedIndex(null);
   }, [currentStep]);
 
-  // 컴포넌트 언마운트 시 타이머 정리
   useEffect(() => {
     return () => {
       if (advanceTimer.current) clearTimeout(advanceTimer.current);
     };
   }, []);
 
-  // 답변 클릭 핸들러
   const handleOptionClick = (index: number, effects: Effects) => {
-    // 이미 선택 중이면 무시 (double-advance 방지)
     if (selectedIndex !== null) return;
 
     setSelectedIndex(index);
 
     advanceTimer.current = setTimeout(() => {
-      // 1. 점수 저장 (answers 배열도 업데이트됨)
       setAnswer(index, effects);
-      setDirection(1); // 앞으로 가기
-
-      // 2. URL 업데이트 -> useEffect에서 감지하여 nextStep() 호출
-      const nextUrl = parentParams
-        ? `/quiz?step=${currentStep + 1}&${parentParams}`
-        : `/quiz?step=${currentStep + 1}`;
-      router.push(nextUrl);
+      setDirection(1);
+      router.push(`/parent/quiz?step=${currentStep + 1}`);
     }, 280);
   };
 
-  // URL 쿼리 파라미터와 스토어 상태 동기화
   useEffect(() => {
     const stepParam = searchParams.get('step');
     const stepFromUrl = stepParam ? Number.parseInt(stepParam, 10) : 0;
 
-    // 1. 뒤로가기 감지 (URL 스텝 < 현재 스텝)
     if (stepFromUrl < currentStep) {
-      setDirection(-1); // 뒤로 가기
+      setDirection(-1);
       prevStep();
-    }
-    // 2. 앞으로 가기 (정상적인 진행)
-    // URL이 현재보다 1 크고, 답변이 이미 저장되어 있다면(answers.length) 이동 허용
-    else if (stepFromUrl === currentStep + 1 && answers.length >= stepFromUrl) {
-      setDirection(1); // 앞으로 가기
+    } else if (
+      stepFromUrl === currentStep + 1 &&
+      answers.length >= stepFromUrl
+    ) {
+      setDirection(1);
       nextStep();
+    } else if (stepFromUrl > currentStep) {
+      router.replace(`/parent/quiz?step=${currentStep}`);
     }
-    // 3. 비정상적인 앞으로 가기 방지 (건너뛰기 등)
-    else if (stepFromUrl > currentStep) {
-      const fixedUrl = parentParams
-        ? `/quiz?step=${currentStep}&${parentParams}`
-        : `/quiz?step=${currentStep}`;
-      router.replace(fixedUrl);
-    }
-  }, [
-    searchParams,
-    currentStep,
-    answers.length,
-    prevStep,
-    nextStep,
-    router,
-    parentParams,
-  ]);
+  }, [searchParams, currentStep, answers.length, prevStep, nextStep, router]);
 
-  // 컴포넌트 마운트 시 퀴즈 초기화
   // biome-ignore lint/correctness/useExhaustiveDependencies: <컴포넌트 마운트>
   useEffect(() => {
     if (currentStep === 0) {
       resetQuiz();
-      // URL 초기화 — 부모 공유 파라미터는 보존해야 함
-      const initialUrl = parentParams
-        ? `/quiz?step=0&${parentParams}`
-        : '/quiz?step=0';
-      router.replace(initialUrl);
+      router.replace('/parent/quiz?step=0');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 결과 페이지 이동 처리
   useEffect(() => {
     if (isFinished) {
-      const resultUrl = parentParams ? `/result?${parentParams}` : '/result';
-      router.push(resultUrl);
+      router.push('/parent/result');
     }
-  }, [isFinished, router, parentParams]);
+  }, [isFinished, router]);
 
-  // 로딩 중이거나 완료된 상태면 로딩 화면 표시 (빈 화면 방지)
   if (!currentQuestion || isFinished) return <Loading />;
 
   return (
     <main className="min-h-screen flex flex-col bg-paper">
-      {/* 상단 진행바 */}
-      <ProgressBar current={currentStep} total={QUESTIONS.length} />
+      <ProgressBar current={currentStep} total={PARENT_QUESTIONS.length} />
 
-      {/* 질문 영역 */}
       <div className="flex-1 flex flex-col justify-center px-6 pb-10 space-y-8 overflow-hidden">
-        {/* 애니메이션 래퍼 */}
         <AnimatePresence mode="popLayout" custom={direction}>
           <motion.div
             key={currentStep}
@@ -168,7 +114,6 @@ function QuizContent() {
             }}
             className="space-y-8"
           >
-            {/* 질문 텍스트 */}
             <div className="space-y-3">
               <span className="text-grading font-bold font-serif text-xl border-b-2 border-grading/20 inline-block pb-1">
                 문제 {currentQuestion.id}
@@ -178,7 +123,6 @@ function QuizContent() {
               </h2>
             </div>
 
-            {/* 선택지 목록 */}
             <div className="space-y-3">
               {currentQuestion.options.map((option, index) => {
                 const isSelected = index === selectedIndex;
@@ -202,7 +146,6 @@ function QuizContent() {
                     >
                       {option.text}
                     </span>
-                    {/* OMR 마킹 느낌의 체크박스 */}
                     <div
                       className={`w-6 h-6 rounded-full border-2 transition-all ${
                         isSelected
@@ -221,7 +164,7 @@ function QuizContent() {
   );
 }
 
-export default function QuizPage() {
+export default function ParentQuizPage() {
   return (
     <Suspense
       fallback={
@@ -230,7 +173,7 @@ export default function QuizPage() {
         </div>
       }
     >
-      <QuizContent />
+      <ParentQuizContent />
     </Suspense>
   );
 }
