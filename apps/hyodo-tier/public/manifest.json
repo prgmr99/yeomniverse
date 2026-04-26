@@ -1,7 +1,7 @@
 {
-  "name": "효도티어 - 부모님 탐구영역",
+  "name": "효도티어 - 부모님 탐구영역 · 부모님 퀴즈",
   "short_name": "효도티어",
-  "description": "2026학년도 대국민 효도능력시험",
+  "description": "2026학년도 대국민 효도능력시험. 부모님 탐구영역 14문항 부모님 퀴즈로 효도 등급을 확인하고, 부모님 자서전 인터뷰의 첫 질문지를 만들어보세요.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f5f5f4",

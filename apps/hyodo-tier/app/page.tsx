@@ -74,6 +74,14 @@ export default function Home() {
           text: '네, 2교시 자녀 탐구영역을 만들었습니다. 부모님께서 자식에 대해 얼마나 아시는지 14문항으로 측정하고, 결과를 자식에게 공유하면 자식도 자기 점수를 볼 수 있어요. /parent에서 응시할 수 있습니다.',
         },
       },
+      {
+        '@type': 'Question',
+        name: '이 부모님 퀴즈를 부모님 자서전 만들기에 활용할 수 있나요?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: '네. 부모님 탐구영역 14문항은 그대로 부모님 자서전 인터뷰의 첫 질문지로 사용할 수 있습니다. 자식이 먼저 풀어 답을 적어보고, 같은 문항을 부모님께 다시 여쭤보면 답변에 자연스럽게 옛 이야기가 따라옵니다. 자세한 인터뷰 50문항과 녹음 가이드는 /blog/parent-autobiography 글을 참고하세요.',
+        },
+      },
     ],
   };
 
@@ -264,6 +272,24 @@ export default function Home() {
                 className="text-grading underline hover:text-ink transition-colors"
               >
                 2교시 응시하러 가기 →
+              </Link>
+            </p>
+          </div>
+
+          <div className="space-y-1">
+            <h4 className="font-bold text-sm text-ink/90">
+              Q. 이 부모님 퀴즈를 부모님 자서전 만들기에 활용할 수 있나요?
+            </h4>
+            <p className="text-xs text-ink/60 leading-relaxed">
+              네. &apos;부모님 탐구영역&apos; 14문항은 그대로 부모님 자서전
+              인터뷰의 첫 질문지로 사용할 수 있습니다. 자식이 먼저 풀어 답을
+              적어보고, 같은 문항을 부모님께 다시 여쭤보면 답변에 자연스럽게 옛
+              이야기가 따라옵니다.{' '}
+              <Link
+                href="/blog/parent-autobiography"
+                className="text-grading underline hover:text-ink transition-colors"
+              >
+                부모님 자서전 인터뷰 가이드 보기 →
               </Link>
             </p>
           </div>

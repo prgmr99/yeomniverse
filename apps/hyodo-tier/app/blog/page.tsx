@@ -6,19 +6,28 @@ import { getBlogPosts } from '@/lib/blogData';
 export const metadata: Metadata = {
   title: '효도 블로그',
   description:
-    '부모님과의 관계를 개선하는 효도 팁, MZ세대 효도 가이드, 대화 주제 등 실용적인 콘텐츠를 제공합니다.',
-  keywords: ['효도 블로그', '부모님 소통', 'MZ세대 효도', '효도 팁'],
+    '부모님과의 관계를 개선하는 효도 팁, 부모님 퀴즈 활용법, 부모님 자서전 만들기 가이드, 대화 주제 등 실용적인 콘텐츠를 제공합니다.',
+  keywords: [
+    '효도 블로그',
+    '부모님 소통',
+    '부모님 퀴즈',
+    '부모님 자서전',
+    '부모님 자서전 만들기',
+    '부모님 인터뷰 질문',
+    'MZ세대 효도',
+    '효도 팁',
+  ],
   openGraph: {
     title: '효도 블로그 | 효도티어',
     description:
-      '부모님과의 관계를 개선하는 효도 팁, MZ세대 효도 가이드, 대화 주제 등 실용적인 콘텐츠를 제공합니다.',
+      '부모님 퀴즈 활용법, 부모님 자서전 인터뷰 가이드, 부모님과의 대화 주제까지 — 실용 효도 콘텐츠를 모아둔 효도티어 블로그.',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: '효도 블로그 | 효도티어',
     description:
-      '부모님과의 관계를 개선하는 효도 팁, MZ세대 효도 가이드, 대화 주제 등 실용적인 콘텐츠를 제공합니다.',
+      '부모님 퀴즈, 부모님 자서전 만들기, 효도 가이드까지 모아둔 효도티어 블로그.',
   },
   alternates: {
     canonical: 'https://hyodo-tier.yeomniverse.com/blog',

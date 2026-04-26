@@ -14,15 +14,23 @@ export const metadata: Metadata = {
     template: '%s | 효도티어',
   },
   description:
-    '당신의 효도 등급은 몇 등급입니까? 2026학년도 대국민 효도능력시험. 지금 바로 응시하고 효도 등급을 확인하세요!',
+    '당신의 효도 등급은 몇 등급입니까? 2026학년도 대국민 효도능력시험. 부모님 탐구영역 14문항 부모님 퀴즈를 풀고, 부모님 자서전의 첫 페이지를 시작하세요.',
   applicationName: '효도티어',
   keywords: [
     '효도티어',
     '부모님 탐구영역',
-    '효도 테스트',
-    '심리테스트',
-    'MZ세대',
     '부모님 퀴즈',
+    '부모님 자서전',
+    '부모님 자서전 만들기',
+    '부모님 인터뷰',
+    '부모님 인터뷰 질문',
+    '부모님 자서전 질문지',
+    '부모님 인생 이야기',
+    '효도 테스트',
+    '효도 심리테스트',
+    '심리테스트',
+    '어버이날 테스트',
+    'MZ세대 효도',
   ],
   icons: {
     icon: [
@@ -55,9 +63,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: '효도티어 | 부모님 탐구영역',
+    title: '효도티어 | 부모님 탐구영역 · 부모님 퀴즈',
     description:
-      '당신의 효도 등급은 몇 등급입니까? 2026학년도 대국민 효도능력시험',
+      '당신의 효도 등급은 몇 등급입니까? 2026학년도 대국민 효도능력시험. 부모님 탐구영역 14문항을 풀고, 부모님 자서전을 시작할 인터뷰 질문지를 받아보세요.',
     url: DOMAIN_URL,
     siteName: '효도티어',
     locale: 'ko_KR',
@@ -73,9 +81,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '효도티어 | 부모님 탐구영역',
+    title: '효도티어 | 부모님 탐구영역 · 부모님 퀴즈',
     description:
-      '당신의 효도 등급은 몇 등급입니까? 2026학년도 대국민 효도능력시험',
+      '당신의 효도 등급은 몇 등급입니까? 2026학년도 대국민 효도능력시험. 부모님 탐구영역 14문항을 풀고 부모님 자서전을 시작하세요.',
     images: ['/og-image.png'],
   },
   alternates: {
@@ -127,11 +135,17 @@ export default function RootLayout({
   const quizSchema = {
     '@context': 'https://schema.org',
     '@type': 'Quiz',
-    name: '2026학년도 대국민 효도능력시험',
+    name: '2026학년도 대국민 효도능력시험 · 부모님 탐구영역',
     description:
-      '부모님에 대한 관심도, 친밀도, 표현력을 측정하는 심리 진단 테스트',
+      '부모님에 대한 관심도, 친밀도, 표현력을 측정하는 부모님 퀴즈 14문항. 부모님 자서전을 만들기 전 인터뷰 질문지로도 활용할 수 있는 심리 진단 테스트.',
     educationalLevel: 'All ages',
     numberOfQuestions: 14,
+    about: [
+      { '@type': 'Thing', name: '부모님 탐구영역' },
+      { '@type': 'Thing', name: '부모님 퀴즈' },
+      { '@type': 'Thing', name: '부모님 자서전' },
+      { '@type': 'Thing', name: '효도 심리테스트' },
+    ],
     quiz: {
       '@type': 'Question',
       name: '부모님 탐구영역',
