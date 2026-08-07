@@ -1,12 +1,12 @@
 {
   "date": "2026-08-07",
-  "timestamp": "2026-08-07T01:36:14.178Z",
-  "newsCount": 50,
+  "timestamp": "2026-08-07T23:03:07.810Z",
+  "newsCount": 51,
   "outputLanguage": "en",
   "fearGreedIndex": {
-    "score": 60,
+    "score": 64,
     "rating": "greed",
-    "timestamp": "2026-08-06T23:59:45+00:00"
+    "timestamp": "2026-08-07T22:47:02+00:00"
   },
   "oneWayIndex": {
     "score": 64,
@@ -15,8 +15,8 @@
     "components": {
       "adx": 0,
       "maAlignment": 100,
-      "rsiTrend": 100,
-      "bbWidth": 85,
+      "rsiTrend": 80,
+      "bbWidth": 100,
       "vix": 90,
       "volume": 40,
       "fearGreed": 70
@@ -25,71 +25,71 @@
   "analysis": {
     "topNews": [
       {
-        "title": "US Jobs Report Imminent: Critical for Fed Policy Outlook",
-        "summary": "The highly anticipated US jobs report is due, with market participants intensely focused on non-farm payrolls, unemployment rates, and average hourly earnings. This data will be the primary input for Federal Reserve's near-term monetary policy decisions, directly influencing interest rate expectations. A significant deviation from consensus could trigger sharp movements across equities, fixed income, and currency markets.",
+        "title": "Upcoming Inflation Data Crucial for Fed Policy Outlook",
+        "summary": "Critical inflation data is due next week, following recent softer jobs figures. This release will be the primary test for current market expectations regarding the Federal Reserve's rate path. A hotter-than-expected print risks re-igniting rate hike fears and could temper equity market enthusiasm.",
         "sentiment": "neutral",
-        "reason": "The jobs report is the single most impactful macro data point this week, directly affecting interest rate futures, the US Dollar, and broad equity market sectors."
+        "reason": "Investors should brace for heightened volatility across equities, fixed income, and currencies, as this data will recalibrate Fed rate probabilities."
       },
       {
-        "title": "Japan Executes Record Yen Intervention",
-        "summary": "Japan's Ministry of Finance undertook a record-setting yen-buying intervention in April, a clear signal of strong official discomfort with rapid yen depreciation. This aggressive move aims to stabilize the currency and demonstrates Tokyo's willingness to use its substantial reserves to defend policy objectives. The action impacts global currency markets, particularly carry trades and relative value across G7 bonds.",
+        "title": "US Economy Posts Unexpected Job Losses in July",
+        "summary": "The U.S. economy unexpectedly shed 23,000 jobs in July, a significant deviation from market expectations. This weak labor market data immediately shifted market sentiment, pushing out expectations for further Federal Reserve rate hikes. Consequently, the dollar weakened as the probability of a tighter monetary policy stance diminished.",
         "sentiment": "neutral",
-        "reason": "The intervention directly alters FX market dynamics, increases volatility for yen-denominated assets, and could curb carry trade attractiveness across global currencies."
+        "reason": "Reduced labor market strength supports a pause in Fed tightening, benefiting growth-sensitive equities and potentially weakening the dollar further."
       },
       {
-        "title": "Oil Prices Rise on Heightened Strait of Hormuz Risks",
-        "summary": "Global oil prices are climbing following reports of Iran's restrictive draft plan for the Strait of Hormuz, raising fears of supply disruptions. This geopolitical development introduces significant uncertainty into energy markets, impacting crude oil benchmarks and refined product prices. Sustained tensions could drive inflation higher and weigh on global economic growth prospects.",
+        "title": "Trump Renews Attacks on Federal Reserve, Seeks to Fire Board Member",
+        "summary": "Former President Trump has renewed efforts to remove Federal Reserve Governor Lisa Cook, citing a Supreme Court ruling. This move reflects his continued desire to influence and potentially politicize central bank appointments and policy. Such interference introduces significant political risk and uncertainty into the future independence and credibility of monetary policy decisions.",
         "sentiment": "bear",
-        "reason": "Elevated geopolitical risk in a critical shipping lane directly increases crude oil prices, impacting energy sector profitability and global inflationary pressures."
+        "reason": "This ongoing political pressure on the Fed creates policy uncertainty and potential for long-term institutional weakening, warranting a risk-off stance in duration-sensitive assets."
       },
       {
-        "title": "Copper Surges to All-Time High",
-        "summary": "Copper prices have reached unprecedented levels, signaling robust global industrial demand and tightening supply conditions. The metal, often seen as 'Dr. Copper' for its predictive economic power, suggests either stronger-than-expected economic activity or significant inflationary pressures. This rally impacts industrial cyclicals, commodity-linked currencies, and broad inflation hedges.",
+        "title": "S&P 500 Closes at Record High, Strongest Week Since April",
+        "summary": "The S&P 500 reached a new record close on Friday, marking its strongest weekly performance since April. This robust rally reflects ongoing market optimism, supported by easing inflation fears and better-than-expected corporate earnings. The sustained upward momentum suggests continued investor confidence in growth prospects despite lingering macroeconomic uncertainties.",
         "sentiment": "bull",
-        "reason": "The record copper price indicates strong industrial demand or rising inflation expectations, benefiting mining companies and industrial materials sectors."
+        "reason": "The broad market strength indicates a favorable risk appetite, suggesting continued preference for equities over safer assets in the short term."
       },
       {
-        "title": "Japan's GPIF Weighs Investment Flexibility",
-        "summary": "Japan's Government Pension Investment Fund (GPIF), the world's largest pension fund, is reportedly considering greater investment flexibility following its Q1 results. Any shift in GPIF's asset allocation strategy could re-rate Japanese government bonds or redirect massive capital flows into domestic and international equities. This potential policy change holds significant implications for global asset markets.",
-        "sentiment": "neutral",
-        "reason": "A strategic shift by GPIF would redistribute global capital, impacting demand for JGBs, international equities, and global bond yields."
-      },
-      {
-        "title": "Fed Governor Musalem Argues for Prior Rate Hike",
-        "summary": "Federal Reserve Governor Musalem stated the central bank should have hiked rates at its last meeting, expressing a more hawkish stance than the current consensus. This commentary highlights potential internal divisions within the Fed and reinforces the argument for higher-for-longer interest rates. It influences market expectations for future rate adjustments and the yield curve's trajectory.",
-        "sentiment": "bear",
-        "reason": "Hawkish commentary from a Fed governor suggests persistent inflation concerns, increasing the probability of future rate hikes and negatively impacting interest-rate sensitive assets."
-      },
-      {
-        "title": "Beijing Signals Shift in US Tech Conflict",
-        "summary": "Beijing appears to be shifting its strategy in the US tech war, potentially testing the truce weeks before a high-level visit. This development implies ongoing geopolitical tensions and policy uncertainty affecting critical technology sectors and global supply chains. Investment decisions in semiconductors, AI, and related industries will remain sensitive to these evolving dynamics.",
-        "sentiment": "bear",
-        "reason": "Renewed tech friction between the US and China creates uncertainty for global technology supply chains, impacting semiconductor and related tech sector valuations."
-      },
-      {
-        "title": "Mexico Central Bank Holds Rates, Delays Inflation Target",
-        "summary": "Banco de México held its benchmark interest rate at 6.5% but delayed its return to the inflation target. This decision indicates persistent inflationary pressures and a cautious monetary policy stance. It creates divergence from other developed market central banks, influencing capital flows into emerging market bonds and the Mexican Peso.",
-        "sentiment": "neutral",
-        "reason": "The Mexican central bank's policy decision affects emerging market fixed income, currency valuations, and carries implications for carry trades."
-      },
-      {
-        "title": "Gold Prices Break Higher",
-        "summary": "Gold prices are breaking higher after a period of consolidation, hinting at renewed investor interest in safe-haven assets or inflation hedges. This upward trend suggests growing uncertainty in broader markets or expectations of continued monetary easing globally. Sustained strength in gold could signal a flight to safety or increased inflation expectations.",
+        "title": "Nvidia Stock Posts Largest Weekly Surge in Over a Year",
+        "summary": "Nvidia's stock experienced its largest weekly surge in over a year, driven by continued strong demand for AI chips and positive sentiment surrounding its dominant market position. This performance underscores the ongoing enthusiasm and significant capital flows into the artificial intelligence sector. The company's momentum suggests AI remains a critical investment theme and a powerful driver for related hardware and software firms.",
         "sentiment": "bull",
-        "reason": "Rising gold prices signal increasing demand for safe-haven assets or inflation protection, benefiting gold miners and commodity funds."
+        "reason": "This validates continued strong investment in the AI infrastructure theme, making leading AI hardware and software providers attractive."
       },
       {
-        "title": "Buffett Labels US Market 'Gambling,' Retail Leverage Surges in Korea",
-        "summary": "Warren Buffett reportedly characterized the current US stock market as 'gambling,' not investing, raising concerns about market exuberance. This sentiment is echoed by reports of record debt-financed retail investment in South Korea, highlighting speculative behavior among individual investors. Such conditions often precede periods of increased market volatility and potential corrections.",
+        "title": "US Container Import Surge Nearing End, Shippers Report",
+        "summary": "Shippers report that the recent surge in US container imports is beginning to taper off. This signals a potential moderation in consumer demand and a normalization of supply chain activity after a period of robust growth. A slowdown in imports could indicate softer economic activity ahead, impacting global trade and logistics sectors.",
         "sentiment": "bear",
-        "reason": "Buffett's commentary, coupled with surging retail leverage, points to elevated speculative risk, advising caution across broad equity market exposures."
+        "reason": "Declining import volumes suggest a weakening consumer demand outlook, advising caution in retail, logistics, and discretionary consumer sectors."
+      },
+      {
+        "title": "China's July Bank Lending Plummets Amid Subdued Demand",
+        "summary": "China's bank lending for July is projected to plummet significantly, reflecting subdued demand and seasonal factors. This slowdown indicates persistent weakness in China's domestic economy, impacting both corporate and consumer sentiment. Reduced credit expansion in China will likely dampen global growth prospects and commodity demand.",
+        "sentiment": "bear",
+        "reason": "Weakening credit impulse in China points to broader economic deceleration, implying headwinds for global cyclicals, materials, and luxury goods sectors."
+      },
+      {
+        "title": "Prediction Markets Influence Earnings Season Expectations",
+        "summary": "Prediction markets are increasingly influencing expectations for quarterly earnings reports, providing real-time sentiment ahead of official announcements. These alternative data sources offer investors an additional layer of insight into potential outcomes, complementing traditional analyst forecasts. The growing use of prediction markets could lead to more efficient pricing of earnings surprises and reduce post-earnings volatility.",
+        "sentiment": "neutral",
+        "reason": "Incorporating prediction market data can refine short-term trading strategies around earnings, particularly for high-volatility individual stocks."
+      },
+      {
+        "title": "Software Stocks See Intensified 'SaaSpocalypse' Debate",
+        "summary": "The 'SaaSpocalypse' debate is intensifying, leading to significant volatility in software stocks. This discussion centers on concerns about stretched valuations, slowing growth rates, and increased competition within the Software-as-a-Service sector. The ongoing scrutiny of business models and profitability metrics will continue to drive differentiation among software companies.",
+        "sentiment": "neutral",
+        "reason": "Heightened scrutiny necessitates careful stock selection within the software sector, favoring profitable companies with sustainable growth over high-multiple, unproven models."
+      },
+      {
+        "title": "BlackRock Identifies Solid Tax-Free Yields in Bond Market",
+        "summary": "BlackRock, a major asset manager, is reportedly finding attractive tax-free yields in a specific segment of the bond market. This highlights pockets of value within fixed income, particularly relevant for institutional and high-net-worth investors seeking income optimization. Such focused strategies suggest a nuanced approach to bond allocation amidst fluctuating interest rate environments.",
+        "sentiment": "bull",
+        "reason": "This signals specific opportunities in tax-exempt municipal bonds or other niche fixed income segments for investors prioritizing income and tax efficiency."
       }
     ],
     "keywords": [
       "#MonetaryPolicy",
-      "#Geopolitics",
-      "#Macroeconomics"
+      "#AIInvestment",
+      "#GlobalEconomy"
     ],
-    "marketSentiment": "Global markets await key US jobs data amid central bank divergence and geopolitical commodity risk."
+    "marketSentiment": "Disinflationary trends and labor market cooling ease Fed tightening fears, supporting equity valuations, while geopolitical and institutional risks persist."
   }
 }
