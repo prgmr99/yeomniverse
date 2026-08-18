@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: '%s | Yeomniverse',
   },
   description:
-    '어버이날 특집! 나는 효자일까 효녀일까? 효도능력시험으로 나의 효도 티어를 확인해보세요. Yeomniverse - 효도티어, FinBrief 등 다양한 디지털 서비스를 만나보세요.',
+    '어버이날 특집! 나는 효자일까 효녀일까? 효도능력시험으로 나의 효도 티어를 확인해보세요. Yeomniverse - 효도티어, FinBrief, NeuroTrade, Argus 등 다양한 디지털 서비스를 만나보세요.',
   keywords: [
     'Yeomniverse',
     '효도티어',
@@ -43,6 +43,11 @@ export const metadata: Metadata = {
     'Hyo-Tier',
     'FinBrief',
     'AI financial briefing',
+    'Argus',
+    '아르고스',
+    '세계 정세 지도',
+    'NeuroTrade',
+    'geopolitics dashboard',
     'personality quiz',
     'digital services',
     'online tools',
@@ -92,7 +97,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: '어버이날 효도능력시험 | 효도티어 - Yeomniverse',
-    description: '어버이날 특집! 나는 효자일까 효녀일까? 효도능력시험으로 나의 효도 티어를 확인해보세요.',
+    description:
+      '어버이날 특집! 나는 효자일까 효녀일까? 효도능력시험으로 나의 효도 티어를 확인해보세요.',
     url: DOMAIN_URL,
     siteName: 'Yeomniverse',
     locale: 'ko_KR',
@@ -109,7 +115,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: '어버이날 효도능력시험 | 효도티어 - Yeomniverse',
-    description: '어버이날 특집! 나는 효자일까 효녀일까? 효도능력시험으로 나의 효도 티어를 확인해보세요.',
+    description:
+      '어버이날 특집! 나는 효자일까 효녀일까? 효도능력시험으로 나의 효도 티어를 확인해보세요.',
     images: ['/og-image.png'],
   },
   alternates: {
@@ -152,7 +159,7 @@ export default function RootLayout({
       height: 512,
     },
     description:
-      'Yeomniverse is a digital services company building AI-powered tools and apps, including FinBrief (AI financial briefing) and Hyo-Tier (personality quiz).',
+      'Yeomniverse is a digital services company building AI-powered tools and apps, including FinBrief (AI financial briefing), Hyo-Tier (personality quiz), NeuroTrade (trading simulator) and Argus (global situation map).',
   };
 
   // WebSite schema
@@ -162,7 +169,7 @@ export default function RootLayout({
     name: 'Yeomniverse',
     url: DOMAIN_URL,
     description:
-      'Yeomniverse - A digital services portal. Discover FinBrief for daily AI financial briefings and Hyo-Tier for personality quizzes.',
+      'Yeomniverse - A digital services portal. Discover FinBrief for daily AI financial briefings, Hyo-Tier for personality quizzes, NeuroTrade for trading simulation and Argus for a live map of world affairs.',
     potentialAction: {
       '@type': 'SearchAction',
       target: {

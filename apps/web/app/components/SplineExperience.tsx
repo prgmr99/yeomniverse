@@ -1,11 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import type { Application } from '@splinetool/runtime';
 import { ArrowUpRight, X } from 'lucide-react';
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
-import type { Application } from '@splinetool/runtime';
 import {
+  type AnimationEvent,
   type ReactNode,
   useCallback,
   useEffect,
@@ -38,16 +37,45 @@ type Props = {
 const SPLINE_SCENE =
   'https://prod.spline.design/yEWkAjJuCo873kcF/scene.splinecode';
 
+// Keep in sync with the `.reveal-*[data-closing='true']` durations in globals.css
+const EXIT_MS = 250;
+
 export default function SplineExperience({ services, children }: Props) {
   const [open, setOpen] = useState(false);
-  const [splineLoaded, setSplineLoaded] = useState(false);
+  const [closing, setClosing] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-  const openReveal = useCallback(() => setOpen(true), []);
-  const closeReveal = useCallback(() => setOpen(false), []);
+  const openReveal = useCallback(() => {
+    setClosing(false);
+    setOpen(true);
+  }, []);
+
+  // Two-step close: flag the exit animation, unmount when it finishes.
+  const closeReveal = useCallback(() => setClosing(true), []);
+
+  const finishClose = useCallback(() => {
+    setClosing(false);
+    setOpen(false);
+  }, []);
+
+  const onOverlayAnimationEnd = useCallback(
+    (event: AnimationEvent<HTMLDivElement>) => {
+      if (event.target !== event.currentTarget || !closing) return;
+      finishClose();
+    },
+    [closing, finishClose],
+  );
+
+  // `animationend` never fires while the tab is hidden, so back it with a
+  // timer — otherwise the modal (and the body scroll lock) can get stuck.
+  useEffect(() => {
+    if (!closing) return;
+    const timer = window.setTimeout(finishClose, EXIT_MS + 100);
+    return () => window.clearTimeout(timer);
+  }, [closing, finishClose]);
+
   const onSplineLoad = useCallback((splineApp: Application) => {
     splineApp.renderOnDemand = true;
-    setSplineLoaded(true);
   }, []);
 
   // ESC to close + lock body scroll when modal is open
@@ -75,7 +103,9 @@ export default function SplineExperience({ services, children }: Props) {
         clicks fall through to the canvas (laptop stays interactive).
       */}
       <div
-        className={`fixed inset-0 z-0 overflow-hidden bg-black will-change-transform ${open ? 'invisible' : 'visible'}`}
+        className={`fixed inset-0 z-0 overflow-hidden bg-black will-change-transform ${
+          open && !closing ? 'invisible' : 'visible'
+        }`}
         aria-hidden="true"
         style={{ contain: 'strict' }}
       >
@@ -134,125 +164,114 @@ export default function SplineExperience({ services, children }: Props) {
       </section>
 
       {/* Services reveal modal */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto overscroll-contain px-4 py-10 md:items-center"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="services-reveal-title"
+      {open && (
+        <div
+          className="reveal-overlay fixed inset-0 z-50 flex items-start justify-center overflow-y-auto overscroll-contain px-4 py-10 md:items-center"
+          data-closing={closing}
+          onAnimationEnd={onOverlayAnimationEnd}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="services-reveal-title"
+        >
+          {/* Scrim — solid overlay instead of backdrop-blur for perf */}
+          <button
+            type="button"
+            aria-label="Close services"
+            onClick={closeReveal}
+            className="fixed inset-0 bg-black/80"
+          />
+
+          {/* Panel */}
+          <div
+            className="reveal-panel relative z-10 w-full max-w-7xl"
+            data-closing={closing}
           >
-            {/* Scrim — solid overlay instead of backdrop-blur for perf */}
-            <button
-              type="button"
-              aria-label="Close services"
-              onClick={closeReveal}
-              className="fixed inset-0 bg-black/80"
-            />
-
-            {/* Panel */}
-            <motion.div
-              initial={{ opacity: 0, y: 24, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 16, scale: 0.98 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="relative z-10 w-full max-w-6xl"
-            >
-              <div className="mb-6 flex items-end justify-between gap-4">
-                <div className="text-left">
-                  <p className="text-xs font-medium uppercase tracking-[0.25em] text-white/50">
-                    Now booting
-                  </p>
-                  <h2
-                    id="services-reveal-title"
-                    className="mt-2 text-3xl font-black text-white md:text-4xl"
-                  >
-                    Pick a world.
-                  </h2>
-                </div>
-                <button
-                  ref={closeButtonRef}
-                  type="button"
-                  onClick={closeReveal}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-[#0d0f17]/80 text-white/80 transition hover:bg-[#13151f] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-                  aria-label="Close"
+            <div className="mb-6 flex items-end justify-between gap-4">
+              <div className="text-left">
+                <p className="text-xs font-medium uppercase tracking-[0.25em] text-white/50">
+                  Now booting
+                </p>
+                <h2
+                  id="services-reveal-title"
+                  className="mt-2 text-3xl font-black text-white md:text-4xl"
                 >
-                  <X className="h-5 w-5" aria-hidden="true" />
-                </button>
+                  Pick a world.
+                </h2>
               </div>
+              <button
+                ref={closeButtonRef}
+                type="button"
+                onClick={closeReveal}
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 bg-[#0d0f17]/80 text-white/80 transition hover:bg-[#13151f] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                aria-label="Close"
+              >
+                <X className="h-5 w-5" aria-hidden="true" />
+              </button>
+            </div>
 
-              <div className="grid gap-5 md:grid-cols-3">
-                {services.map((service, i) => (
-                  <motion.div
-                    key={service.href}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.5,
-                      delay: 0.08 + i * 0.08,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                  >
-                    <Link
-                      href={service.href}
-                      aria-label={`${service.title} — ${service.subtitle}`}
-                      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0d0f17]/90 p-7 transition duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-[#13151f]/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+              {services.map((service, i) => (
+                <a
+                  key={service.href}
+                  href={service.href}
+                  aria-label={`${service.title} — ${service.subtitle}`}
+                  style={{ animationDelay: `${80 + i * 80}ms` }}
+                  className="reveal-card group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0d0f17]/90 p-7 transition duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-[#13151f]/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                >
+                  {/* Accent glow */}
+                  <div
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute -top-24 -right-20 h-56 w-56 rounded-full opacity-40 blur-3xl transition-opacity duration-500 group-hover:opacity-70 ${service.glow}`}
+                  />
+
+                  <div className="relative flex items-center justify-between">
+                    <span className="font-mono text-xs text-white/40">
+                      {service.index}
+                    </span>
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="h-5 w-5 text-white/50 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
+                    />
+                  </div>
+
+                  <div className="relative mt-10">
+                    {/* `bg-clip-text` only paints inside the element box —
+                        without the extra leading/padding, descenders that
+                        overflow the line box (the g in "Argus") get cut off. */}
+                    <h3
+                      className={`bg-gradient-to-r ${service.accent} bg-clip-text pb-1 text-3xl font-black leading-tight tracking-tight text-transparent`}
                     >
-                      {/* Accent glow */}
-                      <div
-                        aria-hidden="true"
-                        className={`pointer-events-none absolute -top-24 -right-20 h-56 w-56 rounded-full opacity-40 blur-3xl transition-opacity duration-500 group-hover:opacity-70 ${service.glow}`}
-                      />
+                      {service.title}
+                    </h3>
+                    <p className="mt-1 text-sm font-medium text-white/60">
+                      {service.subtitle}
+                    </p>
+                  </div>
 
-                      <div className="relative flex items-center justify-between">
-                        <span className="font-mono text-xs text-white/40">
-                          {service.index}
-                        </span>
-                        <ArrowUpRight
-                          aria-hidden="true"
-                          className="h-5 w-5 text-white/50 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
-                        />
-                      </div>
+                  <p className="relative mt-5 text-sm leading-relaxed text-white/70">
+                    {service.description}
+                  </p>
 
-                      <div className="relative mt-10">
-                        <h3
-                          className={`bg-gradient-to-r ${service.accent} bg-clip-text text-3xl font-black tracking-tight text-transparent`}
-                        >
-                          {service.title}
-                        </h3>
-                        <p className="mt-1 text-sm font-medium text-white/60">
-                          {service.subtitle}
-                        </p>
-                      </div>
+                  {/* `mt-auto` pins the CTA to the card floor so every card
+                      lines up regardless of description length. */}
+                  <div className="relative mt-auto flex items-center gap-2 pt-8 text-xs font-semibold uppercase tracking-[0.2em] text-white/60 transition-colors duration-300 group-hover:text-white">
+                    Launch
+                    <span className="h-px w-6 bg-white/30 transition-all duration-300 group-hover:w-10 group-hover:bg-white" />
+                  </div>
+                </a>
+              ))}
+            </div>
 
-                      <p className="relative mt-5 text-sm leading-relaxed text-white/70">
-                        {service.description}
-                      </p>
-
-                      <div className="relative mt-8 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/60 transition-colors duration-300 group-hover:text-white">
-                        Launch
-                        <span className="h-px w-6 bg-white/30 transition-all duration-300 group-hover:w-10 group-hover:bg-white" />
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-
-              <p className="mt-6 text-center text-xs text-white/40">
-                Press{' '}
-                <kbd className="rounded border border-white/15 bg-white/5 px-1.5 py-0.5 font-mono text-[10px]">
-                  Esc
-                </kbd>{' '}
-                to return to the universe
-              </p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <p className="mt-6 text-center text-xs text-white/40">
+              Press{' '}
+              <kbd className="rounded border border-white/15 bg-white/5 px-1.5 py-0.5 font-mono text-[10px]">
+                Esc
+              </kbd>{' '}
+              to return to the universe
+            </p>
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -53,6 +53,20 @@ A web-based educational trading simulator where players analyze fictional news e
 
 ---
 
+### Argus
+**Global Situation Map**
+
+An interactive dashboard that maps the world's major developments onto a single world map, giving a strategy-game-style overview of global affairs at a glance.
+
+- Four toggleable layers: war & conflict, geopolitics, finance, technology & energy
+- Per-country detail panel with current conflicts, issues, and trends
+- Live indicator ticker and auto-refreshing breaking news feed
+- Historical archive for reviewing past snapshots of world state
+
+[Visit Argus](https://argus.yeomniverse.com)
+
+---
+
 ## Contact
 
 Questions or suggestions? Feel free to reach out.
