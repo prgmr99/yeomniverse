@@ -1,6 +1,6 @@
 'use client';
 
-import { Loading } from '@hyo/ui';
+import { Loading, trackEvent } from '@hyo/ui';
 import { type Effects, PARENT_QUESTIONS } from '@hyo/utils';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -78,6 +78,13 @@ function ParentQuizContent() {
       setAnswer(index, effects);
       nextStep();
       setDirection(1);
+
+      trackEvent('question_answered', {
+        mode: 'parent',
+        step: currentStep + 1,
+        question_id: PARENT_QUESTIONS[currentStep].id,
+        option_index: index,
+      });
 
       // 마지막 문항이면 결과 페이지 이동(isFinished)에 맡긴다
       if (currentStep + 1 >= PARENT_QUESTIONS.length) return;

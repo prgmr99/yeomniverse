@@ -1,4 +1,7 @@
 // UI Components
+
+// Analytics helpers
+export { trackEvent } from "./analytics";
 export { default as Footer } from "./Footer";
 export { default as Galaxy } from "./Galaxy";
 // Analytics & Scripts

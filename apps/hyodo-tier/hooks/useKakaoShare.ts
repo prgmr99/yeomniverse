@@ -18,7 +18,8 @@ export const useKakaoShare = (
         ? window.location.origin
         : process.env.NEXT_PUBLIC_DOMAIN_URL;
 
-    const shareUrl = `${baseUrl}/result?result=${resultType}&interest=${scores.interest}&intimacy=${scores.intimacy}&expression=${scores.expression}`;
+    // 유형이 경로에 있어야 정적 메타데이터·OG가 붙고 유형별 검색 유입도 쌓인다
+    const shareUrl = `${baseUrl}/result/${resultType}?interest=${scores.interest}&intimacy=${scores.intimacy}&expression=${scores.expression}`;
     const ogImageUrl = `${baseUrl}/api/og?result=${resultType}&interest=${scores.interest}&intimacy=${scores.intimacy}&expression=${scores.expression}`;
     const shareTitle = `[효도성적표] ${resultTitle}`;
     const shareText = `나의 효도 등급은 ${resultGrade}등급! 너는 몇 등급이야? #엄빠고사 #효도티어`;

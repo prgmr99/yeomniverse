@@ -1,5 +1,6 @@
 'use client';
 
+import { trackEvent } from '@hyo/ui';
 import { PARENT_QUESTION_COUNT } from '@hyo/utils';
 import { AlertCircle, BookOpen, ChevronRight, Users } from 'lucide-react';
 import Link from 'next/link';
@@ -35,10 +36,12 @@ export default function ParentHome() {
 
     setError('');
     setChildProfile(childName.trim(), childBirthday);
+    trackEvent('quiz_start', { mode: 'parent', with_birthday: true });
     router.push('/parent/quiz');
   };
 
   const handleDontKnow = () => {
+    trackEvent('quiz_start', { mode: 'parent', with_birthday: false });
     router.push('/parent/quiz');
   };
 

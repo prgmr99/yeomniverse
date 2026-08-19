@@ -1,11 +1,11 @@
 'use client';
 
-import { Loading, Toast, type ToastMessage } from '@hyo/ui';
+import { Loading, Toast, type ToastMessage, trackEvent } from '@hyo/ui';
 import { normalizeScores, PARENT_SCORE_RANGES } from '@hyo/utils';
 import { BookOpen, Heart, RotateCcw, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { useParentKakaoShare } from '@/hooks/useParentKakaoShare';
 import { calculateParentResult } from '@/lib/calculateParentResult';
 import { PARENT_RESULTS } from '@/lib/parentResultData';
@@ -23,6 +23,7 @@ function ParentResultContent() {
   } = useParentQuizStore();
   const [isReady, setIsReady] = useState(false);
   const [toast, setToast] = useState<ToastMessage | null>(null);
+  const trackedResult = useRef(false);
 
   // 하이드레이션 완료 여부 추적
   const [hydrated, setHydrated] = useState(() =>
@@ -66,6 +67,13 @@ function ParentResultContent() {
 
   const handleShare = async () => {
     const outcome = await shareKakao();
+    trackEvent('share_clicked', {
+      mode: 'parent',
+      result_id: result.id,
+      grade: result.grade,
+      outcome,
+      from_shared: Boolean(sharedResultId),
+    });
     if (outcome === 'copied') {
       setToast({ message: '링크를 복사했어요. 자식에게 붙여넣어 보내보세요.' });
     } else if (outcome === 'failed') {
@@ -92,6 +100,18 @@ function ParentResultContent() {
       setIsReady(true);
     }
   }, [hydrated, currentStep, router, sharedResultId]);
+
+  // 결과 도달 계측 (본인 응시 / 공유 링크 유입을 구분한다)
+  useEffect(() => {
+    if (!isReady || trackedResult.current) return;
+    trackedResult.current = true;
+
+    trackEvent(sharedResultId ? 'shared_link_opened' : 'quiz_complete', {
+      mode: 'parent',
+      result_id: result.id,
+      grade: result.grade,
+    });
+  }, [isReady, sharedResultId, result]);
 
   if (!isReady) return <Loading />;
 

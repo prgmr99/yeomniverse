@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getBlogPosts } from '@/lib/blogData';
+import { RESULTS } from '@/lib/resultData';
 
 const DOMAIN =
   process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://hyodo-tier.yeomniverse.com';
@@ -12,6 +13,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(post.date),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
+  }));
+
+  // 결과 유형별 랜딩 — 유형 이름 롱테일 검색 유입을 노린다
+  const resultUrls = Object.keys(RESULTS).map((type) => ({
+    url: `${DOMAIN}/result/${type}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
   }));
 
   return [
@@ -63,6 +72,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'yearly',
       priority: 0.3,
     },
+    ...resultUrls,
     ...blogUrls,
   ];
 }
