@@ -32,6 +32,9 @@ function QuizContent() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSyncedStep = useRef<number | null>(null);
+  // 프로그램적으로 이동시킨 목표 step. URL이 여기 도달하기 전까지의 중간 상태를
+  // 동기화 로직이 "뒤로가기"로 오해하지 않도록 표시해 둔다.
+  const pendingStep = useRef<number | null>(null);
 
   // Zustand에서 필요한 상태와 액션 꺼내오기
   const { currentStep, answers, nextStep, prevStep, setAnswer, resetQuiz } =
@@ -89,11 +92,18 @@ function QuizContent() {
     setSelectedIndex(index);
 
     advanceTimer.current = setTimeout(() => {
-      // 1. 점수 저장 (answers 배열도 업데이트됨)
+      // 스토어를 먼저 진행시킨다. URL만 밀어 놓고 useEffect가 answers.length 를
+      // 읽어 nextStep() 하던 방식은, 되감기 직후 그 값이 아직 갱신되지 않아
+      // 진행이 롤백되고 currentStep 이 그대로 남아(=selectedIndex 리셋 안 됨)
+      // 이후 모든 선택이 가드에 막히는 교착을 만들었다.
       setAnswer(index, effects);
-      setDirection(1); // 앞으로 가기
+      nextStep();
+      setDirection(1);
 
-      // 2. URL 업데이트 -> useEffect에서 감지하여 nextStep() 호출
+      // 마지막 문항이면 결과 페이지 이동(isFinished)에 맡긴다
+      if (currentStep + 1 >= QUESTIONS.length) return;
+
+      pendingStep.current = currentStep + 1;
       const nextUrl = parentParams
         ? `/quiz?step=${currentStep + 1}&${parentParams}`
         : `/quiz?step=${currentStep + 1}`;
@@ -101,11 +111,31 @@ function QuizContent() {
     }, 280);
   };
 
+  // 이전 문항으로. router.back() 을 써야 히스토리가 늘어나지 않고,
+  // 되감기 로직도 브라우저 뒤로가기와 완전히 같은 경로를 탄다.
+  const handlePrev = () => {
+    if (currentStep <= 0) return;
+    if (advanceTimer.current) clearTimeout(advanceTimer.current);
+    pendingStep.current = null;
+    router.back();
+  };
+
   // URL 쿼리 파라미터와 스토어 상태 동기화
   useEffect(() => {
     if (!hydrated) return;
     const stepParam = searchParams.get('step');
     const stepFromUrl = stepParam ? Number.parseInt(stepParam, 10) : 0;
+
+    // 진행 중인 프로그램적 이동: 스토어는 이미 앞서 있으므로 URL이 목표에
+    // 도달할 때까지 아무것도 하지 않는다. (이 가드가 없으면 URL이 아직 이전
+    // step인 순간을 뒤로가기로 오해해 prevStep() 이 호출된다)
+    if (pendingStep.current !== null) {
+      if (stepFromUrl !== pendingStep.current) return;
+      pendingStep.current = null;
+      lastSyncedStep.current = stepFromUrl;
+      return;
+    }
+
     if (stepFromUrl === lastSyncedStep.current) return;
     lastSyncedStep.current = stepFromUrl;
 
@@ -167,12 +197,17 @@ function QuizContent() {
   return (
     <main className="min-h-screen flex flex-col bg-paper">
       {/* 상단 진행바 */}
-      <ProgressBar current={currentStep} total={QUESTIONS.length} />
+      <ProgressBar
+        current={currentStep}
+        total={QUESTIONS.length}
+        onPrev={currentStep > 0 ? handlePrev : undefined}
+      />
 
       {/* 질문 영역 */}
       <div className="flex-1 flex flex-col justify-center px-6 pb-10 space-y-8 overflow-hidden">
         {/* 애니메이션 래퍼 */}
-        <AnimatePresence mode="popLayout" custom={direction}>
+        {/* initial={false}: 첫 문항은 화면 밖에서 밀려들어오지 않고 바로 보인다 */}
+        <AnimatePresence mode="popLayout" custom={direction} initial={false}>
           <motion.div
             key={currentStep}
             custom={direction}
@@ -247,13 +282,7 @@ function QuizContent() {
 
 export default function QuizPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen flex items-center justify-center">
-          로딩 중...
-        </div>
-      }
-    >
+    <Suspense fallback={<Loading />}>
       <QuizContent />
     </Suspense>
   );
