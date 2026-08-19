@@ -148,40 +148,48 @@ function ParentQuizContent() {
               </h2>
             </div>
 
-            <div className="space-y-3">
+            {/* 선택지 목록 — 네이티브 라디오라 화살표 키 이동과 그룹 시맨틱이 따라온다 */}
+            <fieldset className="space-y-3">
+              <legend className="sr-only">{currentQuestion.q}</legend>
               {currentQuestion.options.map((option, index) => {
                 const isSelected = index === selectedIndex;
+                const optionId = `q${currentQuestion.id}-option${index}`;
                 return (
-                  <button
-                    type="button"
-                    key={index}
-                    onClick={() => handleOptionClick(index, option.effects)}
-                    aria-pressed={index === selectedIndex}
-                    aria-disabled={
-                      selectedIndex !== null && index !== selectedIndex
-                    }
-                    className={`w-full text-left p-5 rounded-xl border-2 transition-all group flex items-center justify-between shadow-sm ${
-                      isSelected
-                        ? 'border-grading bg-grading/10 active:scale-[0.98]'
-                        : 'border-stone-200 bg-white/60 hover:bg-stone-100 hover:border-omr active:scale-[0.98] active:bg-stone-200'
-                    }`}
-                  >
-                    <span
-                      className={`font-sans text-lg ${isSelected ? 'text-ink font-medium' : 'text-ink/90 group-hover:font-medium'}`}
-                    >
-                      {option.text}
-                    </span>
-                    <div
-                      className={`w-6 h-6 rounded-full border-2 transition-all ${
-                        isSelected
-                          ? 'bg-grading border-grading scale-110'
-                          : 'border-stone-300 group-hover:border-grading group-hover:bg-grading'
-                      }`}
+                  <div key={index}>
+                    <input
+                      type="radio"
+                      id={optionId}
+                      name={`question-${currentQuestion.id}`}
+                      className="sr-only peer"
+                      checked={isSelected}
+                      onChange={() => handleOptionClick(index, option.effects)}
                     />
-                  </button>
+                    <label
+                      htmlFor={optionId}
+                      className={`w-full text-left p-5 rounded-xl border-2 transition-all group flex items-center justify-between shadow-sm cursor-pointer peer-focus-visible:ring-2 peer-focus-visible:ring-grading peer-focus-visible:ring-offset-2 ${
+                        isSelected
+                          ? 'border-grading bg-grading/10 active:scale-[0.98]'
+                          : 'border-stone-200 bg-white/60 hover:bg-stone-100 hover:border-omr active:scale-[0.98] active:bg-stone-200'
+                      }`}
+                    >
+                      <span
+                        className={`font-sans text-lg ${isSelected ? 'text-ink font-medium' : 'text-ink/90 group-hover:font-medium'}`}
+                      >
+                        {option.text}
+                      </span>
+                      {/* OMR 마킹 느낌의 체크박스 */}
+                      <div
+                        className={`w-6 h-6 rounded-full border-2 transition-all shrink-0 ml-3 ${
+                          isSelected
+                            ? 'bg-grading border-grading scale-110'
+                            : 'border-stone-300 group-hover:border-grading group-hover:bg-grading'
+                        }`}
+                      />
+                    </label>
+                  </div>
                 );
               })}
-            </div>
+            </fieldset>
           </motion.div>
         </AnimatePresence>
       </div>

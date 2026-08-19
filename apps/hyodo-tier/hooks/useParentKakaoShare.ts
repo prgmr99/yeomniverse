@@ -1,10 +1,13 @@
+// 호출한 화면이 토스트를 띄울 수 있도록 결과를 돌려준다 (alert 금지)
+export type ShareOutcome = 'shared' | 'copied' | 'cancelled' | 'failed';
+
 export const useParentKakaoShare = (
   resultType: string,
   resultTitle: string,
   scores: { interest: number; intimacy: number; expression: number },
   childName?: string,
 ) => {
-  const shareKakao = async () => {
+  const shareKakao = async (): Promise<ShareOutcome> => {
     const kakaoKey = process.env.NEXT_PUBLIC_KAKAO_JS_KEY;
     if (window.Kakao && !window.Kakao.isInitialized() && kakaoKey) {
       window.Kakao.init(kakaoKey);
@@ -48,24 +51,37 @@ export const useParentKakaoShare = (
           },
         ],
       });
-    } else if (navigator.share) {
+      return 'shared';
+    }
+
+    if (navigator.share) {
       try {
         await navigator.share({
           title: shareTitle,
           text: shareText,
           url: shareUrl,
         });
+        return 'shared';
       } catch (err) {
-        if (err instanceof Error && err.name !== 'AbortError') {
-          console.error('navigator.share failed:', err);
+        if (err instanceof Error && err.name === 'AbortError') {
+          return 'cancelled';
         }
+        console.error('navigator.share failed:', err);
+        return 'failed';
       }
-    } else if (navigator.clipboard) {
-      await navigator.clipboard.writeText(shareUrl);
-      alert('링크가 복사되었습니다! 자식에게 붙여넣어 공유하세요.');
-    } else {
-      alert(`링크를 복사해서 공유하세요: ${shareUrl}`);
     }
+
+    if (navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        return 'copied';
+      } catch (err) {
+        console.error('clipboard write failed:', err);
+        return 'failed';
+      }
+    }
+
+    return 'failed';
   };
 
   return { shareKakao };

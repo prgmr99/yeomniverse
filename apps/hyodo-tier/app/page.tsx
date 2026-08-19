@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
+import { digitsOnly, isValidYymmdd } from '@/lib/birthday';
 import { getParentsDayBadge } from '@/lib/parentsDay';
 import { useQuizStore } from '@/store/useQuizStore';
 
@@ -22,12 +23,19 @@ export default function Home() {
     setParentsDayBadge(getParentsDayBadge());
   }, []);
 
-  const handleStart = (e: React.MouseEvent) => {
-    if (fatherDob.length !== 6 || motherDob.length !== 6) {
-      e.preventDefault();
-      setError('부모님 생년월일 6자리(YYMMDD)를 정확히 입력해주세요.');
+  const handleStart = () => {
+    const invalid = [
+      !isValidYymmdd(fatherDob) && '아버지',
+      !isValidYymmdd(motherDob) && '어머니',
+    ].filter(Boolean);
+
+    if (invalid.length > 0) {
+      setError(
+        `${invalid.join('·')} 생년월일을 YYMMDD 6자리로 정확히 입력해주세요.`,
+      );
       return;
     }
+
     setError('');
     setBirthdays(fatherDob, motherDob);
     router.push('/quiz');
@@ -129,61 +137,96 @@ export default function Home() {
 
         {/* 하단: 수험번호 입력 & 시작 버튼 */}
         <div className="w-full space-y-6">
-          {/* 입력 폼: 시험지 스타일로 변경 */}
-          <div className="flex flex-col items-center justify-center gap-3 text-ink font-serif">
-            {/* 수험번호 입력 */}
-            <div className="flex flex-col items-center gap-1">
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-m">수험번호:</span>
-                <div className="flex items-center gap-1">
-                  <input
-                    type="tel"
-                    maxLength={6}
-                    placeholder="父 YYMMDD"
-                    value={fatherDob}
-                    onChange={(e) =>
-                      setFatherDob(e.target.value.replace(/[^0-9]/g, ''))
-                    }
-                    className="w-24 bg-transparent border-b-2 border-ink text-center text-m tracking-widest placeholder:text-ink/20 focus:outline-none focus:border-grading transition-colors"
-                  />
-                  <span className="font-bold">-</span>
-                  <input
-                    type="tel"
-                    maxLength={6}
-                    placeholder="母 YYMMDD"
-                    value={motherDob}
-                    onChange={(e) =>
-                      setMotherDob(e.target.value.replace(/[^0-9]/g, ''))
-                    }
-                    className="w-24 bg-transparent border-b-2 border-ink text-center text-m tracking-widest placeholder:text-ink/20 focus:outline-none focus:border-grading transition-colors"
-                  />
-                </div>
+          <fieldset className="w-full space-y-3 text-ink font-serif">
+            <legend className="w-full text-center text-base font-bold mb-3">
+              수험번호 (부모님 생년월일)
+            </legend>
+
+            <div className="flex items-end justify-center gap-3">
+              <div className="flex flex-col items-center gap-1.5">
+                <label
+                  htmlFor="father-dob"
+                  className="text-xs font-sans font-bold text-ink/60"
+                >
+                  아버지
+                </label>
+                <input
+                  id="father-dob"
+                  type="tel"
+                  inputMode="numeric"
+                  autoComplete="off"
+                  maxLength={6}
+                  placeholder="YYMMDD"
+                  value={fatherDob}
+                  onChange={(e) => setFatherDob(digitsOnly(e.target.value, 6))}
+                  aria-invalid={Boolean(error)}
+                  aria-describedby={error ? 'dob-error' : 'dob-help'}
+                  className="w-32 py-2 bg-transparent border-b-2 border-ink text-center text-base tracking-[0.2em] rounded-sm placeholder:text-ink/25 focus:outline-none focus:border-grading focus-visible:ring-2 focus-visible:ring-grading/50 transition-colors"
+                />
+              </div>
+
+              <span aria-hidden="true" className="pb-2 font-bold text-ink/40">
+                –
+              </span>
+
+              <div className="flex flex-col items-center gap-1.5">
+                <label
+                  htmlFor="mother-dob"
+                  className="text-xs font-sans font-bold text-ink/60"
+                >
+                  어머니
+                </label>
+                <input
+                  id="mother-dob"
+                  type="tel"
+                  inputMode="numeric"
+                  autoComplete="off"
+                  maxLength={6}
+                  placeholder="YYMMDD"
+                  value={motherDob}
+                  onChange={(e) => setMotherDob(digitsOnly(e.target.value, 6))}
+                  aria-invalid={Boolean(error)}
+                  aria-describedby={error ? 'dob-error' : 'dob-help'}
+                  className="w-32 py-2 bg-transparent border-b-2 border-ink text-center text-base tracking-[0.2em] rounded-sm placeholder:text-ink/25 focus:outline-none focus:border-grading focus-visible:ring-2 focus-visible:ring-grading/50 transition-colors"
+                />
               </div>
             </div>
 
-            {/* 에러 메시지 */}
+            <p
+              id="dob-help"
+              className="text-xs font-sans text-ink/50 text-center leading-relaxed"
+            >
+              6자리로 입력하세요 (예: 580315). 결과 화면에서 생신을 캘린더에
+              저장할 때 쓰입니다.
+            </p>
+
             {error && (
-              <p className="text-xs text-grading font-bold flex items-center gap-1 animate-fade-in mt-2">
-                <AlertCircle className="w-3 h-3" /> {error}
+              <p
+                id="dob-error"
+                role="alert"
+                className="text-xs font-sans text-grading font-bold flex items-center justify-center gap-1 animate-fade-in"
+              >
+                <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {error}
               </p>
             )}
-          </div>
+          </fieldset>
 
           <div className="space-y-3">
             <button
               type="button"
               onClick={handleStart}
-              className="w-full bg-omr text-white py-4 rounded-lg font-serif font-bold text-xl shadow-lg hover:bg-ink transition-all flex items-center justify-center gap-2"
+              className="w-full bg-omr text-white py-4 rounded-lg font-serif font-bold text-xl shadow-lg hover:bg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-all flex items-center justify-center gap-2"
             >
               문제지 펼치기 <ChevronRight className="w-5 h-5" />
             </button>
 
+            {/* 우회로도 동등한 무게로 — 여기서 막히면 퍼널 최상단이 통째로 샌다 */}
             <button
               type="button"
               onClick={handleDontKnow}
-              className="text-xs text-ink/50 underline hover:text-grading transition-colors"
+              className="w-full min-h-[52px] px-4 rounded-lg border-2 border-ink/15 bg-white/50 text-ink/70 text-sm font-sans hover:bg-white/80 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-all"
             >
-              부모님 생신을 모르겠어요... 그래도 응시하기
+              부모님 생신을 모릅니다 — 그래도 응시하기
             </button>
           </div>
 

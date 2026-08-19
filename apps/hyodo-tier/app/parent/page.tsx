@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
+import { digitsOnly, isValidYymmdd } from '@/lib/birthday';
 import { getParentsDayBadge } from '@/lib/parentsDay';
 import { useParentQuizStore } from '@/store/useParentQuizStore';
 
@@ -22,12 +23,16 @@ export default function ParentHome() {
     setParentsDayBadge(getParentsDayBadge());
   }, []);
 
-  const handleStart = (e: React.MouseEvent) => {
-    if (childName.trim().length === 0 || childBirthday.length !== 6) {
-      e.preventDefault();
-      setError('자녀 이름과 생년월일 6자리(YYMMDD)를 정확히 입력해주세요.');
+  const handleStart = () => {
+    if (childName.trim().length === 0) {
+      setError('자녀 이름을 입력해주세요.');
       return;
     }
+    if (!isValidYymmdd(childBirthday)) {
+      setError('자녀 생년월일을 YYMMDD 6자리로 정확히 입력해주세요.');
+      return;
+    }
+
     setError('');
     setChildProfile(childName.trim(), childBirthday);
     router.push('/parent/quiz');
@@ -112,48 +117,86 @@ export default function ParentHome() {
 
         {/* 하단: 자녀 정보 입력 & 시작 버튼 */}
         <div className="w-full space-y-6">
-          <div className="flex flex-col items-center justify-center gap-3 text-ink font-serif">
-            <div className="flex flex-col items-center gap-2 w-full">
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-m whitespace-nowrap">
-                  수험번호:
-                </span>
-                <div className="flex items-center gap-1">
-                  <input
-                    type="text"
-                    maxLength={10}
-                    placeholder="자녀 이름"
-                    value={childName}
-                    onChange={(e) => setChildName(e.target.value)}
-                    className="w-24 bg-transparent border-b-2 border-ink text-center text-m tracking-widest placeholder:text-ink/20 focus:outline-none focus:border-grading transition-colors"
-                  />
-                  <span className="font-bold">-</span>
-                  <input
-                    type="tel"
-                    maxLength={6}
-                    placeholder="YYMMDD"
-                    value={childBirthday}
-                    onChange={(e) =>
-                      setChildBirthday(e.target.value.replace(/[^0-9]/g, ''))
-                    }
-                    className="w-24 bg-transparent border-b-2 border-ink text-center text-m tracking-widest placeholder:text-ink/20 focus:outline-none focus:border-grading transition-colors"
-                  />
-                </div>
+          <fieldset className="w-full space-y-3 text-ink font-serif">
+            <legend className="w-full text-center text-base font-bold mb-3">
+              수험번호 (자녀 정보)
+            </legend>
+
+            <div className="flex items-end justify-center gap-3">
+              <div className="flex flex-col items-center gap-1.5">
+                <label
+                  htmlFor="child-name"
+                  className="text-xs font-sans font-bold text-ink/60"
+                >
+                  자녀 이름
+                </label>
+                <input
+                  id="child-name"
+                  type="text"
+                  autoComplete="off"
+                  maxLength={10}
+                  placeholder="홍길동"
+                  value={childName}
+                  onChange={(e) => setChildName(e.target.value)}
+                  aria-invalid={Boolean(error)}
+                  aria-describedby={error ? 'child-error' : 'child-help'}
+                  className="w-32 py-2 bg-transparent border-b-2 border-ink text-center text-base rounded-sm placeholder:text-ink/25 focus:outline-none focus:border-grading focus-visible:ring-2 focus-visible:ring-grading/50 transition-colors"
+                />
+              </div>
+
+              <span aria-hidden="true" className="pb-2 font-bold text-ink/40">
+                –
+              </span>
+
+              <div className="flex flex-col items-center gap-1.5">
+                <label
+                  htmlFor="child-dob"
+                  className="text-xs font-sans font-bold text-ink/60"
+                >
+                  생년월일
+                </label>
+                <input
+                  id="child-dob"
+                  type="tel"
+                  inputMode="numeric"
+                  autoComplete="off"
+                  maxLength={6}
+                  placeholder="YYMMDD"
+                  value={childBirthday}
+                  onChange={(e) =>
+                    setChildBirthday(digitsOnly(e.target.value, 6))
+                  }
+                  aria-invalid={Boolean(error)}
+                  aria-describedby={error ? 'child-error' : 'child-help'}
+                  className="w-32 py-2 bg-transparent border-b-2 border-ink text-center text-base tracking-[0.2em] rounded-sm placeholder:text-ink/25 focus:outline-none focus:border-grading focus-visible:ring-2 focus-visible:ring-grading/50 transition-colors"
+                />
               </div>
             </div>
 
+            <p
+              id="child-help"
+              className="text-xs font-sans text-ink/50 text-center leading-relaxed"
+            >
+              생년월일은 6자리로 입력하세요 (예: 950412). 결과를 자녀에게 보낼
+              때 쓰입니다.
+            </p>
+
             {error && (
-              <p className="text-xs text-grading font-bold flex items-center gap-1 animate-fade-in mt-2">
-                <AlertCircle className="w-3 h-3" /> {error}
+              <p
+                id="child-error"
+                role="alert"
+                className="text-xs font-sans text-grading font-bold flex items-center justify-center gap-1 animate-fade-in"
+              >
+                <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {error}
               </p>
             )}
-          </div>
+          </fieldset>
 
           <div className="space-y-3">
             <button
               type="button"
               onClick={handleStart}
-              className="w-full bg-omr text-white py-4 rounded-lg font-serif font-bold text-xl shadow-lg hover:bg-ink transition-all flex items-center justify-center gap-2"
+              className="w-full bg-omr text-white py-4 rounded-lg font-serif font-bold text-xl shadow-lg hover:bg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-all flex items-center justify-center gap-2"
             >
               문제지 펼치기 <ChevronRight className="w-5 h-5" />
             </button>
@@ -161,9 +204,9 @@ export default function ParentHome() {
             <button
               type="button"
               onClick={handleDontKnow}
-              className="text-xs text-ink/50 underline hover:text-grading transition-colors"
+              className="w-full min-h-[52px] px-4 rounded-lg border-2 border-ink/15 bg-white/50 text-ink/70 text-sm font-sans hover:bg-white/80 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-all"
             >
-              자식 생일을 모르겠어요... 그래도 응시하기
+              자식 생일을 모릅니다 — 그래도 응시하기
             </button>
           </div>
 

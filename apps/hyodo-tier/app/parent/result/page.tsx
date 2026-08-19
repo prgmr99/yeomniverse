@@ -1,6 +1,6 @@
 'use client';
 
-import { Loading } from '@hyo/ui';
+import { Loading, Toast, type ToastMessage } from '@hyo/ui';
 import { normalizeScores, PARENT_SCORE_RANGES } from '@hyo/utils';
 import { BookOpen, Heart, RotateCcw, Share2 } from 'lucide-react';
 import Link from 'next/link';
@@ -22,6 +22,7 @@ function ParentResultContent() {
     childProfile,
   } = useParentQuizStore();
   const [isReady, setIsReady] = useState(false);
+  const [toast, setToast] = useState<ToastMessage | null>(null);
 
   // 하이드레이션 완료 여부 추적
   const [hydrated, setHydrated] = useState(() =>
@@ -63,6 +64,18 @@ function ParentResultContent() {
     childName,
   );
 
+  const handleShare = async () => {
+    const outcome = await shareKakao();
+    if (outcome === 'copied') {
+      setToast({ message: '링크를 복사했어요. 자식에게 붙여넣어 보내보세요.' });
+    } else if (outcome === 'failed') {
+      setToast({
+        message: '공유에 실패했어요. 주소창의 링크를 복사해 보내주세요.',
+        tone: 'error',
+      });
+    }
+  };
+
   // 원점수는 축마다 도달 범위가 달라 그대로 그리면 그래프가 왜곡된다.
   // 판정 로직은 원점수를 쓰고, 표시할 때만 0~100으로 환산한다.
   const displayScores = useMemo(
@@ -85,6 +98,22 @@ function ParentResultContent() {
   const displayName = childProfile.name
     ? `우리 ${childProfile.name}`
     : '우리 애';
+
+  const handleCopyMessage = async () => {
+    const message = `${displayName}, 엄마/아빠가 오늘 너에 대해 얼마나 아는지 테스트해봤어. 너도 한번 풀어보고 결과 보여줄래? 엄마/아빠는 너를 사랑해. 🌸`;
+    try {
+      await navigator.clipboard.writeText(message);
+      setToast({
+        message: '마음을 담은 메시지를 복사했어요. 카톡에 붙여넣어 보내보세요.',
+      });
+    } catch {
+      setToast({
+        message:
+          '복사에 실패했어요. 브라우저 설정에서 복사 권한을 확인해주세요.',
+        tone: 'error',
+      });
+    }
+  };
 
   return (
     <main className="min-h-screen flex flex-col items-center py-10 px-6 animate-fade-in space-y-8 pb-20">
@@ -169,7 +198,7 @@ function ParentResultContent() {
         <button
           type="button"
           className="w-full bg-[#FEE500] text-[#191919] py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md hover:opacity-90 transition-all text-lg"
-          onClick={shareKakao}
+          onClick={handleShare}
         >
           <Share2 className="w-5 h-5" /> 자식에게 성적표 공유하고, 테스트 넘기기
         </button>
@@ -178,13 +207,7 @@ function ParentResultContent() {
           <button
             type="button"
             className="w-full bg-grading/10 text-grading border-2 border-grading/30 py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-grading/20 transition-all"
-            onClick={async () => {
-              const message = `${displayName}, 엄마/아빠가 오늘 너에 대해 얼마나 아는지 테스트해봤어. 너도 한번 풀어보고 결과 보여줄래? 엄마/아빠는 너를 사랑해. 🌸`;
-              await navigator.clipboard.writeText(message);
-              alert(
-                '마음을 담은 메시지가 복사됐어요. 자식에게 카톡으로 붙여넣어 보내보세요.',
-              );
-            }}
+            onClick={handleCopyMessage}
           >
             <Heart className="w-5 h-5" />{' '}
             {childProfile.name ? `${childProfile.name}에게` : '자식에게'} 마음
@@ -209,6 +232,8 @@ function ParentResultContent() {
           </Link>
         </div>
       </div>
+
+      <Toast toast={toast} onDismiss={() => setToast(null)} />
     </main>
   );
 }

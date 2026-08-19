@@ -1,6 +1,6 @@
 'use client';
 
-import { Loading } from '@hyo/ui';
+import { Loading, Toast, type ToastMessage } from '@hyo/ui';
 import {
   CHILD_SCORE_RANGES,
   normalizeScores,
@@ -61,6 +61,7 @@ function ResultContent() {
     skippedBirthday,
   } = useQuizStore();
   const [isReady, setIsReady] = useState(false); // 클라이언트 렌더링 준비 여부
+  const [toast, setToast] = useState<ToastMessage | null>(null);
 
   // 하이드레이션 완료 여부 추적 (세션스토리지 → Zustand 복원 완료 전에 리다이렉트 방지)
   const [hydrated, setHydrated] = useState(() =>
@@ -101,6 +102,35 @@ function ResultContent() {
     result.grade,
     scores,
   );
+
+  const handleShare = async () => {
+    const outcome = await shareKakao();
+    if (outcome === 'copied') {
+      setToast({ message: '링크를 복사했어요. 부모님께 붙여넣어 보내보세요.' });
+    } else if (outcome === 'failed') {
+      setToast({
+        message: '공유에 실패했어요. 주소창의 링크를 복사해 보내주세요.',
+        tone: 'error',
+      });
+    }
+  };
+
+  const handleCopyMessage = async () => {
+    const message =
+      '엄마, 아빠. 오늘 효도티어 테스트를 해봤어요. 평소에 표현은 잘 못했지만, 두 분께 정말 감사하고 사랑한다고 꼭 전하고 싶었어요. 항상 건강하세요. 🌸';
+    try {
+      await navigator.clipboard.writeText(message);
+      setToast({
+        message: '마음을 담은 메시지를 복사했어요. 카톡에 붙여넣어 보내보세요.',
+      });
+    } catch {
+      setToast({
+        message:
+          '복사에 실패했어요. 브라우저 설정에서 복사 권한을 확인해주세요.',
+        tone: 'error',
+      });
+    }
+  };
 
   // 원점수는 축마다 도달 범위가 달라(친밀도 -115~175 등) 그대로 그리면 그래프가 왜곡된다.
   // 판정 로직은 계속 원점수를 쓰고, 표시할 때만 0~100으로 환산한다.
@@ -338,7 +368,7 @@ function ResultContent() {
           className={`w-full bg-[#FEE500] text-[#191919] py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md hover:opacity-90 transition-all ${
             sharedResultId ? 'text-base' : 'text-lg'
           }`}
-          onClick={shareKakao}
+          onClick={handleShare}
         >
           <Share2 className="w-5 h-5" />{' '}
           {sharedResultId ? '이 성적표 공유하기' : '부모님께 공유하기'}
@@ -349,14 +379,7 @@ function ResultContent() {
             <button
               type="button"
               className="w-full bg-grading/10 text-grading border-2 border-grading/30 py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-grading/20 transition-all"
-              onClick={async () => {
-                const message =
-                  '엄마, 아빠. 오늘 효도티어 테스트를 해봤어요. 평소에 표현은 잘 못했지만, 두 분께 정말 감사하고 사랑한다고 꼭 전하고 싶었어요. 항상 건강하세요. 🌸';
-                await navigator.clipboard.writeText(message);
-                alert(
-                  '마음을 담은 메시지가 복사됐어요. 부모님께 카톡으로 붙여넣어 보내보세요.',
-                );
-              }}
+              onClick={handleCopyMessage}
             >
               <Heart className="w-5 h-5" /> 어머니/아버지께 마음 전하기
             </button>
@@ -404,6 +427,8 @@ function ResultContent() {
           </Link>
         </div>
       </div>
+
+      <Toast toast={toast} onDismiss={() => setToast(null)} />
     </main>
   );
 }
