@@ -1,9 +1,9 @@
+import { QUESTION_COUNT } from '@hyo/utils';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: '문제풀기',
-  description:
-    '2026학년도 대국민 효도능력시험 문제를 풀어보세요. 14문항으로 당신의 효도 등급을 측정합니다.',
+  description: `2026학년도 대국민 효도능력시험 문제를 풀어보세요. ${QUESTION_COUNT}문항으로 당신의 효도 등급을 측정합니다.`,
   robots: { index: false, follow: true },
   alternates: { canonical: 'https://hyodo-tier.yeomniverse.com/quiz' },
 };

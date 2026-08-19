@@ -1,10 +1,12 @@
 'use client';
 
+import { PARENT_QUESTION_COUNT } from '@hyo/utils';
 import { AlertCircle, BookOpen, ChevronRight, Users } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Script from 'next/script';
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getParentsDayBadge } from '@/lib/parentsDay';
 import { useParentQuizStore } from '@/store/useParentQuizStore';
 
 export default function ParentHome() {
@@ -14,13 +16,10 @@ export default function ParentHome() {
   const [childBirthday, setChildBirthday] = useState('');
   const [error, setError] = useState('');
 
-  const daysUntilParentsDay = useMemo(() => {
-    const target = new Date('2026-05-08T00:00:00+09:00');
-    const now = new Date();
-    return Math.max(
-      0,
-      Math.ceil((target.getTime() - now.getTime()) / 86400000),
-    );
+  // 프리렌더 시점에 날짜가 고정되지 않도록 클라이언트에서 계산한다.
+  const [parentsDayBadge, setParentsDayBadge] = useState<string | null>(null);
+  useEffect(() => {
+    setParentsDayBadge(getParentsDayBadge());
   }, []);
 
   const handleStart = (e: React.MouseEvent) => {
@@ -47,7 +46,7 @@ export default function ParentHome() {
         name: '부모용 시험은 자식용과 어떻게 다른가요?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: '14문항 구조는 동일하지만, 질문의 관점과 결과 유형이 다릅니다. 자식용(1교시)은 부모님에 대한 관심도를 측정하고, 부모용(2교시)은 자식에 대한 이해와 소통 방식을 분석하여 8가지 부모 유형 중 하나를 제시합니다.',
+          text: `${PARENT_QUESTION_COUNT}문항 구조는 동일하지만, 질문의 관점과 결과 유형이 다릅니다. 자식용(1교시)은 부모님에 대한 관심도를 측정하고, 부모용(2교시)은 자식에 대한 이해와 소통 방식을 분석하여 8가지 부모 유형 중 하나를 제시합니다.`,
         },
       },
       {
@@ -74,12 +73,13 @@ export default function ParentHome() {
       <section className="flex flex-col items-center justify-center w-full pt-8">
         {/* 상단: 시험 정보 헤더 */}
         <div className="w-full border-b-2 border-ink pb-4 mb-4">
-          <span className="inline-flex items-center gap-1 text-[11px] font-sans font-bold bg-grading/10 text-grading px-2 py-0.5 rounded-full mb-2">
-            🌸{' '}
-            {daysUntilParentsDay > 0
-              ? `어버이날 D-${daysUntilParentsDay}`
-              : '어버이날입니다'}
-          </span>
+          <div className="min-h-[26px] mb-2">
+            {parentsDayBadge && (
+              <span className="inline-flex items-center gap-1 text-[11px] font-sans font-bold bg-grading/10 text-grading px-2 py-0.5 rounded-full">
+                🌸 {parentsDayBadge}
+              </span>
+            )}
+          </div>
           <p className="text-sm font-serif font-bold tracking-widest mb-1">
             제2교시
           </p>
@@ -192,10 +192,10 @@ export default function ParentHome() {
           </h3>
           <p className="text-sm text-ink/70 leading-relaxed break-keep">
             &apos;2교시 자녀 탐구영역&apos;은 부모님이 자식에 대해 얼마나 알고
-            계신지를 14개의 문항으로 측정합니다. 자식의 관심사, 생활 패턴, 소통
-            방식에 대한 이해를 종합적으로 분석하여 8가지 부모 유형 중 하나를
-            제시합니다. 결과를 자식에게 공유하면, 자식도 본인 편 테스트를 풀고
-            서로의 성적표를 비교해볼 수 있습니다.
+            계신지를 {PARENT_QUESTION_COUNT}개의 문항으로 측정합니다. 자식의
+            관심사, 생활 패턴, 소통 방식에 대한 이해를 종합적으로 분석하여 8가지
+            부모 유형 중 하나를 제시합니다. 결과를 자식에게 공유하면, 자식도
+            본인 편 테스트를 풀고 서로의 성적표를 비교해볼 수 있습니다.
           </p>
         </div>
 
@@ -210,10 +210,10 @@ export default function ParentHome() {
               Q. 부모용 시험은 자식용과 어떻게 다른가요?
             </h4>
             <p className="text-xs text-ink/60 leading-relaxed">
-              14문항 구조는 동일하지만, 질문의 관점과 결과 유형이 다릅니다.
-              자식용(1교시)은 부모님에 대한 관심도를 측정하고, 부모용(2교시)은
-              자식에 대한 이해와 소통 방식을 분석하여 8가지 부모 유형 중 하나를
-              제시합니다.
+              {PARENT_QUESTION_COUNT}문항 구조는 동일하지만, 질문의 관점과 결과
+              유형이 다릅니다. 자식용(1교시)은 부모님에 대한 관심도를 측정하고,
+              부모용(2교시)은 자식에 대한 이해와 소통 방식을 분석하여 8가지 부모
+              유형 중 하나를 제시합니다.
             </p>
           </div>
 

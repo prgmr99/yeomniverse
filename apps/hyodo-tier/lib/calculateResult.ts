@@ -12,7 +12,15 @@ type Flags = {
   sns: number;
 };
 
-export function calculateResult(scores: Scores, flags: Flags): ResultType {
+type Context = {
+  skippedBirthday?: boolean; // 랜딩에서 "부모님 생신을 모르겠어요"로 시작했는지
+};
+
+export function calculateResult(
+  scores: Scores,
+  flags: Flags,
+  context: Context = {},
+): ResultType {
   const { interest, intimacy, expression } = scores;
   const { tsundere, sns } = flags;
 
@@ -59,5 +67,11 @@ export function calculateResult(scores: Scores, flags: Flags): ResultType {
   }
 
   // 3. 그 외 (점수 미달) -> 하숙생
+  // 단, 생신조차 모른 채 응시했고 점수도 최하위면 특수 엔딩으로 대체한다.
+  // 좋은 점수를 받은 사람까지 덮어쓰지 않도록 최하위 구간에만 적용.
+  if (context.skippedBirthday) {
+    return RESULTS.UNFILIAL;
+  }
+
   return RESULTS.LODGER;
 }

@@ -97,6 +97,6 @@ export const RESULTS: Record<string, ResultType> = {
     solution:
       '지금 당장 부모님께 전화해서 생신을 여쭤보세요. 그리고 달력에 빨간 펜으로 크게 적어두세요. 그게 효도의 첫걸음입니다.',
     tags: ['#불효자', '#호적파일뻔', '#반성하세요'],
-    imageColor: 'bg-gray-400',
+    imageColor: 'bg-gray-300',
   },
 };

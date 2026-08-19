@@ -1,3 +1,4 @@
+import { QUESTION_COUNT } from '@hyo/utils';
 // 블로그 게시물 타입 정의
 export type BlogPost = {
   slug: string;
@@ -154,7 +155,7 @@ export const BLOG_POSTS: Record<string, BlogPost> = {
 **관련 글**:
 - [효도 잘하는 법 - 바쁜 직장인을 위한 5가지 팁](/blog/how-to-be-good-child)
 - [효도 심리테스트로 알아보는 나의 효도 스타일](/blog/filial-piety-test)
-- [부모님 자서전 만들기 - 14문항으로 시작하는 인터뷰 가이드](/blog/parent-autobiography)
+- [부모님 자서전 만들기 - ${QUESTION_COUNT}문항으로 시작하는 인터뷰 가이드](/blog/parent-autobiography)
     `,
   },
   'how-to-be-good-child': {
@@ -271,7 +272,7 @@ export const BLOG_POSTS: Record<string, BlogPost> = {
 **관련 글**:
 - [부모님과 대화 주제 10가지](/blog/conversation-topics)
 - [효도 심리테스트로 알아보는 나의 효도 스타일](/blog/filial-piety-test)
-- [부모님 자서전 만들기 - 14문항으로 시작하는 인터뷰 가이드](/blog/parent-autobiography)
+- [부모님 자서전 만들기 - ${QUESTION_COUNT}문항으로 시작하는 인터뷰 가이드](/blog/parent-autobiography)
     `,
   },
   'filial-piety-test': {
@@ -360,7 +361,7 @@ export const BLOG_POSTS: Record<string, BlogPost> = {
 ## 테스트는 어떻게 진행되나요?
 
 1. **소요 시간**: 3-5분
-2. **문항 수**: 14개
+2. **문항 수**: ${QUESTION_COUNT}개
 3. **결과**: 즉시 확인 + 상세 분석
 
 ## 테스트 후에는?
@@ -391,15 +392,13 @@ export const BLOG_POSTS: Record<string, BlogPost> = {
 **관련 글**:
 - [부모님과 대화 주제 10가지](/blog/conversation-topics)
 - [효도 잘하는 법 - 바쁜 직장인 가이드](/blog/how-to-be-good-child)
-- [부모님 자서전 만들기 - 14문항으로 시작하는 인터뷰 가이드](/blog/parent-autobiography)
+- [부모님 자서전 만들기 - ${QUESTION_COUNT}문항으로 시작하는 인터뷰 가이드](/blog/parent-autobiography)
     `,
   },
   'parent-autobiography': {
     slug: 'parent-autobiography',
-    title:
-      '부모님 자서전 만들기 - 효도티어 14문항으로 시작하는 인터뷰 가이드',
-    description:
-      '부모님 자서전, 어디서부터 시작할지 막막하신가요? 효도티어 부모님 탐구영역 14문항을 첫 질문지로 활용하고, 시기별 인터뷰 질문 50개와 녹음·기록 노하우까지 한 번에 정리했습니다.',
+    title: `부모님 자서전 만들기 - 효도티어 ${QUESTION_COUNT}문항으로 시작하는 인터뷰 가이드`,
+    description: `부모님 자서전, 어디서부터 시작할지 막막하신가요? 효도티어 부모님 탐구영역 ${QUESTION_COUNT}문항을 첫 질문지로 활용하고, 시기별 인터뷰 질문 50개와 녹음·기록 노하우까지 한 번에 정리했습니다.`,
     author: '효도티어 위원회',
     date: '2026-04-26',
     readTime: '8분',
@@ -415,7 +414,7 @@ export const BLOG_POSTS: Record<string, BlogPost> = {
       '부모님 탐구영역',
     ],
     content: `
-# 부모님 자서전 만들기 - 효도티어 14문항으로 시작하는 인터뷰 가이드
+# 부모님 자서전 만들기 - 효도티어 ${QUESTION_COUNT}문항으로 시작하는 인터뷰 가이드
 
 "엄마, 옛날 얘기 좀 해주세요." — 한 번쯤 꺼내봤지만, 어색해서 곧장 묻혀버린 말일 겁니다. 부모님 자서전을 만들고 싶다는 생각은 많이들 하지만, 실제로 첫 질문을 던지기까지가 가장 어렵죠. 이 글은 **부모님 자서전 만들기**의 첫 30분을 가장 자연스럽게 시작하는 방법을 정리했습니다.
 
@@ -433,19 +432,19 @@ export const BLOG_POSTS: Record<string, BlogPost> = {
 
 이 세 문제를 동시에 푸는 가장 쉬운 방법이 **부모님 퀴즈로 시작하기**입니다.
 
-## 효도티어 14문항을 첫 질문지로 쓰는 이유
+## 효도티어 ${QUESTION_COUNT}문항을 첫 질문지로 쓰는 이유
 
-[효도티어 부모님 탐구영역](/) 14문항은 원래 **자식이 부모님에 대해 얼마나 아는지**를 측정하는 부모님 퀴즈입니다. 그런데 같은 14문항을 부모님께 직접 여쭤보면, 그대로 자서전 인터뷰의 첫 챕터가 됩니다.
+[효도티어 부모님 탐구영역](/) ${QUESTION_COUNT}문항은 원래 **자식이 부모님에 대해 얼마나 아는지**를 측정하는 부모님 퀴즈입니다. 그런데 같은 ${QUESTION_COUNT}문항을 부모님께 직접 여쭤보면, 그대로 자서전 인터뷰의 첫 챕터가 됩니다.
 
 - 형식이 "퀴즈"라 부모님이 부담을 덜 느끼십니다.
-- 14문항이라 시간이 정해져 있어 시작·끝이 명확합니다.
+- ${QUESTION_COUNT}문항이라 시간이 정해져 있어 시작·끝이 명확합니다.
 - 답변이 짧게 끝나지 않습니다 — 한 문항당 자연스럽게 5-10분 이야기가 따라옵니다.
 
 먼저 [부모님 탐구영역](/)을 본인이 풀어본 뒤, 같은 질문을 부모님께 다시 여쭤보세요. **자식이 틀린 답을 본 부모님의 정정 한 마디**가 자서전의 첫 문장이 됩니다.
 
 ## 본격 자서전 인터뷰 — 시기별 질문 50개
 
-14문항으로 분위기를 풀었다면, 아래 질문지로 본격 인터뷰를 이어가세요.
+${QUESTION_COUNT}문항으로 분위기를 풀었다면, 아래 질문지로 본격 인터뷰를 이어가세요.
 
 ### 1️⃣ 어린 시절 (출생 ~ 초등)
 1. 본인 이름은 누가, 왜 그렇게 지으셨나요?
@@ -541,7 +540,7 @@ export const BLOG_POSTS: Record<string, BlogPost> = {
 
 ## 지금 바로 시작하기
 
-부모님 자서전의 첫 페이지는 거창한 인터뷰가 아니라, **오늘 저녁 부모님과 푸는 14문항 부모님 퀴즈**일 수 있습니다.
+부모님 자서전의 첫 페이지는 거창한 인터뷰가 아니라, **오늘 저녁 부모님과 푸는 ${QUESTION_COUNT}문항 부모님 퀴즈**일 수 있습니다.
 
 [**👉 효도티어 부모님 탐구영역 시작하기**](/)
 [**👉 부모님이 직접 푸는 자녀 탐구영역(2교시)**](/parent)

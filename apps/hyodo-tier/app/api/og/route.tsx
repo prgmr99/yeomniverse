@@ -15,7 +15,7 @@ const bgColorMap: Record<string, string> = {
   'bg-orange-100': '#ffedd5',
   'bg-slate-200': '#e2e8f0',
   'bg-stone-200': '#e7e5e4',
-  'bg-gray-400': '#9ca3af',
+  'bg-gray-300': '#d1d5db',
 };
 
 // 등급 결정 함수
@@ -29,6 +29,36 @@ function getGrade(resultId: string, mode: string): string {
   if (resultId === 'LODGER') return '9등급';
   if (resultId === 'UNFILIAL') return '등급외';
   return '등급외';
+}
+
+// 템플릿에 고정으로 들어가는 문자열 (폰트 서브셋 요청에 함께 넘긴다)
+const OG_STATIC_TEXT = [
+  '효도티어',
+  '2026학년도 효도능력시험 · 부모편',
+  '2026학년도 대국민 효도능력시험',
+  '관심도친밀도표현력',
+  '자식도 풀러가기 →',
+  '너도 테스트 하러가기 →',
+  '1등급9등급등급외',
+  '0123456789"',
+].join('');
+
+// gstatic 직링크는 폰트 버전이 바뀌면 404가 되므로 CSS API로 매번 해석한다.
+// satori는 woff2를 읽지 못해 truetype/opentype src만 사용한다.
+async function loadNotoSansKr(text: string): Promise<ArrayBuffer> {
+  const cssUrl = `https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&text=${encodeURIComponent(text)}`;
+  const css = await fetch(cssUrl).then((res) => res.text());
+  const src = css.match(
+    /src:\s*url\((\S+?)\)\s*format\('(?:truetype|opentype)'\)/,
+  );
+
+  if (!src) {
+    throw new Error(
+      `Noto Sans KR 폰트 URL을 찾지 못했습니다: ${css.slice(0, 200)}`,
+    );
+  }
+
+  return fetch(src[1]).then((res) => res.arrayBuffer());
 }
 
 export async function GET(req: NextRequest) {
@@ -52,13 +82,10 @@ export async function GET(req: NextRequest) {
     const bgColor = bgColorMap[result.imageColor] || '#f5f5f4';
     const grade = getGrade(resultId, mode);
 
-    // 한글 폰트 로드
-    const fontData = await fetch(
-      new URL(
-        'https://fonts.gstatic.com/s/notosanskr/v27/PbykFmXiEBPT4ITbgNA5Cgm207zl4z0.ttf',
-        import.meta.url,
-      ),
-    ).then((res) => res.arrayBuffer());
+    // 한글 폰트 로드 (이 이미지에 실제로 쓰이는 글자만 서브셋으로 받는다)
+    const fontData = await loadNotoSansKr(
+      OG_STATIC_TEXT + result.title + result.subtitle + grade,
+    );
 
     return new ImageResponse(
       <div
@@ -181,7 +208,7 @@ export async function GET(req: NextRequest) {
                 maxWidth: '800px',
               }}
             >
-              &quot;{result.subtitle}&quot;
+              {`"${result.subtitle}"`}
             </div>
 
             {/* 점수 필 — 세 점수가 모두 0이면 숨김 */}

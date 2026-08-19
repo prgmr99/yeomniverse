@@ -1,10 +1,10 @@
+import { QUESTION_COUNT } from '@hyo/utils';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: '서비스 소개',
-  description:
-    '효도티어는 부모님 탐구영역 14문항으로 효도 등급을 진단하는 부모님 퀴즈 서비스입니다. 관심도, 친밀도, 표현력 3가지 지표로 부모님과의 관계를 분석하고, 부모님 자서전을 시작할 인터뷰 질문지로도 활용할 수 있습니다.',
+  description: `효도티어는 부모님 탐구영역 ${QUESTION_COUNT}문항으로 효도 등급을 진단하는 부모님 퀴즈 서비스입니다. 관심도, 친밀도, 표현력 3가지 지표로 부모님과의 관계를 분석하고, 부모님 자서전을 시작할 인터뷰 질문지로도 활용할 수 있습니다.`,
   keywords: [
     '효도티어 소개',
     '부모님 탐구영역',
@@ -16,8 +16,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: '효도티어 서비스 소개 | 부모님 탐구영역 · 부모님 퀴즈',
-    description:
-      '효도티어는 부모님 탐구영역 14문항으로 효도 등급을 진단하는 부모님 퀴즈 서비스이자, 부모님 자서전을 시작할 인터뷰 질문지입니다.',
+    description: `효도티어는 부모님 탐구영역 ${QUESTION_COUNT}문항으로 효도 등급을 진단하는 부모님 퀴즈 서비스이자, 부모님 자서전을 시작할 인터뷰 질문지입니다.`,
     url: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/about`,
     type: 'website',
   },

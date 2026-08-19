@@ -114,9 +114,32 @@ export const QUESTIONS: Question[] = [
 		],
 	},
 
-	// --- PART 2. 관계 탐구 (친밀도/성향 위주) ---
 	{
 		id: 6,
+		q: "어버이날이나 생신, 당신이 챙기는 방식에 가장 가까운 것은?",
+		options: [
+			{
+				text: "미리 예약해두고 그날 하루를 통째로 비워둔다",
+				effects: { interest: 15, intimacy: 10, expression: 10 },
+			},
+			{
+				text: "카네이션 달아드린 사진부터 찍어 SNS에 올린다",
+				effects: { expression: 15, sns: 2 },
+			},
+			{
+				text: '계좌이체 후 "맛있는 거 사드세요" 한 줄',
+				effects: { expression: 10 },
+			}, // 금융치료 분기 보강
+			{
+				text: "당일 저녁에야 아차 싶어 전화만 급하게 드린다",
+				effects: { interest: -5, intimacy: -5 },
+			},
+		],
+	},
+
+	// --- PART 2. 관계 탐구 (친밀도/성향 위주) ---
+	{
+		id: 7,
 		q: "부모님에게 전화가 왔을 때 당신의 리액션은?",
 		options: [
 			{
@@ -138,7 +161,7 @@ export const QUESTIONS: Question[] = [
 		],
 	},
 	{
-		id: 7,
+		id: 8,
 		q: "부모님이 스마트폰 사용법을 물어보실 때 태도는?",
 		options: [
 			{
@@ -157,7 +180,7 @@ export const QUESTIONS: Question[] = [
 		],
 	},
 	{
-		id: 8,
+		id: 9,
 		q: "평소 부모님과 카톡 대화 스타일은?",
 		options: [
 			{
@@ -176,7 +199,7 @@ export const QUESTIONS: Question[] = [
 		],
 	},
 	{
-		id: 9,
+		id: 10,
 		q: "부모님의 손을 마지막으로 꼭 잡아드린 적은 언제인가요?",
 		options: [
 			{
@@ -184,8 +207,8 @@ export const QUESTIONS: Question[] = [
 				effects: { intimacy: 15, expression: 15 },
 			},
 			{
-				text: "명절이나 특별한 날엔 잠깐 잡는다",
-				effects: { intimacy: 8, expression: 5 },
+				text: "명절에 가족사진 찍을 때 잠깐 잡는다",
+				effects: { intimacy: 8, expression: 5, sns: 1 },
 			},
 			{
 				text: "기억이 잘 안 난다 (꽤 오래된 듯)",
@@ -198,7 +221,7 @@ export const QUESTIONS: Question[] = [
 		],
 	},
 	{
-		id: 10,
+		id: 11,
 		q: '부모님이 뜬금없이 "사랑해"라고 카톡을 보내셨다.',
 		options: [
 			{
@@ -219,7 +242,7 @@ export const QUESTIONS: Question[] = [
 
 	// --- PART 3. 심화 탐구 (가치관) ---
 	{
-		id: 11,
+		id: 12,
 		q: "부모님이 혼자 계시는 시간, 주로 무엇을 하시는지 아시나요?",
 		options: [
 			{
@@ -241,7 +264,7 @@ export const QUESTIONS: Question[] = [
 		],
 	},
 	{
-		id: 12,
+		id: 13,
 		q: "부모님의 젊은 시절 '장래 희망'을 알고 있나요?",
 		options: [
 			{
@@ -254,7 +277,7 @@ export const QUESTIONS: Question[] = [
 		],
 	},
 	{
-		id: 13,
+		id: 14,
 		q: "부모님이 요즘 가장 두려워하시는 일이 뭔지 아시나요?",
 		options: [
 			{
@@ -276,7 +299,7 @@ export const QUESTIONS: Question[] = [
 		],
 	},
 	{
-		id: 14,
+		id: 15,
 		q: "다음 생에도 가족으로 만난다면?",
 		options: [
 			{
@@ -295,3 +318,6 @@ export const QUESTIONS: Question[] = [
 		],
 	},
 ];
+
+// 문항 수는 항상 데이터에서 파생시킨다 (카피·메타데이터에 숫자를 박지 말 것)
+export const QUESTION_COUNT = QUESTIONS.length;

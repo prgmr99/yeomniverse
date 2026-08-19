@@ -20,6 +20,7 @@ interface QuizState {
   scores: Scores; // 누적 점수
   flags: Flags; // 누적 플래그
   birthdays: { father: string; mother: string }; // 부모님 생년월일
+  skippedBirthday: boolean; // 생신을 모른 채 응시했는지 (UNFILIAL 판정용)
 
   // Actions
   setAnswer: (choiceIndex: number, effects: Partial<Scores & Flags>) => void;
@@ -27,6 +28,7 @@ interface QuizState {
   prevStep: () => void;
   resetQuiz: () => void;
   setBirthdays: (father: string, mother: string) => void;
+  skipBirthdays: () => void;
 }
 
 export const useQuizStore = create<QuizState>()(
@@ -38,6 +40,7 @@ export const useQuizStore = create<QuizState>()(
       scores: { interest: 0, intimacy: 0, expression: 0 },
       flags: { tsundere: 0, sns: 0 },
       birthdays: { father: '', mother: '' },
+      skippedBirthday: false,
 
       // 답변 선택 시 점수 누적 로직
       setAnswer: (choiceIndex, effects) =>
@@ -98,11 +101,17 @@ export const useQuizStore = create<QuizState>()(
           scores: { interest: 0, intimacy: 0, expression: 0 },
           flags: { tsundere: 0, sns: 0 },
           birthdays: state.birthdays,
+          skippedBirthday: state.skippedBirthday,
         }));
       },
 
       // 부모님 생년월일 저장
-      setBirthdays: (father, mother) => set({ birthdays: { father, mother } }),
+      setBirthdays: (father, mother) =>
+        set({ birthdays: { father, mother }, skippedBirthday: false }),
+
+      // 생신을 모른 채 응시 시작
+      skipBirthdays: () =>
+        set({ birthdays: { father: '', mother: '' }, skippedBirthday: true }),
     }),
     {
       name: 'hyo-quiz',
@@ -113,6 +122,7 @@ export const useQuizStore = create<QuizState>()(
         scores: state.scores,
         flags: state.flags,
         birthdays: state.birthdays,
+        skippedBirthday: state.skippedBirthday,
       }),
     },
   ),

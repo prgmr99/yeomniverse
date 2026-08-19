@@ -324,3 +324,6 @@ export const PARENT_QUESTIONS: Question[] = [
 		],
 	},
 ];
+
+// 문항 수는 항상 데이터에서 파생시킨다 (카피·메타데이터에 숫자를 박지 말 것)
+export const PARENT_QUESTION_COUNT = PARENT_QUESTIONS.length;

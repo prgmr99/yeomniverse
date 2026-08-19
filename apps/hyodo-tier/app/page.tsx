@@ -1,26 +1,25 @@
 'use client';
 
+import { PARENT_QUESTION_COUNT, QUESTION_COUNT } from '@hyo/utils';
 import { AlertCircle, BookOpen, ChevronRight, Users } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Script from 'next/script';
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getParentsDayBadge } from '@/lib/parentsDay';
 import { useQuizStore } from '@/store/useQuizStore';
 
 export default function Home() {
   const router = useRouter();
-  const { setBirthdays } = useQuizStore();
+  const { setBirthdays, skipBirthdays } = useQuizStore();
   const [fatherDob, setFatherDob] = useState('');
   const [motherDob, setMotherDob] = useState('');
   const [error, setError] = useState('');
 
-  const daysUntilParentsDay = useMemo(() => {
-    const target = new Date('2026-05-08T00:00:00+09:00');
-    const now = new Date();
-    return Math.max(
-      0,
-      Math.ceil((target.getTime() - now.getTime()) / 86400000),
-    );
+  // 프리렌더 시점에 날짜가 고정되지 않도록 클라이언트에서 계산한다.
+  const [parentsDayBadge, setParentsDayBadge] = useState<string | null>(null);
+  useEffect(() => {
+    setParentsDayBadge(getParentsDayBadge());
   }, []);
 
   const handleStart = (e: React.MouseEvent) => {
@@ -35,6 +34,7 @@ export default function Home() {
   };
 
   const handleDontKnow = () => {
+    skipBirthdays();
     router.push('/quiz');
   };
 
@@ -47,7 +47,7 @@ export default function Home() {
         name: '결과는 어떤 기준으로 산출되나요?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: '총 14개의 문항을 통해 사용자의 답변 패턴을 분석합니다. 단순히 연락 빈도뿐만 아니라, 부모님의 취향을 얼마나 파악하고 있는지, 감정적인 교류는 어떠한지 등을 입체적으로 평가하여 알고리즘이 등급을 매깁니다.',
+          text: `총 ${QUESTION_COUNT}개의 문항을 통해 사용자의 답변 패턴을 분석합니다. 단순히 연락 빈도뿐만 아니라, 부모님의 취향을 얼마나 파악하고 있는지, 감정적인 교류는 어떠한지 등을 입체적으로 평가하여 알고리즘이 등급을 매깁니다.`,
         },
       },
       {
@@ -71,7 +71,7 @@ export default function Home() {
         name: '부모님도 이 시험을 볼 수 있나요?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: '네, 2교시 자녀 탐구영역을 만들었습니다. 부모님께서 자식에 대해 얼마나 아시는지 14문항으로 측정하고, 결과를 자식에게 공유하면 자식도 자기 점수를 볼 수 있어요. /parent에서 응시할 수 있습니다.',
+          text: `네, 2교시 자녀 탐구영역을 만들었습니다. 부모님께서 자식에 대해 얼마나 아시는지 ${PARENT_QUESTION_COUNT}문항으로 측정하고, 결과를 자식에게 공유하면 자식도 자기 점수를 볼 수 있어요. /parent에서 응시할 수 있습니다.`,
         },
       },
       {
@@ -79,7 +79,7 @@ export default function Home() {
         name: '이 부모님 퀴즈를 부모님 자서전 만들기에 활용할 수 있나요?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: '네. 부모님 탐구영역 14문항은 그대로 부모님 자서전 인터뷰의 첫 질문지로 사용할 수 있습니다. 자식이 먼저 풀어 답을 적어보고, 같은 문항을 부모님께 다시 여쭤보면 답변에 자연스럽게 옛 이야기가 따라옵니다. 자세한 인터뷰 50문항과 녹음 가이드는 /blog/parent-autobiography 글을 참고하세요.',
+          text: `네. 부모님 탐구영역 ${QUESTION_COUNT}문항은 그대로 부모님 자서전 인터뷰의 첫 질문지로 사용할 수 있습니다. 자식이 먼저 풀어 답을 적어보고, 같은 문항을 부모님께 다시 여쭤보면 답변에 자연스럽게 옛 이야기가 따라옵니다. 자세한 인터뷰 50문항과 녹음 가이드는 /blog/parent-autobiography 글을 참고하세요.`,
         },
       },
     ],
@@ -90,12 +90,13 @@ export default function Home() {
       <section className="flex flex-col items-center justify-center w-full pt-8">
         {/* 상단: 시험 정보 헤더 */}
         <div className="w-full border-b-2 border-ink pb-4 mb-4">
-          <span className="inline-flex items-center gap-1 text-[11px] font-sans font-bold bg-grading/10 text-grading px-2 py-0.5 rounded-full mb-2">
-            🌸{' '}
-            {daysUntilParentsDay > 0
-              ? `어버이날 D-${daysUntilParentsDay}`
-              : '어버이날입니다'}
-          </span>
+          <div className="min-h-[26px] mb-2">
+            {parentsDayBadge && (
+              <span className="inline-flex items-center gap-1 text-[11px] font-sans font-bold bg-grading/10 text-grading px-2 py-0.5 rounded-full">
+                🌸 {parentsDayBadge}
+              </span>
+            )}
+          </div>
           <p className="text-sm font-serif font-bold tracking-widest mb-1">
             제1교시
           </p>
@@ -229,10 +230,10 @@ export default function Home() {
               Q. 결과는 어떤 기준으로 산출되나요?
             </h4>
             <p className="text-xs text-ink/60 leading-relaxed">
-              총 14개의 문항을 통해 사용자의 답변 패턴을 분석합니다. 단순히 연락
-              빈도뿐만 아니라, 부모님의 취향을 얼마나 파악하고 있는지, 감정적인
-              교류는 어떠한지 등을 입체적으로 평가하여 알고리즘이 등급을
-              매깁니다.
+              총 {QUESTION_COUNT}개의 문항을 통해 사용자의 답변 패턴을
+              분석합니다. 단순히 연락 빈도뿐만 아니라, 부모님의 취향을 얼마나
+              파악하고 있는지, 감정적인 교류는 어떠한지 등을 입체적으로 평가하여
+              알고리즘이 등급을 매깁니다.
             </p>
           </div>
 
@@ -265,8 +266,9 @@ export default function Home() {
             </h4>
             <p className="text-xs text-ink/60 leading-relaxed">
               네, 2교시 &apos;자녀 탐구영역&apos;을 만들었습니다. 부모님께서
-              자식에 대해 얼마나 아시는지 14문항으로 측정하고, 결과를 자식에게
-              공유하면 자식도 자기 점수를 볼 수 있어요.{' '}
+              자식에 대해 얼마나 아시는지 {PARENT_QUESTION_COUNT}문항으로
+              측정하고, 결과를 자식에게 공유하면 자식도 자기 점수를 볼 수
+              있어요.{' '}
               <Link
                 href="/parent"
                 className="text-grading underline hover:text-ink transition-colors"
@@ -281,10 +283,10 @@ export default function Home() {
               Q. 이 부모님 퀴즈를 부모님 자서전 만들기에 활용할 수 있나요?
             </h4>
             <p className="text-xs text-ink/60 leading-relaxed">
-              네. &apos;부모님 탐구영역&apos; 14문항은 그대로 부모님 자서전
-              인터뷰의 첫 질문지로 사용할 수 있습니다. 자식이 먼저 풀어 답을
-              적어보고, 같은 문항을 부모님께 다시 여쭤보면 답변에 자연스럽게 옛
-              이야기가 따라옵니다.{' '}
+              네. &apos;부모님 탐구영역&apos; {QUESTION_COUNT}문항은 그대로
+              부모님 자서전 인터뷰의 첫 질문지로 사용할 수 있습니다. 자식이 먼저
+              풀어 답을 적어보고, 같은 문항을 부모님께 다시 여쭤보면 답변에
+              자연스럽게 옛 이야기가 따라옵니다.{' '}
               <Link
                 href="/blog/parent-autobiography"
                 className="text-grading underline hover:text-ink transition-colors"

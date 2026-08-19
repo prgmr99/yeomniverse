@@ -1,7 +1,15 @@
 'use client';
 
 import { Loading } from '@hyo/ui';
-import { BookOpen, CalendarPlus, Heart, RotateCcw, Share2 } from 'lucide-react';
+import { QUESTION_COUNT } from '@hyo/utils';
+import {
+  BookOpen,
+  CalendarPlus,
+  ChevronRight,
+  Heart,
+  RotateCcw,
+  Share2,
+} from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useMemo, useState } from 'react';
@@ -45,6 +53,7 @@ function ResultContent() {
     resetQuiz,
     currentStep,
     birthdays,
+    skippedBirthday,
   } = useQuizStore();
   const [isReady, setIsReady] = useState(false); // 클라이언트 렌더링 준비 여부
 
@@ -78,8 +87,8 @@ function ResultContent() {
     if (sharedResultId && RESULTS[sharedResultId]) {
       return RESULTS[sharedResultId];
     }
-    return calculateResult(storeScores, flags);
-  }, [sharedResultId, storeScores, flags]);
+    return calculateResult(storeScores, flags, { skippedBirthday });
+  }, [sharedResultId, storeScores, flags, skippedBirthday]);
 
   const { shareKakao } = useKakaoShare(result.id, result.title, scores);
 
@@ -112,6 +121,14 @@ function ResultContent() {
 
   return (
     <main className="min-h-screen flex flex-col items-center py-10 px-6 animate-fade-in space-y-8 pb-20">
+      {/* 0. 공유로 들어온 방문자 오리엔테이션 */}
+      {sharedResultId && (
+        <p className="w-full text-center text-xs text-ink/60 bg-white/60 border border-ink/10 rounded-full py-2 px-4">
+          누군가 공유한 성적표입니다 · 내 등급은 {QUESTION_COUNT}문항이면
+          나옵니다
+        </p>
+      )}
+
       {/* 1. 결과 등급 (도장 애니메이션) */}
       <div className="relative w-full text-center py-8 border-b-2 border-dashed border-ink/20">
         <span
@@ -287,12 +304,26 @@ function ResultContent() {
 
       {/* 5. 액션 버튼 */}
       <div className="w-full space-y-3 pt-4">
+        {/* 공유 링크로 들어온 방문자에게는 응시가 1순위 행동이다. */}
+        {sharedResultId && (
+          <Link
+            href="/"
+            onClick={resetQuiz}
+            className="w-full bg-omr text-white py-4 rounded-xl font-serif font-bold text-xl shadow-lg hover:bg-ink transition-all flex items-center justify-center gap-2"
+          >
+            나도 응시하기 <ChevronRight className="w-5 h-5" />
+          </Link>
+        )}
+
         <button
           type="button"
-          className="w-full bg-[#FEE500] text-[#191919] py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md hover:opacity-90 transition-all text-lg"
+          className={`w-full bg-[#FEE500] text-[#191919] py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md hover:opacity-90 transition-all ${
+            sharedResultId ? 'text-base' : 'text-lg'
+          }`}
           onClick={shareKakao}
         >
-          <Share2 className="w-5 h-5" /> 부모님께 공유하기
+          <Share2 className="w-5 h-5" />{' '}
+          {sharedResultId ? '이 성적표 공유하기' : '부모님께 공유하기'}
         </button>
 
         {!sharedResultId && (
@@ -335,14 +366,17 @@ function ResultContent() {
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-3">
-          <Link
-            href="/"
-            onClick={resetQuiz}
-            className="bg-stone-800 text-white py-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 hover:bg-black transition-all"
-          >
-            <RotateCcw className="w-4 h-4" /> 재시험
-          </Link>
+        {/* 응시 이력이 없는 방문자에게 "재시험"은 누를 이유가 없는 라벨이다. */}
+        <div className={sharedResultId ? '' : 'grid grid-cols-2 gap-3'}>
+          {!sharedResultId && (
+            <Link
+              href="/"
+              onClick={resetQuiz}
+              className="bg-stone-800 text-white py-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 hover:bg-black transition-all"
+            >
+              <RotateCcw className="w-4 h-4" /> 재시험
+            </Link>
+          )}
 
           <Link
             href="/blog"
