@@ -1,5 +1,6 @@
 export type ResultType = {
   id: string;
+  grade: number; // 성적표 등급 (1이 최상위). 도장·OG 이미지·공유 문구가 이 값을 쓴다.
   title: string; // 캐릭터 이름
   subtitle: string; // 한 줄 요약
   desc: string; // 상세 설명
@@ -11,6 +12,7 @@ export type ResultType = {
 export const RESULTS: Record<string, ResultType> = {
   UNICORN: {
     id: 'UNICORN',
+    grade: 1,
     title: '전설의 유니콘 효자',
     subtitle: '존재 자체가 미스테리인 육각형 인재',
     desc: '당신은 전래동화에서 튀어나온 듯한 존재입니다. 부모님의 취향, 건강, 소소한 일상까지 꿰뚫고 있으며, 그것을 살갑게 표현할 줄도 아는 완벽한 자녀군요. 부모님은 동네방네 당신 자랑을 하고 다니실 겁니다. 혹시 인생 2회차이신가요?',
@@ -21,6 +23,7 @@ export const RESULTS: Record<string, ResultType> = {
   },
   FINANCIAL: {
     id: 'FINANCIAL',
+    grade: 4,
     title: '금융치료 전문의',
     subtitle: '입금은 칼같이, 대화는 낫(Not)같이',
     desc: '"사랑은 계좌이체로 증명하는 것"이라는 확고한 철학을 가졌군요. 살가운 말 한마디는 죽어도 못 하지만, 생신날 봉투 두께만큼은 누구에게도 지지 않습니다. 효도의 9할은 자본주의라고 믿는 당신, 든든하긴 하지만 가끔은 쓸쓸합니다.',
@@ -31,6 +34,7 @@ export const RESULTS: Record<string, ResultType> = {
   },
   K_LEADER: {
     id: 'K_LEADER',
+    grade: 3,
     title: 'K-장녀/장남 리더십',
     subtitle: '집안의 해결사, 하지만 본인은 번아웃',
     desc: "집안의 기둥이자 해결사 역할을 자처하고 있군요. 부모님의 속사정을 너무 잘 알고 공감해서, 때로는 그 무게가 버겁게 느껴질 때도 있을 겁니다. 책임감은 만점인데, 부모님을 대하는 게 즐겁기보단 '숙제'처럼 느껴질 때가 많네요.",
@@ -41,6 +45,7 @@ export const RESULTS: Record<string, ResultType> = {
   },
   TSUNDERE: {
     id: 'TSUNDERE',
+    grade: 5,
     title: '방구석 츤데레',
     subtitle: '툴툴대면서 해달라는 건 다 해줌',
     desc: '마음은 굴뚝같은데 입만 열면 툴툴거리는 스타일입니다. "아, 그걸 왜 나한테 물어봐!"라고 짜증 내면서도, 뒤돌아서 인터넷으로 다 검색해 주는 당신. 부모님은 당신의 짜증 섞인 말투 뒤에 숨겨진 진심을 통역하느라 바쁘십니다.',
@@ -51,6 +56,7 @@ export const RESULTS: Record<string, ResultType> = {
   },
   SOULMATE: {
     id: 'SOULMATE',
+    grade: 2,
     title: '영혼의 단짝 (술친구)',
     subtitle: '위계질서? 그게 뭐죠? 우리는 베프!',
     desc: '부모님과 친구처럼 지내는 모습이 보기 좋습니다. 쇼핑도 같이 가고 맛집도 다니는 최고의 파트너죠. 하지만 너무 편한 나머지, 부모님이 진짜 감추고 싶은 아픔이나 노후에 대한 진지한 고민은 가볍게 넘기고 있을지도 모릅니다.',
@@ -61,6 +67,7 @@ export const RESULTS: Record<string, ResultType> = {
   },
   SHOW_WINDOW: {
     id: 'SHOW_WINDOW',
+    grade: 6,
     title: '쇼윈도 이벤트 기획자',
     subtitle: 'SNS 업로드용 효도 전문가',
     desc: '어버이날 인스타그램 스토리는 누구보다 화려합니다. 남들이 볼 땐 효자/효녀가 따로 없죠. 하지만 평범한 날들에는 어떤가요? 부모님은 화려한 이벤트 한 번보다, 소소한 안부 전화 열 통을 더 기다리고 계실지도 모릅니다.',
@@ -71,6 +78,7 @@ export const RESULTS: Record<string, ResultType> = {
   },
   AI_BOT: {
     id: 'AI_BOT',
+    grade: 7,
     title: 'AI 음성 사서함',
     subtitle: '필요할 때만 연결되는 정보 통신망',
     desc: '부모님과의 대화를 \'정보 교환\'으로 생각하시나요? 용건이 있을 때만 짧게 통화하고, 감정적인 대화가 오가려 하면 "그래서 결론이 뭐야?"라며 차단해 버립니다. 팩트는 완벽하지만 따뜻함이 부족하네요.',
@@ -81,6 +89,7 @@ export const RESULTS: Record<string, ResultType> = {
   },
   LODGER: {
     id: 'LODGER',
+    grade: 8,
     title: '하숙집 장기 투숙객',
     subtitle: '밥만 먹고 방으로 사라지는 그림자',
     desc: "한집에 살지만 얼굴 보기가 하늘의 별 따기입니다. 귀가하면 방문부터 닫고, 식탁에서도 스마트폰만 보시네요. 부모님 입장에서 당신은 자식이 아니라 '월세 안 내는 예민한 하숙생'처럼 느껴질 수 있습니다.",
@@ -91,6 +100,7 @@ export const RESULTS: Record<string, ResultType> = {
   },
   UNFILIAL: {
     id: 'UNFILIAL',
+    grade: 9,
     title: '호적에서 파일 뻔한 불효자',
     subtitle: '부모님 생신도 모르는 당신...',
     desc: '세상에... 부모님의 생년월일조차 모르시나요? 시험을 볼 자격이 없습니다. 부모님은 당신의 생일, 태어난 시각, 태몽까지 기억하고 계실 텐데 말이죠. 반성하세요.',

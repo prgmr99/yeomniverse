@@ -1,6 +1,7 @@
 export const useKakaoShare = (
   resultType: string,
   resultTitle: string,
+  resultGrade: number,
   scores: { interest: number; intimacy: number; expression: number },
 ) => {
   const shareKakao = async () => {
@@ -16,9 +17,8 @@ export const useKakaoShare = (
 
     const shareUrl = `${baseUrl}/result?result=${resultType}&interest=${scores.interest}&intimacy=${scores.intimacy}&expression=${scores.expression}`;
     const ogImageUrl = `${baseUrl}/api/og?result=${resultType}&interest=${scores.interest}&intimacy=${scores.intimacy}&expression=${scores.expression}`;
-    const totalScore = scores.interest + scores.intimacy + scores.expression;
     const shareTitle = `[효도성적표] ${resultTitle}`;
-    const shareText = `나의 효도 점수는 ${totalScore}점! 너는 몇 등급이야? #엄빠고사 #효도티어`;
+    const shareText = `나의 효도 등급은 ${resultGrade}등급! 너는 몇 등급이야? #엄빠고사 #효도티어`;
 
     if (window.Kakao?.Share) {
       window.Kakao.Share.sendDefault({

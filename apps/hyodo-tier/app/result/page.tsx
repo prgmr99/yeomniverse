@@ -1,7 +1,12 @@
 'use client';
 
 import { Loading } from '@hyo/ui';
-import { QUESTION_COUNT } from '@hyo/utils';
+import {
+  CHILD_SCORE_RANGES,
+  normalizeScores,
+  PARENT_SCORE_RANGES,
+  QUESTION_COUNT,
+} from '@hyo/utils';
 import {
   BookOpen,
   CalendarPlus,
@@ -90,7 +95,19 @@ function ResultContent() {
     return calculateResult(storeScores, flags, { skippedBirthday });
   }, [sharedResultId, storeScores, flags, skippedBirthday]);
 
-  const { shareKakao } = useKakaoShare(result.id, result.title, scores);
+  const { shareKakao } = useKakaoShare(
+    result.id,
+    result.title,
+    result.grade,
+    scores,
+  );
+
+  // 원점수는 축마다 도달 범위가 달라(친밀도 -115~175 등) 그대로 그리면 그래프가 왜곡된다.
+  // 판정 로직은 계속 원점수를 쓰고, 표시할 때만 0~100으로 환산한다.
+  const displayScores = useMemo(
+    () => normalizeScores(scores, CHILD_SCORE_RANGES),
+    [scores],
+  );
 
   // 부모 결과 비교 (parent 파라미터가 있을 때)
   const parentResultId = searchParams.get('parent');
@@ -104,6 +121,12 @@ function ResultContent() {
     [searchParams],
   );
   const parentName = (searchParams.get('pname') || '').slice(0, 10) || null;
+
+  // 부모편은 축 범위 자체가 달라서(친밀도 최대 190) 원점수끼리 비교하면 불공평하다.
+  const displayParentScores = useMemo(
+    () => normalizeScores(parentScores, PARENT_SCORE_RANGES),
+    [parentScores],
+  );
 
   // 3. 예외 처리: 퀴즈를 안 풀고 접근했으면 홈으로 보냄 (단, 공유된 링크는 제외)
   useEffect(() => {
@@ -149,14 +172,10 @@ function ResultContent() {
           &quot;{result.subtitle}&quot;
         </p>
 
-        {/* 1등급 도장 (유니콘일 때만 1등급, 나머지는 재치있게 변경 가능하지만 일단 통일) */}
+        {/* 등급 도장 — 등급 값은 resultData의 grade가 단일 출처 */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
           <div className="border-[6px] border-grading text-grading rounded-xl px-6 py-2 text-6xl font-black font-serif opacity-0 animate-stamp-move whitespace-nowrap bg-paper/90 backdrop-blur-sm shadow-xl">
-            {result.id === 'UNICORN'
-              ? '1등급'
-              : result.id === 'LODGER'
-                ? '9등급'
-                : '등급외'}
+            {result.grade}등급
           </div>
         </div>
       </div>
@@ -202,17 +221,17 @@ function ResultContent() {
               <div className="space-y-1 mt-2">
                 <MiniBar
                   label="관심"
-                  score={parentScores.interest}
+                  score={displayParentScores.interest}
                   color="bg-blue-300"
                 />
                 <MiniBar
                   label="친밀"
-                  score={parentScores.intimacy}
+                  score={displayParentScores.intimacy}
                   color="bg-pink-300"
                 />
                 <MiniBar
                   label="표현"
-                  score={parentScores.expression}
+                  score={displayParentScores.expression}
                   color="bg-yellow-300"
                 />
               </div>
@@ -225,17 +244,17 @@ function ResultContent() {
               <div className="space-y-1 mt-2">
                 <MiniBar
                   label="관심"
-                  score={scores.interest}
+                  score={displayScores.interest}
                   color="bg-blue-300"
                 />
                 <MiniBar
                   label="친밀"
-                  score={scores.intimacy}
+                  score={displayScores.intimacy}
                   color="bg-pink-300"
                 />
                 <MiniBar
                   label="표현"
-                  score={scores.expression}
+                  score={displayScores.expression}
                   color="bg-yellow-300"
                 />
               </div>
@@ -244,11 +263,13 @@ function ResultContent() {
           <p className="text-xs text-ink/60 leading-relaxed text-center">
             {(() => {
               const childTotal =
-                scores.interest + scores.intimacy + scores.expression;
+                displayScores.interest +
+                displayScores.intimacy +
+                displayScores.expression;
               const parentTotal =
-                parentScores.interest +
-                parentScores.intimacy +
-                parentScores.expression;
+                displayParentScores.interest +
+                displayParentScores.intimacy +
+                displayParentScores.expression;
               if (childTotal > parentTotal) {
                 return '당신이 부모님보다 서로를 더 잘 알고 있어요. 놀라운 결과네요.';
               }
@@ -284,20 +305,17 @@ function ResultContent() {
         <h4 className="text-sm font-bold opacity-70 ml-1">상세 점수</h4>
         <ScoreBar
           label="관심도 (지식)"
-          score={scores.interest}
-          max={100}
+          score={displayScores.interest}
           color="bg-blue-400"
         />
         <ScoreBar
           label="친밀도 (마음)"
-          score={scores.intimacy}
-          max={100}
+          score={displayScores.intimacy}
           color="bg-pink-400"
         />
         <ScoreBar
           label="표현력 (행동)"
-          score={scores.expression}
-          max={100}
+          score={displayScores.expression}
           color="bg-yellow-400"
         />
       </div>
@@ -408,7 +426,7 @@ function MiniBar({
   score: number;
   color: string;
 }) {
-  const percent = Math.min(Math.max((score / 100) * 100, 5), 100);
+  const percent = Math.min(Math.max(score, 0), 100);
   return (
     <div className="flex items-center gap-1 text-[10px]">
       <span className="w-6 text-right text-ink/50 font-bold">{label}</span>
@@ -423,20 +441,17 @@ function MiniBar({
   );
 }
 
-// 간단한 점수 게이지 컴포넌트
+// 점수 게이지 — score는 0~100으로 이미 환산된 값이다 (@hyo/utils normalizeScores)
 function ScoreBar({
   label,
   score,
-  max,
   color,
 }: {
   label: string;
   score: number;
-  max: number;
   color: string;
 }) {
-  // 점수 정규화 (최대 100% 안 넘게)
-  const percent = Math.min(Math.max((score / max) * 100, 5), 100);
+  const percent = Math.min(Math.max(score, 0), 100);
 
   return (
     <div className="flex items-center gap-3 text-xs">

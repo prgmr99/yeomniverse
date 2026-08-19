@@ -7,6 +7,7 @@ export type ParentResultType = ResultType;
 export const PARENT_RESULTS: Record<string, ParentResultType> = {
   UNICORN_PARENT: {
     id: 'UNICORN_PARENT',
+    grade: 1,
     title: '전설의 슈퍼 부모',
     subtitle: '자식 마음까지 외운 육각형 양육자',
     desc: '자식의 사이즈, 꿈, 어제 먹은 점심까지 꿰뚫고 계시는군요. 거기에 사랑한다는 말도, 어깨를 토닥이는 손도 어색하지 않으십니다. 자식은 이 테스트 결과를 받아보고 조용히 반성문을 쓰고 있을 겁니다.',
@@ -17,6 +18,7 @@ export const PARENT_RESULTS: Record<string, ParentResultType> = {
   },
   FINANCIAL_PARENT: {
     id: 'FINANCIAL_PARENT',
+    grade: 4,
     title: '현금인출기 부모',
     subtitle: '걱정은 마음에, 용돈은 통장에',
     desc: '자식이 힘들어 보이면 일단 통장부터 열어주시는 스타일이군요. 사랑한다는 말은 어색해도 "필요한 거 있으면 말해"는 자연스럽게 나오십니다. 자식은 그 마음을 다 알면서도, 가끔은 돈 말고 목소리가 듣고 싶을 때가 있습니다.',
@@ -27,6 +29,7 @@ export const PARENT_RESULTS: Record<string, ParentResultType> = {
   },
   K_LEADER_PARENT: {
     id: 'K_LEADER_PARENT',
+    grade: 3,
     title: 'K-감독관 부모',
     subtitle: '성적·진로·연애까지 종합관리',
     desc: '자식 인생의 디렉터를 자처하고 계시는군요. 잘되길 바라는 마음이 커서 간섭처럼 보일 때도 있지만, 모든 계획의 중심에 "자식이 행복했으면" 이 깔려 있다는 건 자식도 어렴풋이 알고 있습니다. 다만 요즘은 관객석에 계셔도 이야기가 잘 굴러갑니다.',
@@ -37,6 +40,7 @@ export const PARENT_RESULTS: Record<string, ParentResultType> = {
   },
   TSUNDERE_PARENT: {
     id: 'TSUNDERE_PARENT',
+    grade: 5,
     title: '돌부처 부모',
     subtitle: '속으로는 다 울고, 겉으로는 한 마디',
     desc: '자식 얘기 나오면 속으로는 열두 문단씩 쓰시면서, 입 밖으론 "응, 그래"로 끝내시는 타입이군요. 사랑이 없는 게 아니라 표현하는 근육을 안 써보신 것뿐입니다. 자식은 그 무뚝뚝함을 해석하느라 늘 한 박자 늦게 울컥합니다.',
@@ -47,6 +51,7 @@ export const PARENT_RESULTS: Record<string, ParentResultType> = {
   },
   SOULMATE_PARENT: {
     id: 'SOULMATE_PARENT',
+    grade: 2,
     title: '엄빠친구 부모',
     subtitle: '자식이 술친구이자 쇼핑메이트',
     desc: '자식과 맛집 다니고, 드라마 얘기하고, 가끔은 같이 한 잔 기울이시는 친구 같은 부모님이시군요. 이 편안함은 아무나 못 만듭니다. 다만 너무 친구 같다 보니, 자식이 진짜로 힘들 때는 괜히 걱정 끼칠까 봐 숨기기도 합니다.',
@@ -57,6 +62,7 @@ export const PARENT_RESULTS: Record<string, ParentResultType> = {
   },
   SHOW_WINDOW_PARENT: {
     id: 'SHOW_WINDOW_PARENT',
+    grade: 6,
     title: '자식 자랑꾼 부모',
     subtitle: '동창회 가는 날이 인생의 하이라이트',
     desc: '동네 미용실, 동창회, 가족 단톡방까지 자식 자랑이 이미 다 도착했습니다. 자랑거리가 넘친다는 건 그만큼 자랑스럽다는 뜻이니 그 자체는 행복한 일이죠. 다만 자식 본인에게 "잘했다"고 직접 건넨 적은 언제가 마지막이었는지, 한번 떠올려봐 주세요.',
@@ -67,6 +73,7 @@ export const PARENT_RESULTS: Record<string, ParentResultType> = {
   },
   AI_BOT_PARENT: {
     id: 'AI_BOT_PARENT',
+    grade: 7,
     title: '안부콜 오퍼레이터',
     subtitle: "'밥 먹었니?' 프로토콜 반복 중",
     desc: '자식 상태는 잘 알고 계시지만, 대화는 늘 "밥 먹었니? 춥지 않니?"에서 끝납니다. 관심은 만렙인데 대화 레퍼토리가 30년째 업데이트를 안 했을 뿐이에요. 자식은 그 걱정을 알면서도, 가끔은 일기예보 말고 속 얘기를 듣고 싶어 합니다.',
@@ -77,6 +84,7 @@ export const PARENT_RESULTS: Record<string, ParentResultType> = {
   },
   LODGER_PARENT: {
     id: 'LODGER_PARENT',
+    grade: 8,
     title: '방문 밖 손님 부모',
     subtitle: '한집에 살지만 노크도 조심스러운 거리',
     desc: '자식 방문 앞에서 괜히 머뭇거리신 적이 많으시죠. 혼날 일을 하신 게 아니라, 자식이 크는 동안 어느새 대화의 리듬을 놓치신 것뿐입니다. 지금이라도 "잘 지내?" 한마디 건네는 것, 생각만큼 어렵지 않습니다.',

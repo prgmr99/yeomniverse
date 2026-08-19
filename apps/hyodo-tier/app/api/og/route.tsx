@@ -1,3 +1,8 @@
+import {
+  CHILD_SCORE_RANGES,
+  normalizeScores,
+  PARENT_SCORE_RANGES,
+} from '@hyo/utils';
 import { ImageResponse } from 'next/og';
 import type { NextRequest } from 'next/server';
 import { PARENT_RESULTS } from '@/lib/parentResultData';
@@ -18,19 +23,6 @@ const bgColorMap: Record<string, string> = {
   'bg-gray-300': '#d1d5db',
 };
 
-// 등급 결정 함수
-function getGrade(resultId: string, mode: string): string {
-  if (mode === 'parent') {
-    if (resultId === 'UNICORN_PARENT') return '1등급';
-    if (resultId === 'LODGER_PARENT') return '9등급';
-    return '등급외';
-  }
-  if (resultId === 'UNICORN') return '1등급';
-  if (resultId === 'LODGER') return '9등급';
-  if (resultId === 'UNFILIAL') return '등급외';
-  return '등급외';
-}
-
 // 템플릿에 고정으로 들어가는 문자열 (폰트 서브셋 요청에 함께 넘긴다)
 const OG_STATIC_TEXT = [
   '효도티어',
@@ -39,7 +31,7 @@ const OG_STATIC_TEXT = [
   '관심도친밀도표현력',
   '자식도 풀러가기 →',
   '너도 테스트 하러가기 →',
-  '1등급9등급등급외',
+  '등급',
   '0123456789"',
 ].join('');
 
@@ -67,10 +59,21 @@ export async function GET(req: NextRequest) {
     const resultId = searchParams.get('result') || 'UNICORN';
     const mode = searchParams.get('mode') === 'parent' ? 'parent' : 'child';
 
-    const interest = Number(searchParams.get('interest')) || 0;
-    const intimacy = Number(searchParams.get('intimacy')) || 0;
-    const expression = Number(searchParams.get('expression')) || 0;
-    const hasScores = interest !== 0 || intimacy !== 0 || expression !== 0;
+    const rawScores = {
+      interest: Number(searchParams.get('interest')) || 0,
+      intimacy: Number(searchParams.get('intimacy')) || 0,
+      expression: Number(searchParams.get('expression')) || 0,
+    };
+    const hasScores =
+      rawScores.interest !== 0 ||
+      rawScores.intimacy !== 0 ||
+      rawScores.expression !== 0;
+
+    // 공유 URL은 원점수를 그대로 실어 나르므로, 결과 페이지와 같은 기준으로 환산한다.
+    const { interest, intimacy, expression } = normalizeScores(
+      rawScores,
+      mode === 'parent' ? PARENT_SCORE_RANGES : CHILD_SCORE_RANGES,
+    );
 
     // 결과 데이터 가져오기 (mode에 따라 분기)
     const result =
@@ -80,7 +83,7 @@ export async function GET(req: NextRequest) {
     }
 
     const bgColor = bgColorMap[result.imageColor] || '#f5f5f4';
-    const grade = getGrade(resultId, mode);
+    const grade = `${result.grade}등급`;
 
     // 한글 폰트 로드 (이 이미지에 실제로 쓰이는 글자만 서브셋으로 받는다)
     const fontData = await loadNotoSansKr(

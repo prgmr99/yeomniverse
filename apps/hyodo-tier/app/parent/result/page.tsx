@@ -1,6 +1,7 @@
 'use client';
 
 import { Loading } from '@hyo/ui';
+import { normalizeScores, PARENT_SCORE_RANGES } from '@hyo/utils';
 import { BookOpen, Heart, RotateCcw, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -62,6 +63,13 @@ function ParentResultContent() {
     childName,
   );
 
+  // 원점수는 축마다 도달 범위가 달라 그대로 그리면 그래프가 왜곡된다.
+  // 판정 로직은 원점수를 쓰고, 표시할 때만 0~100으로 환산한다.
+  const displayScores = useMemo(
+    () => normalizeScores(scores, PARENT_SCORE_RANGES),
+    [scores],
+  );
+
   useEffect(() => {
     if (!hydrated) return;
     if (!sharedResultId && currentStep === 0) {
@@ -101,11 +109,7 @@ function ParentResultContent() {
 
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
           <div className="border-[6px] border-grading text-grading rounded-xl px-6 py-2 text-6xl font-black font-serif opacity-0 animate-stamp-move whitespace-nowrap bg-paper/90 backdrop-blur-sm shadow-xl">
-            {result.id === 'UNICORN_PARENT'
-              ? '1등급'
-              : result.id === 'LODGER_PARENT'
-                ? '9등급'
-                : '등급외'}
+            {result.grade}등급
           </div>
         </div>
       </div>
@@ -145,20 +149,17 @@ function ParentResultContent() {
         <h4 className="text-sm font-bold opacity-70 ml-1">상세 점수</h4>
         <ScoreBar
           label="관심도 (지식)"
-          score={scores.interest}
-          max={100}
+          score={displayScores.interest}
           color="bg-blue-400"
         />
         <ScoreBar
           label="친밀도 (마음)"
-          score={scores.intimacy}
-          max={100}
+          score={displayScores.intimacy}
           color="bg-pink-400"
         />
         <ScoreBar
           label="표현력 (행동)"
-          score={scores.expression}
-          max={100}
+          score={displayScores.expression}
           color="bg-yellow-400"
         />
       </div>
@@ -220,18 +221,17 @@ export default function ParentResultPage() {
   );
 }
 
+// score는 0~100으로 이미 환산된 값이다 (@hyo/utils normalizeScores)
 function ScoreBar({
   label,
   score,
-  max,
   color,
 }: {
   label: string;
   score: number;
-  max: number;
   color: string;
 }) {
-  const percent = Math.min(Math.max((score / max) * 100, 5), 100);
+  const percent = Math.min(Math.max(score, 0), 100);
 
   return (
     <div className="flex items-center gap-3 text-xs">
