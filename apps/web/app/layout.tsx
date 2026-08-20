@@ -17,7 +17,8 @@ function getRequiredEnv(key: string): string {
 const DOMAIN_URL = getRequiredEnv('NEXT_PUBLIC_DOMAIN_URL');
 const NAVER_VERIFICATION =
   process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION || '';
-const ADSENSE_ACCOUNT = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT || '';
+const ADSENSE_ACCOUNT =
+  process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT || 'ca-pub-7476208540300201';
 
 export const metadata: Metadata = {
   metadataBase: new URL(DOMAIN_URL),

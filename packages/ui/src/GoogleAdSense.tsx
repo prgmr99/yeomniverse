@@ -3,6 +3,9 @@
 import { usePathname } from "next/navigation";
 import Script from "next/script";
 
+// Yeomniverse 전체 사이트가 공유하는 AdSense 퍼블리셔 ID (공개 값, ads.txt와 동일)
+const DEFAULT_ADSENSE_CLIENT = "ca-pub-7476208540300201";
+
 export default function GoogleAdSense() {
 	const pathname = usePathname();
 
@@ -11,9 +14,8 @@ export default function GoogleAdSense() {
 		return null;
 	}
 
-	const pId = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT;
-
-	if (!pId) return null;
+	const pId =
+		process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT || DEFAULT_ADSENSE_CLIENT;
 
 	return (
 		<Script

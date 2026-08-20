@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import './finbrief.css';
-import { GoogleAnalytics } from '@hyo/ui';
+import { GoogleAdSense, GoogleAnalytics } from '@hyo/ui';
 import { JsonLd } from '@/components/JsonLd';
 import { sans, serif } from './fonts';
 
 const DOMAIN_URL =
   process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://finbrief.yeomniverse.com';
+const ADSENSE_ACCOUNT =
+  process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT || 'ca-pub-7476208540300201';
 
 export const metadata: Metadata = {
   metadataBase: new URL(DOMAIN_URL),
@@ -112,6 +114,9 @@ export const metadata: Metadata = {
         process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION || '',
     },
   },
+  other: {
+    'google-adsense-account': ADSENSE_ACCOUNT,
+  },
 };
 
 export default function RootLayout({
@@ -179,6 +184,7 @@ export default function RootLayout({
       <body className="min-h-screen font-sans antialiased">
         {children}
         <GoogleAnalytics />
+        <GoogleAdSense />
 
         {/* Structured Data Schemas - plain <script> for SSR visibility to crawlers */}
         <JsonLd data={organizationSchema} />

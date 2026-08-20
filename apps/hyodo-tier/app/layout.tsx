@@ -95,8 +95,9 @@ export const metadata: Metadata = {
     },
   },
   other: {
-    'google-adsense-account': process.env
-      .NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT as string,
+    'google-adsense-account':
+      process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT ||
+      'ca-pub-7476208540300201',
   },
   manifest: '/manifest.json',
 };
