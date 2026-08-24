@@ -7,6 +7,9 @@ import { ImageResponse } from 'next/og';
 import type { NextRequest } from 'next/server';
 import { PARENT_RESULTS } from '@/lib/parentResultData';
 import { RESULTS } from '@/lib/resultData';
+import { LandscapeCard } from './templates/landscape';
+import { StoryCard } from './templates/story';
+import type { OgTemplateProps } from './templates/types';
 
 export const runtime = 'edge';
 
@@ -23,7 +26,15 @@ const bgColorMap: Record<string, string> = {
   'bg-gray-300': '#d1d5db',
 };
 
-// 템플릿에 고정으로 들어가는 문자열 (폰트 서브셋 요청에 함께 넘긴다)
+const RATIOS = {
+  og: { width: 1200, height: 630 },
+  story: { width: 1080, height: 1920 },
+} as const;
+
+type Ratio = keyof typeof RATIOS;
+
+// 템플릿에 고정으로 들어가는 문자열 (폰트 서브셋 요청에 함께 넘긴다).
+// 세로형에만 있는 도메인 문자도 포함해야 스토리 카드에서 글자가 빠지지 않는다.
 const OG_STATIC_TEXT = [
   '효도티어',
   '2026학년도 효도능력시험 · 부모편',
@@ -33,6 +44,7 @@ const OG_STATIC_TEXT = [
   '너도 테스트 하러가기 →',
   '등급',
   '0123456789"',
+  'hyodo-tier.yeomniverse.com',
 ].join('');
 
 // gstatic 직링크는 폰트 버전이 바뀌면 404가 되므로 CSS API로 매번 해석한다.
@@ -44,10 +56,8 @@ async function loadNotoSansKr(text: string): Promise<ArrayBuffer> {
     /src:\s*url\((\S+?)\)\s*format\('(?:truetype|opentype)'\)/,
   );
 
-  if (!src) {
-    throw new Error(
-      `Noto Sans KR 폰트 URL을 찾지 못했습니다: ${css.slice(0, 200)}`,
-    );
+  if (!src?.[1]) {
+    throw new Error('Noto Sans KR truetype src not found in CSS response');
   }
 
   return fetch(src[1]).then((res) => res.arrayBuffer());
@@ -58,6 +68,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const resultId = searchParams.get('result') || 'UNICORN';
     const mode = searchParams.get('mode') === 'parent' ? 'parent' : 'child';
+    const ratio: Ratio = searchParams.get('ratio') === 'story' ? 'story' : 'og';
 
     const rawScores = {
       interest: Number(searchParams.get('interest')) || 0,
@@ -70,7 +81,7 @@ export async function GET(req: NextRequest) {
       rawScores.expression !== 0;
 
     // 공유 URL은 원점수를 그대로 실어 나르므로, 결과 페이지와 같은 기준으로 환산한다.
-    const { interest, intimacy, expression } = normalizeScores(
+    const scores = normalizeScores(
       rawScores,
       mode === 'parent' ? PARENT_SCORE_RANGES : CHILD_SCORE_RANGES,
     );
@@ -82,222 +93,30 @@ export async function GET(req: NextRequest) {
       return new Response('Result not found', { status: 404 });
     }
 
-    const bgColor = bgColorMap[result.imageColor] || '#f5f5f4';
-    const grade = `${result.grade}등급`;
+    const props: OgTemplateProps = {
+      mode,
+      title: result.title,
+      subtitle: result.subtitle,
+      grade: `${result.grade}등급`,
+      bgColor: bgColorMap[result.imageColor] || '#f5f5f4',
+      hasScores,
+      scores,
+    };
 
     // 한글 폰트 로드 (이 이미지에 실제로 쓰이는 글자만 서브셋으로 받는다)
     const fontData = await loadNotoSansKr(
-      OG_STATIC_TEXT + result.title + result.subtitle + grade,
+      OG_STATIC_TEXT + props.title + props.subtitle + props.grade,
     );
 
     return new ImageResponse(
-      <div
-        style={{
-          height: '100%',
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: bgColor,
-          backgroundImage: `
-              radial-gradient(circle at 25px 25px, rgba(0, 0, 0, 0.05) 2%, transparent 0%),
-              radial-gradient(circle at 75px 75px, rgba(0, 0, 0, 0.05) 2%, transparent 0%)
-            `,
-          backgroundSize: '100px 100px',
-          padding: '60px',
-          position: 'relative',
-          fontFamily: 'NotoSansKR',
-        }}
-      >
-        {/* 상단 브랜딩 */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '40px',
-            left: '60px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '4px',
-          }}
-        >
-          <div
-            style={{
-              fontSize: '28px',
-              fontWeight: 900,
-              color: '#292524',
-              letterSpacing: '-0.02em',
-            }}
-          >
-            효도티어
-          </div>
-          <div
-            style={{
-              fontSize: '16px',
-              color: '#78716c',
-              fontWeight: 500,
-            }}
-          >
-            {mode === 'parent'
-              ? '2026학년도 효도능력시험 · 부모편'
-              : '2026학년도 대국민 효도능력시험'}
-          </div>
-        </div>
-
-        {/* 중앙 컨텐츠 */}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '32px',
-            textAlign: 'center',
-            maxWidth: '900px',
-          }}
-        >
-          {/* 등급 스탬프 */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: '8px solid #dc2626',
-              borderRadius: '20px',
-              padding: '20px 60px',
-              backgroundColor: 'rgba(255, 255, 255, 0.95)',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-              transform: 'rotate(-4deg)',
-            }}
-          >
-            <div
-              style={{
-                fontSize: '80px',
-                fontWeight: 900,
-                color: '#dc2626',
-                letterSpacing: '-0.02em',
-              }}
-            >
-              {grade}
-            </div>
-          </div>
-
-          {/* 캐릭터 타이틀 */}
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '16px',
-              alignItems: 'center',
-            }}
-          >
-            <div
-              style={{
-                fontSize: '68px',
-                fontWeight: 900,
-                color: '#1c1917',
-                lineHeight: 1.1,
-                letterSpacing: '-0.03em',
-              }}
-            >
-              {result.title}
-            </div>
-            <div
-              style={{
-                fontSize: '32px',
-                color: '#57534e',
-                fontWeight: 500,
-                lineHeight: 1.3,
-                maxWidth: '800px',
-              }}
-            >
-              {`"${result.subtitle}"`}
-            </div>
-
-            {/* 점수 필 — 세 점수가 모두 0이면 숨김 */}
-            {hasScores && (
-              <div
-                style={{
-                  display: 'flex',
-                  gap: '20px',
-                  marginTop: '24px',
-                }}
-              >
-                {[
-                  { label: '관심도', value: interest },
-                  { label: '친밀도', value: intimacy },
-                  { label: '표현력', value: expression },
-                ].map((pill) => (
-                  <div
-                    key={pill.label}
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      padding: '16px 28px',
-                      borderRadius: '16px',
-                      backgroundColor: 'rgba(255,255,255,0.85)',
-                      minWidth: '120px',
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontSize: 36,
-                        fontWeight: 900,
-                        color: '#1c1917',
-                      }}
-                    >
-                      {pill.value}
-                    </span>
-                    <span
-                      style={{
-                        fontSize: 16,
-                        color: '#57534e',
-                        marginTop: 4,
-                      }}
-                    >
-                      {pill.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* 하단 CTA */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '40px',
-            right: '60px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            backgroundColor: '#292524',
-            color: 'white',
-            padding: '18px 36px',
-            borderRadius: '14px',
-            fontSize: '22px',
-            fontWeight: 700,
-            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
-          }}
-        >
-          <span>
-            {mode === 'parent' ? '자식도 풀러가기 →' : '너도 테스트 하러가기 →'}
-          </span>
-        </div>
-      </div>,
+      ratio === 'story' ? (
+        <StoryCard {...props} />
+      ) : (
+        <LandscapeCard {...props} />
+      ),
       {
-        width: 1200,
-        height: 630,
-        fonts: [
-          {
-            name: 'NotoSansKR',
-            data: fontData,
-            style: 'normal',
-          },
-        ],
+        ...RATIOS[ratio],
+        fonts: [{ name: 'NotoSansKR', data: fontData, style: 'normal' }],
       },
     );
   } catch (e: unknown) {

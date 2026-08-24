@@ -12,6 +12,7 @@ import {
   CalendarPlus,
   ChevronRight,
   Heart,
+  ImageDown,
   RotateCcw,
   Share2,
   Users,
@@ -20,6 +21,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { useKakaoShare } from '@/hooks/useKakaoShare';
+import { useResultCard } from '@/hooks/useResultCard';
 import { calculateResult } from '@/lib/calculateResult';
 import { PARENT_RESULTS } from '@/lib/parentResultData';
 import { RESULTS } from '@/lib/resultData';
@@ -111,6 +113,30 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
     result.grade,
     scores,
   );
+
+  const { saveCard, isSaving } = useResultCard({
+    resultType: result.id,
+    scores,
+  });
+
+  const handleSaveCard = async () => {
+    const outcome = await saveCard();
+    trackEvent('result_card_saved', {
+      mode: 'child',
+      result_id: result.id,
+      grade: result.grade,
+      outcome,
+      from_shared: Boolean(sharedResultId),
+    });
+    if (outcome === 'downloaded') {
+      setToast({ message: '이미지를 저장했어요. 스토리에 올려보세요! 🌸' });
+    } else if (outcome === 'failed') {
+      setToast({
+        message: '이미지를 만들지 못했어요. 잠시 후 다시 시도해주세요.',
+        tone: 'error',
+      });
+    }
+  };
 
   const handleShare = async () => {
     const { outcome, shareId } = await shareKakao();
@@ -432,6 +458,17 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
         >
           <Share2 className="w-5 h-5" />{' '}
           {sharedResultId ? '이 성적표 공유하기' : '부모님께 공유하기'}
+        </button>
+
+        {/* 카톡 링크로는 안 닿는 채널(인스타 스토리 등)을 여는 경로 */}
+        <button
+          type="button"
+          disabled={isSaving}
+          className="w-full bg-ink text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md hover:opacity-90 transition-all disabled:opacity-60"
+          onClick={handleSaveCard}
+        >
+          <ImageDown className="w-5 h-5" />
+          {isSaving ? '성적표 만드는 중...' : '성적표 이미지 저장'}
         </button>
 
         {/* 부모↔자식 비교가 이 서비스의 가장 강한 성장 동선인데,
