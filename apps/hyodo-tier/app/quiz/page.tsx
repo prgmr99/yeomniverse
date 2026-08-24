@@ -6,6 +6,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation'; // 라우터
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import ProgressBar from '@/components/quiz/ProgressBar';
+import { readShareRef } from '@/lib/shareRef';
 import { useQuizStore } from '@/store/useQuizStore'; // 스토어 불러오기
 
 // 애니메이션 변형 정의
@@ -56,7 +57,7 @@ function QuizContent() {
   const parentParams = useMemo(() => {
     const parent = searchParams.get('parent');
     if (!parent) return '';
-    const entries = ['parent', 'pi', 'pn', 'pe', 'pname']
+    const entries = ['parent', 'pi', 'pn', 'pe', 'pname', 'ref']
       .map((k) => {
         const v = searchParams.get(k);
         return v ? `${k}=${encodeURIComponent(v)}` : '';
@@ -64,6 +65,23 @@ function QuizContent() {
       .filter(Boolean);
     return entries.join('&');
   }, [searchParams]);
+
+  // 부모가 공유한 링크는 결과 페이지가 아니라 이 화면으로 떨어진다.
+  // 여기서 잡지 않으면 parent→child 유입이 계측에서 통째로 빠진다.
+  const trackedOpen = useRef(false);
+  useEffect(() => {
+    if (!hydrated || trackedOpen.current) return;
+    const parent = searchParams.get('parent');
+    if (!parent) return;
+    trackedOpen.current = true;
+
+    trackEvent('shared_link_opened', {
+      mode: 'child',
+      landing: 'quiz',
+      parent_result_id: parent,
+      ref: readShareRef(searchParams.get('ref')),
+    });
+  }, [hydrated, searchParams]);
 
   // 현재 보여줄 질문 데이터
   const currentQuestion = QUESTIONS[currentStep];

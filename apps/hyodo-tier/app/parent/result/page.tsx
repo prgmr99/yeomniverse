@@ -9,6 +9,7 @@ import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { useParentKakaoShare } from '@/hooks/useParentKakaoShare';
 import { calculateParentResult } from '@/lib/calculateParentResult';
 import { PARENT_RESULTS } from '@/lib/parentResultData';
+import { readShareRef } from '@/lib/shareRef';
 import { useParentQuizStore } from '@/store/useParentQuizStore';
 
 function ParentResultContent() {
@@ -66,13 +67,14 @@ function ParentResultContent() {
   );
 
   const handleShare = async () => {
-    const outcome = await shareKakao();
+    const { outcome, shareId } = await shareKakao();
     trackEvent('share_clicked', {
       mode: 'parent',
       result_id: result.id,
       grade: result.grade,
       outcome,
       from_shared: Boolean(sharedResultId),
+      share_id: shareId,
     });
     if (outcome === 'copied') {
       setToast({ message: '링크를 복사했어요. 자식에게 붙여넣어 보내보세요.' });
@@ -110,8 +112,9 @@ function ParentResultContent() {
       mode: 'parent',
       result_id: result.id,
       grade: result.grade,
+      ref: readShareRef(searchParams.get('ref')),
     });
-  }, [isReady, sharedResultId, result]);
+  }, [isReady, sharedResultId, result, searchParams]);
 
   if (!isReady) return <Loading />;
 

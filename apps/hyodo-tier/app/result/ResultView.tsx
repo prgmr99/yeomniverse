@@ -23,6 +23,7 @@ import { useKakaoShare } from '@/hooks/useKakaoShare';
 import { calculateResult } from '@/lib/calculateResult';
 import { PARENT_RESULTS } from '@/lib/parentResultData';
 import { RESULTS } from '@/lib/resultData';
+import { readShareRef } from '@/lib/shareRef';
 import { useQuizStore } from '@/store/useQuizStore';
 
 type ResultViewProps = {
@@ -112,13 +113,14 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
   );
 
   const handleShare = async () => {
-    const outcome = await shareKakao();
+    const { outcome, shareId } = await shareKakao();
     trackEvent('share_clicked', {
       mode: 'child',
       result_id: result.id,
       grade: result.grade,
       outcome,
       from_shared: Boolean(sharedResultId),
+      share_id: shareId,
     });
     if (outcome === 'copied') {
       setToast({ message: '링크를 복사했어요. 부모님께 붙여넣어 보내보세요.' });
@@ -170,6 +172,9 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
   );
   const parentName = (searchParams.get('pname') || '').slice(0, 10) || null;
 
+  // 이 방문자를 데려온 공유 건 (Phase 0 계측 — share_clicked와 짝을 이룬다)
+  const shareRef = readShareRef(searchParams.get('ref'));
+
   // 부모편은 축 범위 자체가 달라서(친밀도 최대 190) 원점수끼리 비교하면 불공평하다.
   const displayParentScores = useMemo(
     () => normalizeScores(parentScores, PARENT_SCORE_RANGES),
@@ -199,6 +204,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
         result_id: result.id,
         grade: result.grade,
         has_parent_compare: Boolean(parentResultId),
+        ref: shareRef,
       });
     } else {
       trackEvent('quiz_complete', {
@@ -206,9 +212,17 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
         result_id: result.id,
         grade: result.grade,
         skipped_birthday: skippedBirthday,
+        ref: shareRef,
       });
     }
-  }, [isReady, sharedResultId, result, parentResultId, skippedBirthday]);
+  }, [
+    isReady,
+    sharedResultId,
+    result,
+    parentResultId,
+    skippedBirthday,
+    shareRef,
+  ]);
 
   if (!isReady) return <Loading />; // 리다이렉트 중 깜빡임 방지 및 푸터 점프 방지
 

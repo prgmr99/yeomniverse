@@ -1,5 +1,10 @@
+import { createShareId } from '@/lib/shareRef';
+
 // 호출한 화면이 토스트를 띄울 수 있도록 결과를 돌려준다 (alert 금지)
 export type ShareOutcome = 'shared' | 'copied' | 'cancelled' | 'failed';
+
+// shareId는 GA에서 이 공유 건이 데려온 방문자를 되짚기 위한 값이다.
+export type ShareResult = { outcome: ShareOutcome; shareId: string };
 
 export const useParentKakaoShare = (
   resultType: string,
@@ -7,7 +12,8 @@ export const useParentKakaoShare = (
   scores: { interest: number; intimacy: number; expression: number },
   childName?: string,
 ) => {
-  const shareKakao = async (): Promise<ShareOutcome> => {
+  const shareKakao = async (): Promise<ShareResult> => {
+    const shareId = createShareId();
     const kakaoKey = process.env.NEXT_PUBLIC_KAKAO_JS_KEY;
     if (window.Kakao && !window.Kakao.isInitialized() && kakaoKey) {
       window.Kakao.init(kakaoKey);
@@ -24,7 +30,7 @@ export const useParentKakaoShare = (
     const nameQuery = trimmedName
       ? `&pname=${encodeURIComponent(trimmedName)}`
       : '';
-    const shareUrl = `${baseUrl}/quiz?parent=${resultType}&pi=${scores.interest}&pn=${scores.intimacy}&pe=${scores.expression}${nameQuery}`;
+    const shareUrl = `${baseUrl}/quiz?parent=${resultType}&pi=${scores.interest}&pn=${scores.intimacy}&pe=${scores.expression}${nameQuery}&ref=${shareId}`;
     const ogImageUrl = `${baseUrl}/api/og?result=${resultType}&interest=${scores.interest}&intimacy=${scores.intimacy}&expression=${scores.expression}&mode=parent`;
     const shareTitle = `[효도성적표 · 부모편] ${resultTitle}`;
     const shareText = `나는 ${resultTitle}! 너는 나를 얼마나 아니? 👉 자식 편 테스트 풀어보기 #효도티어 #엄빠편`;
@@ -51,7 +57,7 @@ export const useParentKakaoShare = (
           },
         ],
       });
-      return 'shared';
+      return { outcome: 'shared', shareId };
     }
 
     if (navigator.share) {
@@ -61,27 +67,27 @@ export const useParentKakaoShare = (
           text: shareText,
           url: shareUrl,
         });
-        return 'shared';
+        return { outcome: 'shared', shareId };
       } catch (err) {
         if (err instanceof Error && err.name === 'AbortError') {
-          return 'cancelled';
+          return { outcome: 'cancelled', shareId };
         }
         console.error('navigator.share failed:', err);
-        return 'failed';
+        return { outcome: 'failed', shareId };
       }
     }
 
     if (navigator.clipboard) {
       try {
         await navigator.clipboard.writeText(shareUrl);
-        return 'copied';
+        return { outcome: 'copied', shareId };
       } catch (err) {
         console.error('clipboard write failed:', err);
-        return 'failed';
+        return { outcome: 'failed', shareId };
       }
     }
 
-    return 'failed';
+    return { outcome: 'failed', shareId };
   };
 
   return { shareKakao };
