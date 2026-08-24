@@ -139,7 +139,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
   };
 
   const handleShare = async () => {
-    const { outcome, shareId } = await shareKakao();
+    const { outcome, shareId, copyVariant } = await shareKakao();
     trackEvent('share_clicked', {
       mode: 'child',
       result_id: result.id,
@@ -147,6 +147,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
       outcome,
       from_shared: Boolean(sharedResultId),
       share_id: shareId,
+      copy_variant: copyVariant,
     });
     if (outcome === 'copied') {
       setToast({ message: '링크를 복사했어요. 부모님께 붙여넣어 보내보세요.' });
