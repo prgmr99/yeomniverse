@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getBlogPosts } from '@/lib/blogData';
+import { PARENT_RESULTS } from '@/lib/parentResultData';
 import { RESULTS } from '@/lib/resultData';
 
 const DOMAIN =
@@ -18,6 +19,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 결과 유형별 랜딩 — 유형 이름 롱테일 검색 유입을 노린다
   const resultUrls = Object.keys(RESULTS).map((type) => ({
     url: `${DOMAIN}/result/${type}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }));
+
+  const parentResultUrls = Object.keys(PARENT_RESULTS).map((type) => ({
+    url: `${DOMAIN}/parent/result/${type}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.6,
@@ -73,6 +81,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
     },
     ...resultUrls,
+    ...parentResultUrls,
     ...blogUrls,
   ];
 }
