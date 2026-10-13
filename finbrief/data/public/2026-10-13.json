@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-13",
+  "timestamp": "2026-10-13T03:06:00.926Z",
+  "newsCount": 51,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 46,
+    "rating": "neutral",
+    "timestamp": "2026-10-12T23:59:52+00:00"
+  },
+  "oneWayIndex": {
+    "score": 58,
+    "direction": "bull",
+    "label": "Moderate Trend",
+    "components": {
+      "adx": 0,
+      "maAlignment": 100,
+      "rsiTrend": 100,
+      "bbWidth": 50,
+      "vix": 90,
+      "volume": 40,
+      "fearGreed": 40
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "Fed Official Warns Against 'Inflationary Mindset,' Citing Need for Higher Rates",
+        "summary": "Federal Reserve Governor Hammack stated higher interest rates may be necessary to prevent an 'inflationary mindset' from taking root. This rhetoric signals the Fed's continued vigilance against inflation and potential for further tightening beyond current market expectations. Such a stance implies sustained upward pressure on borrowing costs and a less accommodative monetary environment.",
+        "sentiment": "bear",
+        "reason": "This directly impacts fixed income valuations, particularly longer-duration bonds, and signals headwinds for equity risk premiums."
+      },
+      {
+        "title": "US Treasury Yield Surge Triggers Mortgage Hedging, Intensifying Bond Market Pressure",
+        "summary": "A significant surge in US Treasury yields has prompted increased mortgage hedging activity from financial institutions. This dynamic, where mortgage lenders sell long-duration bonds to offset interest rate risk from their portfolios, creates additional supply pressure on the bond market. The cycle reinforces rising yields, impacting borrowing costs across the economy and challenging fixed income strategies.",
+        "sentiment": "bear",
+        "reason": "The mechanism of mortgage hedging exacerbates bond market sell-offs, increasing the cost of capital for all borrowers and negatively affecting credit-sensitive asset classes."
+      },
+      {
+        "title": "IMF: AI Boosts Global Growth, But Geopolitical Risks and Debt Loom",
+        "summary": "The International Monetary Fund reported that AI investment is currently underpinning global economic growth, suggesting a more resilient short-term outlook. However, the IMF also cautioned that persistent geopolitical conflicts and high public debt levels pose significant threats to the longer-term stability and pace of this expansion. This dual perspective highlights a bifurcated economic landscape where technological tailwinds confront macroeconomic and geopolitical headwinds.",
+        "sentiment": "neutral",
+        "reason": "Capital allocation will gravitate towards AI-leveraged sectors while maintaining hedges against sovereign debt and geopolitical uncertainties."
+      },
+      {
+        "title": "IMF Anticipates Gradual BOJ Rate Hike Towards Neutral Stance",
+        "summary": "The International Monetary Fund forecasts a gradual trajectory for the Bank of Japan to normalize monetary policy, moving interest rates towards a neutral setting. This outlook suggests an eventual end to the BOJ's ultra-loose policy framework, a shift with profound implications for global financial markets. A change in Japan's rate policy would likely unwind long-standing carry trades and reprice global liquidity.",
+        "sentiment": "bear",
+        "reason": "This implies a weakening yen carry trade and a potential shift in global bond market dynamics as Japanese investors repatriate capital or demand higher yields."
+      },
+      {
+        "title": "Japan's Wholesale Inflation Remains Elevated, Fueling BOJ Rate Hike Speculation",
+        "summary": "Japan's wholesale inflation continues to run high, indicating persistent price pressures within the economy. This sustained inflation provides further justification for the Bank of Japan to consider tightening its monetary policy, moving away from its long-held negative interest rate regime. Elevated input costs for businesses will eventually pressure consumer prices and strengthen the case for a BOJ pivot.",
+        "sentiment": "bear",
+        "reason": "Rising inflationary pressures in Japan solidify expectations for a BOJ rate hike, increasing volatility in JGBs and the yen."
+      },
+      {
+        "title": "Dollar Holds Near 18-Month High Amid Rising Geopolitical Risks",
+        "summary": "The US Dollar maintains its position near an 18-month high against major currencies as global geopolitical tensions intensify. Investors seek the safety of the dollar during periods of uncertainty, viewing it as the primary safe-haven asset. This sustained dollar strength negatively impacts commodity prices, emerging market currencies, and the earnings of US multinational corporations.",
+        "sentiment": "bear",
+        "reason": "A strong dollar necessitates a defensive posture in emerging market equities and commodities, while favoring large-cap U.S. multinationals with domestic revenue streams."
+      },
+      {
+        "title": "Asian Tech Stocks Decline as Wall Street Chip Sell-Off Spreads Globally",
+        "summary": "Shares of major Asian technology firms like SK Hynix and SoftBank plunged, mirroring a broader sell-off in US chip stocks. This global contagion highlights the interconnectedness of the technology sector, particularly in semiconductors, across major markets. The decline signals increased investor caution towards growth-oriented technology names and potential profit-taking in a leading market segment.",
+        "sentiment": "bear",
+        "reason": "This indicates a potential rotation out of high-growth technology and semiconductor stocks, favoring value-oriented or defensive sectors."
+      },
+      {
+        "title": "RBA Minutes Signal Further Rate Hikes as Inflation Risks Intensify",
+        "summary": "Minutes from the Reserve Bank of Australia meeting indicated the central bank is prepared to implement further interest rate hikes due to intensifying inflation risks. This signals a commitment to tackling persistent price pressures, aligning with a global trend of central bank hawkishness. Higher Australian rates would impact local economic growth and potentially attract yield-seeking capital flows.",
+        "sentiment": "bear",
+        "reason": "This reinforces the 'higher for longer' interest rate theme, particularly impacting real estate and consumer discretionary sectors in Australia and other developed markets."
+      },
+      {
+        "title": "South Korea's Central Bank Chief Hints at Unavoidable Interest Rate Hikes",
+        "summary": "The head of South Korea's central bank, Rhee Chang-yong, stated the country cannot avoid raising interest rates, citing global economic pressures. This forward guidance suggests an impending tightening of monetary policy in a key Asian economy. Such a move would likely stabilize the Won but could temper domestic economic activity and equity market performance.",
+        "sentiment": "bear",
+        "reason": "This further confirms the global trend of monetary tightening, indicating potential for continued pressure on emerging market equities and local fixed income."
+      },
+      {
+        "title": "Goldman Sachs Forecasts 'Goldilocks' Scenario, Projecting Simultaneous Stock and Bond Gains",
+        "summary": "Goldman Sachs articulated a 'Goldilocks' outlook, predicting a rare scenario where both equities and bonds experience simultaneous strength. This bullish call suggests a soft landing for the global economy, where inflation cools without a significant recession, allowing central banks to ease policy. Such a market environment would reward diversified portfolios and potentially extend the current bull market.",
+        "sentiment": "bull",
+        "reason": "This challenges the dominant bearish narrative, suggesting opportunities for balanced portfolios and a potential re-rating of both growth stocks and high-quality fixed income."
+      }
+    ],
+    "keywords": [
+      "#MonetaryPolicy",
+      "#GlobalMacro",
+      "#AIInvestment"
+    ],
+    "marketSentiment": "Central banks signal prolonged monetary tightening while AI investment sustains growth, but bond markets face upward yield pressure."
+  }
+}
