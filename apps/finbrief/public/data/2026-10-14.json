@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-14",
+  "timestamp": "2026-10-14T01:18:43.444Z",
+  "newsCount": 52,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 45,
+    "rating": "fear",
+    "timestamp": "2026-10-13T23:59:52+00:00"
+  },
+  "oneWayIndex": {
+    "score": 58,
+    "direction": "bull",
+    "label": "Moderate Trend",
+    "components": {
+      "adx": 0,
+      "maAlignment": 100,
+      "rsiTrend": 100,
+      "bbWidth": 50,
+      "vix": 90,
+      "volume": 40,
+      "fearGreed": 40
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "Analysis Error",
+        "summary": "An error occurred during AI analysis. Please try again later.",
+        "sentiment": "neutral",
+        "reason": "System error"
+      }
+    ],
+    "keywords": [
+      "#finance",
+      "#investing",
+      "#news"
+    ],
+    "marketSentiment": "Unable to retrieve analysis results."
+  }
+}
