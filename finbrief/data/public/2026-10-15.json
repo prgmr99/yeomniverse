@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-15",
+  "timestamp": "2026-10-15T00:40:15.985Z",
+  "newsCount": 48,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 32,
+    "rating": "fear",
+    "timestamp": "2026-10-14T23:59:45+00:00"
+  },
+  "oneWayIndex": {
+    "score": 37,
+    "direction": "bull",
+    "label": "Weak Directional Bias",
+    "components": {
+      "adx": 0,
+      "maAlignment": 100,
+      "rsiTrend": 10,
+      "bbWidth": 30,
+      "vix": 60,
+      "volume": 40,
+      "fearGreed": 15
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "Hot Inflation Fuels Rate Hike Fears, Nasdaq Falls",
+        "summary": "September CPI data came in hotter than expected, indicating persistent inflationary pressures across the U.S. economy. This data immediately fueled market fears of further Federal Reserve interest rate hikes and reinforced a 'higher for longer' monetary policy stance. Equity markets, particularly growth stocks, saw significant declines, and the U.S. dollar strengthened on rate differentials.",
+        "sentiment": "bear",
+        "reason": "Higher inflation and rising rate expectations will depress equity valuations, especially for growth and long-duration assets, while boosting short-term fixed income yields and the dollar."
+      },
+      {
+        "title": "CoreWeave AI Bonds Tumble, Signaling Credit Risk",
+        "summary": "Bonds issued by AI infrastructure provider CoreWeave experienced a significant tumble, with yields nearing 15% amid broader market concerns. This reflects growing investor apprehension over the credit quality and sustainability of highly leveraged AI-related companies in a rising rate environment. The distressed pricing of these bonds raises questions about broader credit market health and lending standards for capital-intensive AI ventures.",
+        "sentiment": "bear",
+        "reason": "Increased cost of capital and tighter lending conditions for AI startups will impact venture capital flows and private market valuations across the technology sector."
+      },
+      {
+        "title": "Dell Plunge Signals Enterprise AI Adoption Timing Concerns",
+        "summary": "Dell Technologies' stock plunged over 11%, leading a broader sell-off in data center hardware providers. This decline is attributed to fears that enterprise adoption of AI infrastructure is occurring slower than previously anticipated, impacting near-term revenue projections. The re-evaluation of 'enterprise AI timing' indicates a shift in market expectations from immediate broad-based growth to a more measured deployment cycle.",
+        "sentiment": "bear",
+        "reason": "Re-calibrated enterprise AI adoption timelines will pressure revenue and earnings forecasts for hardware providers and cloud infrastructure companies, impacting their equity valuations."
+      },
+      {
+        "title": "Fed's Goolsbee Cites Discouraging CPI Data",
+        "summary": "Chicago Fed President Austan Goolsbee described September CPI data as 'discouraging,' publicly acknowledging the Federal Reserve's concern regarding persistent inflation. His comments reinforce the consensus that the Fed remains data-dependent and vigilant about price stability. This sentiment suggests that the path to easing monetary policy will be longer and more challenging than previously hoped.",
+        "sentiment": "bear",
+        "reason": "Sustained hawkish rhetoric from Fed officials underpins higher short-term interest rates and increases the likelihood of further tightening, negatively affecting interest-rate sensitive sectors."
+      },
+      {
+        "title": "Traders Pile Into CoreWeave 'Bubble Puts' Amid Plunge",
+        "summary": "Traders are increasingly purchasing 'bubble puts' on CoreWeave and other neocloud stocks, indicating growing bearish sentiment and a belief that valuations are unsustainable. This aggressive options positioning signals a speculative shift, with investors betting against the continued rise of high-flying AI-related assets. Such concentrated bearish bets can amplify downward price movements and signal broader sentiment exhaustion in the AI sector.",
+        "sentiment": "bear",
+        "reason": "Increased speculative shorting activity and bearish options positioning will contribute to volatility and downside pressure for highly-valued, speculative growth stocks within the AI ecosystem."
+      },
+      {
+        "title": "Fannie Mae Raises Mortgage Rate Forecast Through 2027",
+        "summary": "Fannie Mae significantly increased its mortgage rate forecast, anticipating higher rates persisting through 2027. This upward revision reflects a more pessimistic outlook on long-term interest rates, driven by sticky inflation and a hawkish Federal Reserve. Higher mortgage rates will suppress housing demand, reduce affordability, and weigh on residential real estate markets.",
+        "sentiment": "bear",
+        "reason": "Elevated long-term mortgage rates will continue to deflate housing market activity, impacting homebuilders, real estate investment trusts (REITs), and consumer spending on durable goods."
+      },
+      {
+        "title": "Small-Cap Stocks Unravel From Record Highs",
+        "summary": "Small-cap stocks, as measured by the Russell 2000, have corrected sharply, dropping 10% from recent highs in just two months. This rapid unraveling reflects investor sensitivity to higher interest rates, tighter credit conditions, and slowing domestic growth prospects. Small-caps are typically more leveraged and exposed to the domestic economy, making them particularly vulnerable to these macro headwinds.",
+        "sentiment": "bear",
+        "reason": "Small-cap underperformance signals a deterioration in broader market risk appetite and credit conditions, prompting a defensive rotation out of economically sensitive segments."
+      },
+      {
+        "title": "Fed's Daly Signals Rate Hikes Likely, No Immediate Urgency",
+        "summary": "San Francisco Fed President Mary Daly indicated that further rate hikes are likely necessary but signaled no urgency for an October move. This provides a crucial distinction, suggesting the Fed maintains its tightening bias but will proceed cautiously and data-dependently. The 'no urgency' clause allows for market breathing room while reinforcing the overall restrictive monetary policy outlook.",
+        "sentiment": "neutral",
+        "reason": "This nuanced Fed communication provides near-term stability for bond markets by moderating immediate rate hike fears, but maintains upward pressure on the yield curve's longer end."
+      },
+      {
+        "title": "Bank of America Reports Profit Miss, Regulatory Fine",
+        "summary": "Bank of America reported a profit miss and disclosed a $1.2 billion government fine, weighing on financial sector sentiment. The fine highlights ongoing regulatory scrutiny and compliance costs for large financial institutions, increasing their operational overhead. This development adds pressure on bank profitability and could prompt increased caution in lending activities.",
+        "sentiment": "bear",
+        "reason": "Increased regulatory costs and potential profitability headwinds for major banks will negatively impact financial sector earnings and investor confidence."
+      },
+      {
+        "title": "US-Korea Strategic Investment Enters Execution Phase",
+        "summary": "Ryu Jin of the Korea Federation of Enterprises stated that US-Korea strategic investments are now entering the execution phase, signaling a transition to corporate-led implementation. This follows high-level bilateral discussions and indicates concrete capital deployment for specific projects within the alliance framework. Such strategic capital allocation commitments can stimulate activity in sectors like advanced manufacturing, semiconductors, and clean energy.",
+        "sentiment": "bull",
+        "reason": "Confirmed execution of bilateral strategic investments will drive capital expenditure and potentially boost revenue for companies involved in identified strategic sectors in both countries."
+      }
+    ],
+    "keywords": [
+      "#MonetaryPolicy",
+      "#AITech",
+      "#CreditConditions"
+    ],
+    "marketSentiment": "Persistent inflation solidifies Fed's hawkish stance, raising rate expectations and prompting risk asset re-evaluation, particularly in AI and small-cap segments."
+  }
+}
