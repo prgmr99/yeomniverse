@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-16",
+  "timestamp": "2026-10-16T00:31:55.974Z",
+  "newsCount": 47,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 32,
+    "rating": "fear",
+    "timestamp": "2026-10-15T23:59:53+00:00"
+  },
+  "oneWayIndex": {
+    "score": 40,
+    "direction": "bull",
+    "label": "Weak Directional Bias",
+    "components": {
+      "adx": 0,
+      "maAlignment": 100,
+      "rsiTrend": 50,
+      "bbWidth": 10,
+      "vix": 60,
+      "volume": 40,
+      "fearGreed": 15
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "Fed Governor Hammack Warns on Inflation Expectations",
+        "summary": "Federal Reserve Governor Philip Hammack stated that a deterioration in inflation expectations could necessitate a Fed policy response. This signals a hawkish stance, indicating the central bank's readiness to tighten further if public and market inflation expectations drift upwards. Such a move would directly impact borrowing costs and asset valuations across the board.",
+        "sentiment": "bear",
+        "reason": "This explicitly flags increased monetary tightening risk, negatively affecting equities, credit, and longer-duration fixed income."
+      },
+      {
+        "title": "US 10-Year Treasury Yields Decline Sharply",
+        "summary": "The U.S. 10-year Treasury yield experienced its largest one-day decline in over a year as bonds rallied. This movement suggests either an abrupt re-evaluation of future Fed rate hikes or a significant flight-to-quality by investors seeking safety. Lower benchmark yields can reduce financing costs but also signal growth concerns.",
+        "sentiment": "neutral",
+        "reason": "The rally implies potential easing of long-term borrowing costs, benefiting growth stocks, but also hints at underlying economic caution driving demand for safe assets."
+      },
+      {
+        "title": "Dow Rises as Capital Rotates from AI",
+        "summary": "The Dow Jones Industrial Average rose significantly as investors shifted capital away from the concentrated AI trade. This rotation indicates broadening market participation and a search for value beyond high-growth technology. Capital is moving into more mature, stable sectors, altering market leadership dynamics.",
+        "sentiment": "neutral",
+        "reason": "This confirms a sector rotation out of AI/growth and into established value or defensive segments, impacting index composition and relative performance."
+      },
+      {
+        "title": "Pharma Outperforms as Investors Seek Defensives",
+        "summary": "Big pharmaceutical stocks reached new highs, demonstrating a clear rotation of capital towards defensive sectors. This shift occurs as the tech selloff intensifies, driving investors to prioritize stability and consistent earnings. The move reflects risk aversion and a preference for established industries with reliable cash flows.",
+        "sentiment": "neutral",
+        "reason": "Confirms the capital reallocation from growth to defensive sectors, specifically favoring large-cap pharmaceutical and other stable industries."
+      },
+      {
+        "title": "CoreWeave CDS Signal AI Credit Stress",
+        "summary": "Credit default swaps for CoreWeave, an AI infrastructure firm, reached distressed levels, signaling investor concerns over AI sector debt. This indicates growing skepticism about the financing models and future profitability of highly leveraged AI companies. The widening spreads reflect a re-evaluation of credit risk within the broader AI ecosystem.",
+        "sentiment": "bear",
+        "reason": "Highlights increasing credit risk in the AI sector, potentially leading to tighter financing conditions and higher costs for AI-related ventures."
+      },
+      {
+        "title": "Dollar Retreats from Recent Highs",
+        "summary": "The U.S. Dollar pulled back from an 18-month high, influenced by a bond rally that somewhat offset recent hot inflation data. This suggests that the market is balancing inflation concerns with either growth deceleration or a potential peak in interest rate expectations. A weaker dollar can boost multinational corporate earnings and commodity prices.",
+        "sentiment": "neutral",
+        "reason": "A weaker dollar impacts corporate earnings for U.S. multinationals and can support commodity prices, while indicating shifting sentiment on rate differentials."
+      },
+      {
+        "title": "Fed's Goolsbee Expresses Mixed Inflation View",
+        "summary": "Chicago Fed President Austan Goolsbee described recent inflation data as discouraging but maintained some optimism for future disinflation. This nuanced commentary suggests internal Fed debate or a desire to avoid overly hawkish signaling despite persistent price pressures. It introduces uncertainty regarding the Fed's unified stance and future policy path.",
+        "sentiment": "neutral",
+        "reason": "The mixed messaging creates uncertainty regarding the Fed's policy trajectory, influencing interest rate expectations and volatility across asset classes."
+      },
+      {
+        "title": "Stock-Bond Correlation Shifts, Mid-Term Treasuries Gain Hedging Appeal",
+        "summary": "The historical inverse correlation between stocks and bonds appears to be breaking down, changing fundamental portfolio diversification strategies. This shift highlights the increased hedging appeal of U.S. medium-term Treasuries in a market where traditional safe-haven assets are less reliable. Investors must reconsider traditional 60/40 portfolio assumptions and risk management approaches.",
+        "sentiment": "neutral",
+        "reason": "This signals a fundamental change in portfolio construction and risk management strategies, favoring assets with genuinely uncorrelated returns."
+      },
+      {
+        "title": "AI Data Center Deals Challenged by Macro Headwinds",
+        "summary": "The boom in AI data center deals is facing headwinds from the broader market selloff and rising interest rates. Increased borrowing costs and tighter capital markets make financing large-scale infrastructure projects more difficult. This will likely slow new development and consolidation within the capital-intensive AI infrastructure sector.",
+        "sentiment": "bear",
+        "reason": "Higher rates and market skepticism will reduce deal activity and increase capital costs for AI infrastructure, dampening growth projections for related companies."
+      },
+      {
+        "title": "Democrat Midterm Sweep Poses Tech Sector Risk",
+        "summary": "A potential sweep by Democrats in upcoming midterm elections could exacerbate the current tech sector selloff, potentially triggering a broader crash. Increased regulatory scrutiny, antitrust actions, or changes to tax policy could significantly impact tech company valuations and profitability. This political risk adds a layer of uncertainty to an already fragile sector.",
+        "sentiment": "bear",
+        "reason": "Political shifts can introduce significant regulatory and fiscal risks for the tech sector, potentially amplifying current negative market trends."
+      }
+    ],
+    "keywords": [
+      "#RatesOutlook",
+      "#AIContagion",
+      "#SectorRotation"
+    ],
+    "marketSentiment": "Macroeconomic crosscurrents are driving sector rotation, with increasing credit stress evident in high-growth tech segments."
+  }
+}
