@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-22",
+  "timestamp": "2026-10-22T00:46:38.750Z",
+  "newsCount": 47,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 31,
+    "rating": "fear",
+    "timestamp": "2026-10-21T23:59:57+00:00"
+  },
+  "oneWayIndex": {
+    "score": 40,
+    "direction": "bull",
+    "label": "Weak Directional Bias",
+    "components": {
+      "adx": 0,
+      "maAlignment": 100,
+      "rsiTrend": 50,
+      "bbWidth": 10,
+      "vix": 60,
+      "volume": 40,
+      "fearGreed": 15
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "Global Equities Rise on AI Earnings; French 10-Year Yield Hits 5%",
+        "summary": "Equity markets advanced, driven by strong AI-related earnings reports from major technology firms. This occurred concurrently with France's 10-year bond yield reaching 5%, a level not seen in over a decade, reflecting sustained global sovereign debt pressure. The dual narrative highlights divergent forces: robust tech growth counteracting the tightening financial conditions driven by higher interest rates.",
+        "sentiment": "neutral",
+        "reason": "The simultaneous strength in AI equities and a significant spike in European bond yields forces a re-evaluation of growth versus discount rate assumptions across all asset classes."
+      },
+      {
+        "title": "Meta Reports Q3 Revenue Beat, Issues Strong Guidance",
+        "summary": "Meta Platforms exceeded third-quarter revenue expectations and provided an optimistic outlook for the upcoming period. This performance signals robust demand in digital advertising and validates the company's significant investments in AI and foundational models. The strong results reinforce the resilience of mega-cap tech and the accelerating monetization of AI capabilities across the ad tech ecosystem.",
+        "sentiment": "bull",
+        "reason": "The strong performance by a leading advertising platform suggests resilient consumer spending and continued capital flows into the digital advertising and AI-enabled software sectors."
+      },
+      {
+        "title": "US Housing Market Shows Warning Signs Amid Potential Fed Hikes",
+        "summary": "The U.S. housing market is exhibiting multiple indicators of stress, including declining affordability and slower transaction volumes. These warning signs emerge as the Federal Reserve continues to assess further interest rate increases, which would exacerbate existing pressures on mortgage demand. Sustained housing weakness risks broader economic deceleration and could complicate the Fed's inflation targeting objectives.",
+        "sentiment": "bear",
+        "reason": "Deterioration in the housing market suggests a significant headwind for consumer sentiment and potential for broader economic contraction, impacting rate-sensitive sectors and discretionary consumer spending."
+      },
+      {
+        "title": "BlackRock's Rieder Highlights Historic Opportunity in High-Quality Bonds",
+        "summary": "Rick Rieder, BlackRock's Chief Investment Officer of Global Fixed Income, articulated a compelling case for investment in high-quality bonds. He views current elevated yields as a generational opportunity to lock in attractive, risk-adjusted returns for fixed income portfolios. This perspective suggests a potential strategic rotation of institutional capital from risk assets back into investment-grade debt, altering market liquidity dynamics.",
+        "sentiment": "bull",
+        "reason": "This pronouncement from a leading fixed-income manager encourages institutional capital reallocation into duration and credit, potentially supporting bond prices and dampening equity risk appetite."
+      },
+      {
+        "title": "Tesla Exceeds Q3 Earnings and Sales Estimates; Automotive Revenue Declines",
+        "summary": "Tesla reported better-than-expected third-quarter earnings and sales, however, its core automotive revenue experienced a year-over-year decline. The mixed results highlight the impact of price cuts on margins and growing competition within the electric vehicle market. This signals increasing pressure on Tesla's profitability and raises questions about its valuation sustainability in a maturing EV landscape.",
+        "sentiment": "bear",
+        "reason": "The erosion of automotive revenue despite overall beat indicates margin pressure for the leading EV manufacturer, raising concerns for the broader automotive sector and high-growth technology valuations."
+      },
+      {
+        "title": "CoreWeave Market Confidence Erodes Amid Rising Bond Yields",
+        "summary": "CoreWeave, a high-growth AI infrastructure startup, experienced a decline in market confidence, reflected in its stock performance. This erosion is directly attributed to the recent spike in global bond yields, increasing the cost of capital for speculative growth companies. The development serves as a canary in the coal mine for private market valuations and the funding environment for AI startups dependent on future growth.",
+        "sentiment": "bear",
+        "reason": "The distress of a prominent private AI infrastructure firm due to higher yields signals tightening funding conditions for venture capital-backed technology and potential revaluation of private market assets."
+      },
+      {
+        "title": "IBM Beats Q3 Estimates, Cites 'Super Intelligence' AI Traction",
+        "summary": "IBM reported a beat on both revenue and earnings for its third quarter, driven by strong performance in its consulting and software segments. CEO Arvind Krishna emphasized significant traction in AI solutions, particularly their 'Super Intelligence' offerings, indicating enterprise-level adoption. This demonstrates that AI-driven growth is extending beyond consumer-facing giants into traditional enterprise IT services and infrastructure.",
+        "sentiment": "bull",
+        "reason": "IBM's robust AI-driven performance indicates broader enterprise technology adoption of artificial intelligence solutions, signaling increased capital expenditures in business transformation and AI integration."
+      },
+      {
+        "title": "New Zealand Q3 Inflation Rises 0.7% Quarter-over-Quarter",
+        "summary": "New Zealand's Consumer Price Index increased by 0.7% in the third quarter compared to the previous quarter. This inflation reading, while not extreme, indicates persistent price pressures within a developed economy. The data could influence expectations for other central banks globally, especially those with similar economic structures, regarding future monetary policy tightening.",
+        "sentiment": "neutral",
+        "reason": "Elevated inflation in a bellwether developed economy could reinforce global central bank hawkishness, maintaining pressure on bond yields and impacting interest-rate sensitive sectors globally."
+      },
+      {
+        "title": "India's Data Center Growth Faces Water and Power Sustainability Concerns",
+        "summary": "India is emerging as a leading market for data center development in Asia, attracting significant foreign investment. However, this rapid expansion faces critical sustainability challenges regarding adequate water and power supply. Addressing these concerns is vital for continued foreign direct investment into Indian infrastructure and for meeting the escalating demands of its digital economy.",
+        "sentiment": "neutral",
+        "reason": "India's data center growth presents a significant investment opportunity in emerging market infrastructure, but requires careful consideration of ESG factors and regulatory stability for long-term capital deployment."
+      },
+      {
+        "title": "SpaceX Stock Jumps Post-Earnings; Musk Hints at Tesla Tie-up",
+        "summary": "SpaceX, a prominent private company, saw its valuation jump following a strong earnings report. Simultaneously, Elon Musk hinted at a potential future collaboration or tie-up between SpaceX and Tesla. This dual development underscores the robust performance of privately held innovative firms and introduces a speculative M&A catalyst for Tesla, potentially reshaping its strategic direction.",
+        "sentiment": "bull",
+        "reason": "Strong private company performance validates venture capital bets in space and tech, while the Tesla tie-up speculation creates M&A optionality for public market investors in the electric vehicle sector."
+      }
+    ],
+    "keywords": [
+      "#AI",
+      "#InterestRates",
+      "#FixedIncome"
+    ],
+    "marketSentiment": "Global equities navigate robust AI earnings against a backdrop of persistent sovereign yield pressure."
+  }
+}
