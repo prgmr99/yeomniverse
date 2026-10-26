@@ -14,7 +14,7 @@ const ADSENSE_ACCOUNT =
   process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT || 'ca-pub-7476208540300201';
 
 const DESCRIPTION =
-  'Yeomniverse는 개인이 만든 작은 웹 도구를 모아둔 사이트입니다. 부모님 탐구영역 테스트 효도티어, 매일 아침 AI 금융 브리핑 FinBrief, 거래 시뮬레이터 NeuroTrade, 세계 정세 지도 Argus를 운영합니다.';
+  'Yeomniverse는 개인이 만든 작은 웹 도구를 모아둔 사이트입니다. 부모님 탐구영역 테스트 효도티어, 매일 아침 AI 금융 브리핑 FinBrief, 거래 시뮬레이터 NeuroTrade, 세계 정세 지도 Argus, 치과 종사자 리뷰 서비스 치잡을 운영합니다.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -39,6 +39,9 @@ export const metadata: Metadata = {
     '모의투자',
     'Argus',
     '세계 정세 지도',
+    '치잡',
+    '치과 취업',
+    '치과 병원 리뷰',
   ],
   applicationName: SITE_NAME,
   icons: {

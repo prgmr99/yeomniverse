@@ -47,7 +47,8 @@ export default function YeomniverseLanding() {
 
           <p className="mt-5 max-w-xl text-base leading-relaxed text-white/80 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] md:text-lg">
             직접 만든 작은 웹 도구를 모아두는 곳. 심리테스트부터 금융 브리핑,
-            거래 시뮬레이터, 세계 정세 지도까지 네 개의 서비스를 운영합니다.
+            세계 정세 지도, 치과 취업 정보까지 {SERVICES.length}개의 서비스를
+            운영합니다.
           </p>
         </SplineExperience>
 
@@ -92,8 +93,9 @@ export default function YeomniverseLanding() {
               운영 중인 서비스
             </h2>
             <p className="mt-4 leading-relaxed text-white/70">
-              네 개의 서비스가 각각 독립적으로 동작합니다. 서비스 이름을 누르면
-              무엇을 하는 도구인지, 어떻게 쓰는지 정리한 소개 페이지로 갑니다.
+              {SERVICES.length}개의 서비스가 각각 독립적으로 동작합니다. 서비스
+              이름을 누르면 무엇을 하는 도구인지, 어떻게 쓰는지 정리한 소개
+              페이지로 갑니다.
             </p>
 
             <ul className="mt-10 space-y-6">

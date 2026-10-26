@@ -161,7 +161,7 @@ export default function SplineExperience({ services, children }: Props) {
       {/* Services reveal modal */}
       {open && (
         <div
-          className="reveal-overlay fixed inset-0 z-50 flex items-start justify-center overflow-y-auto overscroll-contain px-4 py-10 md:items-center"
+          className="reveal-overlay fixed inset-0 z-50 flex items-start justify-center overflow-y-auto overscroll-contain px-4 py-10"
           data-closing={closing}
           onAnimationEnd={onOverlayAnimationEnd}
           role="dialog"
@@ -178,7 +178,7 @@ export default function SplineExperience({ services, children }: Props) {
 
           {/* Panel */}
           <div
-            className="reveal-panel relative z-10 w-full max-w-7xl"
+            className="reveal-panel relative z-10 my-auto w-full max-w-7xl"
             data-closing={closing}
           >
             <div className="mb-6 flex items-end justify-between gap-4">
@@ -204,7 +204,7 @@ export default function SplineExperience({ services, children }: Props) {
               </button>
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {services.map((service, i) => (
                 <a
                   key={service.href}

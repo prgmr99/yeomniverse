@@ -129,9 +129,10 @@ export default function AboutPage() {
         <h2 className="text-2xl font-bold text-white">기술 구성</h2>
         <div className="mt-4 space-y-4 leading-relaxed text-white/70">
           <p>
-            전체가 하나의 모노레포에서 관리되고, 각 서비스는 Next.js와
-            TypeScript로 만들어 Vercel에 배포합니다. 공통 UI 컴포넌트와
-            유틸리티는 패키지로 분리해 서비스 간에 공유합니다.
+            각 서비스는 Next.js와 TypeScript로 만들어 Vercel에 배포합니다.
+            효도티어와 FinBrief는 이 사이트와 같은 모노레포에서 관리하며, 공통
+            UI 컴포넌트와 유틸리티를 패키지로 분리해 공유합니다. 나머지는 각자
+            독립된 저장소에 있습니다.
           </p>
           <p>
             FinBrief의 일일 브리핑처럼 정해진 시각에 돌아야 하는 작업은 GitHub
