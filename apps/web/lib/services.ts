@@ -32,11 +32,20 @@ export type RelatedLink = {
  */
 export type ServiceAccess = 'public' | 'private';
 
+export type ServiceLanguage = 'ko' | 'en';
+
+export const LANGUAGE_LABELS: Record<ServiceLanguage, string> = {
+  ko: '한국어',
+  en: 'English',
+};
+
 export type Service = {
   slug: string;
   access: ServiceAccess;
   /** 바로가기 아래에 덧붙일 접근 조건 (로그인 필요 등) */
   accessNote?: string;
+  /** UI에서 지원하는 언어. 첫 번째가 기본 언어다. */
+  languages: ServiceLanguage[];
   title: string;
   subtitle: string;
   /** 홈 카드와 상세 페이지 상단에 함께 쓰는 한 줄 요약 */
@@ -63,6 +72,7 @@ export type Service = {
 export const SERVICES: Service[] = [
   {
     slug: 'hyodo-tier',
+    languages: ['ko'],
     access: 'public',
     title: '효도티어',
     subtitle: 'Filial Piety Test',
@@ -223,6 +233,7 @@ export const SERVICES: Service[] = [
   },
   {
     slug: 'finbrief',
+    languages: ['ko', 'en'],
     access: 'public',
     title: 'FinBrief',
     subtitle: 'AI Financial Briefing',
@@ -366,6 +377,7 @@ export const SERVICES: Service[] = [
   },
   {
     slug: 'neuro-trade',
+    languages: ['ko', 'en'],
     access: 'public',
     title: 'NeuroTrade',
     subtitle: 'Simulated Financial Trading',
@@ -507,6 +519,7 @@ export const SERVICES: Service[] = [
   },
   {
     slug: 'argus',
+    languages: ['ko', 'en'],
     access: 'public',
     title: 'Argus',
     subtitle: 'Global Situation Map',
@@ -632,6 +645,7 @@ export const SERVICES: Service[] = [
   },
   {
     slug: 'chijob',
+    languages: ['ko'],
     access: 'public',
     title: '치잡',
     subtitle: 'Dental Workplace Reviews',
@@ -791,6 +805,7 @@ export const SERVICES: Service[] = [
   },
   {
     slug: 'ansim-wolse',
+    languages: ['ko'],
     access: 'public',
     title: '안심월세',
     subtitle: 'Rental Safety Scoring',

@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
-import { getService, SERVICES } from '@/lib/services';
+import { getService, LANGUAGE_LABELS, SERVICES } from '@/lib/services';
 import { SITE_NAME, SITE_URL } from '@/lib/site';
 
 type Params = { slug: string };
@@ -99,6 +99,17 @@ export default async function ServicePage({
       <p className="mt-2 text-sm font-medium text-white/50">
         {service.subtitle}
       </p>
+
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        {service.languages.map((language) => (
+          <span
+            key={language}
+            className="rounded-full border border-white/15 px-2.5 py-1 text-xs font-medium text-white/50"
+          >
+            {LANGUAGE_LABELS[language]}
+          </span>
+        ))}
+      </div>
       <p className="mt-6 text-lg leading-relaxed text-white/80">
         {service.lead}
       </p>

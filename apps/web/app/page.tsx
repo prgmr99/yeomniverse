@@ -1,6 +1,6 @@
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
-import { SERVICES } from '@/lib/services';
+import { LANGUAGE_LABELS, SERVICES } from '@/lib/services';
 import SiteFooter from './components/SiteFooter';
 import SplineExperience from './components/SplineExperience';
 
@@ -105,7 +105,7 @@ export default function YeomniverseLanding() {
                   key={service.slug}
                   className="rounded-3xl border border-white/10 bg-white/[0.03] p-7"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                     <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/35">
                       {service.index}
                     </p>
@@ -114,6 +114,14 @@ export default function YeomniverseLanding() {
                         비공개
                       </span>
                     )}
+                    {service.languages.map((language) => (
+                      <span
+                        key={language}
+                        className="rounded-full border border-white/15 px-2 py-0.5 text-[10px] font-medium text-white/45"
+                      >
+                        {LANGUAGE_LABELS[language]}
+                      </span>
+                    ))}
                   </div>
 
                   <h3 className="mt-3 text-2xl font-bold text-white">

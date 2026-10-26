@@ -16,6 +16,8 @@
 ### Hyodo-Tier (효도티어)
 **2026 National Filial Piety Aptitude Test**
 
+`한국어`
+
 A quiz that measures how much you actually know about your parents, scored across three axes — attention, closeness, and expression.
 
 - 15 questions, 9 result types and a grade
@@ -30,6 +32,8 @@ A quiz that measures how much you actually know about your parents, scored acros
 
 ### FinBrief
 **Daily Morning Financial Market Summary**
+
+`한국어` `English`
 
 AI-curated global financial news delivered to your Telegram every morning.
 
@@ -46,6 +50,8 @@ AI-curated global financial news delivered to your Telegram every morning.
 ### NeuroTrade
 **Simulated Financial Trading Game**
 
+`한국어` `English`
+
 A web-based educational trading simulator where players analyze fictional news events to predict market movements and manage a digital portfolio.
 
 - News-driven dynamic market engine
@@ -61,6 +67,8 @@ A web-based educational trading simulator where players analyze fictional news e
 ### Argus
 **Global Situation Map**
 
+`한국어` `English`
+
 An interactive dashboard that maps the world's major developments onto a single world map, giving a strategy-game-style overview of global affairs at a glance.
 
 - Four toggleable layers: war & conflict, geopolitics, finance, technology & energy
@@ -74,6 +82,8 @@ An interactive dashboard that maps the world's major developments onto a single 
 
 ### Chijob (치잡)
 **Anonymous Workplace Reviews for Dental Staff**
+
+`한국어`
 
 Dental hygienists and assistants rarely get to know what a clinic is like before they take the job. Chijob puts every clinic in the country on the map and lets the people who worked there say what it was like.
 
@@ -90,6 +100,8 @@ Dental hygienists and assistants rarely get to know what a clinic is like before
 
 ### Ansim Wolse (안심월세)
 **Seoul Rental Comparison, Scored on the Walk Home and the Contract**
+
+`한국어`
 
 Listing photos never tell you what the walk from the station looks like at 11pm, or what the property register says. This scores both before you sign.
 
