@@ -1,4 +1,4 @@
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Lock } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -103,15 +103,23 @@ export default async function ServicePage({
         {service.lead}
       </p>
 
-      <a
-        href={service.url}
-        className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-white/90"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        {service.title} 사용하기
-        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-      </a>
+      {service.access === 'public' ? (
+        <a
+          href={service.url}
+          className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-white/90"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {service.title} 사용하기
+          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+        </a>
+      ) : (
+        <p className="mt-8 inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-4 text-sm text-white/60">
+          <Lock className="h-4 w-4 shrink-0" aria-hidden="true" />
+          현재 비공개로 운영 중이라 바로 사용할 수는 없습니다. 아래는 이 도구가
+          무엇을 어떻게 재는지에 대한 설명입니다.
+        </p>
+      )}
 
       {service.sections.map((section) => (
         <section key={section.heading} className="mt-14">
@@ -182,26 +190,28 @@ export default async function ServicePage({
         </div>
       </section>
 
-      <section className="mt-14">
-        <h2 className="text-2xl font-bold text-white">관련 링크</h2>
-        <ul className="mt-6 space-y-3">
-          {service.relatedLinks.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="group flex items-baseline gap-2 text-white/80 transition-colors hover:text-white"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <span className="font-semibold underline decoration-white/20 underline-offset-4 group-hover:decoration-white">
-                  {link.label}
-                </span>
-                <span className="text-sm text-white/45">{link.note}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
+      {service.relatedLinks.length > 0 && (
+        <section className="mt-14">
+          <h2 className="text-2xl font-bold text-white">관련 링크</h2>
+          <ul className="mt-6 space-y-3">
+            {service.relatedLinks.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className="group flex items-baseline gap-2 text-white/80 transition-colors hover:text-white"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <span className="font-semibold underline decoration-white/20 underline-offset-4 group-hover:decoration-white">
+                    {link.label}
+                  </span>
+                  <span className="text-sm text-white/45">{link.note}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section className="mt-16 border-t border-white/10 pt-10">
         <h2 className="text-lg font-bold text-white">다른 서비스</h2>

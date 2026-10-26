@@ -5,11 +5,12 @@ import SiteFooter from './components/SiteFooter';
 import SplineExperience from './components/SplineExperience';
 
 // 모달 카드는 기존 동작을 유지한다 — 눌렀을 때 바로 서비스로 간다.
+// 비공개 도구만 예외로, 로그인 벽 대신 소개 페이지로 보낸다.
 const splineServices = SERVICES.map((service) => ({
   title: service.title,
   subtitle: service.subtitle,
   description: service.cardDescription,
-  href: service.url,
+  href: service.access === 'public' ? service.url : `/services/${service.slug}`,
   accent: service.accent,
   glow: service.glow,
   index: service.index,
@@ -104,9 +105,16 @@ export default function YeomniverseLanding() {
                   key={service.slug}
                   className="rounded-3xl border border-white/10 bg-white/[0.03] p-7"
                 >
-                  <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/35">
-                    {service.index}
-                  </p>
+                  <div className="flex items-center gap-3">
+                    <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/35">
+                      {service.index}
+                    </p>
+                    {service.access === 'private' && (
+                      <span className="rounded-full border border-white/15 px-2 py-0.5 text-[10px] font-medium text-white/45">
+                        비공개
+                      </span>
+                    )}
+                  </div>
 
                   <h3 className="mt-3 text-2xl font-bold text-white">
                     <Link
@@ -135,18 +143,20 @@ export default function YeomniverseLanding() {
                     >
                       자세히 보기
                     </Link>
-                    <a
-                      href={service.url}
-                      className="inline-flex items-center gap-1.5 text-white/60 transition-colors hover:text-white"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      바로 사용하기
-                      <ArrowUpRight
-                        className="h-3.5 w-3.5"
-                        aria-hidden="true"
-                      />
-                    </a>
+                    {service.access === 'public' && (
+                      <a
+                        href={service.url}
+                        className="inline-flex items-center gap-1.5 text-white/60 transition-colors hover:text-white"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        바로 사용하기
+                        <ArrowUpRight
+                          className="h-3.5 w-3.5"
+                          aria-hidden="true"
+                        />
+                      </a>
+                    )}
                   </div>
                 </li>
               ))}
