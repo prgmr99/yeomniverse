@@ -8,19 +8,20 @@ const bundleAnalyzer = withBundleAnalyzer({
 const nextConfig: NextConfig = {
   async redirects() {
     return [
-      // Redirect hyodo-tier routes to subdomain
+      // 아직 서브도메인에 사는 서비스로 넘긴다.
+      // 효도티어를 /hyodo-tier 경로로 옮길 때 이 두 항목을 rewrite로 바꾼다.
       {
         source: '/hyodo-tier/:path*',
         destination: 'https://hyodo-tier.yeomniverse.com/:path*',
         permanent: true,
       },
-      // Redirect finbrief routes to subdomain
       {
         source: '/finbrief/:path*',
         destination: 'https://finbrief.yeomniverse.com/:path*',
         permanent: true,
       },
-      // Legacy hyodo-tier routes (SEO protection)
+      // 루트가 효도티어였던 시절의 경로들. 루트에 같은 이름의 페이지가 없는
+      // 것만 남긴다 — /about, /privacy, /terms는 이제 루트 자체 페이지다.
       {
         source: '/quiz',
         destination: 'https://hyodo-tier.yeomniverse.com/quiz',
@@ -29,6 +30,11 @@ const nextConfig: NextConfig = {
       {
         source: '/result',
         destination: 'https://hyodo-tier.yeomniverse.com/result',
+        permanent: true,
+      },
+      {
+        source: '/result/:path*',
+        destination: 'https://hyodo-tier.yeomniverse.com/result/:path*',
         permanent: true,
       },
       {
@@ -41,24 +47,11 @@ const nextConfig: NextConfig = {
         destination: 'https://hyodo-tier.yeomniverse.com/blog/:slug*',
         permanent: true,
       },
-      {
-        source: '/about',
-        destination: 'https://hyodo-tier.yeomniverse.com/about',
-        permanent: true,
-      },
-      {
-        source: '/privacy',
-        destination: 'https://hyodo-tier.yeomniverse.com/privacy',
-        permanent: true,
-      },
-      {
-        source: '/terms',
-        destination: 'https://hyodo-tier.yeomniverse.com/terms',
-        permanent: true,
-      },
     ];
   },
   async headers() {
+    // CSP는 요청마다 nonce가 달라야 해서 middleware.ts에서 설정한다.
+    // 여기서 CSP를 함께 내보내면 두 정책의 교집합이 적용돼 광고가 깨진다.
     const commonSecurityHeaders = [
       { key: 'X-Frame-Options', value: 'DENY' },
       { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -70,60 +63,7 @@ const nextConfig: NextConfig = {
       },
     ];
 
-    // Base CSP — applied everywhere except the landing page.
-    // No Spline-specific allowances; tighter worker-src.
-    const baseCsp = [
-      "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://www.google-analytics.com https://va.vercel-scripts.com",
-      "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: https: blob:",
-      "font-src 'self' data:",
-      "connect-src 'self' https://www.google-analytics.com https://pagead2.googlesyndication.com https://vitals.vercel-insights.com",
-      "worker-src 'self'",
-      'frame-src https://googleads.g.doubleclick.net',
-      "object-src 'none'",
-      "base-uri 'self'",
-      "form-action 'self'",
-      "frame-ancestors 'none'",
-    ].join('; ');
-
-    // Landing-page CSP — relaxes the policy only for `/` so the Spline 3D
-    // scene can load runtime/assets from prod.spline.design, unpkg, gstatic,
-    // plus the blob: worker the Spline runtime spawns.
-    const splineCsp = [
-      "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://www.google-analytics.com https://va.vercel-scripts.com https://www.gstatic.com",
-      "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: https: blob:",
-      "font-src 'self' data:",
-      "connect-src 'self' https://www.google-analytics.com https://pagead2.googlesyndication.com https://vitals.vercel-insights.com https://prod.spline.design https://unpkg.com https://www.gstatic.com",
-      "worker-src 'self' blob:",
-      'frame-src https://googleads.g.doubleclick.net',
-      "object-src 'none'",
-      "base-uri 'self'",
-      "form-action 'self'",
-      "frame-ancestors 'none'",
-    ].join('; ');
-
-    return [
-      // Landing page only — relaxed CSP for Spline.
-      {
-        source: '/',
-        headers: [
-          ...commonSecurityHeaders,
-          { key: 'Content-Security-Policy', value: splineCsp },
-        ],
-      },
-      // Everything else — strict CSP without Spline allowances.
-      // `/:path+` requires at least one segment so it never matches `/`.
-      {
-        source: '/:path+',
-        headers: [
-          ...commonSecurityHeaders,
-          { key: 'Content-Security-Policy', value: baseCsp },
-        ],
-      },
-    ];
+    return [{ source: '/:path*', headers: commonSecurityHeaders }];
   },
 };
 

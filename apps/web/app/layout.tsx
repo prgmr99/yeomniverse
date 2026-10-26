@@ -1,59 +1,46 @@
 import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 import Script from 'next/script';
 import './globals.css';
 import { GoogleAdSense, GoogleAnalytics } from '@hyo/ui';
+import { SERVICES } from '@/lib/services';
+import { SITE_NAME, SITE_URL } from '@/lib/site';
 import { sans, serif } from './fonts';
 
-// Validate required environment variables
-function getRequiredEnv(key: string): string {
-  const value = process.env[key];
-  if (!value) {
-    throw new Error(`Missing required environment variable: ${key}`);
-  }
-  return value;
-}
-
-const DOMAIN_URL = getRequiredEnv('NEXT_PUBLIC_DOMAIN_URL');
 const NAVER_VERIFICATION =
   process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION || '';
 const ADSENSE_ACCOUNT =
   process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT || 'ca-pub-7476208540300201';
 
+const DESCRIPTION =
+  'Yeomniverse는 개인이 만든 작은 웹 도구를 모아둔 사이트입니다. 부모님 탐구영역 테스트 효도티어, 매일 아침 AI 금융 브리핑 FinBrief, 거래 시뮬레이터 NeuroTrade, 세계 정세 지도 Argus를 운영합니다.';
+
 export const metadata: Metadata = {
-  metadataBase: new URL(DOMAIN_URL),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Yeomniverse',
+    default: 'Yeomniverse — 직접 만든 웹 도구 모음',
     template: '%s | Yeomniverse',
   },
-  description:
-    '어버이날 특집! 나는 효자일까 효녀일까? 효도능력시험으로 나의 효도 티어를 확인해보세요. Yeomniverse - 효도티어, FinBrief, NeuroTrade, Argus 등 다양한 디지털 서비스를 만나보세요.',
+  description: DESCRIPTION,
   keywords: [
     'Yeomniverse',
+    '웹 도구',
+    '무료 웹 서비스',
+    '온라인 도구',
     '효도티어',
     '효도능력시험',
-    '어버이날',
-    '어버이날 테스트',
-    '어버이날 선물',
-    '효도 테스트',
-    '효자',
-    '효녀',
-    '부모님께 효도',
-    '카네이션',
-    '5월 어버이날',
-    'Hyo-Tier',
+    '부모님 탐구영역',
     'FinBrief',
-    'AI financial briefing',
-    'Argus',
-    '아르고스',
-    '세계 정세 지도',
+    '금융 뉴스 요약',
+    'AI 브리핑',
     'NeuroTrade',
-    'geopolitics dashboard',
-    'personality quiz',
-    'digital services',
-    'online tools',
+    '거래 시뮬레이터',
+    '모의투자',
+    'Argus',
+    '세계 정세 지도',
   ],
-  applicationName: 'Yeomniverse',
+  applicationName: SITE_NAME,
   icons: {
     icon: [
       { url: '/images/favicon/icon.svg', type: 'image/svg+xml' },
@@ -77,9 +64,9 @@ export const metadata: Metadata = {
       },
     ],
   },
-  authors: [{ name: 'Yeomniverse' }],
-  creator: 'Yeomniverse',
-  publisher: 'Yeomniverse',
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
   formatDetection: {
     telephone: false,
     email: false,
@@ -97,11 +84,10 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: '어버이날 효도능력시험 | 효도티어 - Yeomniverse',
-    description:
-      '어버이날 특집! 나는 효자일까 효녀일까? 효도능력시험으로 나의 효도 티어를 확인해보세요.',
-    url: DOMAIN_URL,
-    siteName: 'Yeomniverse',
+    title: 'Yeomniverse — 직접 만든 웹 도구 모음',
+    description: DESCRIPTION,
+    url: SITE_URL,
+    siteName: SITE_NAME,
     locale: 'ko_KR',
     type: 'website',
     images: [
@@ -109,19 +95,18 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: '어버이날 효도능력시험 - 효도티어 | Yeomniverse',
+        alt: 'Yeomniverse',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: '어버이날 효도능력시험 | 효도티어 - Yeomniverse',
-    description:
-      '어버이날 특집! 나는 효자일까 효녀일까? 효도능력시험으로 나의 효도 티어를 확인해보세요.',
+    title: 'Yeomniverse — 직접 만든 웹 도구 모음',
+    description: DESCRIPTION,
     images: ['/og-image.png'],
   },
   alternates: {
-    canonical: DOMAIN_URL,
+    canonical: SITE_URL,
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
@@ -142,43 +127,49 @@ export const viewport = {
   userScalable: true,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Organization schema
+  // middleware가 요청마다 발급한 값. nonce를 쓰려면 응답이 요청 시점에
+  // 만들어져야 해서, 이 호출이 전체 라우트를 동적 렌더링으로 바꾼다.
+  const nonce = (await headers()).get('x-nonce') ?? undefined;
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Yeomniverse',
-    url: DOMAIN_URL,
+    name: SITE_NAME,
+    url: SITE_URL,
     logo: {
       '@type': 'ImageObject',
-      url: `${DOMAIN_URL}/images/favicon/icon-512.png`,
+      url: `${SITE_URL}/images/favicon/icon-512.png`,
       width: 512,
       height: 512,
     },
-    description:
-      'Yeomniverse is a digital services company building AI-powered tools and apps, including FinBrief (AI financial briefing), Hyo-Tier (personality quiz), NeuroTrade (trading simulator) and Argus (global situation map).',
+    description: DESCRIPTION,
   };
 
-  // WebSite schema
   const websiteSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Yeomniverse',
-    url: DOMAIN_URL,
-    description:
-      'Yeomniverse - A digital services portal. Discover FinBrief for daily AI financial briefings, Hyo-Tier for personality quizzes, NeuroTrade for trading simulation and Argus for a live map of world affairs.',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${DOMAIN_URL}/?q={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
-    },
+    name: SITE_NAME,
+    url: SITE_URL,
+    inLanguage: 'ko-KR',
+    description: DESCRIPTION,
+  };
+
+  // 사이트가 어떤 도구들로 구성되는지 구조화 데이터로도 알린다.
+  const serviceListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Yeomniverse 서비스',
+    itemListElement: SERVICES.map((service, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: service.title,
+      description: service.tagline,
+      url: `${SITE_URL}/services/${service.slug}`,
+    })),
   };
 
   return (
@@ -191,31 +182,16 @@ export default function RootLayout({
         className="min-h-screen font-sans antialiased"
         suppressHydrationWarning
       >
-        {/* Spline hero: warm up CDN connections and prefetch the scene file
-            so the 3D canvas can paint as soon as the runtime hydrates.
-            React 19 hoists these resource hints into <head> automatically. */}
-        <link
-          rel="preconnect"
-          href="https://prod.spline.design"
-          crossOrigin=""
-        />
-        <link rel="preconnect" href="https://unpkg.com" crossOrigin="" />
-        <link
-          rel="preload"
-          as="fetch"
-          href="https://prod.spline.design/yEWkAjJuCo873kcF/scene.splinecode"
-          crossOrigin=""
-        />
-
         {children}
 
         <Analytics />
-        <GoogleAnalytics />
-        <GoogleAdSense />
+        <GoogleAnalytics nonce={nonce} />
+        <GoogleAdSense nonce={nonce} />
 
         <Script
           id="organization-schema"
           type="application/ld+json"
+          nonce={nonce}
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationSchema),
@@ -225,9 +201,18 @@ export default function RootLayout({
         <Script
           id="website-schema"
           type="application/ld+json"
+          nonce={nonce}
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+
+        <Script
+          id="service-list-schema"
+          type="application/ld+json"
+          nonce={nonce}
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(websiteSchema),
+            __html: JSON.stringify(serviceListSchema),
           }}
         />
       </body>

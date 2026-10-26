@@ -156,11 +156,6 @@ export default function SplineExperience({ services, children }: Props) {
             />
           </button>
         </div>
-
-        {/* Footer stays anchored */}
-        <footer className="relative z-10 w-full border-t border-white/10 py-6 text-center text-xs text-white/40">
-          <p>2026 Yeomniverse. All rights reserved.</p>
-        </footer>
       </section>
 
       {/* Services reveal modal */}
