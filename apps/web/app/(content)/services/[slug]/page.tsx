@@ -104,15 +104,20 @@ export default async function ServicePage({
       </p>
 
       {service.access === 'public' ? (
-        <a
-          href={service.url}
-          className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-white/90"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          {service.title} 사용하기
-          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-        </a>
+        <div className="mt-8">
+          <a
+            href={service.url}
+            className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-white/90"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {service.title} 사용하기
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </a>
+          {service.accessNote && (
+            <p className="mt-3 text-sm text-white/45">{service.accessNote}</p>
+          )}
+        </div>
       ) : (
         <p className="mt-8 inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-4 text-sm text-white/60">
           <Lock className="h-4 w-4 shrink-0" aria-hidden="true" />
