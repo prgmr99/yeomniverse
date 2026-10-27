@@ -38,6 +38,14 @@ export default function SiteFooter() {
           <ul className="mt-4 space-y-2 text-sm">
             <li>
               <Link
+                href="/writing"
+                className="text-white/60 transition-colors hover:text-white"
+              >
+                글
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/about"
                 className="text-white/60 transition-colors hover:text-white"
               >

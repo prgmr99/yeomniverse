@@ -1,6 +1,7 @@
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { LANGUAGE_LABELS, SERVICES } from '@/lib/services';
+import { POSTS } from '@/lib/writing';
 import SiteFooter from './components/SiteFooter';
 import SplineExperience from './components/SplineExperience';
 
@@ -169,6 +170,38 @@ export default function YeomniverseLanding() {
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+
+        <section className="relative z-20 border-t border-white/10 bg-[#0b0e17] px-6 py-20">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-3xl font-bold text-white md:text-4xl">글</h2>
+            <p className="mt-4 leading-relaxed text-white/70">
+              도구를 만들며 부딪힌 문제와 그때 내린 판단을 남겨둡니다.
+            </p>
+
+            <ul className="mt-10 space-y-4">
+              {POSTS.map((post) => (
+                <li key={post.slug}>
+                  <Link
+                    href={`/writing/${post.slug}`}
+                    className="block rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition hover:border-white/25 hover:bg-white/[0.06]"
+                  >
+                    <p className="font-semibold text-white">{post.title}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-white/60">
+                      {post.description}
+                    </p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <Link
+              href="/writing"
+              className="mt-8 inline-flex text-sm font-semibold text-white underline decoration-white/30 underline-offset-4 transition hover:decoration-white"
+            >
+              글 전체 보기
+            </Link>
           </div>
         </section>
 
