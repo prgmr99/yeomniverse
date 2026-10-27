@@ -88,7 +88,7 @@ export default function YeomniverseLanding() {
           </div>
         </section>
 
-        <section className="relative z-20 border-t border-white/10 bg-[#0b0e17] px-6 pb-20">
+        <section className="relative z-20 border-t border-white/10 bg-[#0b0e17] px-6 py-20">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-3xl font-bold text-white md:text-4xl">
               운영 중인 서비스
