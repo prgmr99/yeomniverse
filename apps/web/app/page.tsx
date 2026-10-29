@@ -18,6 +18,8 @@ const splineServices = SERVICES.map((service) => ({
 }));
 
 export default function YeomniverseLanding() {
+  const posts = [...POSTS].sort((a, b) => b.date.localeCompare(a.date));
+
   return (
     <>
       <a href="#main-content" className="skip-link">
@@ -181,7 +183,7 @@ export default function YeomniverseLanding() {
             </p>
 
             <ul className="mt-10 space-y-4">
-              {POSTS.map((post) => (
+              {posts.map((post) => (
                 <li key={post.slug}>
                   <Link
                     href={`/writing/${post.slug}`}
