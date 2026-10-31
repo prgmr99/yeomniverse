@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-31",
+  "timestamp": "2026-10-31T01:43:02.315Z",
+  "newsCount": 55,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 26,
+    "rating": "fear",
+    "timestamp": "2026-10-30T23:59:48+00:00"
+  },
+  "oneWayIndex": {
+    "score": 30,
+    "direction": "bull",
+    "label": "Weak Directional Bias",
+    "components": {
+      "adx": 0,
+      "maAlignment": 67,
+      "rsiTrend": 10,
+      "bbWidth": 30,
+      "vix": 60,
+      "volume": 40,
+      "fearGreed": 15
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "AI Cash Burn Fears Drive Tech Selloff, Bonds Rally",
+        "summary": "Global equities declined sharply, led by technology stocks, amid growing investor concerns over the high cash burn rates associated with AI development. This shift reflects a re-evaluation of growth company valuations as capital costs rise and profitability timelines extend. Capital will likely rotate from speculative growth segments into less capital-intensive or income-generating assets, including fixed income.",
+        "sentiment": "bear",
+        "reason": "Investors will reduce exposure to high-growth, high-capex technology stocks and increase allocations to fixed income and value-oriented sectors."
+      },
+      {
+        "title": "Major Macro Catalysts Loom: Midterms, Tech Earnings, Jobs Data",
+        "summary": "The market anticipates a critical period with US midterm elections, key technology earnings reports, and the monthly jobs data all scheduled within the next four weeks. These events carry significant potential to dictate market direction and investor sentiment for the remainder of the year. Portfolio managers will maintain heightened caution and potentially reduce risk ahead of these data points, awaiting clarity on policy, corporate health, and economic strength.",
+        "sentiment": "neutral",
+        "reason": "Risk-off positioning is likely to persist across equities until greater clarity emerges from these imminent economic and political events."
+      },
+      {
+        "title": "Fed Officials Affirm Case for Continued Rate Hikes Amid Inflation",
+        "summary": "Federal Reserve officials continue to advocate for further interest rate increases, citing persistent inflation concerns that remain above the central bank's target. This reinforces the expectation of a higher-for-longer rate environment, maintaining pressure on borrowing costs and future economic activity. Fixed income markets will likely price in additional rate hike probabilities, while equity valuations face ongoing compression.",
+        "sentiment": "bear",
+        "reason": "The trajectory for interest rates remains upward, tightening financial conditions and dampening appetite for growth-sensitive equity sectors."
+      },
+      {
+        "title": "S&P Downgrades Meta Outlook on Cash Flow and Capex Concerns",
+        "summary": "S&P Global revised Meta Platforms' outlook downward, citing growing concerns over the company's cash flow generation and extensive capital expenditure requirements. This specific downgrade from a major ratings agency validates broader market fears about the financial sustainability of aggressive AI and metaverse investments. The event signals increased scrutiny on large tech companies' balance sheets, potentially triggering similar reassessments across the sector.",
+        "sentiment": "bear",
+        "reason": "This action directly impacts Meta's credit profile and could lead to a re-rating of large-cap technology stocks with high capital intensity."
+      },
+      {
+        "title": "OpenAI Reportedly Cuts Funding Target by $10 Billion",
+        "summary": "OpenAI, a leading artificial intelligence research company, has reportedly lowered its funding target by $10 billion. This reduction indicates a more challenging capital raising environment for even the most prominent AI ventures, suggesting a shift in investor appetite for high-burn, long-horizon projects. The move implies a broader recalibration of AI sector valuations and capital deployment strategies.",
+        "sentiment": "bear",
+        "reason": "The contraction in funding for a key AI player signals a cooling investment climate for the entire private and public AI ecosystem, impacting venture capital flows and tech valuations."
+      },
+      {
+        "title": "Intel's Woes Drive AMD Slide, Signaling Semiconductor Weakness",
+        "summary": "Intel's stock experienced its worst day in decades after its earnings report revealed significant operational and market issues, subsequently causing AMD's stock to slide. This performance highlights broader weakness within the semiconductor industry, particularly concerning demand for data center and PC components, driven by reduced enterprise and consumer spending. The event suggests a challenging outlook for companies reliant on chip manufacturing and technology infrastructure investment.",
+        "sentiment": "bear",
+        "reason": "Investors should reduce exposure to semiconductor manufacturers as earnings indicate a deceleration in key end markets and increased competition."
+      },
+      {
+        "title": "Chevron and Exxon Hit All-Time Highs Amid Soaring Refining Profits",
+        "summary": "Chevron and Exxon Mobil shares reached all-time highs as refining profits surged, directly benefiting from market dislocations caused by geopolitical tensions in Iran and Ukraine. This performance underscores the significant pricing power and demand resilience within the energy sector, contrasting sharply with broader market weakness. Capital will continue to flow into integrated oil and gas companies, leveraging strong commodity prices and refining margins.",
+        "sentiment": "bull",
+        "reason": "Allocation to integrated energy majors remains justified given robust refining margins and geopolitical support for commodity prices, offering defensive growth in a volatile market."
+      },
+      {
+        "title": "Interest Rate Stability Identified as Key to Stock Market Rebound",
+        "summary": "Market analysts emphasize that a prerequisite for any sustained stock market rebound is the achievement of interest rate stability. This condition highlights the sensitivity of equity valuations to the cost of capital and discount rates, particularly for growth-oriented companies. Until central banks signal a clear pause or pivot in monetary policy, equity markets will remain constrained, favoring cash or short-duration fixed income.",
+        "sentiment": "neutral",
+        "reason": "Equity market upside is capped until bond yields stabilize, implying continued fixed income strength and a cautious approach to equity risk."
+      },
+      {
+        "title": "Nasdaq's Plunge Prompts Comparisons to Dot-Com Bust",
+        "summary": "The recent sharp decline in the Nasdaq Composite Index has prompted market observers to draw parallels with the dot-com bubble burst of 2000. This historical comparison signifies heightened investor apprehension regarding overextended valuations and speculative excesses within the technology sector. The market psychology suggests increased sensitivity to downside risks and a potential for further, sustained contraction in tech valuations.",
+        "sentiment": "bear",
+        "reason": "The psychological shift towards 'bubble burst' narratives suggests institutional capital will maintain defensive positioning and trim exposure to highly valued growth segments."
+      },
+      {
+        "title": "Gold Plunges to Year-Low Despite Iran Tensions",
+        "summary": "Gold prices fell to their lowest level in a year, defying expectations that renewed geopolitical tensions involving Iran would boost its safe-haven appeal. This divergence indicates that capital is not flowing into traditional precious metal hedges during periods of global instability. The move suggests a preference for other safe-haven assets, such as the U.S. dollar or short-term Treasuries, indicating a re-evaluation of gold's role as a primary crisis hedge.",
+        "sentiment": "bear",
+        "reason": "The failure of gold to act as a safe-haven asset suggests capital managers are re-evaluating its utility, potentially shifting funds towards the U.S. dollar or high-quality government bonds."
+      }
+    ],
+    "keywords": [
+      "#AIBurnRate",
+      "#TechSectorRisk",
+      "#MacroCatalysts"
+    ],
+    "marketSentiment": "Equities face broad re-rating as AI investment concerns amplify, macro calendar dictates near-term direction, and Fed maintains hawkish stance."
+  }
+}
