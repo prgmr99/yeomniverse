@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-01",
+  "timestamp": "2026-11-01T01:18:52.321Z",
+  "newsCount": 46,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 26,
+    "rating": "fear",
+    "timestamp": "2026-10-30T23:59:48+00:00"
+  },
+  "oneWayIndex": {
+    "score": 30,
+    "direction": "bull",
+    "label": "Weak Directional Bias",
+    "components": {
+      "adx": 0,
+      "maAlignment": 67,
+      "rsiTrend": 10,
+      "bbWidth": 30,
+      "vix": 60,
+      "volume": 40,
+      "fearGreed": 15
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "OPEC+ Maintains Oil Output Targets Amid Market Stability Efforts",
+        "summary": "OPEC+ members have reportedly agreed to keep current oil output targets steady for December. This decision signals an intent to stabilize oil prices and manage supply in a volatile global market. The continued production discipline aims to support prices amidst fluctuating demand and geopolitical risks.",
+        "sentiment": "neutral",
+        "reason": "This directly impacts crude oil prices, energy sector equities, and inflation outlooks, influencing allocation to commodity-linked assets."
+      },
+      {
+        "title": "China's Factory Activity Contracts for Third Time in Four Months",
+        "summary": "Chinese factory activity declined in October, marking the third contraction in four months. This persistent weakness suggests ongoing challenges in the world's second-largest economy, dampening global demand expectations. The data points to sustained headwinds for manufacturing and industrial output.",
+        "sentiment": "bear",
+        "reason": "Weakening Chinese manufacturing indicates a softening global growth outlook, impacting commodity prices and emerging market equities, particularly those tied to Chinese demand."
+      },
+      {
+        "title": "Rising Rates Impact Korean Insurers' Q3 Earnings",
+        "summary": "Korean insurance companies reported a significant drop in net profit for the third quarter, primarily due to higher interest rates negatively impacting investment gains. This trend demonstrates the direct financial consequences of tighter monetary policy on the investment portfolios of institutional financial firms. It highlights a sector-specific vulnerability to the current rate environment.",
+        "sentiment": "bear",
+        "reason": "This signals direct pressure on financial sector profitability, specifically for insurance companies and other rate-sensitive financial institutions, affecting their equity valuations."
+      },
+      {
+        "title": "OpenAI Lowers Fundraising Target to $20 Billion",
+        "summary": "OpenAI, a leading artificial intelligence company, has reportedly pared back its latest fundraising goal, now seeking up to $20 billion. This revision suggests a recalibration of private market valuations in the high-growth tech sector amidst broader market uncertainty. It could signal a more cautious environment for venture capital and growth equity funding for AI startups.",
+        "sentiment": "bear",
+        "reason": "The adjustment in OpenAI's private valuation indicates potential cooling in tech valuations, affecting investor sentiment for growth equity, venture capital, and future AI IPOs."
+      },
+      {
+        "title": "FBI Links $6.3 Billion Binance Crypto Theft to North Korea",
+        "summary": "The FBI has officially attributed a record $6.3 billion cryptocurrency theft from Binance to North Korean state-sponsored hackers. This incident underscores the persistent and escalating security risks within the digital asset ecosystem, particularly from nation-state actors. It intensifies scrutiny on crypto exchange security protocols and regulatory oversight.",
+        "sentiment": "bear",
+        "reason": "This event highlights significant security and regulatory risks in the digital asset space, potentially dampening institutional interest in cryptocurrency and increasing pressure for stricter controls on exchanges."
+      },
+      {
+        "title": "Binance Recovers 90% of Stolen Funds, Resumes Withdrawals",
+        "summary": "Binance announced it has recovered 90% of the $6.3 billion stolen in a recent cyberattack and plans to resume withdrawals. While mitigating immediate financial impact, this event still underscores the inherent vulnerability of even large crypto exchanges to sophisticated attacks. The rapid recovery demonstrates some resilience but does not erase the underlying security concerns for digital asset investors.",
+        "sentiment": "neutral",
+        "reason": "While the recovery lessens immediate panic, the incident itself reinforces the operational and security risks associated with digital asset platforms, impacting confidence in the broader crypto market."
+      },
+      {
+        "title": "Intel Stock Plunges 29% Amid Analyst Caution",
+        "summary": "Intel's stock recently plunged 29%, prompting analysts to advise caution on buying the dip. This significant decline points to either substantial company-specific challenges or broader weaknesses impacting the semiconductor sector. It signals potential headwinds for a critical segment of the technology market.",
+        "sentiment": "bear",
+        "reason": "Intel's sharp stock decline indicates sector-specific or idiosyncratic challenges within semiconductors, influencing allocation decisions for technology and growth-oriented portfolios."
+      },
+      {
+        "title": "Bank of England Considers Loosening Mortgage Lending Rules",
+        "summary": "The Bank of England is reportedly considering raising the cap on high-risk mortgages to five times income. This potential regulatory shift could impact the affordability and accessibility of housing finance in the UK. A loosening of lending standards could stimulate the housing market but also raise concerns about financial stability.",
+        "sentiment": "neutral",
+        "reason": "A change in UK mortgage regulations could impact the British housing market's outlook and influence the performance of UK-exposed financial institutions and real estate assets."
+      },
+      {
+        "title": "Qatari Mediators Initiate US-Iran Talks in Tehran",
+        "summary": "Qatari mediators have reportedly held discussions in Tehran aimed at restarting direct negotiations between the United States and Iran. While preliminary, any move towards de-escalation in the Middle East holds significant geopolitical implications. A reduction in regional tensions could ease market uncertainty and impact energy prices.",
+        "sentiment": "bull",
+        "reason": "Initial talks between the US and Iran, if successful, could de-escalate Middle East tensions, reducing geopolitical risk premiums across energy markets and regional assets."
+      },
+      {
+        "title": "Russian Oil Tankers Employ Makeshift Drone Defenses",
+        "summary": "Russian oil tankers are deploying improvised drone defenses amid escalating attacks in the Black Sea. This development highlights increased physical risks to a key global oil supply route. The ongoing conflict's impact on maritime transport raises concerns for crude oil supply stability.",
+        "sentiment": "bear",
+        "reason": "Increased physical threats to Russian oil tankers underscore geopolitical supply risks in energy markets, potentially leading to higher oil price volatility and influencing energy-related equities."
+      }
+    ],
+    "keywords": [
+      "#EnergyMarkets",
+      "#GlobalGrowth",
+      "#TechValuations"
+    ],
+    "marketSentiment": "Monetary policy impacts on corporate earnings persist as global growth indicators show weakness, while geopolitical tensions remain a key market risk."
+  }
+}
