@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-01",
-  "timestamp": "2026-11-01T01:18:52.321Z",
-  "newsCount": 46,
+  "date": "2026-11-02",
+  "timestamp": "2026-11-02T01:40:23.092Z",
+  "newsCount": 55,
   "outputLanguage": "en",
   "fearGreedIndex": {
     "score": 26,
@@ -25,71 +25,71 @@
   "analysis": {
     "topNews": [
       {
-        "title": "OPEC+ Maintains Oil Output Targets Amid Market Stability Efforts",
-        "summary": "OPEC+ members have reportedly agreed to keep current oil output targets steady for December. This decision signals an intent to stabilize oil prices and manage supply in a volatile global market. The continued production discipline aims to support prices amidst fluctuating demand and geopolitical risks.",
+        "title": "LNG Tanker Attacked Near Hormuz Strait",
+        "summary": "A Pakistan-bound LNG tanker was attacked near the Strait of Hormuz, despite prior clearance from Iran. This incident escalates geopolitical tensions in a critical maritime chokepoint, threatening global energy supply lines and shipping insurance costs. Capital markets anticipate increased risk premiums on crude and LNG, alongside potential disruption to global supply chains.",
+        "sentiment": "bear",
+        "reason": "Increased geopolitical risk and potential for energy supply disruption raises volatility in oil, gas, and shipping equities."
+      },
+      {
+        "title": "Bank of England Signals Rate Hike, Cautions on Future Increases",
+        "summary": "The Bank of England is expected to raise interest rates, but policymakers indicate a potential reluctance to commit to further aggressive tightening. This nuanced guidance suggests a cautious approach to monetary policy, balancing inflation control against recessionary risks. Markets will likely interpret this as a dovish signal, impacting UK gilt yields and the sterling.",
         "sentiment": "neutral",
-        "reason": "This directly impacts crude oil prices, energy sector equities, and inflation outlooks, influencing allocation to commodity-linked assets."
+        "reason": "Monetary policy outlook influences fixed income yields, currency valuations, and UK equity sector performance."
       },
       {
-        "title": "China's Factory Activity Contracts for Third Time in Four Months",
-        "summary": "Chinese factory activity declined in October, marking the third contraction in four months. This persistent weakness suggests ongoing challenges in the world's second-largest economy, dampening global demand expectations. The data points to sustained headwinds for manufacturing and industrial output.",
-        "sentiment": "bear",
-        "reason": "Weakening Chinese manufacturing indicates a softening global growth outlook, impacting commodity prices and emerging market equities, particularly those tied to Chinese demand."
-      },
-      {
-        "title": "Rising Rates Impact Korean Insurers' Q3 Earnings",
-        "summary": "Korean insurance companies reported a significant drop in net profit for the third quarter, primarily due to higher interest rates negatively impacting investment gains. This trend demonstrates the direct financial consequences of tighter monetary policy on the investment portfolios of institutional financial firms. It highlights a sector-specific vulnerability to the current rate environment.",
-        "sentiment": "bear",
-        "reason": "This signals direct pressure on financial sector profitability, specifically for insurance companies and other rate-sensitive financial institutions, affecting their equity valuations."
-      },
-      {
-        "title": "OpenAI Lowers Fundraising Target to $20 Billion",
-        "summary": "OpenAI, a leading artificial intelligence company, has reportedly pared back its latest fundraising goal, now seeking up to $20 billion. This revision suggests a recalibration of private market valuations in the high-growth tech sector amidst broader market uncertainty. It could signal a more cautious environment for venture capital and growth equity funding for AI startups.",
-        "sentiment": "bear",
-        "reason": "The adjustment in OpenAI's private valuation indicates potential cooling in tech valuations, affecting investor sentiment for growth equity, venture capital, and future AI IPOs."
-      },
-      {
-        "title": "FBI Links $6.3 Billion Binance Crypto Theft to North Korea",
-        "summary": "The FBI has officially attributed a record $6.3 billion cryptocurrency theft from Binance to North Korean state-sponsored hackers. This incident underscores the persistent and escalating security risks within the digital asset ecosystem, particularly from nation-state actors. It intensifies scrutiny on crypto exchange security protocols and regulatory oversight.",
-        "sentiment": "bear",
-        "reason": "This event highlights significant security and regulatory risks in the digital asset space, potentially dampening institutional interest in cryptocurrency and increasing pressure for stricter controls on exchanges."
-      },
-      {
-        "title": "Binance Recovers 90% of Stolen Funds, Resumes Withdrawals",
-        "summary": "Binance announced it has recovered 90% of the $6.3 billion stolen in a recent cyberattack and plans to resume withdrawals. While mitigating immediate financial impact, this event still underscores the inherent vulnerability of even large crypto exchanges to sophisticated attacks. The rapid recovery demonstrates some resilience but does not erase the underlying security concerns for digital asset investors.",
+        "title": "US Markets Brace for Pivotal Week of Earnings, Jobs Data, and Midterm Elections",
+        "summary": "US markets are positioned for a critical week, facing a confluence of major corporate earnings reports, key employment data, and the midterm elections. These events provide significant near-term catalysts that will shape investor sentiment and economic expectations. Market participants will adjust portfolios based on corporate guidance, labor market health indicators, and the potential for policy shifts from election outcomes.",
         "sentiment": "neutral",
-        "reason": "While the recovery lessens immediate panic, the incident itself reinforces the operational and security risks associated with digital asset platforms, impacting confidence in the broader crypto market."
+        "reason": "Imminent economic data, corporate performance, and political outcomes will directly influence broad equity indices and sector rotations."
       },
       {
-        "title": "Intel Stock Plunges 29% Amid Analyst Caution",
-        "summary": "Intel's stock recently plunged 29%, prompting analysts to advise caution on buying the dip. This significant decline points to either substantial company-specific challenges or broader weaknesses impacting the semiconductor sector. It signals potential headwinds for a critical segment of the technology market.",
-        "sentiment": "bear",
-        "reason": "Intel's sharp stock decline indicates sector-specific or idiosyncratic challenges within semiconductors, influencing allocation decisions for technology and growth-oriented portfolios."
-      },
-      {
-        "title": "Bank of England Considers Loosening Mortgage Lending Rules",
-        "summary": "The Bank of England is reportedly considering raising the cap on high-risk mortgages to five times income. This potential regulatory shift could impact the affordability and accessibility of housing finance in the UK. A loosening of lending standards could stimulate the housing market but also raise concerns about financial stability.",
-        "sentiment": "neutral",
-        "reason": "A change in UK mortgage regulations could impact the British housing market's outlook and influence the performance of UK-exposed financial institutions and real estate assets."
-      },
-      {
-        "title": "Qatari Mediators Initiate US-Iran Talks in Tehran",
-        "summary": "Qatari mediators have reportedly held discussions in Tehran aimed at restarting direct negotiations between the United States and Iran. While preliminary, any move towards de-escalation in the Middle East holds significant geopolitical implications. A reduction in regional tensions could ease market uncertainty and impact energy prices.",
+        "title": "Goldman Sachs Raises Oil Price Forecasts",
+        "summary": "Goldman Sachs has revised its oil price forecasts upwards for December and 2027, citing persistent supply tightness and resilient demand. This outlook reinforces expectations for elevated energy costs, contributing to inflationary pressures across global economies. Higher oil prices will likely bolster energy sector equities while pressuring margins for energy-intensive industries.",
         "sentiment": "bull",
-        "reason": "Initial talks between the US and Iran, if successful, could de-escalate Middle East tensions, reducing geopolitical risk premiums across energy markets and regional assets."
+        "reason": "Higher oil price forecasts underpin inflation expectations and favor energy sector investments."
       },
       {
-        "title": "Russian Oil Tankers Employ Makeshift Drone Defenses",
-        "summary": "Russian oil tankers are deploying improvised drone defenses amid escalating attacks in the Black Sea. This development highlights increased physical risks to a key global oil supply route. The ongoing conflict's impact on maritime transport raises concerns for crude oil supply stability.",
+        "title": "Saudi Economy Contracts 3.8% as Conflict Disrupts Oil Output",
+        "summary": "Saudi Arabia's economy contracted by 3.8% due to disruptions in oil production, a direct consequence of ongoing regional conflict. This signals the vulnerability of global oil supply to geopolitical instability and could tighten crude markets further. Investors should anticipate continued volatility in oil prices and reassess regional geopolitical risk premiums.",
         "sentiment": "bear",
-        "reason": "Increased physical threats to Russian oil tankers underscore geopolitical supply risks in energy markets, potentially leading to higher oil price volatility and influencing energy-related equities."
+        "reason": "Geopolitical conflict impacting a major oil producer signals supply risks and broader economic slowdown."
+      },
+      {
+        "title": "Wall Street Warns of Sustained Outflows from AI Investments",
+        "summary": "Wall Street strategists are signaling that capital outflows from artificial intelligence investments are likely to persist. This indicates a potential cooling in the intense speculative fervor that has driven AI valuations, shifting focus to profitability and tangible returns. Investors should expect a re-evaluation of AI-related equities, favoring companies with clear monetization strategies over pure growth narratives.",
+        "sentiment": "bear",
+        "reason": "Shifting institutional sentiment in the AI sector implies valuation adjustments and a re-rating of growth-oriented technology stocks."
+      },
+      {
+        "title": "Apple Earnings Crucial for Big Tech Outlook",
+        "summary": "Apple's upcoming earnings report is expected to be a bellwether for the entire Big Tech sector, arriving at a critical juncture for industry valuations. Its performance and forward guidance will provide key insights into consumer spending trends and enterprise technology demand. A strong or weak report will set the tone for broader tech sentiment, influencing index performance and investor confidence.",
+        "sentiment": "neutral",
+        "reason": "Apple's earnings provide a critical read on consumer demand and tech sector health, influencing broad market leadership."
+      },
+      {
+        "title": "Iran Offers Hormuz Reopening Plan Amid Talks Progress",
+        "summary": "Iran has proposed a 48-hour plan to reopen the Strait of Hormuz, with signals from former President Trump indicating progress in related talks. This development could ease geopolitical tensions in the critical oil chokepoint, potentially mitigating recent supply concerns. While positive, the situation remains fluid, and sustained de-escalation is needed to reduce regional risk premiums fully.",
+        "sentiment": "bull",
+        "reason": "Potential de-escalation of geopolitical risk in a critical energy transit route could reduce oil price volatility and shipping costs."
+      },
+      {
+        "title": "Anthropic Faces IPO Challenges Amid High Chip Debt, Investment Concerns",
+        "summary": "AI developer Anthropic is reportedly facing significant hurdles for its potential IPO, including 'astronomical chip debt' and concerns about investment suitability. This highlights the substantial capital intensity and cash burn rates inherent in developing advanced AI, raising questions about sector-wide profitability. The challenges for Anthropic underscore broader valuation risks within the high-growth, yet capital-intensive, AI industry.",
+        "sentiment": "bear",
+        "reason": "Specific concerns about a prominent AI firm reveal underlying financial pressures and valuation risks in the broader AI sector."
+      },
+      {
+        "title": "South Korea Reports Historic 93.7% Export Surge in October",
+        "summary": "South Korea recorded an extraordinary 93.7% surge in October exports, marking the fastest growth rate since 1974. This exceptional performance signals robust global demand for key industrial and technology products, reflecting a resilient underlying global economy. The strong export data could bolster South Korean equities and the Korean Won, while indicating positive momentum for global trade.",
+        "sentiment": "bull",
+        "reason": "Strong export data from a major trading nation indicates robust global demand and supports the outlook for manufacturing and trade-sensitive economies."
       }
     ],
     "keywords": [
-      "#EnergyMarkets",
-      "#GlobalGrowth",
-      "#TechValuations"
+      "#GeopoliticalRisk",
+      "#MonetaryPolicy",
+      "#AITech"
     ],
-    "marketSentiment": "Monetary policy impacts on corporate earnings persist as global growth indicators show weakness, while geopolitical tensions remain a key market risk."
+    "marketSentiment": "Global markets navigate heightened geopolitical energy supply risks alongside cautious central bank forward guidance and a re-evaluation of AI sector valuations."
   }
 }
