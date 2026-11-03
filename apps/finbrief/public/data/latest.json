@@ -1,23 +1,23 @@
 {
-  "date": "2026-11-02",
-  "timestamp": "2026-11-02T01:40:23.092Z",
-  "newsCount": 55,
+  "date": "2026-11-03",
+  "timestamp": "2026-11-03T03:32:48.672Z",
+  "newsCount": 51,
   "outputLanguage": "en",
   "fearGreedIndex": {
-    "score": 26,
-    "rating": "fear",
-    "timestamp": "2026-10-30T23:59:48+00:00"
+    "score": 23,
+    "rating": "extreme fear",
+    "timestamp": "2026-11-02T23:59:46+00:00"
   },
   "oneWayIndex": {
-    "score": 30,
+    "score": 31,
     "direction": "bull",
     "label": "Weak Directional Bias",
     "components": {
       "adx": 0,
       "maAlignment": 67,
       "rsiTrend": 10,
-      "bbWidth": 30,
-      "vix": 60,
+      "bbWidth": 50,
+      "vix": 40,
       "volume": 40,
       "fearGreed": 15
     }
@@ -25,71 +25,71 @@
   "analysis": {
     "topNews": [
       {
-        "title": "LNG Tanker Attacked Near Hormuz Strait",
-        "summary": "A Pakistan-bound LNG tanker was attacked near the Strait of Hormuz, despite prior clearance from Iran. This incident escalates geopolitical tensions in a critical maritime chokepoint, threatening global energy supply lines and shipping insurance costs. Capital markets anticipate increased risk premiums on crude and LNG, alongside potential disruption to global supply chains.",
-        "sentiment": "bear",
-        "reason": "Increased geopolitical risk and potential for energy supply disruption raises volatility in oil, gas, and shipping equities."
-      },
-      {
-        "title": "Bank of England Signals Rate Hike, Cautions on Future Increases",
-        "summary": "The Bank of England is expected to raise interest rates, but policymakers indicate a potential reluctance to commit to further aggressive tightening. This nuanced guidance suggests a cautious approach to monetary policy, balancing inflation control against recessionary risks. Markets will likely interpret this as a dovish signal, impacting UK gilt yields and the sterling.",
+        "title": "U.S. Midterm Elections Loom, Congress Control Dominates Investor Focus",
+        "summary": "U.S. midterm elections are underway, with investors keenly awaiting results that will determine control of Congress. The political balance will dictate future fiscal policy, spending priorities, and regulatory environments across key sectors. This outcome will directly influence government stimulus, infrastructure projects, energy policy, and technology regulation, prompting significant sector-specific and broad market reallocations.",
         "sentiment": "neutral",
-        "reason": "Monetary policy outlook influences fixed income yields, currency valuations, and UK equity sector performance."
+        "reason": "The electoral outcome will define the legislative agenda for the next two years, directly impacting government spending, taxation, and regulatory frameworks across all major asset classes."
       },
       {
-        "title": "US Markets Brace for Pivotal Week of Earnings, Jobs Data, and Midterm Elections",
-        "summary": "US markets are positioned for a critical week, facing a confluence of major corporate earnings reports, key employment data, and the midterm elections. These events provide significant near-term catalysts that will shape investor sentiment and economic expectations. Market participants will adjust portfolios based on corporate guidance, labor market health indicators, and the potential for policy shifts from election outcomes.",
+        "title": "U.S. Strikes Iran's Qeshm Island Amid Conflicting Signals on Oil and Geopolitics",
+        "summary": "The U.S. reportedly struck Iran's Qeshm Island, signaling escalating regional tensions while crude oil prices simultaneously slumped over 7% on hopes of a negotiated settlement with Tehran. This dichotomy reflects market uncertainty regarding energy supply stability and the potential for a de-escalation that could release more oil supply. Geopolitical risk premiums in energy markets remain highly volatile, creating significant short-term trading opportunities and long-term supply chain planning challenges.",
         "sentiment": "neutral",
-        "reason": "Imminent economic data, corporate performance, and political outcomes will directly influence broad equity indices and sector rotations."
+        "reason": "Increased geopolitical volatility in the Middle East and concurrent oil price swings directly impact energy sector profitability, global inflation outlooks, and treasury yields."
       },
       {
-        "title": "Goldman Sachs Raises Oil Price Forecasts",
-        "summary": "Goldman Sachs has revised its oil price forecasts upwards for December and 2027, citing persistent supply tightness and resilient demand. This outlook reinforces expectations for elevated energy costs, contributing to inflationary pressures across global economies. Higher oil prices will likely bolster energy sector equities while pressuring margins for energy-intensive industries.",
-        "sentiment": "bull",
-        "reason": "Higher oil price forecasts underpin inflation expectations and favor energy sector investments."
-      },
-      {
-        "title": "Saudi Economy Contracts 3.8% as Conflict Disrupts Oil Output",
-        "summary": "Saudi Arabia's economy contracted by 3.8% due to disruptions in oil production, a direct consequence of ongoing regional conflict. This signals the vulnerability of global oil supply to geopolitical instability and could tighten crude markets further. Investors should anticipate continued volatility in oil prices and reassess regional geopolitical risk premiums.",
+        "title": "Apple Shares Decline Following Weak Margin Forecast",
+        "summary": "Apple's stock fell after providing a weak margin forecast, overshadowing otherwise strong iPhone sales. The company signaled increasing cost pressures or competitive pricing, which will compress profitability despite robust demand. This outlook could pressure the broader technology sector and market indices, given Apple's significant weight, and suggests a challenging environment for hardware margins.",
         "sentiment": "bear",
-        "reason": "Geopolitical conflict impacting a major oil producer signals supply risks and broader economic slowdown."
+        "reason": "A margin contraction at the world's largest company implies broader cost pressures or demand elasticity issues, impacting technology sector valuations and overall market sentiment."
       },
       {
-        "title": "Wall Street Warns of Sustained Outflows from AI Investments",
-        "summary": "Wall Street strategists are signaling that capital outflows from artificial intelligence investments are likely to persist. This indicates a potential cooling in the intense speculative fervor that has driven AI valuations, shifting focus to profitability and tangible returns. Investors should expect a re-evaluation of AI-related equities, favoring companies with clear monetization strategies over pure growth narratives.",
-        "sentiment": "bear",
-        "reason": "Shifting institutional sentiment in the AI sector implies valuation adjustments and a re-rating of growth-oriented technology stocks."
-      },
-      {
-        "title": "Apple Earnings Crucial for Big Tech Outlook",
-        "summary": "Apple's upcoming earnings report is expected to be a bellwether for the entire Big Tech sector, arriving at a critical juncture for industry valuations. Its performance and forward guidance will provide key insights into consumer spending trends and enterprise technology demand. A strong or weak report will set the tone for broader tech sentiment, influencing index performance and investor confidence.",
+        "title": "China Raises Foreign Exchange Deposit Reserve Ratio to Slow Yuan Gains",
+        "summary": "China's central bank raised the foreign exchange deposit reserve ratio to 6%, an explicit move to slow the pace of yuan appreciation. This policy action aims to manage currency strength and maintain export competitiveness amid evolving global trade dynamics. The intervention will impact capital flows, Chinese asset valuations, and the competitiveness of multinational corporations operating in and exporting from China.",
         "sentiment": "neutral",
-        "reason": "Apple's earnings provide a critical read on consumer demand and tech sector health, influencing broad market leadership."
+        "reason": "Direct currency intervention by a major global economy influences global trade balances, commodity prices, and the profitability of multinational corporations with significant China exposure."
       },
       {
-        "title": "Iran Offers Hormuz Reopening Plan Amid Talks Progress",
-        "summary": "Iran has proposed a 48-hour plan to reopen the Strait of Hormuz, with signals from former President Trump indicating progress in related talks. This development could ease geopolitical tensions in the critical oil chokepoint, potentially mitigating recent supply concerns. While positive, the situation remains fluid, and sustained de-escalation is needed to reduce regional risk premiums fully.",
-        "sentiment": "bull",
-        "reason": "Potential de-escalation of geopolitical risk in a critical energy transit route could reduce oil price volatility and shipping costs."
-      },
-      {
-        "title": "Anthropic Faces IPO Challenges Amid High Chip Debt, Investment Concerns",
-        "summary": "AI developer Anthropic is reportedly facing significant hurdles for its potential IPO, including 'astronomical chip debt' and concerns about investment suitability. This highlights the substantial capital intensity and cash burn rates inherent in developing advanced AI, raising questions about sector-wide profitability. The challenges for Anthropic underscore broader valuation risks within the high-growth, yet capital-intensive, AI industry.",
+        "title": "Nasdaq-100 Enters Third Correction This Year Amid AI Valuation Concerns",
+        "summary": "The Nasdaq-100 has tumbled into its third correction of the year, driven by growing investor concerns over AI-related valuations and broader market risk appetite. This signals a re-evaluation of growth stock multiples, particularly within the heavily weighted technology and artificial intelligence sectors. Capital is likely to rotate out of high-flying, richly valued tech names into more defensive or value-oriented segments, impacting portfolio construction for the near term.",
         "sentiment": "bear",
-        "reason": "Specific concerns about a prominent AI firm reveal underlying financial pressures and valuation risks in the broader AI sector."
+        "reason": "A broad correction in the growth-oriented Nasdaq-100 indicates a shift in risk appetite, leading to capital rotation out of high-growth tech stocks and into more stable asset classes."
       },
       {
-        "title": "South Korea Reports Historic 93.7% Export Surge in October",
-        "summary": "South Korea recorded an extraordinary 93.7% surge in October exports, marking the fastest growth rate since 1974. This exceptional performance signals robust global demand for key industrial and technology products, reflecting a resilient underlying global economy. The strong export data could bolster South Korean equities and the Korean Won, while indicating positive momentum for global trade.",
+        "title": "Palantir's Commercial AI Revenue Surpasses Government Segment for First Time",
+        "summary": "Palantir reported booming U.S. commercial revenue growth, marking the first time it exceeded its historically dominant government segment. This milestone validates the company's aggressive pivot towards enterprise AI solutions and the broader adoption of AI tools by commercial entities. The strong commercial traction confirms the expanding market for sophisticated data analytics and AI platforms, driving increased investment interest in enterprise AI software providers.",
         "sentiment": "bull",
-        "reason": "Strong export data from a major trading nation indicates robust global demand and supports the outlook for manufacturing and trade-sensitive economies."
+        "reason": "This validates the significant demand for enterprise AI solutions beyond government contracts, reinforcing investment in AI software companies and related cloud infrastructure."
+      },
+      {
+        "title": "Anthropic Discloses Massive Revenue and Commitments for AI Models",
+        "summary": "Anthropic reported $17 billion in Q3 revenue and an astonishing $895.4 billion in purchase commitments, as disclosed in a revised S-1 filing. These figures underscore the enormous capital expenditure and demand flowing into foundational AI models and large language model development. Such substantial commitments signal an accelerating arms race in generative AI, benefiting cloud service providers, specialized semiconductor manufacturers, and data center operators.",
+        "sentiment": "bull",
+        "reason": "The scale of investment and commitments in generative AI confirms sustained hyper-growth in the sector, driving capital allocation towards AI infrastructure, specialized hardware, and cloud computing firms."
+      },
+      {
+        "title": "Intel's Foundry Strategy Faces Critical Test After Significant Stock Decline",
+        "summary": "Intel's ambitious foundry push faces a critical test following a steep 45% stock plunge in October, reflecting deep investor skepticism regarding its turnaround strategy. The success of this initiative is vital for Intel's long-term competitive position and for broader efforts to establish geographically diversified semiconductor manufacturing capabilities. The outcome will have significant implications for the global semiconductor supply chain, impacting equipment manufacturers and competitor valuations.",
+        "sentiment": "neutral",
+        "reason": "The success or failure of Intel's foundry strategy dictates its competitive future and influences the global semiconductor supply chain and capital expenditure plans of related industries."
+      },
+      {
+        "title": "Chinese Official Cautions Against Overly Concentrated AI Investment",
+        "summary": "A Chinese official has voiced concerns that AI investment is becoming overly concentrated, echoing growing sentiment about potential bubbles or misallocations within the sector. This public statement from a major economic power implies increasing scrutiny of AI valuations and could precede regulatory actions or shifts in official investment priorities. Such concerns may temper investor enthusiasm for highly speculative AI ventures and encourage a more diversified approach to technology sector exposure.",
+        "sentiment": "bear",
+        "reason": "Official concerns about AI investment concentration signal potential regulatory intervention or a cooling of speculative capital, impacting valuations within the AI and technology sectors."
+      },
+      {
+        "title": "U.S. Dollar Under Pressure Amidst Global Macroeconomic Shifts",
+        "summary": "The U.S. dollar is under pressure, influenced by slumping oil prices and anticipation of global central bank actions. A weakening dollar typically boosts commodity prices, improves the foreign earnings of U.S. multinational corporations, and affects global capital flows. Investors will re-evaluate currency hedges and international asset allocations in response to persistent dollar weakness, potentially favoring emerging markets and commodity-producing nations.",
+        "sentiment": "neutral",
+        "reason": "Sustained dollar weakness impacts global trade dynamics, commodity prices, and the competitiveness of U.S. multinational corporations, prompting adjustments in currency and international equity exposures."
       }
     ],
     "keywords": [
-      "#GeopoliticalRisk",
-      "#MonetaryPolicy",
-      "#AITech"
+      "#MidtermElections",
+      "#AIInvestment",
+      "#GeopoliticalRisk"
     ],
-    "marketSentiment": "Global markets navigate heightened geopolitical energy supply risks alongside cautious central bank forward guidance and a re-evaluation of AI sector valuations."
+    "marketSentiment": "Global markets navigate policy uncertainty and sector re-evaluations, with tech valuations under scrutiny and energy markets remaining volatile."
   }
 }
