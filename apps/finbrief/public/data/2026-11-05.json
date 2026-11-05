@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-05",
+  "timestamp": "2026-11-05T02:38:31.341Z",
+  "newsCount": 49,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 27,
+    "rating": "fear",
+    "timestamp": "2026-11-04T23:59:55+00:00"
+  },
+  "oneWayIndex": {
+    "score": 39,
+    "direction": "bull",
+    "label": "Weak Directional Bias",
+    "components": {
+      "adx": 0,
+      "maAlignment": 67,
+      "rsiTrend": 50,
+      "bbWidth": 50,
+      "vix": 60,
+      "volume": 40,
+      "fearGreed": 15
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "Markets interpret US election results as policy gridlock, driving risk-on rally",
+        "summary": "Markets reacted positively to the US midterm election outcome, perceiving a Democratic sweep as likely to lead to divided government. This anticipated policy gridlock reduces the probability of radical legislative changes or significant policy shocks. Investors are re-allocating capital towards risk assets, anticipating a period of greater policy stability and less intervention.",
+        "sentiment": "bull",
+        "reason": "This fundamental shift in policy expectations underpins a broad repricing across equities, fixed income, and currency markets, favoring risk assets and dampening US dollar strength."
+      },
+      {
+        "title": "White House sets December 14 for Fed’s Lisa Cook hearing",
+        "summary": "The White House has confirmed December 14 as the date for a hearing on the nomination of Lisa Cook to the Federal Reserve Board. This sets a clear timeline for confirmation proceedings, reducing uncertainty surrounding the Fed's future composition. The outcome will clarify the potential for shifts in the Federal Reserve's dovish or hawkish leanings.",
+        "sentiment": "neutral",
+        "reason": "The hearing introduces a specific near-term catalyst for potential changes in US monetary policy outlook, directly impacting bond yields and the US dollar."
+      },
+      {
+        "title": "Bank of Japan debates need for more rate hikes and faster moves",
+        "summary": "Minutes from the Bank of Japan's September meeting reveal a debate among policymakers on the necessity of further rate hikes and the scope for accelerating tightening. This internal discussion signals a potential shift in the BOJ's long-standing ultra-loose monetary policy stance. Any move towards tightening would have profound implications for global capital flows, carry trades, and currency markets.",
+        "sentiment": "bear",
+        "reason": "A hawkish pivot by the BOJ would significantly impact global fixed income markets, particularly for JPY-funded carry trades, and could strengthen the Japanese Yen."
+      },
+      {
+        "title": "Energy CEOs forecast 'demand decade' ahead for investment",
+        "summary": "Leading energy executives from BP and Baker Hughes are articulating a strategic outlook for a 'demand decade' in the energy sector. This sentiment signals a sustained period of capital expenditure and resource allocation towards energy infrastructure and production. Such a long-term view supports continued investment in traditional and transition energy assets, despite short-term market volatility.",
+        "sentiment": "bull",
+        "reason": "This outlook provides a strong fundamental case for long-term capital allocation into energy equities and related infrastructure investments."
+      },
+      {
+        "title": "NextDC shares surge 43% on Goodman and Digital Realty stake purchases",
+        "summary": "Data center operator NextDC saw its shares surge by 43% following significant stake purchases by Goodman and Digital Realty, major players in real estate and digital infrastructure. This institutional investment underscores robust conviction in the growth trajectory and strategic value of data center assets. The capital injection validates the underlying demand for digital infrastructure, signaling further sector consolidation and investment.",
+        "sentiment": "bull",
+        "reason": "This signals strong institutional capital flow into the data center and broader digital infrastructure sector, favoring related technology and real estate equities."
+      },
+      {
+        "title": "Bank of England poised for first rate hike in 3 years",
+        "summary": "The Bank of England is set to implement its first interest rate hike in three years, signaling a decisive move towards monetary tightening. This action aims to combat persistent inflationary pressures within the UK economy. The hike will directly influence Gilt yields, the value of the Pound Sterling, and broader UK asset valuations.",
+        "sentiment": "bear",
+        "reason": "This tightening directly impacts UK bond markets and the British Pound, potentially repricing UK equities lower due to higher borrowing costs."
+      },
+      {
+        "title": "US Dollar declines after Democrats take Congress in midterms",
+        "summary": "The US dollar experienced a notable decline following the Democratic sweep in the midterm elections. This market reaction suggests a reduced safe-haven bid and an unwind of dollar strength driven by previous policy uncertainty. A weaker dollar impacts global trade dynamics, commodity prices, and the competitiveness of US exports.",
+        "sentiment": "bear",
+        "reason": "A softer US dollar can benefit non-US denominated assets, emerging market currencies, and commodity prices, shifting international capital flows."
+      },
+      {
+        "title": "Crude oil prices fall below $90 a barrel",
+        "summary": "Crude oil prices have fallen below the significant $90 per barrel threshold. This price action reflects evolving supply-demand dynamics and broader macroeconomic sentiment. Sustained lower oil prices impact inflation expectations, corporate profitability for energy producers, and consumer purchasing power.",
+        "sentiment": "bear",
+        "reason": "The decline in crude prices affects energy sector profitability and global inflation outlooks, impacting commodity-linked currencies and industrial stocks."
+      },
+      {
+        "title": "India weighs tax cut to attract foreign investors",
+        "summary": "India is reportedly considering a tax cut initiative designed to enhance its appeal to foreign investors. This potential fiscal policy adjustment aims to boost foreign direct investment and stimulate economic growth. Success in attracting capital would bolster India's currency and equity markets.",
+        "sentiment": "bull",
+        "reason": "A potential tax cut could significantly increase foreign direct investment and portfolio flows into Indian equities and local bonds, enhancing EM allocations."
+      },
+      {
+        "title": "Brazil’s central bank ends run of rate cuts after Lula election win",
+        "summary": "Brazil’s central bank has ended its cycle of interest rate cuts following the election win of Lula. This policy shift indicates a renewed focus on inflation management and potentially less accommodation. The change in monetary policy impacts local asset valuations, the Brazilian Real, and the outlook for emerging market carry trades.",
+        "sentiment": "neutral",
+        "reason": "This policy reversal impacts Brazil's bond and equity markets, signaling a shift in emerging market monetary policy trends."
+      }
+    ],
+    "keywords": [
+      "#PolicyGridlock",
+      "#MonetaryPolicy",
+      "#EnergyTransition"
+    ],
+    "marketSentiment": "Risk assets rally on US policy gridlock expectations; central bank divergence drives FX volatility."
+  }
+}
