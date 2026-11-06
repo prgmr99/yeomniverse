@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-06",
+  "timestamp": "2026-11-06T02:39:28.110Z",
+  "newsCount": 49,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 20,
+    "rating": "extreme fear",
+    "timestamp": "2026-11-05T23:59:56+00:00"
+  },
+  "oneWayIndex": {
+    "score": 48,
+    "direction": "bear",
+    "label": "Moderate Trend",
+    "components": {
+      "adx": 0,
+      "maAlignment": 50,
+      "rsiTrend": 80,
+      "bbWidth": 70,
+      "vix": 65,
+      "volume": 40,
+      "fearGreed": 90
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "October Jobs Report Signals Macro Direction",
+        "summary": "The October jobs report, scheduled for release, is the most critical economic data point of the week. This report directly influences the Federal Reserve's monetary policy decisions, specifically regarding future interest rate hikes. Its outcome will dictate market expectations for liquidity and economic growth, setting the immediate tone for equity and fixed income markets.",
+        "sentiment": "neutral",
+        "reason": "The jobs report's outcome will directly reprice interest rate probabilities and global risk assets across all classes."
+      },
+      {
+        "title": "Magnificent 7 and AI Tech Stocks Experience Trillion-Dollar Sell-Off",
+        "summary": "The 'Magnificent 7' tech stocks collectively lost over $1 trillion in market capitalization as the broader AI trade undergoes a significant correction. This substantial deleveraging is driven by rising interest rates, valuation concerns, and profit-taking in previously high-flying growth sectors. The sell-off signals a re-evaluation of future earnings potential and a shift in market leadership from concentrated mega-cap tech.",
+        "sentiment": "bear",
+        "reason": "This re-rating mandates a defensive posture for growth equity allocations and may trigger broader index rebalancing."
+      },
+      {
+        "title": "Dollar Strength Persists as Yen Gains Amid Global Equity Rout",
+        "summary": "The U.S. Dollar maintained its strength, while the Japanese Yen appreciated significantly, reflecting a broad-based risk-off sentiment in global markets. This currency dynamic is driven by capital flowing into perceived safe-haven assets and the unwinding of riskier carry trades. Continued dollar strength and yen volatility impact corporate earnings for exporters and importers, alongside global liquidity conditions.",
+        "sentiment": "neutral",
+        "reason": "Positioning in currency pairs, particularly USD/JPY, and hedging strategies are critical for international portfolio managers."
+      },
+      {
+        "title": "Democrats Propose National Data Center Moratorium, Threatening AI Buildout",
+        "summary": "Leading Democrats have called for a national moratorium on new data center construction, citing concerns over energy consumption and environmental impact. This policy proposal introduces significant regulatory uncertainty and potential headwinds for the rapidly expanding AI infrastructure sector. Such a moratorium could slow the deployment of critical AI computing capacity, impacting chip demand and cloud service expansion.",
+        "sentiment": "bear",
+        "reason": "This directly impacts the data center REIT sector, chip manufacturers, and cloud computing providers, necessitating a reassessment of growth projections."
+      },
+      {
+        "title": "Neocloud IREN Delays $4 Billion Revenue Due to Customer Requests",
+        "summary": "Neocloud IREN reported a delay of $4 billion in annualized revenue, attributed to customer requests for deferred project timelines. This deferral, explicitly tied to customer-driven adjustments in data center build-out schedules, signals a potential slowdown in AI infrastructure investment. The event suggests that the rapid pace of AI adoption and hardware deployment may be moderating, impacting the AI supply chain.",
+        "sentiment": "bear",
+        "reason": "This specific signal indicates potential softening in AI infrastructure demand, impacting hyperscaler capex and related hardware suppliers."
+      },
+      {
+        "title": "Japan's Rising Wages Bolster Case for BOJ Policy Shift",
+        "summary": "Japan's real wages have risen for the ninth consecutive month, providing further evidence of sustained inflationary pressure. This continuous wage growth strengthens the argument for the Bank of Japan to consider exiting its negative interest rate policy. A BOJ pivot would represent a significant shift in global monetary policy, impacting JGBs, the yen, and global capital flows.",
+        "sentiment": "neutral",
+        "reason": "A potential BOJ policy shift necessitates re-evaluation of Japanese equity allocations, JGBs, and global carry trade strategies."
+      },
+      {
+        "title": "China's Yuan Faces Divergent Pressures: Weak Abroad, Strong Domestically",
+        "summary": "The Chinese Yuan is navigating a complex environment, showing weakness in offshore markets while remaining relatively strong against its domestic basket. This divergence creates policy challenges for Beijing, impacting its trade competitiveness and capital flow management. The yuan's trajectory will influence exporter profitability, capital account stability, and investor confidence in Chinese assets.",
+        "sentiment": "neutral",
+        "reason": "The yuan's instability impacts emerging market currency strategies, China-focused equity funds, and global trade competitiveness."
+      },
+      {
+        "title": "Tesla and SpaceX Market Capitalization Plunges Post-Midterms",
+        "summary": "Elon Musk's Tesla and SpaceX experienced a combined market cap loss exceeding $420 billion in the aftermath of the midterm elections. This significant decline reflects investor concerns over policy implications, regulatory scrutiny, and a broader re-evaluation of speculative growth stock valuations. The scale of the sell-off signals an unwinding of premiums previously afforded to high-growth, innovation-driven companies.",
+        "sentiment": "bear",
+        "reason": "This event serves as a bellwether for speculative growth equities, indicating a continued cautious stance on highly valued, innovation-led companies."
+      },
+      {
+        "title": "Lula's Election Victory Dashes US Hopes for Brazilian Rare Earths Access",
+        "summary": "Lula da Silva's election win in Brazil has effectively closed off U.S. hopes for quick access to Brazil's vast rare earth deposits. This geopolitical shift signals increased resource nationalism and potential disruptions to global critical mineral supply chains. The development impacts long-term strategic sourcing and pricing for key industrial components.",
+        "sentiment": "bear",
+        "reason": "This influences long-term supply chain strategies, impacts investments in critical minerals, and suggests increased geopolitical risk premiums."
+      },
+      {
+        "title": "Cloudflare Stock Rallies Following Strong Sales Surge",
+        "summary": "Cloudflare's stock saw a notable comeback after reporting its fastest sales surge in nearly four years, defying the broader tech sell-off trend. This performance suggests selective resilience within the cloud infrastructure and cybersecurity sectors, driven by robust demand for specific internet services. The strong revenue growth indicates that essential cloud services continue to attract investment despite macro headwinds.",
+        "sentiment": "bull",
+        "reason": "Cloudflare's performance highlights opportunities in resilient cloud infrastructure and cybersecurity sectors amidst broader tech weakness."
+      }
+    ],
+    "keywords": [
+      "#MacroOutlook",
+      "#TechRevaluation",
+      "#GeopoliticalRisk"
+    ],
+    "marketSentiment": "Global equity markets are deleveraging amidst growth concerns and tightening financial conditions."
+  }
+}

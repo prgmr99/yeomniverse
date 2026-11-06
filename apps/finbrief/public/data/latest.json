@@ -1,95 +1,95 @@
 {
-  "date": "2026-11-05",
-  "timestamp": "2026-11-05T02:38:31.341Z",
+  "date": "2026-11-06",
+  "timestamp": "2026-11-06T02:39:28.110Z",
   "newsCount": 49,
   "outputLanguage": "en",
   "fearGreedIndex": {
-    "score": 27,
-    "rating": "fear",
-    "timestamp": "2026-11-04T23:59:55+00:00"
+    "score": 20,
+    "rating": "extreme fear",
+    "timestamp": "2026-11-05T23:59:56+00:00"
   },
   "oneWayIndex": {
-    "score": 39,
-    "direction": "bull",
-    "label": "Weak Directional Bias",
+    "score": 48,
+    "direction": "bear",
+    "label": "Moderate Trend",
     "components": {
       "adx": 0,
-      "maAlignment": 67,
-      "rsiTrend": 50,
-      "bbWidth": 50,
-      "vix": 60,
+      "maAlignment": 50,
+      "rsiTrend": 80,
+      "bbWidth": 70,
+      "vix": 65,
       "volume": 40,
-      "fearGreed": 15
+      "fearGreed": 90
     }
   },
   "analysis": {
     "topNews": [
       {
-        "title": "Markets interpret US election results as policy gridlock, driving risk-on rally",
-        "summary": "Markets reacted positively to the US midterm election outcome, perceiving a Democratic sweep as likely to lead to divided government. This anticipated policy gridlock reduces the probability of radical legislative changes or significant policy shocks. Investors are re-allocating capital towards risk assets, anticipating a period of greater policy stability and less intervention.",
-        "sentiment": "bull",
-        "reason": "This fundamental shift in policy expectations underpins a broad repricing across equities, fixed income, and currency markets, favoring risk assets and dampening US dollar strength."
-      },
-      {
-        "title": "White House sets December 14 for Fed’s Lisa Cook hearing",
-        "summary": "The White House has confirmed December 14 as the date for a hearing on the nomination of Lisa Cook to the Federal Reserve Board. This sets a clear timeline for confirmation proceedings, reducing uncertainty surrounding the Fed's future composition. The outcome will clarify the potential for shifts in the Federal Reserve's dovish or hawkish leanings.",
+        "title": "October Jobs Report Signals Macro Direction",
+        "summary": "The October jobs report, scheduled for release, is the most critical economic data point of the week. This report directly influences the Federal Reserve's monetary policy decisions, specifically regarding future interest rate hikes. Its outcome will dictate market expectations for liquidity and economic growth, setting the immediate tone for equity and fixed income markets.",
         "sentiment": "neutral",
-        "reason": "The hearing introduces a specific near-term catalyst for potential changes in US monetary policy outlook, directly impacting bond yields and the US dollar."
+        "reason": "The jobs report's outcome will directly reprice interest rate probabilities and global risk assets across all classes."
       },
       {
-        "title": "Bank of Japan debates need for more rate hikes and faster moves",
-        "summary": "Minutes from the Bank of Japan's September meeting reveal a debate among policymakers on the necessity of further rate hikes and the scope for accelerating tightening. This internal discussion signals a potential shift in the BOJ's long-standing ultra-loose monetary policy stance. Any move towards tightening would have profound implications for global capital flows, carry trades, and currency markets.",
+        "title": "Magnificent 7 and AI Tech Stocks Experience Trillion-Dollar Sell-Off",
+        "summary": "The 'Magnificent 7' tech stocks collectively lost over $1 trillion in market capitalization as the broader AI trade undergoes a significant correction. This substantial deleveraging is driven by rising interest rates, valuation concerns, and profit-taking in previously high-flying growth sectors. The sell-off signals a re-evaluation of future earnings potential and a shift in market leadership from concentrated mega-cap tech.",
         "sentiment": "bear",
-        "reason": "A hawkish pivot by the BOJ would significantly impact global fixed income markets, particularly for JPY-funded carry trades, and could strengthen the Japanese Yen."
+        "reason": "This re-rating mandates a defensive posture for growth equity allocations and may trigger broader index rebalancing."
       },
       {
-        "title": "Energy CEOs forecast 'demand decade' ahead for investment",
-        "summary": "Leading energy executives from BP and Baker Hughes are articulating a strategic outlook for a 'demand decade' in the energy sector. This sentiment signals a sustained period of capital expenditure and resource allocation towards energy infrastructure and production. Such a long-term view supports continued investment in traditional and transition energy assets, despite short-term market volatility.",
-        "sentiment": "bull",
-        "reason": "This outlook provides a strong fundamental case for long-term capital allocation into energy equities and related infrastructure investments."
-      },
-      {
-        "title": "NextDC shares surge 43% on Goodman and Digital Realty stake purchases",
-        "summary": "Data center operator NextDC saw its shares surge by 43% following significant stake purchases by Goodman and Digital Realty, major players in real estate and digital infrastructure. This institutional investment underscores robust conviction in the growth trajectory and strategic value of data center assets. The capital injection validates the underlying demand for digital infrastructure, signaling further sector consolidation and investment.",
-        "sentiment": "bull",
-        "reason": "This signals strong institutional capital flow into the data center and broader digital infrastructure sector, favoring related technology and real estate equities."
-      },
-      {
-        "title": "Bank of England poised for first rate hike in 3 years",
-        "summary": "The Bank of England is set to implement its first interest rate hike in three years, signaling a decisive move towards monetary tightening. This action aims to combat persistent inflationary pressures within the UK economy. The hike will directly influence Gilt yields, the value of the Pound Sterling, and broader UK asset valuations.",
-        "sentiment": "bear",
-        "reason": "This tightening directly impacts UK bond markets and the British Pound, potentially repricing UK equities lower due to higher borrowing costs."
-      },
-      {
-        "title": "US Dollar declines after Democrats take Congress in midterms",
-        "summary": "The US dollar experienced a notable decline following the Democratic sweep in the midterm elections. This market reaction suggests a reduced safe-haven bid and an unwind of dollar strength driven by previous policy uncertainty. A weaker dollar impacts global trade dynamics, commodity prices, and the competitiveness of US exports.",
-        "sentiment": "bear",
-        "reason": "A softer US dollar can benefit non-US denominated assets, emerging market currencies, and commodity prices, shifting international capital flows."
-      },
-      {
-        "title": "Crude oil prices fall below $90 a barrel",
-        "summary": "Crude oil prices have fallen below the significant $90 per barrel threshold. This price action reflects evolving supply-demand dynamics and broader macroeconomic sentiment. Sustained lower oil prices impact inflation expectations, corporate profitability for energy producers, and consumer purchasing power.",
-        "sentiment": "bear",
-        "reason": "The decline in crude prices affects energy sector profitability and global inflation outlooks, impacting commodity-linked currencies and industrial stocks."
-      },
-      {
-        "title": "India weighs tax cut to attract foreign investors",
-        "summary": "India is reportedly considering a tax cut initiative designed to enhance its appeal to foreign investors. This potential fiscal policy adjustment aims to boost foreign direct investment and stimulate economic growth. Success in attracting capital would bolster India's currency and equity markets.",
-        "sentiment": "bull",
-        "reason": "A potential tax cut could significantly increase foreign direct investment and portfolio flows into Indian equities and local bonds, enhancing EM allocations."
-      },
-      {
-        "title": "Brazil’s central bank ends run of rate cuts after Lula election win",
-        "summary": "Brazil’s central bank has ended its cycle of interest rate cuts following the election win of Lula. This policy shift indicates a renewed focus on inflation management and potentially less accommodation. The change in monetary policy impacts local asset valuations, the Brazilian Real, and the outlook for emerging market carry trades.",
+        "title": "Dollar Strength Persists as Yen Gains Amid Global Equity Rout",
+        "summary": "The U.S. Dollar maintained its strength, while the Japanese Yen appreciated significantly, reflecting a broad-based risk-off sentiment in global markets. This currency dynamic is driven by capital flowing into perceived safe-haven assets and the unwinding of riskier carry trades. Continued dollar strength and yen volatility impact corporate earnings for exporters and importers, alongside global liquidity conditions.",
         "sentiment": "neutral",
-        "reason": "This policy reversal impacts Brazil's bond and equity markets, signaling a shift in emerging market monetary policy trends."
+        "reason": "Positioning in currency pairs, particularly USD/JPY, and hedging strategies are critical for international portfolio managers."
+      },
+      {
+        "title": "Democrats Propose National Data Center Moratorium, Threatening AI Buildout",
+        "summary": "Leading Democrats have called for a national moratorium on new data center construction, citing concerns over energy consumption and environmental impact. This policy proposal introduces significant regulatory uncertainty and potential headwinds for the rapidly expanding AI infrastructure sector. Such a moratorium could slow the deployment of critical AI computing capacity, impacting chip demand and cloud service expansion.",
+        "sentiment": "bear",
+        "reason": "This directly impacts the data center REIT sector, chip manufacturers, and cloud computing providers, necessitating a reassessment of growth projections."
+      },
+      {
+        "title": "Neocloud IREN Delays $4 Billion Revenue Due to Customer Requests",
+        "summary": "Neocloud IREN reported a delay of $4 billion in annualized revenue, attributed to customer requests for deferred project timelines. This deferral, explicitly tied to customer-driven adjustments in data center build-out schedules, signals a potential slowdown in AI infrastructure investment. The event suggests that the rapid pace of AI adoption and hardware deployment may be moderating, impacting the AI supply chain.",
+        "sentiment": "bear",
+        "reason": "This specific signal indicates potential softening in AI infrastructure demand, impacting hyperscaler capex and related hardware suppliers."
+      },
+      {
+        "title": "Japan's Rising Wages Bolster Case for BOJ Policy Shift",
+        "summary": "Japan's real wages have risen for the ninth consecutive month, providing further evidence of sustained inflationary pressure. This continuous wage growth strengthens the argument for the Bank of Japan to consider exiting its negative interest rate policy. A BOJ pivot would represent a significant shift in global monetary policy, impacting JGBs, the yen, and global capital flows.",
+        "sentiment": "neutral",
+        "reason": "A potential BOJ policy shift necessitates re-evaluation of Japanese equity allocations, JGBs, and global carry trade strategies."
+      },
+      {
+        "title": "China's Yuan Faces Divergent Pressures: Weak Abroad, Strong Domestically",
+        "summary": "The Chinese Yuan is navigating a complex environment, showing weakness in offshore markets while remaining relatively strong against its domestic basket. This divergence creates policy challenges for Beijing, impacting its trade competitiveness and capital flow management. The yuan's trajectory will influence exporter profitability, capital account stability, and investor confidence in Chinese assets.",
+        "sentiment": "neutral",
+        "reason": "The yuan's instability impacts emerging market currency strategies, China-focused equity funds, and global trade competitiveness."
+      },
+      {
+        "title": "Tesla and SpaceX Market Capitalization Plunges Post-Midterms",
+        "summary": "Elon Musk's Tesla and SpaceX experienced a combined market cap loss exceeding $420 billion in the aftermath of the midterm elections. This significant decline reflects investor concerns over policy implications, regulatory scrutiny, and a broader re-evaluation of speculative growth stock valuations. The scale of the sell-off signals an unwinding of premiums previously afforded to high-growth, innovation-driven companies.",
+        "sentiment": "bear",
+        "reason": "This event serves as a bellwether for speculative growth equities, indicating a continued cautious stance on highly valued, innovation-led companies."
+      },
+      {
+        "title": "Lula's Election Victory Dashes US Hopes for Brazilian Rare Earths Access",
+        "summary": "Lula da Silva's election win in Brazil has effectively closed off U.S. hopes for quick access to Brazil's vast rare earth deposits. This geopolitical shift signals increased resource nationalism and potential disruptions to global critical mineral supply chains. The development impacts long-term strategic sourcing and pricing for key industrial components.",
+        "sentiment": "bear",
+        "reason": "This influences long-term supply chain strategies, impacts investments in critical minerals, and suggests increased geopolitical risk premiums."
+      },
+      {
+        "title": "Cloudflare Stock Rallies Following Strong Sales Surge",
+        "summary": "Cloudflare's stock saw a notable comeback after reporting its fastest sales surge in nearly four years, defying the broader tech sell-off trend. This performance suggests selective resilience within the cloud infrastructure and cybersecurity sectors, driven by robust demand for specific internet services. The strong revenue growth indicates that essential cloud services continue to attract investment despite macro headwinds.",
+        "sentiment": "bull",
+        "reason": "Cloudflare's performance highlights opportunities in resilient cloud infrastructure and cybersecurity sectors amidst broader tech weakness."
       }
     ],
     "keywords": [
-      "#PolicyGridlock",
-      "#MonetaryPolicy",
-      "#EnergyTransition"
+      "#MacroOutlook",
+      "#TechRevaluation",
+      "#GeopoliticalRisk"
     ],
-    "marketSentiment": "Risk assets rally on US policy gridlock expectations; central bank divergence drives FX volatility."
+    "marketSentiment": "Global equity markets are deleveraging amidst growth concerns and tightening financial conditions."
   }
 }
