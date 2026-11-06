@@ -99,7 +99,7 @@ Dental hygienists and assistants rarely get to know what a clinic is like before
 - Six-question diagnostic that places your current conditions against the national spread, with a shareable result card; answers are never stored
 - Guides in three tracks — hiring & moving jobs, practice, and labour rights
 
-[Visit Chijob](https://chijob.vercel.app) · [About](https://yeomniverse.com/services/chijob)
+[Visit Chijob](https://chijob.yeomniverse.com) · [About](https://yeomniverse.com/services/chijob)
 
 ---
 

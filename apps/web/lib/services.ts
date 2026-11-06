@@ -678,7 +678,7 @@ export const SERVICES: Service[] = [
     tagline: '치과 종사자를 위한 익명 병원 리뷰와 근무 정보',
     cardDescription:
       '전국 치과를 지역·시군구별로 훑고, 급여·워라밸·분위기·성장 네 항목으로 근무 환경을 확인한다. 6문항 진단으로 내 조건이 전국 어디쯤인지도 알 수 있다.',
-    url: 'https://chijob.vercel.app',
+    url: 'https://chijob.yeomniverse.com',
     accent: 'from-amber-300 to-yellow-400',
     glow: 'bg-amber-500/40',
     index: '05 — Jobs',
@@ -830,17 +830,17 @@ export const SERVICES: Service[] = [
     relatedLinks: [
       {
         label: '치잡 바로 가기',
-        href: 'https://chijob.vercel.app',
+        href: 'https://chijob.yeomniverse.com',
         note: '병원을 검색하거나 지역별로 둘러본다.',
       },
       {
         label: '근무조건 진단',
-        href: 'https://chijob.vercel.app/check',
+        href: 'https://chijob.yeomniverse.com/check',
         note: '6문항으로 내 조건의 전국 위치를 확인한다.',
       },
       {
         label: '치과 취업·실무 가이드',
-        href: 'https://chijob.vercel.app/guides',
+        href: 'https://chijob.yeomniverse.com/guides',
         note: '업무 범위, 수습 급여 등 정리된 글.',
       },
     ],
