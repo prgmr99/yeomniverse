@@ -110,3 +110,6 @@ export const RESULTS: Record<string, ResultType> = {
     imageColor: 'bg-gray-300',
   },
 };
+
+/** 결과 유형 수. 소개 문구가 유형을 추가해도 어긋나지 않게 여기서 파생한다. */
+export const RESULT_COUNT = Object.keys(RESULTS).length;

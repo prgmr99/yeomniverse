@@ -32,6 +32,7 @@ export default function FinBriefPage() {
       <HowItWorks />
       <MarketPulse data={data} isLoading={isLoading} />
       <BriefingSample data={data} isLoading={isLoading} />
+      <HowToRead />
       <CTASection />
       <Footer />
     </main>
@@ -93,7 +94,7 @@ function HeroSection() {
               '0 2px 4px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2), 0 8px 32px rgba(0,0,0,0.15)',
           }}
         >
-          AI Financial Briefing in 30 Seconds
+          The morning's market news, in five minutes
         </motion.p>
 
         {/* CTA Button */}
@@ -154,7 +155,7 @@ function ValueProposition() {
               className="font-semibold text-finbrief-black"
               style={{ fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.2 }}
             >
-              AI reads <span className="text-gradient">100+ articles</span>,
+              AI reads <span className="text-gradient">about 50 articles</span>,
             </p>
           </StaggerItem>
           <StaggerItem>
@@ -162,8 +163,8 @@ function ValueProposition() {
               className="font-semibold text-finbrief-black"
               style={{ fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.2 }}
             >
-              and picks just the <span className="text-gradient">top 3</span>{' '}
-              for you.
+              and keeps the <span className="text-gradient">10</span> that moved
+              the market.
             </p>
           </StaggerItem>
         </StaggerContainer>
@@ -188,7 +189,7 @@ function FeatureShowcase() {
   const features = [
     {
       icon: Zap,
-      title: '30-Second Read',
+      title: 'Five-Minute Read',
       description:
         'Catch the key points quickly on your commute or before lunch.',
     },
@@ -196,7 +197,7 @@ function FeatureShowcase() {
       icon: Brain,
       title: 'AI Curation',
       description:
-        'Cutting-edge AI analyzes hundreds of articles and picks only the most important.',
+        'Gemini scores every story for market impact, then keeps the ten that carried the day.',
     },
     {
       icon: Target,
@@ -260,8 +261,8 @@ function FeatureShowcase() {
 // ============================================
 function HowItWorks() {
   const steps = [
-    { number: '01', title: 'Every dawn, AI analyzes 100+ articles' },
-    { number: '02', title: 'Picks the 3 most important' },
+    { number: '01', title: 'Every dawn, AI reads about 50 articles' },
+    { number: '02', title: 'Keeps the 10 that moved the market' },
     { number: '03', title: 'Delivered via Telegram at 8 AM' },
   ];
 
@@ -552,6 +553,90 @@ function CTASection() {
 // ============================================
 // Footer - Minimal
 // ============================================
+function HowToRead() {
+  return (
+    <section className="py-24 px-6 bg-white">
+      <div className="max-w-[720px] mx-auto">
+        <h2 className="text-3xl font-bold text-finbrief-black mb-8">
+          What you are actually reading
+        </h2>
+
+        <div className="space-y-5 text-finbrief-gray-500 leading-relaxed">
+          <p>
+            FinBrief is a daily digest of the overnight market, assembled
+            without a human in the loop. Every dawn a scheduled job pulls four
+            RSS feeds — CNBC, MarketWatch, Investing.com and Google News Korea —
+            and takes the most recent items from each. Stories that several
+            outlets carried collapse into one, advertising and price-ticker
+            filler drop out, and roughly fifty articles survive to be scored.
+            Google Gemini then writes up the ten that carried the day, and the
+            result lands in your Telegram at 8 AM KST.
+          </p>
+
+          <h3 className="text-xl font-semibold text-finbrief-black pt-4">
+            How to read it
+          </h3>
+          <p>
+            Each of the ten entries gives you the event, what it means, and
+            which way it cut. Read the sentiment tag as the briefing&apos;s
+            reading of market reaction on the day, not as a forecast. The
+            ordering is by scored importance, so the top of the list is where
+            the day&apos;s weight sat — if you only have a minute, the first
+            three are the ones to keep.
+          </p>
+          <p>
+            Alongside the news we publish the One-Way Index, a single number for
+            how strongly the market is trending in one direction. It measures
+            the strength of a move, not its direction&apos;s correctness, and it
+            says nothing about what happens tomorrow.
+          </p>
+
+          <h3 className="text-xl font-semibold text-finbrief-black pt-4">
+            What it is not
+          </h3>
+          <p>
+            Four feeds are not the whole market. Anything those outlets did not
+            run that morning is not in the briefing, and coverage skews toward
+            US headlines with Korean market news arriving through an aggregator.
+            The summaries are model-written and can get a detail wrong, so treat
+            a number that matters to you as something to confirm at the source
+            rather than as a quotation.
+          </p>
+          <p>
+            The briefing is delivered after the US close, so it describes the
+            session that just ended. None of it is investment advice, and
+            nothing here is personalised to your holdings.
+          </p>
+        </div>
+
+        <div className="mt-10 pt-8 border-t border-[#e8e8ed] text-sm">
+          <p className="text-finbrief-gray-500">
+            Want the full source list, the scoring method and the One-Way Index
+            weights?{' '}
+            <a
+              href="/about"
+              className="text-finbrief-black font-semibold underline underline-offset-4"
+            >
+              Read how it is built
+            </a>
+            .
+          </p>
+          <p className="text-finbrief-gray-500 mt-3">
+            FinBrief is one of the tools built at{' '}
+            <a
+              href="https://yeomniverse.com"
+              className="text-finbrief-black font-semibold underline underline-offset-4"
+            >
+              Yeomniverse
+            </a>
+            .
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Footer() {
   return (
     <footer className="py-12 px-6 bg-[#f5f5f7] border-t border-[#e8e8ed]">
@@ -576,6 +661,12 @@ function Footer() {
               className="hover:text-finbrief-black transition-colors"
             >
               Terms of Service
+            </a>
+            <a
+              href="https://yeomniverse.com"
+              className="hover:text-finbrief-black transition-colors"
+            >
+              Yeomniverse
             </a>
           </div>
         </div>

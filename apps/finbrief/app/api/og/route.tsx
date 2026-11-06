@@ -33,7 +33,7 @@ export async function GET() {
           marginBottom: 16,
         }}
       >
-        AI Financial Briefing in 30 Seconds
+        The morning's market news, in five minutes
       </div>
       <div
         style={{

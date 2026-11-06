@@ -9,6 +9,7 @@ import Script from 'next/script';
 import { useEffect, useState } from 'react';
 import { digitsOnly, isValidYymmdd } from '@/lib/birthday';
 import { getParentsDayBadge } from '@/lib/parentsDay';
+import { RESULT_COUNT } from '@/lib/resultData';
 import { useQuizStore } from '@/store/useQuizStore';
 
 export default function Home() {
@@ -260,8 +261,8 @@ export default function Home() {
             &apos;2026학년도 대국민 효도능력시험&apos;은 단순한 심리 테스트를
             넘어, 현대 사회에서 점차 잊혀가는 효(孝)의 가치를 재미있게 재해석한
             자기 진단 서비스입니다. 부모님에 대한 관심도, 친밀도, 그리고
-            표현력을 종합적으로 분석하여 총 8가지의 독창적인 캐릭터 유형으로
-            결과를 제공합니다.
+            표현력을 종합적으로 분석하여 총 {RESULT_COUNT}가지의 독창적인 캐릭터
+            유형으로 결과를 제공합니다.
           </p>
         </div>
 

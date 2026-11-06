@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     template: '%s | FinBrief',
   },
   description:
-    'AI-powered financial briefing you can read in 30 seconds. Get the top 3 news picks from 100+ articles delivered to your Telegram every morning at 8 AM.',
+    'AI-powered financial briefing you can read in five minutes. About 50 articles are collected each dawn and the 10 that moved the market are delivered to your Telegram at 8 AM KST.',
   applicationName: 'FinBrief',
   keywords: [
     'AI financial news briefing',
@@ -82,7 +82,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'FinBrief | AI Financial Briefing',
     description:
-      'AI-powered financial briefing in 30 seconds. AI analyzes 100+ articles and picks the top 3.',
+      'AI-powered financial briefing in five minutes. AI reads about 50 articles and keeps the 10 that moved the market.',
     url: DOMAIN_URL,
     siteName: 'FinBrief',
     locale: 'en_US',
@@ -169,7 +169,7 @@ export default function RootLayout({
       name: 'FinBrief',
     },
     description:
-      'AI analyzes 100+ financial news articles and delivers the top 3 picks to your Telegram every morning at 8 AM.',
+      'AI reads about 50 financial news articles and delivers the 10 that moved the market to your Telegram every morning at 8 AM KST.',
     serviceType: 'AI News Curation',
     areaServed: 'Worldwide',
     inLanguage: 'en',

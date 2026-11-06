@@ -1,5 +1,6 @@
 import { Mail } from 'lucide-react';
 import type { Metadata } from 'next';
+import { SERVICES } from '@/lib/services';
 import { CONTACT_EMAIL, GITHUB_URL, SITE_NAME, SITE_URL } from '@/lib/site';
 
 const title = '문의';
@@ -56,8 +57,8 @@ export default function ContactPage() {
         </p>
         <ul className="mt-6 space-y-3 text-white/70">
           <li className="rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm leading-relaxed">
-            <strong className="text-white">어떤 서비스인지</strong> — 효도티어,
-            FinBrief, NeuroTrade, Argus 중 어느 것인지
+            <strong className="text-white">어떤 서비스인지</strong> —{' '}
+            {SERVICES.map((service) => service.title).join(', ')} 중 어느 것인지
           </li>
           <li className="rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm leading-relaxed">
             <strong className="text-white">무엇을 하다가 생겼는지</strong> —

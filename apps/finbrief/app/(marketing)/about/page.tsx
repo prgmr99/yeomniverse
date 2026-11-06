@@ -8,7 +8,7 @@ const DOMAIN =
 export const metadata: Metadata = {
   title: 'About FinBrief | AI Financial Briefing Service',
   description:
-    'Learn about FinBrief — an AI-powered financial briefing service that analyzes 100+ news sources daily and delivers curated market insights via Telegram. Built with transparency about our AI methodology.',
+    'Learn about FinBrief — an AI-powered financial briefing service that reads about 50 articles from four RSS feeds daily and delivers curated market insights via Telegram. Built with transparency about our sources and AI methodology.',
   alternates: { canonical: `${DOMAIN}/about` },
   openGraph: {
     title: 'About FinBrief | AI Financial Briefing Service',
@@ -21,23 +21,21 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'About FinBrief | AI Financial Briefing Service',
     description:
-      'Learn about FinBrief — an AI-powered financial briefing service that analyzes 100+ news sources daily and delivers curated market insights via Telegram. Built with transparency about our AI methodology.',
+      'Learn about FinBrief — an AI-powered financial briefing service that reads about 50 articles from four RSS feeds daily and delivers curated market insights via Telegram. Built with transparency about our sources and AI methodology.',
     images: ['/api/og'],
   },
 };
 
+// 실제로 fetch하는 피드만 둔다. src/collectors/rss-collector.ts와 일치해야 한다.
 const RSS_SOURCES = [
-  { name: 'Bloomberg Markets', type: 'Global Financial News' },
-  { name: 'Reuters Finance', type: 'Wire Service' },
-  { name: 'CNBC Markets', type: 'Financial Media' },
-  { name: 'MarketWatch', type: 'Financial News' },
-  { name: 'Investing.com', type: 'Markets & Analysis' },
-  { name: 'Yahoo Finance', type: 'Markets Data & News' },
+  { name: 'CNBC', type: 'Financial Media', cap: 'up to 20 items' },
+  { name: 'MarketWatch', type: 'Financial News', cap: 'up to 15 items' },
+  { name: 'Investing.com', type: 'Markets & Analysis', cap: 'up to 15 items' },
   {
-    name: 'Korean Financial News (Google News KR)',
+    name: 'Google News KR',
     type: 'Korean Market Coverage',
+    cap: 'up to 20 items',
   },
-  { name: 'Naver Finance News', type: 'Korean Market Coverage' },
 ];
 
 const ONE_WAY_COMPONENTS = [
@@ -121,10 +119,10 @@ export default function AboutPage() {
           <div className="p-6 rounded-2xl bg-white/5 border border-white/10 mb-4">
             <p className="text-white/70 leading-relaxed mb-4">
               FinBrief is a daily financial intelligence service. Every morning
-              at 8:00 AM KST, our automated pipeline collects news from 8+
-              financial news sources, scores each article for importance and
-              relevance, and uses Google Gemini AI to analyze and summarize the
-              most material developments.
+              at 8:00 AM KST, our automated pipeline collects news from four RSS
+              feeds, scores each article for importance and relevance, and uses
+              Google Gemini AI to analyze and summarize the most material
+              developments.
             </p>
             <p className="text-white/70 leading-relaxed mb-4">
               Alongside the news analysis, the pipeline calculates the{' '}
@@ -162,8 +160,9 @@ export default function AboutPage() {
                 Step 1 — News Collection
               </h3>
               <p className="text-white/60 text-sm leading-relaxed mb-4">
-                We collect news via RSS feeds from the following sources, with
-                deduplication to ensure each story is counted once:
+                We pull from exactly four RSS feeds. Each run takes the most
+                recent items from each, then removes stories that several feeds
+                carried so one event is counted once:
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {RSS_SOURCES.map((src) => (
@@ -175,10 +174,20 @@ export default function AboutPage() {
                     <span>
                       <span className="text-white/70">{src.name}</span>
                       <span className="text-white/30 ml-1">— {src.type}</span>
+                      <span className="text-white/25 ml-1">({src.cap})</span>
                     </span>
                   </div>
                 ))}
               </div>
+              <p className="text-white/50 text-sm leading-relaxed mt-4">
+                Wire coverage from Bloomberg and Reuters reaches us only when
+                Google News surfaces it as the originating outlet — we do not
+                subscribe to their feeds directly, so their stories appear some
+                days and not others. Yahoo Finance is used for price quotes in
+                the One-Way Index, not for news. We name the feeds rather than a
+                headline count because the number of outlets you can reach
+                through an aggregator is not a measure of coverage.
+              </p>
             </div>
 
             <div className="p-6 rounded-2xl bg-white/5 border border-white/10">

@@ -254,7 +254,7 @@ export default function DashboardPage() {
                   AI Analysis in Progress
                 </h3>
                 <p className="text-sm text-slate-400 leading-relaxed">
-                  Every morning, AI analyzes 100+ articles and delivers the 3
+                  Every morning, AI reads about 50 articles and delivers the 10
                   most important stories at 8 AM. Get them on Telegram!
                 </p>
               </div>

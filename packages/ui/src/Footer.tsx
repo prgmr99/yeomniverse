@@ -20,6 +20,13 @@ export default function Footer() {
 					>
 						서비스 소개
 					</Link>
+					<span className="text-stone-300">|</span>
+					<a
+						href="https://yeomniverse.com"
+						className="hover:text-stone-800 transition-colors"
+					>
+						Yeomniverse
+					</a>
 				</div>
 			</div>
 
