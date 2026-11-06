@@ -91,12 +91,13 @@ An interactive dashboard that maps the world's major developments onto a single 
 
 Dental hygienists and assistants rarely get to know what a clinic is like before they take the job. Chijob puts every clinic in the country on the map and lets the people who worked there say what it was like.
 
-- Nationwide clinic directory built from HIRA public health insurance data
+- Nationwide clinic directory built from HIRA public health insurance data — 4,900+ clinics in Seoul alone
 - Reviews split into pay, work-life balance, atmosphere, and growth
-- Fully anonymous, moderated before publishing
+- Anyone can post a review with no account and no identity check; every review is moderated before it goes public
+- Report button on published reviews
 - Region drill-down from province to district
-- Six-question diagnostic that places your current conditions against the national spread
-- Guides on hiring, practice, and workers' rights
+- Six-question diagnostic that places your current conditions against the national spread, with a shareable result card; answers are never stored
+- Guides in three tracks — hiring & moving jobs, practice, and labour rights
 
 [Visit Chijob](https://chijob.vercel.app) · [About](https://yeomniverse.com/services/chijob)
 
