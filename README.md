@@ -73,7 +73,8 @@ A web-based educational trading simulator where players analyze fictional news e
 
 An interactive dashboard that maps the world's major developments onto a single world map, giving a strategy-game-style overview of global affairs at a glance.
 
-- Five toggleable layers: war & conflict, geopolitics, finance, technology & energy, and relationship lines (support, sanctions, alliance, tension)
+- Four toggleable layers: war & conflict, geopolitics, finance, technology & energy
+- A separate relationship-line overlay (support, sanctions, alliance, tension), shown on days that have relations recorded
 - Per-country detail panel with current conflicts, issues, and trends
 - Indicator ticker carrying policy rates, major indices, bond yields, oil, gold, and FX
 - Auto-refreshing breaking news feed
