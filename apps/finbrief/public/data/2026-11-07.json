@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-07",
+  "timestamp": "2026-11-07T02:07:32.512Z",
+  "newsCount": 49,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 22,
+    "rating": "extreme fear",
+    "timestamp": "2026-11-06T23:59:54+00:00"
+  },
+  "oneWayIndex": {
+    "score": 53,
+    "direction": "bear",
+    "label": "Moderate Trend",
+    "components": {
+      "adx": 0,
+      "maAlignment": 50,
+      "rsiTrend": 100,
+      "bbWidth": 85,
+      "vix": 65,
+      "volume": 40,
+      "fearGreed": 90
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "US Payrolls Boost Dollar, Reinforce Tight Policy Outlook",
+        "summary": "The latest US payrolls report showed robust job growth, significantly exceeding expectations. This strength signals continued economic resilience, likely underpinning sustained inflationary pressures. Consequently, the Federal Reserve gains further rationale to maintain restrictive monetary policy, supporting the US dollar.",
+        "sentiment": "bull",
+        "reason": "Increased US dollar strength impacts FX hedging costs and global capital flows, influencing asset allocation to dollar-denominated assets and emerging markets."
+      },
+      {
+        "title": "Fed's Daly Affirms Rate Hike Likelihood Amid Tech Volatility",
+        "summary": "Federal Reserve President Daly stated that a rate hike remains probable, even after a significant selloff in technology stocks. This commentary underscores the Fed's priority on inflation control over equity market stability. The central bank signals its tolerance for financial tightening as long as price pressures persist.",
+        "sentiment": "bear",
+        "reason": "Confirms the Fed's hawkish bias and risk of further rate increases, pressuring growth stocks and risk assets while supporting yield-sensitive investments."
+      },
+      {
+        "title": "BOJ Chief Ueda Acknowledges Upside Risks to Inflation",
+        "summary": "Bank of Japan Governor Ueda indicated that he observes 'some upside risks' to inflation, suggesting a potential shift in the central bank's long-held dovish stance. This commentary signals an increasing likelihood of future policy adjustments away from negative rates or yield curve control. Such a pivot would re-price Japanese government bonds and impact global carry trades.",
+        "sentiment": "neutral",
+        "reason": "A hawkish BOJ shift would impact global bond yields and currency markets, compelling a re-evaluation of yen-denominated assets and sovereign debt strategies."
+      },
+      {
+        "title": "OpenAI Commits to Continued AI Data Center Investment",
+        "summary": "OpenAI's CFO confirmed the company's sustained, substantial investment in AI data centers, irrespective of upcoming election outcomes. This commitment signals a long-term, secular demand for critical AI infrastructure components and services. The persistent capital expenditure fuels growth for semiconductor manufacturers, cloud computing providers, and power utilities.",
+        "sentiment": "bull",
+        "reason": "Sustained AI infrastructure investment provides a robust demand driver for semiconductor, cloud computing, and utility sectors."
+      },
+      {
+        "title": "Rising Cost of Capital for AI Infrastructure Evident in CoreWeave Bond Yields",
+        "summary": "CoreWeave's bond yield surpassing 16% indicates a significant increase in the cost of capital for AI infrastructure development. This trend signals growing investor skepticism about the risk-adjusted returns of some AI-related ventures. Higher financing costs will pressure balance sheets and could temper the pace of future AI expansion.",
+        "sentiment": "bear",
+        "reason": "Increased cost of capital for AI infrastructure may reduce investment returns and slow growth in capital-intensive AI-related ventures."
+      },
+      {
+        "title": "Brazilian Banks Lower Growth Forecasts, Heightening Fiscal Concerns",
+        "summary": "Major Brazilian banks have reduced their economic growth forecasts, highlighting persistent challenges for the nation's economy. This downgrade intensifies fiscal pressures on the Lula administration, necessitating difficult policy choices. The weakened outlook signals potential for further currency depreciation and increased sovereign risk premiums.",
+        "sentiment": "bear",
+        "reason": "A deteriorating economic outlook in Brazil suggests increased sovereign risk and potential currency weakness, impacting EM debt and equity allocations."
+      },
+      {
+        "title": "Microsoft Reports AI Buildout Strain, Plans Fewer Neoclouds",
+        "summary": "Microsoft indicated signs of strain in its AI buildout and stated plans to use fewer 'neoclouds,' though the term's precise meaning remains vague. This suggests potential challenges in scaling AI infrastructure efficiently or managing associated costs. Such adjustments could impact specific hardware or energy suppliers to cloud giants.",
+        "sentiment": "neutral",
+        "reason": "Potential for reduced or reallocated AI infrastructure spend by a major cloud provider may shift demand within the hardware and energy sectors."
+      },
+      {
+        "title": "Wall Street Rallies Following Recent AI-Related Selloff",
+        "summary": "Wall Street stocks rallied after a period of intense selling pressure, particularly in AI-related equities. This rebound signals a tactical shift in investor sentiment, potentially indicating a belief that the recent correction was overdone. The move suggests a near-term stabilization of market volatility and a potential for rotational capital flows.",
+        "sentiment": "bull",
+        "reason": "A rebound in market sentiment after a tech selloff indicates potential stabilization and opportunities for tactical re-entry or rotation into growth sectors."
+      },
+      {
+        "title": "Underlying Weakness Seen in US Labor Market Despite Strong Headline Jobs",
+        "summary": "Beneath robust headline job numbers, analysis reveals disturbing trends such as rising involuntary part-time employment and declining average weekly hours. These indicators suggest an underlying softening of the US labor market, diverging from the strong initial reports. Such hidden weakness could prompt the Federal Reserve to reconsider its aggressive stance sooner than anticipated.",
+        "sentiment": "bear",
+        "reason": "Subtle signs of labor market weakening could accelerate a dovish shift by the Federal Reserve, impacting bond yields and growth stock valuations."
+      },
+      {
+        "title": "IMF Highlights AI Growth as Central Bank Policy Factor",
+        "summary": "IMF Managing Director Georgieva stated that any slowdown in AI-driven growth would be a significant factor for central banks' policy considerations. This emphasizes AI's recognized role as a macro-economic driver, not just a sector-specific trend. Central banks are increasingly integrating AI's economic contribution into their models, making its trajectory a critical input for future policy.",
+        "sentiment": "neutral",
+        "reason": "Central bank recognition of AI's macroeconomic impact means AI growth dynamics will directly influence monetary policy, affecting long-term sector allocation strategies."
+      }
+    ],
+    "keywords": [
+      "#MonetaryPolicy",
+      "#AITechnology",
+      "#EmergingMarkets"
+    ],
+    "marketSentiment": "Global central banks maintain hawkish bias while AI infrastructure expansion faces rising capital costs."
+  }
+}
