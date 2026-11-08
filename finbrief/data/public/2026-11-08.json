@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-08",
+  "timestamp": "2026-11-08T01:39:14.580Z",
+  "newsCount": 50,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 22,
+    "rating": "extreme fear",
+    "timestamp": "2026-11-06T23:59:54+00:00"
+  },
+  "oneWayIndex": {
+    "score": 53,
+    "direction": "bear",
+    "label": "Moderate Trend",
+    "components": {
+      "adx": 0,
+      "maAlignment": 50,
+      "rsiTrend": 100,
+      "bbWidth": 85,
+      "vix": 65,
+      "volume": 40,
+      "fearGreed": 90
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "Iran War Escalation Risk Persists Despite U.S. Midterm Outcomes",
+        "summary": "The risk of war escalation in Iran remains high, despite expectations that Democratic gains in U.S. midterm elections might temper regional tensions. Ongoing geopolitical friction suggests the underlying catalysts for conflict in the Middle East are structural, not solely tied to U.S. political shifts. This persistent risk will maintain a geopolitical premium on energy markets and increase broader risk aversion among investors.",
+        "sentiment": "bear",
+        "reason": "Geopolitical risk elevates crude oil prices and weighs on emerging market assets, particularly those in the MENA region."
+      },
+      {
+        "title": "ECB Signals Prolonged High Inflation, No Rate Course Alteration",
+        "summary": "ECB President Lagarde stated that Eurozone inflation is expected to remain high, indicating little reason to change the current monetary policy trajectory. This reiterates the central bank's commitment to maintaining restrictive policies for an extended period to combat persistent price pressures. Consequently, Eurozone bond yields will remain elevated, and the Euro's strength will reflect relative rate differentials.",
+        "sentiment": "bear",
+        "reason": "Sustained hawkish ECB policy implies higher European government bond yields and supports a stronger Euro, pressuring risk assets."
+      },
+      {
+        "title": "Emerging Market Central Banks Turn Hawkish Amid Rising Inflation",
+        "summary": "Citi reports that emerging market central banks are increasingly adopting hawkish stances as inflationary pressures mount across their economies. This reflects a coordinated global effort to tighten monetary policy, with EM economies often more susceptible to imported inflation and currency depreciation. Capital flows will likely shift away from riskier EM assets, favoring those with stronger fiscal positions and higher real rates.",
+        "sentiment": "bear",
+        "reason": "Higher interest rates in emerging markets increase sovereign debt servicing costs and reduce growth prospects, leading to capital outflow pressure."
+      },
+      {
+        "title": "Hedge Funds Significantly Reduce AI Investment Post-Gains",
+        "summary": "Hedge funds have sharply cut their investments in artificial intelligence, marking the largest reduction in over a decade after benefiting from substantial gains. This widespread de-risking suggests a re-evaluation of AI valuations and a potential peak in speculative enthusiasm for the sector. The shift indicates a rotation out of high-growth, high-valuation tech names, impacting broader market leadership.",
+        "sentiment": "bear",
+        "reason": "Large-scale hedge fund withdrawals signal a cooling in the AI sector, likely leading to price corrections in related technology stocks."
+      },
+      {
+        "title": "Samsung Electronics Reports Record Cash Reserves, Signals Major Shareholder Returns",
+        "summary": "Samsung Electronics has accumulated over 215 trillion won in cash, leading to expectations of record-breaking shareholder returns or significant new investments. This substantial liquidity provides the company with strategic flexibility for M&A, capital expenditure, or enhanced dividends and buybacks. Such a move from a global tech leader sets a precedent for capital allocation within the semiconductor and electronics industries.",
+        "sentiment": "bull",
+        "reason": "Increased capital returns from a major global technology firm like Samsung will boost investor confidence in the sector and support its stock price."
+      },
+      {
+        "title": "Berkshire Hathaway Doubles Buybacks Amidst Earnings Decline",
+        "summary": "Berkshire Hathaway more than doubled its share buybacks in the third quarter, even as its earnings declined. This aggressive capital allocation strategy underscores management's confidence in the intrinsic value of its underlying businesses. The move signals a value-oriented approach to capital deployment, indicating an opportunity to acquire shares at attractive valuations during market downturns.",
+        "sentiment": "bull",
+        "reason": "Increased buybacks from a fundamentally strong company like Berkshire Hathaway signal undervaluation and provide direct support for its share price."
+      },
+      {
+        "title": "Israel’s Eisenkot Receives Mandate to Form Government, Aims to Oust Netanyahu",
+        "summary": "Opposition candidate Gadi Eisenkot has received the first mandate to form a new Israeli government, signaling a potential end to Prime Minister Netanyahu's long tenure. This development suggests a significant shift in Israel's political landscape, which could lead to changes in domestic and foreign policy. A new government could alter regional alliances and approaches to ongoing conflicts, affecting stability in the Middle East.",
+        "sentiment": "neutral",
+        "reason": "Political transition in Israel introduces policy uncertainty, warranting a cautious stance on Israeli equities and regional sovereign bonds."
+      },
+      {
+        "title": "S&P Cuts Poland’s Outlook to Negative Citing Presidential Vetoes",
+        "summary": "S&P Global Ratings revised Poland's sovereign outlook to negative, attributing the downgrade to political instability caused by presidential vetoes. The repeated use of veto power by the president creates legislative gridlock, hindering effective policy implementation and reforms. This action increases the perceived risk for investors in Polish government bonds and could pressure the zloty.",
+        "sentiment": "bear",
+        "reason": "A negative sovereign outlook for Poland raises concerns about fiscal discipline and governance, increasing the cost of capital for Polish assets."
+      },
+      {
+        "title": "Equity Positioning Records Largest Weekly Decline in History",
+        "summary": "Deutsche Bank reported that equity positioning recorded its largest weekly decline ever, indicating a significant de-risking by institutional investors. This dramatic shift reflects heightened market caution and potentially capitulation across various asset classes. Such extreme positioning could precede either a further market sell-off or, conversely, set the stage for a short-covering rally.",
+        "sentiment": "bear",
+        "reason": "Massive equity de-risking suggests widespread investor pessimism and potential for further market volatility, particularly in growth stocks."
+      },
+      {
+        "title": "U.S. Investment Pressure Expected to Intensify Despite Midterm Outcomes",
+        "summary": "Despite the U.S. midterm election outcomes, expectations are for increased pressure on foreign direct investment into the United States. This indicates a sustained protectionist stance, regardless of which party holds legislative power. Multinational corporations will face continued scrutiny on supply chain localization and domestic job creation, impacting global FDI flows and M&A strategies.",
+        "sentiment": "bear",
+        "reason": "Rising protectionist pressures on foreign direct investment will increase costs and complexity for multinational corporations operating in the U.S."
+      }
+    ],
+    "keywords": [
+      "#GeopoliticalRisk",
+      "#MonetaryPolicy",
+      "#TechSectorShift"
+    ],
+    "marketSentiment": "Global inflation concerns persist, prompting hawkish central bank action and a reevaluation of high-growth technology assets amidst rising geopolitical tensions."
+  }
+}
