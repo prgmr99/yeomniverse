@@ -266,6 +266,58 @@ export default function Home() {
           </p>
         </div>
 
+        {/* 이용 방법 */}
+        <div className="space-y-2">
+          <h3 className="font-serif font-bold text-lg text-ink">
+            🧭 어떻게 이용하나요?
+          </h3>
+          <p className="text-sm text-ink/70 leading-relaxed break-keep">
+            생년월일을 넣고 1교시 &apos;부모님 탐구영역&apos; {QUESTION_COUNT}
+            문항을 풉니다. 로그인은 없고 3분이면 끝납니다. 결과 화면에서는
+            등급과 유형, 그리고 부모님께 그대로 여쭤볼 수 있는 질문지를 함께
+            드립니다. 카카오톡으로 결과 카드를 공유하면 가족끼리 점수를 맞춰 볼
+            수 있고, 부모님이 2교시 &apos;자녀 탐구영역&apos;{' '}
+            {PARENT_QUESTION_COUNT}문항을 푸시면 양쪽 결과를 나란히 비교할 수
+            있습니다.
+          </p>
+        </div>
+
+        {/* 채점 기준 */}
+        <div className="space-y-2">
+          <h3 className="font-serif font-bold text-lg text-ink">
+            📊 점수는 무엇으로 매기나요?
+          </h3>
+          <p className="text-sm text-ink/70 leading-relaxed break-keep">
+            문항은 관심도, 친밀도, 표현력 세 축에 나뉘어 배치되어 있습니다.
+            관심도는 부모님의 취향이나 최근 상황을 얼마나 알고 있는지, 친밀도는
+            연락과 방문이 실제로 얼마나 이어지는지, 표현력은 마음을 말로 꺼내 본
+            적이 있는지를 봅니다. 선택지마다 세 축의 점수가 더해지거나 깎이고,
+            축마다 도달 가능한 범위가 달라 마지막에 각각 0~100으로 환산합니다.
+          </p>
+          <p className="text-sm text-ink/70 leading-relaxed break-keep">
+            유형은 총점이 아니라 세 축의 모양으로 정해집니다. 어느 축이 높고
+            어느 축이 낮은지, 그리고 답변에서 드러난 성향이 함께 쓰입니다.
+            그래서 세 축이 모두 높은 사람과 친밀도만 높은 사람은 다른 유형이
+            나오고, 등급은 그 유형에 붙어 있는 값입니다. 점수를 더해 줄을 세우는
+            방식이 아닙니다.
+          </p>
+        </div>
+
+        {/* 한계 */}
+        <div className="space-y-2">
+          <h3 className="font-serif font-bold text-lg text-ink">
+            ⚠️ 결과를 어디까지 믿어야 하나요?
+          </h3>
+          <p className="text-sm text-ink/70 leading-relaxed break-keep">
+            이 시험은 검증된 심리 척도가 아니라 대화를 열기 위해 만든
+            장치입니다. 낮은 등급이 효심이 부족하다는 뜻은 아닙니다. 멀리 살거나
+            교대 근무를 하거나 서로 표현에 서툰 집이라면 같은 마음으로도 점수가
+            낮게 나옵니다. 반대로 높은 등급이 관계가 좋다는 증명도 아닙니다.
+            숫자보다, 답이 막혔던 문항이 어디였는지가 더 쓸모 있습니다. 그
+            문항을 그대로 부모님께 여쭤보시라고 질문지를 함께 드리는 이유입니다.
+          </p>
+        </div>
+
         {/* FAQ 형태의 텍스트 콘텐츠 */}
         <div className="space-y-4">
           <h3 className="font-serif font-bold text-lg text-ink">

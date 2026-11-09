@@ -1,1 +1,13 @@
 google.com, pub-7476208540300201, DIRECT, f08c47fec0942fa0
+
+# IAB ads.txt 1.1 §5.5 — 자체 ads.txt를 제공하는 서브도메인을 선언한다.
+# 선언하지 않으면 크롤러는 서브도메인 파일을 읽지 않고 이 루트 파일을 적용한다.
+# 선언한 뒤에는 각 서브도메인 파일이 그쪽을 지배하므로, 그 파일이 404가 되면
+# 해당 서브도메인만 선언 없음으로 처리된다. 서브도메인을 추가할 때 이 목록과
+# 그쪽 public/ads.txt를 함께 챙길 것.
+subdomain=hyodo-tier.yeomniverse.com
+subdomain=finbrief.yeomniverse.com
+subdomain=neuro-trade.yeomniverse.com
+subdomain=argus.yeomniverse.com
+subdomain=chijob.yeomniverse.com
+subdomain=ansim.yeomniverse.com

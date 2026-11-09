@@ -76,6 +76,65 @@ export default function ContactPage() {
       </section>
 
       <section className="mt-14">
+        <h2 className="text-2xl font-bold text-white">
+          메일보다 빠른 창구가 있는 경우
+        </h2>
+        <p className="mt-4 leading-relaxed text-white/70">
+          어떤 요청은 서비스 안에 전용 경로가 있고, 그쪽이 더 빠릅니다.
+        </p>
+        <ul className="mt-6 space-y-3 text-white/70">
+          <li className="rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm leading-relaxed">
+            <strong className="text-white">치잡의 부적절한 리뷰</strong> —
+            공개된 리뷰마다 신고 버튼이 있습니다. 어느 리뷰인지 특정된 채로
+            들어오므로 메일보다 확인이 빠릅니다.
+          </li>
+          <li className="rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm leading-relaxed">
+            <strong className="text-white">병원 정보가 실제와 다를 때</strong> —
+            치잡의 병원 정보는 건강보험심사평가원 공공데이터를 하루 한 번 받아
+            씁니다. 원본이 바뀌면 다음 날 따라오므로, 심평원 쪽이 이미
+            고쳐졌다면 기다리시면 됩니다. 원본부터 틀렸다면 메일로 알려주세요.
+          </li>
+          <li className="rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm leading-relaxed">
+            <strong className="text-white">개인정보 열람·삭제 요청</strong> — 각
+            서비스의 개인정보처리방침에 적힌 책임자 연락처로 보내주시면 그쪽
+            기준에 따라 처리합니다. 이 메일로 보내셔도 됩니다.
+          </li>
+        </ul>
+      </section>
+
+      <section className="mt-14">
+        <h2 className="text-2xl font-bold text-white">인용하고 싶다면</h2>
+        <p className="mt-4 leading-relaxed text-white/70">
+          치잡의 전국 치과 통계는 따로 허락을 받지 않아도 인용하실 수 있습니다.
+          출처를 치잡으로 표기해 주시면 됩니다. 원본 공공데이터의 권리는 제공
+          기관에 있으니 그쪽 이용 조건도 함께 확인해 주세요. 다만 통계는 하루
+          단위로 갱신되므로, 기준 시점을 함께 적어 두시는 편이 나중에 숫자가
+          달라져도 혼선이 없습니다.
+        </p>
+        <p className="mt-4 leading-relaxed text-white/70">
+          Argus의 정세 항목은 공개된 보도를 위치와 분류로 재배치한 것이라 1차
+          출처가 아닙니다. 인용하실 때는 Argus가 아니라 원 보도를 확인하고
+          그쪽을 적어주시기 바랍니다.
+        </p>
+      </section>
+
+      <section className="mt-14">
+        <h2 className="text-2xl font-bold text-white">답하기 어려운 것</h2>
+        <p className="mt-4 leading-relaxed text-white/70">
+          미리 말씀드리는 편이 서로의 시간을 아낄 것 같습니다. 여기 있는
+          도구들은 투자 자문이나 법률 자문을 하지 않고, 부동산 중개나 대출
+          중개도 하지 않습니다. &ldquo;이 집을 계약해도 되는지&rdquo;, &ldquo;이
+          병원에 들어가도 되는지&rdquo;, &ldquo;이 종목을 사야 하는지&rdquo;
+          같은 판단은 드릴 수 없습니다.
+        </p>
+        <p className="mt-4 leading-relaxed text-white/70">
+          대신 그 판단에 필요한 근거를 어디서 확인하면 되는지는 알려드릴 수
+          있습니다. 도구가 어떤 데이터를 보고 그 숫자를 냈는지, 무엇을 빼고
+          계산했는지 같은 것들입니다. 그런 질문이라면 얼마든지 보내주세요.
+        </p>
+      </section>
+
+      <section className="mt-14">
         <h2 className="text-2xl font-bold text-white">답변까지 걸리는 시간</h2>
         <p className="mt-4 leading-relaxed text-white/70">
           개인이 운영하는 사이트라 상시 응대는 어렵습니다. 보통 며칠 안에
