@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-09",
+  "timestamp": "2026-11-09T01:48:12.529Z",
+  "newsCount": 48,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 22,
+    "rating": "extreme fear",
+    "timestamp": "2026-11-06T23:59:54+00:00"
+  },
+  "oneWayIndex": {
+    "score": 53,
+    "direction": "bear",
+    "label": "Moderate Trend",
+    "components": {
+      "adx": 0,
+      "maAlignment": 50,
+      "rsiTrend": 100,
+      "bbWidth": 85,
+      "vix": 65,
+      "volume": 40,
+      "fearGreed": 90
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "BOJ Governor Ueda Sees Upside Risks to Inflation",
+        "summary": "Bank of Japan Governor Kazuo Ueda indicated the central bank sees upside risks to inflation, following previous remarks on a possible end to negative interest rates. This commentary signals a more hawkish stance from the BOJ, increasing the likelihood of a policy shift. Such a move would impact global bond yields and currency markets, particularly the Japanese Yen.",
+        "sentiment": "bear",
+        "reason": "A BOJ hawkish shift implies higher JGB yields and a stronger JPY, potentially prompting global bond investors to reprice risk."
+      },
+      {
+        "title": "RBA Deputy Governor Suggests AI Investment Could Lift Neutral Rate",
+        "summary": "The Reserve Bank of Australia's Deputy Governor highlighted that increased AI investment could elevate the neutral interest rate. This suggests a central bank view that AI's long-term economic impact could be inflationary through increased capital expenditure and demand for resources. Implications include persistent upward pressure on long-term government bond yields globally, impacting discount rates for growth equities.",
+        "sentiment": "bear",
+        "reason": "Higher neutral rate expectations impact long-duration assets, suggesting a fundamental reassessment of long-term bond yield potential."
+      },
+      {
+        "title": "Nvidia Board Probes CEO Huang's Relationship with Alleged Chinese Spy",
+        "summary": "Nvidia's board is investigating CEO Jensen Huang's alleged relationship with a suspected Chinese intelligence operative. This corporate governance and geopolitical risk directly impacts the market leader in AI chip technology. The uncertainty could trigger investor de-risking from Nvidia and broader AI hardware stocks.",
+        "sentiment": "bear",
+        "reason": "This introduces direct operational and geopolitical risk to Nvidia, potentially leading to a re-rating of the stock and impacting the broader semiconductor sector."
+      },
+      {
+        "title": "AI Data Center Protests Emerge in US and Europe, Threatening Big Tech Investment",
+        "summary": "Public protests against AI data centers are growing in the US and Europe, signaling potential headwinds for large-scale infrastructure deployment. These local opposition movements could slow down the physical expansion required for AI's computational demands. This friction translates into higher costs and delays for hyperscalers and AI companies, impacting their capital expenditure efficiency and growth projections.",
+        "sentiment": "bear",
+        "reason": "Increased resistance to AI infrastructure development threatens the capital expenditure plans of major tech companies, affecting their growth outlook and related real estate sectors."
+      },
+      {
+        "title": "US and China Explore AI Regulation, Posing Industry Risk",
+        "summary": "Discussions are surfacing in both the US and China regarding potential regulation of artificial intelligence. Regulatory frameworks, if enacted, could impose significant operational constraints and compliance costs on AI developers and deployers. This uncertainty introduces a new layer of risk for the AI sector, potentially capping innovation or fragmenting markets.",
+        "sentiment": "bear",
+        "reason": "Regulatory scrutiny in major economies presents a material risk to AI sector profitability and could slow down broad AI adoption, impacting tech valuations."
+      },
+      {
+        "title": "RBA Official Hunter States AI Yet to Boost Productivity or Cause Job Losses",
+        "summary": "RBA official Hunter observed that AI has not yet significantly boosted productivity or led to widespread job losses. This contrasts with more bullish views on AI's immediate economic impact, suggesting a slower integration into mainstream economic activity. The assessment implies that AI's transformative effects may be further out than some market participants anticipate, affecting short-to-medium-term growth expectations.",
+        "sentiment": "neutral",
+        "reason": "This provides a critical counterpoint to overly optimistic AI narratives, suggesting a measured approach to tech sector valuations based on near-term productivity gains."
+      },
+      {
+        "title": "Trump Anticipates Meeting Xi and Putin at China APEC Summit",
+        "summary": "Donald Trump indicated a potential meeting with Chinese President Xi Jinping and Russian President Vladimir Putin at the upcoming APEC summit in China. Such a high-stakes encounter, if it materializes, could significantly alter geopolitical dynamics. Outcomes could range from de-escalation signals to increased tensions, directly impacting trade, technology, and defense sector outlooks.",
+        "sentiment": "neutral",
+        "reason": "Potential for major shifts in global geopolitical alignments warrants close monitoring, impacting defense stocks, trade-sensitive sectors, and commodity prices."
+      },
+      {
+        "title": "Anthropic Secures $3.4 Billion Generator Deal for AI Data Centers",
+        "summary": "Anthropic reportedly secured a $3.4 billion deal for generators to power its AI data centers. This substantial investment underscores the continued, aggressive capital deployment into core AI infrastructure by leading private companies. The deal signals robust underlying demand for the physical components necessary for AI's expansion, despite broader market and regulatory concerns.",
+        "sentiment": "bull",
+        "reason": "This deal indicates continued strong private investment in AI infrastructure, benefiting power generation equipment suppliers and data center operators."
+      },
+      {
+        "title": "Brazil's Lula Pledges Budget Discipline Amid High Interest Rates",
+        "summary": "Brazilian President Lula expressed concern over high interest rates and committed to budget discipline. This commitment attempts to signal fiscal responsibility and bolster investor confidence in the country's economic management. Should Lula deliver on fiscal consolidation, it would support Brazilian sovereign bonds and currency, potentially easing inflation pressures.",
+        "sentiment": "bull",
+        "reason": "Fiscal commitment from Brazil’s President supports Emerging Market sovereign debt and local currency assets, reducing risk premiums."
+      },
+      {
+        "title": "EU and UK Near Post-Brexit Carbon Market Linkage Deal",
+        "summary": "The European Union and United Kingdom are reportedly close to a deal linking their post-Brexit carbon markets. This integration would create a larger, more liquid carbon market, providing greater clarity and stability for participants. The linkage signals continued momentum for carbon pricing mechanisms, impacting energy-intensive industries and fostering investment in green technologies.",
+        "sentiment": "bull",
+        "reason": "A linked carbon market provides a clearer pricing signal for emissions, benefiting renewable energy, carbon capture, and clean technology investments."
+      }
+    ],
+    "keywords": [
+      "#CentralBankPolicy",
+      "#AIInfrastructure",
+      "#Geopolitics"
+    ],
+    "marketSentiment": "Global central banks are signaling tighter policy while AI's structural impact faces both investment surges and regulatory/social friction."
+  }
+}
