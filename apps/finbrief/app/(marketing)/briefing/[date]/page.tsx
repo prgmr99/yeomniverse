@@ -2,7 +2,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { JsonLd } from '@/components/JsonLd';
-import { getAvailableBriefingDates, getBriefingByDate } from '@/lib/briefing';
+import {
+  getAvailableBriefingDates,
+  getBriefingByDate,
+  isBriefingIndexable,
+} from '@/lib/briefing';
 
 const DOMAIN =
   process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://finbrief.yeomniverse.com';
@@ -31,6 +35,10 @@ export async function generateMetadata({
   return {
     title,
     description,
+    // 분석이 실패한 날은 본문이 에러 문구뿐이라 색인에서 뺀다. 링크는 따라가게 둔다.
+    ...(isBriefingIndexable(briefing)
+      ? {}
+      : { robots: { index: false, follow: true } }),
     alternates: { canonical: `${DOMAIN}/briefing/${date}` },
     openGraph: {
       title,

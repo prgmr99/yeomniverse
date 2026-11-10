@@ -149,6 +149,28 @@ export function getBriefingByDate(date: string): BriefingData | null {
 }
 
 /**
+ * Sentinels written by the analyzer when a day's AI analysis fails.
+ *
+ * finbrief/src/analyzers/gemini-analyzer.ts의 폴백과 일치해야 한다. 그쪽은
+ * 별도 저장소의 Node 서비스라 상수를 import할 수 없어 문자열을 다시 적는다.
+ */
+const ANALYSIS_ERROR_TITLE = 'Analysis Error';
+const ANALYSIS_ERROR_SUMMARY = 'Unable to retrieve analysis results.';
+
+/**
+ * Returns whether a briefing has real analysis and may be indexed.
+ *
+ * 분석이 실패한 날도 파이프라인은 정상 결과와 같은 모양의 JSON을 커밋하므로,
+ * 센티넬을 보고 걸러내지 않으면 에러 문구가 본문인 페이지가 색인된다.
+ */
+export function isBriefingIndexable(briefing: BriefingData): boolean {
+  if (briefing.summary === ANALYSIS_ERROR_SUMMARY) return false;
+  return !briefing.briefings.some(
+    (item) => item.title === ANALYSIS_ERROR_TITLE,
+  );
+}
+
+/**
  * Returns all available briefing dates (YYYY-MM-DD) from public/data/.
  */
 export function getAvailableBriefingDates(): string[] {
@@ -163,6 +185,19 @@ export function getAvailableBriefingDates(): string[] {
   } catch {
     return [];
   }
+}
+
+/**
+ * Returns briefing dates that may be indexed. Used by the sitemap.
+ *
+ * isBriefingIndexable과 같은 기준이어야 한다. 한쪽만 바꾸면 noindex인
+ * 페이지가 사이트맵에 남는다.
+ */
+export function getIndexableBriefingDates(): string[] {
+  return getAvailableBriefingDates().filter((date) => {
+    const briefing = getBriefingByDate(date);
+    return briefing !== null && isBriefingIndexable(briefing);
+  });
 }
 
 /**

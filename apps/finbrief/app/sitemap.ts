@@ -1,11 +1,11 @@
 import type { MetadataRoute } from 'next';
-import { getAvailableBriefingDates } from '@/lib/briefing';
+import { getIndexableBriefingDates } from '@/lib/briefing';
 
 const DOMAIN =
   process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://finbrief.yeomniverse.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const dates = getAvailableBriefingDates();
+  const dates = getIndexableBriefingDates();
 
   const briefingEntries: MetadataRoute.Sitemap = dates.map((date) => ({
     url: `${DOMAIN}/briefing/${date}`,

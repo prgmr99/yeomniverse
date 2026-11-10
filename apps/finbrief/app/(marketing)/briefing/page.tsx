@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getAvailableBriefingDates, getBriefingByDate } from '@/lib/briefing';
+import {
+  getAvailableBriefingDates,
+  getBriefingByDate,
+  isBriefingIndexable,
+} from '@/lib/briefing';
 
 const DOMAIN =
   process.env.NEXT_PUBLIC_DOMAIN_URL || 'https://finbrief.yeomniverse.com';
@@ -105,7 +109,7 @@ export default function BriefingArchivePage() {
                       View →
                     </span>
                   </div>
-                  {briefing?.summary && (
+                  {briefing?.summary && isBriefingIndexable(briefing) && (
                     <p className="text-white/40 text-sm mt-2 line-clamp-1">
                       {briefing.summary}
                     </p>
