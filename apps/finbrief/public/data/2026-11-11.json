@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-11",
+  "timestamp": "2026-11-11T02:02:19.006Z",
+  "newsCount": 51,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 33,
+    "rating": "fear",
+    "timestamp": "2026-11-10T23:59:51+00:00"
+  },
+  "oneWayIndex": {
+    "score": 47,
+    "direction": "bear",
+    "label": "Moderate Trend",
+    "components": {
+      "adx": 0,
+      "maAlignment": 50,
+      "rsiTrend": 100,
+      "bbWidth": 85,
+      "vix": 20,
+      "volume": 40,
+      "fearGreed": 70
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "Fed Officials Signal Accelerated Rate Hike Potential Amid Worsening Inflation",
+        "summary": "Multiple Federal Reserve officials have indicated a willingness to pursue a quicker pace of rate hikes if inflationary pressures intensify. This aggressive stance signals a higher terminal rate, directly increasing borrowing costs across the economy. Consequently, credit-sensitive sectors and growth equity valuations face significant downward pressure.",
+        "sentiment": "bear",
+        "reason": "Signals tighter monetary policy, leading to downward revaluation of growth assets and increased cost of capital."
+      },
+      {
+        "title": "10-Year Treasury Yield Nears 5% on Hawkish Fed Comments and Inflation Data",
+        "summary": "The 10-year Treasury yield surged, approaching 5%, driven by hawkish Federal Reserve commentary and persistent inflation reports. This increase in long-term yields directly elevates the discount rate applied to future cash flows across all asset classes. The rising cost of capital will pressure equity valuations, particularly for long-duration growth stocks and corporate debt markets.",
+        "sentiment": "bear",
+        "reason": "Higher risk-free rates devalue future earnings, exerting broad pressure on equity markets and fixed income."
+      },
+      {
+        "title": "Dollar Strengthens as Fed Officials Highlight Inflation Risks",
+        "summary": "The U.S. Dollar gained significant traction against major currencies following Federal Reserve speakers' warnings on inflation risks. The expectation of higher relative U.S. interest rates makes dollar-denominated assets more attractive to global capital. A stronger dollar will impact the earnings of U.S. multinational corporations and put downward pressure on commodity prices.",
+        "sentiment": "neutral",
+        "reason": "Favors dollar-denominated assets and creates headwinds for emerging markets and commodity exporters."
+      },
+      {
+        "title": "Fed's Paulson Advocates Gradual Rate Hikes Amid Persistent Inflation",
+        "summary": "Federal Reserve official Paulson called for a gradual but steady approach to rate increases, acknowledging ongoing high inflation. This perspective reinforces the Federal Reserve's commitment to addressing inflation, even if the pace is debated internally. It solidifies the 'higher for longer' interest rate narrative, maintaining elevated borrowing cost expectations.",
+        "sentiment": "bear",
+        "reason": "Confirms the Federal Reserve's commitment to further tightening, maintaining upward pressure on bond yields."
+      },
+      {
+        "title": "UK Inflation Forecast to Exceed BoE Target for Four Years",
+        "summary": "The National Institute of Economic and Social Research (NIESR) forecasts that UK inflation will remain above the Bank of England's target for the next four years. This projection indicates deeply embedded inflationary pressures requiring a prolonged period of monetary tightening by the BoE. Persistent high inflation and rates in the UK will likely depress British asset valuations and weaken the Pound Sterling.",
+        "sentiment": "bear",
+        "reason": "Signals persistent inflationary pressures in a major economy, portending extended monetary tightening and currency volatility."
+      },
+      {
+        "title": "CoreWeave Exceeds Revenue and Lifts Guidance, Allaying AI Slowdown Fears",
+        "summary": "CoreWeave, a prominent AI infrastructure provider, reported revenue that surpassed expectations and raised its future guidance, easing market concerns about an AI sector slowdown. This strong performance validates robust demand and continued capital investment in advanced AI capabilities. The positive signal strengthens valuations for AI-related hardware, software, and cloud service providers.",
+        "sentiment": "bull",
+        "reason": "Provides strong fundamental support for continued investment in the artificial intelligence and semiconductor sectors."
+      },
+      {
+        "title": "CoreWeave Targets 2028 Profitability Amid Surging AI Demand",
+        "summary": "AI infrastructure firm CoreWeave announced a clear roadmap to achieving profitability by 2028, driven by sustained demand for AI compute. A defined path to profitability for a high-growth AI company adds a critical layer of fundamental validation to the broader sector. This underpins investor confidence in the long-term viability and monetization potential of AI investments.",
+        "sentiment": "bull",
+        "reason": "Reinforces the long-term investment thesis for artificial intelligence infrastructure and related technology companies."
+      },
+      {
+        "title": "Anthropic's Explosive Growth May Justify Record-Breaking IPO, Analyst Suggests",
+        "summary": "Commentary from Jim Cramer highlights Anthropic's rapid growth, suggesting it could support a record-breaking initial public offering valuation. A highly anticipated and large-scale AI IPO signals robust investor appetite and significant capital flow into the artificial intelligence sector. Such an event would establish a strong valuation benchmark for other private AI companies, potentially igniting a broader AI market rally.",
+        "sentiment": "bull",
+        "reason": "Suggests significant capital deployment into artificial intelligence, providing a positive catalyst for technology IPOs."
+      },
+      {
+        "title": "US Rate Outlook Remains Primary Market Driver",
+        "summary": "Market observations emphasize that the outlook for U.S. interest rates continues to be the overwhelming determinant of investor decisions. This underscores the paramount importance of monetary policy expectations in shaping asset valuations and overall risk appetite. Investors will maintain close scrutiny of Federal Reserve communications and economic data for any shifts in future rate hike probabilities.",
+        "sentiment": "neutral",
+        "reason": "Confirms the preeminence of interest rate expectations in influencing broad market sentiment and capital flows."
+      },
+      {
+        "title": "Stock Futures Rise as Market Attempts Recovery Post-Nvidia Decline",
+        "summary": "Stock futures posted a modest gain as the market sought to stabilize following a technology-led downturn. This rebound indicates a potential short-term tactical recovery from recent volatility, particularly within the semiconductor sector. However, this suggests a technical bounce rather than a fundamental market shift, with underlying macro concerns persisting.",
+        "sentiment": "bull",
+        "reason": "Presents a short-term trading opportunity for technology-heavy indices and oversold semiconductor stocks."
+      }
+    ],
+    "keywords": [
+      "#MonetaryPolicy",
+      "#ArtificialIntelligence",
+      "#Inflation"
+    ],
+    "marketSentiment": "Interest rate outlook dominates market sentiment; AI sector demonstrates resilience."
+  }
+}
