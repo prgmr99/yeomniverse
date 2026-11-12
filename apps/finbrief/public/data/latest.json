@@ -1,22 +1,22 @@
 {
-  "date": "2026-11-11",
-  "timestamp": "2026-11-11T02:02:19.006Z",
+  "date": "2026-11-12",
+  "timestamp": "2026-11-12T03:11:50.404Z",
   "newsCount": 51,
   "outputLanguage": "en",
   "fearGreedIndex": {
-    "score": 33,
+    "score": 37,
     "rating": "fear",
-    "timestamp": "2026-11-10T23:59:51+00:00"
+    "timestamp": "2026-11-11T23:59:59+00:00"
   },
   "oneWayIndex": {
-    "score": 47,
+    "score": 38,
     "direction": "bear",
-    "label": "Moderate Trend",
+    "label": "Weak Directional Bias",
     "components": {
       "adx": 0,
       "maAlignment": 50,
-      "rsiTrend": 100,
-      "bbWidth": 85,
+      "rsiTrend": 50,
+      "bbWidth": 70,
       "vix": 20,
       "volume": 40,
       "fearGreed": 70
@@ -25,71 +25,71 @@
   "analysis": {
     "topNews": [
       {
-        "title": "Fed Officials Signal Accelerated Rate Hike Potential Amid Worsening Inflation",
-        "summary": "Multiple Federal Reserve officials have indicated a willingness to pursue a quicker pace of rate hikes if inflationary pressures intensify. This aggressive stance signals a higher terminal rate, directly increasing borrowing costs across the economy. Consequently, credit-sensitive sectors and growth equity valuations face significant downward pressure.",
+        "title": "Nvidia CEO Jensen Huang Reportedly Faces Board Ouster",
+        "summary": "Reports indicate Nvidia's board is considering removing CEO Jensen Huang, a foundational figure for the company and the broader AI sector. This news is driving significant uncertainty and a sharp sell-off in Nvidia stock and related AI equities. Such a leadership change challenges the current growth narrative and introduces a new layer of risk to a high-flying market segment.",
         "sentiment": "bear",
-        "reason": "Signals tighter monetary policy, leading to downward revaluation of growth assets and increased cost of capital."
+        "reason": "Direct negative impact on technology stocks, especially AI-related equities, and broader market sentiment due to leadership uncertainty regarding a key growth driver."
       },
       {
-        "title": "10-Year Treasury Yield Nears 5% on Hawkish Fed Comments and Inflation Data",
-        "summary": "The 10-year Treasury yield surged, approaching 5%, driven by hawkish Federal Reserve commentary and persistent inflation reports. This increase in long-term yields directly elevates the discount rate applied to future cash flows across all asset classes. The rising cost of capital will pressure equity valuations, particularly for long-duration growth stocks and corporate debt markets.",
-        "sentiment": "bear",
-        "reason": "Higher risk-free rates devalue future earnings, exerting broad pressure on equity markets and fixed income."
+        "title": "CoreWeave Reports Strong Q3, Easing AI Spending Concerns",
+        "summary": "AI cloud infrastructure provider CoreWeave reported robust Q3 results, significantly exceeding expectations. This strong performance signals continued healthy demand for AI compute and infrastructure services, providing a counterpoint to recent sector-specific anxieties. The positive outlook suggests enterprise AI spending remains resilient, supporting the broader AI ecosystem.",
+        "sentiment": "bull",
+        "reason": "Supports continued investor confidence in the AI infrastructure sector, potentially attracting capital to beneficiaries beyond Nvidia."
       },
       {
-        "title": "Dollar Strengthens as Fed Officials Highlight Inflation Risks",
-        "summary": "The U.S. Dollar gained significant traction against major currencies following Federal Reserve speakers' warnings on inflation risks. The expectation of higher relative U.S. interest rates makes dollar-denominated assets more attractive to global capital. A stronger dollar will impact the earnings of U.S. multinational corporations and put downward pressure on commodity prices.",
+        "title": "Japan Wholesale Inflation Accelerates, Fueling BOJ Rate Hike Speculation",
+        "summary": "Japan's wholesale inflation accelerated, reinforcing expectations for the Bank of Japan to consider further monetary tightening. This data point strengthens the argument for an upcoming BOJ rate hike, moving away from ultra-loose policy. Such a shift impacts global carry trades and increases volatility in fixed income and currency markets.",
         "sentiment": "neutral",
-        "reason": "Favors dollar-denominated assets and creates headwinds for emerging markets and commodity exporters."
+        "reason": "Impacts global bond yields and currency markets, specifically the JPY, due to shifting expectations for Bank of Japan monetary policy."
       },
       {
-        "title": "Fed's Paulson Advocates Gradual Rate Hikes Amid Persistent Inflation",
-        "summary": "Federal Reserve official Paulson called for a gradual but steady approach to rate increases, acknowledging ongoing high inflation. This perspective reinforces the Federal Reserve's commitment to addressing inflation, even if the pace is debated internally. It solidifies the 'higher for longer' interest rate narrative, maintaining elevated borrowing cost expectations.",
+        "title": "Japan Officials Warn Against Yen Weakness as Currency Approaches 160 Per Dollar",
+        "summary": "Japanese officials issued explicit warnings regarding potential currency intervention as the yen nears the critical 160 per dollar level. This signals the government's readiness to defend its currency, adding volatility to the foreign exchange market. Active intervention would directly impact carry trade strategies and global financial flows.",
         "sentiment": "bear",
-        "reason": "Confirms the Federal Reserve's commitment to further tightening, maintaining upward pressure on bond yields."
+        "reason": "Directly impacts the foreign exchange market, particularly the JPY, and could trigger short-term volatility and risk reduction in carry trades."
       },
       {
-        "title": "UK Inflation Forecast to Exceed BoE Target for Four Years",
-        "summary": "The National Institute of Economic and Social Research (NIESR) forecasts that UK inflation will remain above the Bank of England's target for the next four years. This projection indicates deeply embedded inflationary pressures requiring a prolonged period of monetary tightening by the BoE. Persistent high inflation and rates in the UK will likely depress British asset valuations and weaken the Pound Sterling.",
+        "title": "US, China Agree on Importance of Leader-Level Denuclearization Talks",
+        "summary": "The United States and China affirmed the importance of leader-level talks aimed at advancing denuclearization efforts. This agreement signals a potential de-escalation of tensions and a constructive path forward on a critical geopolitical issue. Reduced geopolitical friction between the two global powers typically improves overall market risk appetite.",
+        "sentiment": "bull",
+        "reason": "Reduces geopolitical uncertainty, positively affecting global risk appetite and potentially specific sectors exposed to US-China relations."
+      },
+      {
+        "title": "UK House Sales Outlook Weakens to Lowest Since 2023",
+        "summary": "RICS reported the outlook for UK house sales is the darkest since 2023, reflecting persistent affordability challenges and high interest rates. This weakness in the housing market signals broader economic deceleration and reduced consumer confidence. A sustained downturn impacts the UK banking sector, construction companies, and retail spending.",
         "sentiment": "bear",
-        "reason": "Signals persistent inflationary pressures in a major economy, portending extended monetary tightening and currency volatility."
+        "reason": "Signals potential economic slowdown in the UK, negatively impacting UK equities, particularly in the banking, construction, and retail sectors."
       },
       {
-        "title": "CoreWeave Exceeds Revenue and Lifts Guidance, Allaying AI Slowdown Fears",
-        "summary": "CoreWeave, a prominent AI infrastructure provider, reported revenue that surpassed expectations and raised its future guidance, easing market concerns about an AI sector slowdown. This strong performance validates robust demand and continued capital investment in advanced AI capabilities. The positive signal strengthens valuations for AI-related hardware, software, and cloud service providers.",
-        "sentiment": "bull",
-        "reason": "Provides strong fundamental support for continued investment in the artificial intelligence and semiconductor sectors."
-      },
-      {
-        "title": "CoreWeave Targets 2028 Profitability Amid Surging AI Demand",
-        "summary": "AI infrastructure firm CoreWeave announced a clear roadmap to achieving profitability by 2028, driven by sustained demand for AI compute. A defined path to profitability for a high-growth AI company adds a critical layer of fundamental validation to the broader sector. This underpins investor confidence in the long-term viability and monetization potential of AI investments.",
-        "sentiment": "bull",
-        "reason": "Reinforces the long-term investment thesis for artificial intelligence infrastructure and related technology companies."
-      },
-      {
-        "title": "Anthropic's Explosive Growth May Justify Record-Breaking IPO, Analyst Suggests",
-        "summary": "Commentary from Jim Cramer highlights Anthropic's rapid growth, suggesting it could support a record-breaking initial public offering valuation. A highly anticipated and large-scale AI IPO signals robust investor appetite and significant capital flow into the artificial intelligence sector. Such an event would establish a strong valuation benchmark for other private AI companies, potentially igniting a broader AI market rally.",
-        "sentiment": "bull",
-        "reason": "Suggests significant capital deployment into artificial intelligence, providing a positive catalyst for technology IPOs."
-      },
-      {
-        "title": "US Rate Outlook Remains Primary Market Driver",
-        "summary": "Market observations emphasize that the outlook for U.S. interest rates continues to be the overwhelming determinant of investor decisions. This underscores the paramount importance of monetary policy expectations in shaping asset valuations and overall risk appetite. Investors will maintain close scrutiny of Federal Reserve communications and economic data for any shifts in future rate hike probabilities.",
+        "title": "Morgan Stanley Recommends High-Quality AI Bonds Amid Debt Concerns",
+        "summary": "Morgan Stanley advises sticking with high-quality AI-related bonds as debt worries persist across markets. This highlights a flight to quality within the fixed income landscape, differentiating strong balance sheet AI players from speculative ones. The recommendation guides capital toward investment-grade technology credit while signaling broader concerns over corporate debt.",
         "sentiment": "neutral",
-        "reason": "Confirms the preeminence of interest rate expectations in influencing broad market sentiment and capital flows."
+        "reason": "Guides fixed-income allocation decisions, favoring investment-grade corporate bonds in the technology sector while signaling broader credit concerns."
       },
       {
-        "title": "Stock Futures Rise as Market Attempts Recovery Post-Nvidia Decline",
-        "summary": "Stock futures posted a modest gain as the market sought to stabilize following a technology-led downturn. This rebound indicates a potential short-term tactical recovery from recent volatility, particularly within the semiconductor sector. However, this suggests a technical bounce rather than a fundamental market shift, with underlying macro concerns persisting.",
+        "title": "Samsung Increases HBM Investment Amid Nvidia Succession Discussions",
+        "summary": "Samsung is significantly increasing its High Bandwidth Memory (HBM) investment, coinciding with ongoing discussions regarding Nvidia's leadership. This move underscores Samsung's strategic commitment to the critical AI semiconductor supply chain, irrespective of specific customer leadership changes. Increased HBM capacity is vital for sustaining the rapid growth in AI hardware demand.",
         "sentiment": "bull",
-        "reason": "Presents a short-term trading opportunity for technology-heavy indices and oversold semiconductor stocks."
+        "reason": "Indicates continued robust demand and capital expenditure in the semiconductor memory sector, supporting companies in the high-bandwidth memory supply chain."
+      },
+      {
+        "title": "Spain Experiences First General Strike in 14 Years Amid Housing Anger",
+        "summary": "Millions of Spaniards participated in the country's first general strike in 14 years, driven by widespread anger over housing affordability and cost-of-living issues. This significant social unrest signals heightened political risk and potential government policy shifts in response to public pressure. Such instability can deter foreign investment and impact consumer spending in the short term.",
+        "sentiment": "bear",
+        "reason": "Creates political and economic uncertainty in Spain, potentially impacting consumer spending and investor sentiment towards Spanish assets."
+      },
+      {
+        "title": "Nasdaq-100 Futures Decline as Nvidia Sell-off Resumes",
+        "summary": "Nasdaq-100 futures slid lower as Nvidia's stock resumed its sell-off following reports of potential CEO changes. This immediate reaction reflects Nvidia's significant weighting and its role as a bellwether for the broader technology sector. The futures decline signals pre-market downside pressure on growth stocks and overall market sentiment.",
+        "sentiment": "bear",
+        "reason": "Signals immediate downside pressure on broader technology indices and growth stocks due to a significant component's decline."
       }
     ],
     "keywords": [
+      "#Semiconductors",
       "#MonetaryPolicy",
-      "#ArtificialIntelligence",
-      "#Inflation"
+      "#Geopolitics"
     ],
-    "marketSentiment": "Interest rate outlook dominates market sentiment; AI sector demonstrates resilience."
+    "marketSentiment": "Global equities consolidate amid AI sector leadership uncertainty and evolving monetary policy outlooks."
   }
 }

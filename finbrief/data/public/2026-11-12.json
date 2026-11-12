@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-12",
+  "timestamp": "2026-11-12T03:11:50.404Z",
+  "newsCount": 51,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 37,
+    "rating": "fear",
+    "timestamp": "2026-11-11T23:59:59+00:00"
+  },
+  "oneWayIndex": {
+    "score": 38,
+    "direction": "bear",
+    "label": "Weak Directional Bias",
+    "components": {
+      "adx": 0,
+      "maAlignment": 50,
+      "rsiTrend": 50,
+      "bbWidth": 70,
+      "vix": 20,
+      "volume": 40,
+      "fearGreed": 70
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "Nvidia CEO Jensen Huang Reportedly Faces Board Ouster",
+        "summary": "Reports indicate Nvidia's board is considering removing CEO Jensen Huang, a foundational figure for the company and the broader AI sector. This news is driving significant uncertainty and a sharp sell-off in Nvidia stock and related AI equities. Such a leadership change challenges the current growth narrative and introduces a new layer of risk to a high-flying market segment.",
+        "sentiment": "bear",
+        "reason": "Direct negative impact on technology stocks, especially AI-related equities, and broader market sentiment due to leadership uncertainty regarding a key growth driver."
+      },
+      {
+        "title": "CoreWeave Reports Strong Q3, Easing AI Spending Concerns",
+        "summary": "AI cloud infrastructure provider CoreWeave reported robust Q3 results, significantly exceeding expectations. This strong performance signals continued healthy demand for AI compute and infrastructure services, providing a counterpoint to recent sector-specific anxieties. The positive outlook suggests enterprise AI spending remains resilient, supporting the broader AI ecosystem.",
+        "sentiment": "bull",
+        "reason": "Supports continued investor confidence in the AI infrastructure sector, potentially attracting capital to beneficiaries beyond Nvidia."
+      },
+      {
+        "title": "Japan Wholesale Inflation Accelerates, Fueling BOJ Rate Hike Speculation",
+        "summary": "Japan's wholesale inflation accelerated, reinforcing expectations for the Bank of Japan to consider further monetary tightening. This data point strengthens the argument for an upcoming BOJ rate hike, moving away from ultra-loose policy. Such a shift impacts global carry trades and increases volatility in fixed income and currency markets.",
+        "sentiment": "neutral",
+        "reason": "Impacts global bond yields and currency markets, specifically the JPY, due to shifting expectations for Bank of Japan monetary policy."
+      },
+      {
+        "title": "Japan Officials Warn Against Yen Weakness as Currency Approaches 160 Per Dollar",
+        "summary": "Japanese officials issued explicit warnings regarding potential currency intervention as the yen nears the critical 160 per dollar level. This signals the government's readiness to defend its currency, adding volatility to the foreign exchange market. Active intervention would directly impact carry trade strategies and global financial flows.",
+        "sentiment": "bear",
+        "reason": "Directly impacts the foreign exchange market, particularly the JPY, and could trigger short-term volatility and risk reduction in carry trades."
+      },
+      {
+        "title": "US, China Agree on Importance of Leader-Level Denuclearization Talks",
+        "summary": "The United States and China affirmed the importance of leader-level talks aimed at advancing denuclearization efforts. This agreement signals a potential de-escalation of tensions and a constructive path forward on a critical geopolitical issue. Reduced geopolitical friction between the two global powers typically improves overall market risk appetite.",
+        "sentiment": "bull",
+        "reason": "Reduces geopolitical uncertainty, positively affecting global risk appetite and potentially specific sectors exposed to US-China relations."
+      },
+      {
+        "title": "UK House Sales Outlook Weakens to Lowest Since 2023",
+        "summary": "RICS reported the outlook for UK house sales is the darkest since 2023, reflecting persistent affordability challenges and high interest rates. This weakness in the housing market signals broader economic deceleration and reduced consumer confidence. A sustained downturn impacts the UK banking sector, construction companies, and retail spending.",
+        "sentiment": "bear",
+        "reason": "Signals potential economic slowdown in the UK, negatively impacting UK equities, particularly in the banking, construction, and retail sectors."
+      },
+      {
+        "title": "Morgan Stanley Recommends High-Quality AI Bonds Amid Debt Concerns",
+        "summary": "Morgan Stanley advises sticking with high-quality AI-related bonds as debt worries persist across markets. This highlights a flight to quality within the fixed income landscape, differentiating strong balance sheet AI players from speculative ones. The recommendation guides capital toward investment-grade technology credit while signaling broader concerns over corporate debt.",
+        "sentiment": "neutral",
+        "reason": "Guides fixed-income allocation decisions, favoring investment-grade corporate bonds in the technology sector while signaling broader credit concerns."
+      },
+      {
+        "title": "Samsung Increases HBM Investment Amid Nvidia Succession Discussions",
+        "summary": "Samsung is significantly increasing its High Bandwidth Memory (HBM) investment, coinciding with ongoing discussions regarding Nvidia's leadership. This move underscores Samsung's strategic commitment to the critical AI semiconductor supply chain, irrespective of specific customer leadership changes. Increased HBM capacity is vital for sustaining the rapid growth in AI hardware demand.",
+        "sentiment": "bull",
+        "reason": "Indicates continued robust demand and capital expenditure in the semiconductor memory sector, supporting companies in the high-bandwidth memory supply chain."
+      },
+      {
+        "title": "Spain Experiences First General Strike in 14 Years Amid Housing Anger",
+        "summary": "Millions of Spaniards participated in the country's first general strike in 14 years, driven by widespread anger over housing affordability and cost-of-living issues. This significant social unrest signals heightened political risk and potential government policy shifts in response to public pressure. Such instability can deter foreign investment and impact consumer spending in the short term.",
+        "sentiment": "bear",
+        "reason": "Creates political and economic uncertainty in Spain, potentially impacting consumer spending and investor sentiment towards Spanish assets."
+      },
+      {
+        "title": "Nasdaq-100 Futures Decline as Nvidia Sell-off Resumes",
+        "summary": "Nasdaq-100 futures slid lower as Nvidia's stock resumed its sell-off following reports of potential CEO changes. This immediate reaction reflects Nvidia's significant weighting and its role as a bellwether for the broader technology sector. The futures decline signals pre-market downside pressure on growth stocks and overall market sentiment.",
+        "sentiment": "bear",
+        "reason": "Signals immediate downside pressure on broader technology indices and growth stocks due to a significant component's decline."
+      }
+    ],
+    "keywords": [
+      "#Semiconductors",
+      "#MonetaryPolicy",
+      "#Geopolitics"
+    ],
+    "marketSentiment": "Global equities consolidate amid AI sector leadership uncertainty and evolving monetary policy outlooks."
+  }
+}
