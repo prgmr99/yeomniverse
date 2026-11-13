@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-13",
+  "timestamp": "2026-11-13T02:44:24.154Z",
+  "newsCount": 49,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 40,
+    "rating": "fear",
+    "timestamp": "2026-11-12T23:59:58+00:00"
+  },
+  "oneWayIndex": {
+    "score": 38,
+    "direction": "bear",
+    "label": "Weak Directional Bias",
+    "components": {
+      "adx": 0,
+      "maAlignment": 50,
+      "rsiTrend": 50,
+      "bbWidth": 70,
+      "vix": 20,
+      "volume": 40,
+      "fearGreed": 70
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "Bond Yields Experience Largest Surge Since 2022",
+        "summary": "US bond yields saw their sharpest increase since 2022, driven by rising market expectations for further Federal Reserve rate hikes. This surge signals a market-wide repricing of interest rate risk, reflecting renewed conviction that inflation remains persistent. Higher yields directly impact borrowing costs across the economy and diminish the present value of future earnings for long-duration assets.",
+        "sentiment": "bear",
+        "reason": "Rising bond yields increase the cost of capital and reduce equity valuations, particularly for growth stocks."
+      },
+      {
+        "title": "Nvidia CEO Jensen Huang Resigns, Market Reacts",
+        "summary": "Jensen Huang resigned as CEO of Nvidia, a move that immediately impacted the company's stock and broadly affected AI sector sentiment. Huang's iconic leadership has been central to Nvidia's market dominance and innovation narrative, making his departure a profound leadership shock. This event triggers investor re-evaluation of Nvidia's future trajectory and the stability of the broader AI ecosystem.",
+        "sentiment": "bear",
+        "reason": "Nvidia's leadership change creates uncertainty for a key AI technology leader, impacting technology sector allocation."
+      },
+      {
+        "title": "Japan Finance Minister Vows Action as Yen Breaches 160",
+        "summary": "The Japanese yen depreciated past the 160 threshold against the dollar, prompting Japan's Finance Minister to reiterate readiness for intervention. This level of yen weakness significantly impacts import costs and potentially destabilizes Japan's economic outlook, challenging the Bank of Japan's dovish stance. Immediate intervention risk adds volatility to currency markets and influences global carry trades.",
+        "sentiment": "neutral",
+        "reason": "Potential Japanese FX intervention introduces significant volatility to global currency markets and carry trade strategies."
+      },
+      {
+        "title": "Fed's Williams Reinforces Persistent Inflation Stance",
+        "summary": "New York Fed President John Williams stated the central bank has 'work to do' to return inflation to its target, underscoring a continued hawkish bias. This commentary reinforces expectations that the Federal Reserve will maintain higher interest rates for longer, pushing against premature easing expectations. Such a sustained restrictive monetary policy dampens overall economic growth prospects and pressures corporate earnings.",
+        "sentiment": "bear",
+        "reason": "Williams' hawkish comments signal a prolonged period of high interest rates, negatively impacting economic growth and equity markets."
+      },
+      {
+        "title": "Cerebras Posts Strong Revenue, Secures Microsoft Deal",
+        "summary": "AI chip firm Cerebras Technology reported better-than-expected quarterly revenue and announced a significant deal with Microsoft. This performance highlights continued strong demand for AI infrastructure and suggests a competitive landscape emerging beyond traditional chip incumbents. The Microsoft partnership provides Cerebras with substantial validation and market access, boosting its position in the evolving AI hardware sector.",
+        "sentiment": "bull",
+        "reason": "Cerebras' performance and Microsoft deal signal robust AI infrastructure demand and emerging competition in the AI chip sector."
+      },
+      {
+        "title": "Cisco Exceeds Earnings, Forecasts Doubled AI Infrastructure Revenue",
+        "summary": "Cisco reported stronger-than-expected earnings and projected that its AI infrastructure revenue will double in the current fiscal year. This guidance validates the strong enterprise and data center spending on AI foundational technologies, illustrating broad industry adoption. Increased AI infrastructure build-out drives demand for networking equipment and related services, benefiting established tech hardware providers.",
+        "sentiment": "bull",
+        "reason": "Cisco's AI revenue guidance confirms robust enterprise spending on AI infrastructure, benefiting technology hardware and networking firms."
+      },
+      {
+        "title": "Nvidia's Organizational Structure Questioned Post-Huang",
+        "summary": "Following Jensen Huang's resignation, a management expert assessed Nvidia's organizational structure as not 'built to last' without his central leadership. This critique raises concerns about the company's long-term strategic execution and innovation capabilities, which were heavily dependent on Huang's vision. Investors will scrutinize the new leadership's ability to maintain cohesion and drive future growth without the founder's direct influence.",
+        "sentiment": "bear",
+        "reason": "Doubts about Nvidia's post-Huang leadership structure introduce long-term governance and execution risks for shareholders."
+      },
+      {
+        "title": "Widespread Microsoft 365 Outage Disrupts Services",
+        "summary": "A widespread outage took down Microsoft's Outlook and other core Microsoft 365 services, disrupting millions of users globally. Such significant downtime highlights operational dependencies on cloud infrastructure and the potential for cascading business impacts. While likely temporary, this event underscores the operational risks inherent in centralized cloud platforms and may prompt businesses to reassess redundancy strategies.",
+        "sentiment": "neutral",
+        "reason": "The Microsoft outage highlights operational risk in cloud computing services, prompting re-evaluation of service reliability for enterprise clients."
+      },
+      {
+        "title": "High-Profile Investigation Initiated at Nvidia",
+        "summary": "Nvidia faces an investigation led by ex-prosecutor Joon Kim and law firm Wachtell, Lipton, signaling serious legal scrutiny into the company. The involvement of such high-caliber legal counsel indicates the investigation's potential depth and complexity, extending beyond mere corporate governance issues. This development introduces material legal and reputational risk, potentially impacting Nvidia's operational focus and financial outlook.",
+        "sentiment": "bear",
+        "reason": "A high-profile investigation introduces legal and reputational risks for Nvidia, adding uncertainty to its valuation."
+      },
+      {
+        "title": "Nvidia Family Member Linked to Chinese Competitor",
+        "summary": "Reports indicate Alice Huang, a relative of Jensen Huang, is tied to Nvidia’s largest Chinese competitor, raising potential conflict of interest and geopolitical concerns. This connection could complicate Nvidia's strategic positioning within the critical Chinese market and amid ongoing US-China tech tensions. The revelation introduces an element of corporate espionage or competitive disadvantage, impacting investor perception of Nvidia's intellectual property security.",
+        "sentiment": "bear",
+        "reason": "Family ties to a Chinese competitor present potential conflict of interest and geopolitical risks for Nvidia in a critical market."
+      }
+    ],
+    "keywords": [
+      "#MonetaryPolicy",
+      "#AIInfrastructure",
+      "#GeopoliticalRisk"
+    ],
+    "marketSentiment": "Global markets are navigating a hawkish monetary policy regime alongside significant leadership transition and increased scrutiny in the dominant AI sector."
+  }
+}
