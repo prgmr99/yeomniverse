@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-14",
+  "timestamp": "2026-11-14T02:33:31.115Z",
+  "newsCount": 49,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 39,
+    "rating": "fear",
+    "timestamp": "2026-11-13T23:59:56+00:00"
+  },
+  "oneWayIndex": {
+    "score": 38,
+    "direction": "bear",
+    "label": "Weak Directional Bias",
+    "components": {
+      "adx": 0,
+      "maAlignment": 50,
+      "rsiTrend": 50,
+      "bbWidth": 70,
+      "vix": 20,
+      "volume": 40,
+      "fearGreed": 70
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "Fed Officials Signal Policy Direction Driven by Inflation Data",
+        "summary": "Federal Reserve Governor Jefferson affirmed policy cues are derived from inflation data, while Governor Daly suggested rate hikes may be needed if inflation worsens. These statements reinforce the Fed's data-dependent, hawkish posture in combating persistent price pressures. Investors should anticipate continued monetary tightening or sustained higher rates, influencing fixed income and equity valuations.",
+        "sentiment": "bear",
+        "reason": "This directly impacts the Federal Reserve's interest rate trajectory, affecting all asset classes, particularly fixed income and rate-sensitive equities."
+      },
+      {
+        "title": "Nvidia CEO Jensen Huang Reportedly Resigns, Shaking AI Sector",
+        "summary": "Nvidia CEO Jensen Huang has reportedly resigned, prompting a significant downturn in Nvidia stock and sparking broader market concerns regarding the AI sector. Huang's departure marks the exit of a key visionary leader, raising questions about Nvidia's future innovation and competitive edge. This event will likely trigger a re-evaluation of AI hardware valuations and broader tech sector leadership.",
+        "sentiment": "bear",
+        "reason": "The reported departure of Nvidia's CEO creates significant uncertainty for the semiconductor industry and the broader AI growth narrative, impacting tech sector allocation."
+      },
+      {
+        "title": "US Wholesale Prices Rise, Fueling Inflationary Concerns",
+        "summary": "Wholesale prices increased by 0.3% in October, pushing the annual rate to 6.5%, the highest in nearly four years. This data signals persistent inflationary pressures within the economy, supporting the Federal Reserve's hawkish stance. The elevated wholesale inflation will likely translate into higher consumer prices, sustaining expectations for tighter monetary policy.",
+        "sentiment": "bear",
+        "reason": "Rising wholesale inflation pressures profit margins across various industries and reinforces the likelihood of sustained higher interest rates, impacting corporate earnings and bond yields."
+      },
+      {
+        "title": "AI Risks Emerge as Top Financial System Worry for Fed",
+        "summary": "A recent Federal Reserve survey identified AI risks as the biggest threat to the financial system. This growing concern highlights potential systemic vulnerabilities and regulatory gaps associated with widespread AI adoption. The Fed's focus on AI risk will likely lead to increased scrutiny and potential new regulations for technology and financial sectors employing AI.",
+        "sentiment": "bear",
+        "reason": "The identification of AI as a systemic risk by the Fed signals potential regulatory headwinds for the technology and financial sectors heavily reliant on AI innovation."
+      },
+      {
+        "title": "Fiscal Policy Accommodation Under Scrutiny Amid Higher Yields",
+        "summary": "Questions are rising about the sustainability of accommodative fiscal policy given the current environment of higher interest rates. Governments face increasing costs to service debt, challenging their ability to provide significant economic stimulus. This dynamic implies reduced future fiscal support, potentially impacting government bond yields and economic growth projections.",
+        "sentiment": "neutral",
+        "reason": "The debate over fiscal policy sustainability influences government bond issuance, debt ceiling negotiations, and long-term economic growth forecasts, affecting sovereign debt and inflation expectations."
+      },
+      {
+        "title": "Trump Trip to China Avoids Nvidia, Spy Issues",
+        "summary": "US officials indicate that former President Trump does not plan to raise Nvidia or spy-related issues during his upcoming trip to China. This signals a potential tactical de-escalation or focused agenda in US-China trade and tech relations. The omission could reduce immediate geopolitical tensions for certain tech companies, but underlying strategic competition remains.",
+        "sentiment": "neutral",
+        "reason": "The decision to avoid specific tech-related trade issues during the China trip offers a temporary respite for multinational technology companies, particularly those with complex supply chains."
+      },
+      {
+        "title": "Dollar Strengthens as Yen Weakens Toward 160",
+        "summary": "The US Dollar is poised for its best week in two months, with the Japanese Yen weakening significantly towards 160. This reflects persistent divergence in monetary policies and economic outlooks between the US and Japan. A stronger dollar impacts the earnings of US multinational corporations and puts pressure on emerging market currencies and commodity prices.",
+        "sentiment": "bull",
+        "reason": "Dollar strength impacts FX-hedging costs, commodity prices, and the profitability of multinational corporations with significant international revenues."
+      },
+      {
+        "title": "Global Institutions Reduce Exposure to Korean Equities",
+        "summary": "Global institutional investors are reportedly reducing their allocation to Korean equities, indicating a shift in emerging market capital flows. This strategic move suggests a reassessment of risk and reward in the Korean market, potentially driven by macro factors or specific regional concerns. The outflow pressures Korean stock valuations and currency stability.",
+        "sentiment": "bear",
+        "reason": "Reduced global institutional allocation signals a negative sentiment shift for emerging market equities, specifically impacting South Korean stocks and the Korean Won."
+      },
+      {
+        "title": "Post-Midterm Election Asset Allocation Shifts Underway",
+        "summary": "Professional investors are reportedly strategizing significant asset allocation adjustments in the aftermath of midterm elections. This indicates a responsive approach to potential policy shifts, economic outlook changes, or geopolitical realignments. These strategic shifts will likely influence flows into various asset classes and sectors based on perceived election outcomes and policy implications.",
+        "sentiment": "neutral",
+        "reason": "Broad post-election asset allocation changes will drive capital rebalancing across sectors and geographies, with implications for market leadership and relative performance."
+      },
+      {
+        "title": "Chinese Companies Divert Capital to Venture Investments in Tech",
+        "summary": "Chinese companies traditionally focused on manufacturing are now reportedly pouring hundreds of billions into venture capital for tech investments. This strategic pivot signals a national drive towards innovation and self-sufficiency in critical technologies. The increased venture funding will boost early-stage tech companies within China, potentially creating new domestic leaders.",
+        "sentiment": "bull",
+        "reason": "This shift in Chinese corporate capital allocation supports domestic technology development, creating opportunities in China's venture capital and high-growth tech sectors."
+      }
+    ],
+    "keywords": [
+      "#MonetaryPolicy",
+      "#AISector",
+      "#Inflation"
+    ],
+    "marketSentiment": "Central banks maintain hawkish stance on inflation, driving yield curve shifts and reassessment of AI sector valuations."
+  }
+}
