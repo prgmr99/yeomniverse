@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-16",
+  "timestamp": "2026-11-16T02:18:08.598Z",
+  "newsCount": 46,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 39,
+    "rating": "fear",
+    "timestamp": "2026-11-13T23:59:56+00:00"
+  },
+  "oneWayIndex": {
+    "score": 40,
+    "direction": "bear",
+    "label": "Weak Directional Bias",
+    "components": {
+      "adx": 0,
+      "maAlignment": 50,
+      "rsiTrend": 50,
+      "bbWidth": 85,
+      "vix": 20,
+      "volume": 40,
+      "fearGreed": 70
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "Nvidia Earnings to Test AI Rally",
+        "summary": "Nvidia's upcoming earnings report is one of Wall Street's most anticipated calls in years. Its performance and guidance will serve as a crucial barometer for the entire artificial intelligence investment theme. A strong report will validate AI enthusiasm, while a weak one could trigger a broader tech sector correction and revaluation.",
+        "sentiment": "neutral",
+        "reason": "Q3 earnings and Q4 guidance will directly impact technology sector valuations, particularly AI-related equities."
+      },
+      {
+        "title": "China Slowdown Deepens in October",
+        "summary": "China's industrial output, retail sales, and investment data for October missed analyst estimates. This indicates a deepening economic slowdown driven by persistent domestic demand weakness and property sector woes. A sustained Chinese deceleration will suppress global commodity prices and weigh on multinational company revenue forecasts.",
+        "sentiment": "bear",
+        "reason": "Lower global growth forecasts and weaker demand directly impact cyclical sectors, commodity producers, and companies with significant China exposure."
+      },
+      {
+        "title": "Japan's Economy Unexpectedly Shrinks",
+        "summary": "Japan's economy unexpectedly contracted in the third quarter, with elevated energy costs and inflation weighing on household spending. This surprising downturn suggests domestic demand remains fragile despite recent efforts to stimulate growth. The contraction could pressure the Bank of Japan to maintain its ultra-loose monetary policy longer than anticipated, impacting bond yields and currency markets.",
+        "sentiment": "bear",
+        "reason": "The unexpected contraction weighs on the Yen and Japanese domestic equities, potentially delaying interest rate normalization by the Bank of Japan."
+      },
+      {
+        "title": "Fed Signals Continued Inflation Vigilance",
+        "summary": "Kansas City Fed President Schmid reiterated the central bank 'has work to do on inflation'. This signals the Federal Reserve maintains a hawkish posture despite recent inflation moderation. Such rhetoric reinforces expectations for a 'higher for longer' interest rate environment. This impacts bond yields, the U.S. dollar, and the valuation models for growth equities.",
+        "sentiment": "bear",
+        "reason": "Reinforces higher-for-longer rate expectations, negatively impacting fixed income and growth-oriented equity valuations."
+      },
+      {
+        "title": "U.S.-China-Russia Trilateral Summit Set",
+        "summary": "A trilateral summit involving the U.S., China, and Russia is reportedly scheduled for November 19th in Shenzhen. This unprecedented meeting could signal critical shifts in global geopolitical alignments or attempts at de-escalation in ongoing conflicts. Outcomes will directly impact global stability, trade dynamics, and risk premiums across commodity markets and defense sectors.",
+        "sentiment": "neutral",
+        "reason": "Potential for significant geopolitical shifts impacts commodity prices, defense sector valuations, and overall market risk sentiment."
+      },
+      {
+        "title": "Iran Threatens Preemptive Action",
+        "summary": "Iran declared it would not wait for a U.S. attack, signaling heightened geopolitical risk in the Middle East. This statement escalates the potential for regional conflict and broader instability. Any military engagement would likely trigger a sharp rise in global oil prices and a flight to safe-haven assets.",
+        "sentiment": "bear",
+        "reason": "Increases geopolitical risk premium across oil markets, defense stocks, and leads to demand for safe-haven assets."
+      },
+      {
+        "title": "Anthropic IPO to Test AI Market Sentiment",
+        "summary": "The upcoming Anthropic IPO will provide a key test for investor appetite in the nascent artificial intelligence sector. This public offering will reveal current primary market valuations and investor conviction beyond established AI giants. A successful debut could bolster confidence in AI startups, while a tepid reception may signal caution regarding sector valuations.",
+        "sentiment": "neutral",
+        "reason": "The IPO performance will influence sentiment and valuation metrics for privately held and publicly traded AI software companies."
+      },
+      {
+        "title": "UK Property Prices Decline Sharply",
+        "summary": "UK property asking prices fell more than usual in November, according to Rightmove data. This indicates a significant weakening in housing market demand, likely influenced by elevated interest rates and cost-of-living pressures. A prolonged slowdown in property values will impact consumer wealth, mortgage lenders, and the overall trajectory of the UK economy.",
+        "sentiment": "bear",
+        "reason": "Weakens the outlook for UK domestic consumption, impacts financial institutions with mortgage exposure, and signals broader economic slowdown."
+      },
+      {
+        "title": "Asian Equities Edge Lower Ahead of Tech Tests",
+        "summary": "Asian share markets declined as investors awaited Nvidia's earnings and the Anthropic IPO, testing the resilience of the broader tech rally. This reflects a cautious approach to technology sector exposure ahead of significant catalysts. The movement indicates a potential sensitivity to disappointing results or lukewarm new market entries.",
+        "sentiment": "bear",
+        "reason": "Highlights immediate regional market sensitivity and potential fragility within the global technology sector rally."
+      },
+      {
+        "title": "Market Braces for Key Tech Events",
+        "summary": "Stock futures are ticking higher as traders position themselves ahead of Nvidia's earnings report and Anthropic's IPO this week. This indicates market anticipation and cautious optimism surrounding major catalysts in the technology sector. Current trading reflects immediate investor sentiment and sector-specific positioning.",
+        "sentiment": "neutral",
+        "reason": "Provides insight into immediate market positioning and sentiment surrounding critical technology sector events."
+      }
+    ],
+    "keywords": [
+      "#AIInvestment",
+      "#GlobalMacro",
+      "#Geopolitics"
+    ],
+    "marketSentiment": "Global economic slowdown concerns weigh on risk assets; AI sector faces critical performance tests."
+  }
+}
