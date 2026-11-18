@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-18",
+  "timestamp": "2026-11-18T03:46:01.218Z",
+  "newsCount": 53,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 25,
+    "rating": "fear",
+    "timestamp": "2026-11-17T23:59:42+00:00"
+  },
+  "oneWayIndex": {
+    "score": 53,
+    "direction": "bear",
+    "label": "Moderate Trend",
+    "components": {
+      "adx": 0,
+      "maAlignment": 50,
+      "rsiTrend": 100,
+      "bbWidth": 85,
+      "vix": 65,
+      "volume": 40,
+      "fearGreed": 90
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "Nvidia Beats Earnings Expectations, Drives Stock Futures Higher",
+        "summary": "Nvidia reported an earnings beat and provided a strong outlook, exceeding market expectations for its core AI and data center segments. This performance validates the robust demand for AI infrastructure and its critical components. The positive sentiment is expected to bolster technology equities and extend the market's risk-on appetite in the near term.",
+        "sentiment": "bull",
+        "reason": "This strengthens the investment thesis for AI-centric technology stocks and broader equity markets, confirming sustained corporate earnings power."
+      },
+      {
+        "title": "Fed's Williams Signals Need for Further Rate Hikes Amid Inflation",
+        "summary": "Federal Reserve Bank of New York President John Williams indicated that more interest rate hikes are likely necessary to combat persistent inflation. This reinforces the Fed's commitment to a restrictive monetary policy stance. The statement signals continued pressure on bond yields and a higher cost of capital for businesses and consumers.",
+        "sentiment": "bear",
+        "reason": "This implies further tightening pressure on fixed income markets and potentially higher discount rates for all risk assets."
+      },
+      {
+        "title": "Bank of Japan Governor Advocates Continued Rate Increases",
+        "summary": "The Bank of Japan governor stated the central bank should maintain its course of raising interest rates. This confirms a significant shift away from the long-standing ultra-loose monetary policy in Japan. The move will influence Yen appreciation, impact Japanese bond yields, and reshape capital flows within the region and globally.",
+        "sentiment": "bull",
+        "reason": "This suggests a strengthening Yen and rising Japanese government bond yields, with implications for global fixed income and currency allocations."
+      },
+      {
+        "title": "China's Xi Urges Removal of Trade and Investment Barriers",
+        "summary": "Chinese President Xi Jinping called for eliminating trade and investment barriers ahead of meetings with global leaders. This signals a potential thawing of trade tensions and a push for greater economic integration from Beijing. Such a shift could improve global supply chain efficiency and boost cross-border investment flows.",
+        "sentiment": "neutral",
+        "reason": "This suggests potential for de-escalation in trade disputes, impacting global trade-sensitive sectors and emerging market equities."
+      },
+      {
+        "title": "Homebuilder Sentiment Plunges to 14-Year Low",
+        "summary": "U.S. homebuilder sentiment declined to a 14-year low, with more builders reducing prices to stimulate sales. This reflects persistent high interest rates, affordability challenges, and broader economic uncertainty impacting the housing market. The trend indicates continued weakness in residential construction and a potential drag on consumer spending.",
+        "sentiment": "bear",
+        "reason": "This signals headwinds for the housing sector, related consumer discretionary industries, and overall economic growth projections."
+      },
+      {
+        "title": "Japan Exports Surge 20.5% Driven by Robust Chip Shipments",
+        "summary": "Japan's October exports surged by 20.5%, significantly exceeding estimates, primarily due to strong chip shipments. This indicates resilient global demand for technology components and a robust manufacturing sector in Japan. The data suggests underlying strength in global trade, particularly within the electronics supply chain.",
+        "sentiment": "bull",
+        "reason": "This supports an investment thesis for Japanese equities and global semiconductor manufacturers, reflecting strong end-market demand."
+      },
+      {
+        "title": "Anthropic IPO Expected to Price Above Initial Range",
+        "summary": "Sources indicate that Anthropic's IPO is likely to price above its initially announced range of $70 to $78 per share. This suggests strong investor demand for leading generative AI companies in the private market. A higher valuation sets a new benchmark for AI company multiples and reinforces capital inflows into the sector.",
+        "sentiment": "bull",
+        "reason": "This validates high valuations within the AI sector, likely encouraging further capital allocation towards AI-related startups and technologies."
+      },
+      {
+        "title": "Goldman Sachs Outlines S&P 500 Outlook for 2027",
+        "summary": "Goldman Sachs provided its outlook for the S&P 500 through 2027, projecting substantial gains over the multi-year horizon. Such long-term forecasts from a major institution offer a strategic anchor for portfolio planning. The guidance influences asset allocators' forward-looking equity targets and risk-adjusted return expectations.",
+        "sentiment": "bull",
+        "reason": "This provides a long-term directional signal for broad market equity allocation, guiding strategic portfolio positioning."
+      },
+      {
+        "title": "Dollar Holds Near 19-Month High Amid Rate Hike Expectations",
+        "summary": "The U.S. Dollar continues to trade near a 19-month high, supported by data that reinforces the case for ongoing US rate hikes. This reflects the interest rate differential favoring the dollar and the relative strength of the U.S. economy. Sustained dollar strength impacts global trade dynamics, commodity pricing, and emerging market capital flows.",
+        "sentiment": "bull",
+        "reason": "This implies continued strength for the USD, impacting currency hedges and the cost of dollar-denominated goods for international buyers."
+      },
+      {
+        "title": "JPMorgan Working on AI Agent Transactions Without Human Intervention",
+        "summary": "JPMorgan Chase is developing AI agent transactions that can execute financial operations without direct human involvement. This signifies a major step towards autonomous AI integration within the financial services industry. The initiative promises significant efficiency gains, reduced operational costs, and a potential reshaping of financial workflows.",
+        "sentiment": "bull",
+        "reason": "This highlights the transformational impact of AI on financial services, signaling future productivity enhancements and competitive shifts within the sector."
+      }
+    ],
+    "keywords": [
+      "#AIInfrastructure",
+      "#MonetaryPolicy",
+      "#GlobalTrade"
+    ],
+    "marketSentiment": "Market sentiment remains cautiously optimistic, buoyed by robust tech earnings but tempered by persistent inflation and hawkish central bank signals."
+  }
+}
