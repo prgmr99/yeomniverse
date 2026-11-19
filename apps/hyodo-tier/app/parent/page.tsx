@@ -255,7 +255,7 @@ export default function ParentHome() {
                   저는 자식 생일을 모릅니다
                 </span>
                 <span className="text-xs text-ink-faint mt-0.5">
-                  네, 제가 그 쓰레기입니다. 응시를 포기합니다
+                  면목이 없습니다. 응시를 포기합니다
                 </span>
               </span>
             </button>

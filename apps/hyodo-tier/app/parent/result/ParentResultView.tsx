@@ -69,8 +69,8 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
     if (sharedResultId && PARENT_RESULTS[sharedResultId]) {
       return PARENT_RESULTS[sharedResultId];
     }
-    return calculateParentResult(storeScores, flags);
-  }, [sharedResultId, storeScores, flags]);
+    return calculateParentResult(storeScores, flags, { gaveUp });
+  }, [sharedResultId, storeScores, flags, gaveUp]);
 
   const childName = childProfile.name || undefined;
 
