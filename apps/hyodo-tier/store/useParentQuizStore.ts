@@ -25,6 +25,7 @@ interface ParentQuizState {
   scores: Scores; // 누적 점수
   flags: Flags; // 누적 플래그
   childProfile: ChildProfile; // 자식 이름 + 생년월일
+  gaveUp: boolean; // 자식 정보를 못 적고 응시를 포기했는지 (백지 답안 제출)
 
   // Actions
   setAnswer: (choiceIndex: number, effects: Partial<Scores & Flags>) => void;
@@ -32,6 +33,7 @@ interface ParentQuizState {
   prevStep: () => void;
   resetQuiz: () => void;
   setChildProfile: (name: string, birthday: string) => void;
+  giveUp: () => void;
 }
 
 export const useParentQuizStore = create<ParentQuizState>()(
@@ -43,6 +45,7 @@ export const useParentQuizStore = create<ParentQuizState>()(
       scores: { interest: 0, intimacy: 0, expression: 0 },
       flags: { tsundere: 0, sns: 0 },
       childProfile: { name: '', birthday: '' },
+      gaveUp: false,
 
       // 답변 선택 시 점수 누적 로직
       setAnswer: (choiceIndex, effects) =>
@@ -103,12 +106,16 @@ export const useParentQuizStore = create<ParentQuizState>()(
           scores: { interest: 0, intimacy: 0, expression: 0 },
           flags: { tsundere: 0, sns: 0 },
           childProfile: state.childProfile,
+          gaveUp: false,
         }));
       },
 
       // 자식 이름·생년월일 저장 (공유 메시지 + 동갑내기 로직용)
       setChildProfile: (name, birthday) =>
         set({ childProfile: { name, birthday } }),
+
+      // 응시 포기. 백지 답안을 낸 것과 같아 점수 0으로 채점된다.
+      giveUp: () => set({ gaveUp: true }),
     }),
     {
       name: 'hyo-parent-quiz',
@@ -119,6 +126,7 @@ export const useParentQuizStore = create<ParentQuizState>()(
         scores: state.scores,
         flags: state.flags,
         childProfile: state.childProfile,
+        gaveUp: state.gaveUp,
       }),
     },
   ),

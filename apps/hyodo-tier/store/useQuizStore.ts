@@ -21,6 +21,7 @@ interface QuizState {
   flags: Flags; // 누적 플래그
   birthdays: { father: string; mother: string }; // 부모님 생년월일
   skippedBirthday: boolean; // 생신을 모른 채 응시했는지 (UNFILIAL 판정용)
+  gaveUp: boolean; // 수험번호를 못 적고 응시를 포기했는지 (백지 답안 제출)
 
   // Actions
   setAnswer: (choiceIndex: number, effects: Partial<Scores & Flags>) => void;
@@ -28,7 +29,7 @@ interface QuizState {
   prevStep: () => void;
   resetQuiz: () => void;
   setBirthdays: (father: string, mother: string) => void;
-  skipBirthdays: () => void;
+  giveUp: () => void;
 }
 
 export const useQuizStore = create<QuizState>()(
@@ -41,6 +42,7 @@ export const useQuizStore = create<QuizState>()(
       flags: { tsundere: 0, sns: 0 },
       birthdays: { father: '', mother: '' },
       skippedBirthday: false,
+      gaveUp: false,
 
       // 답변 선택 시 점수 누적 로직
       setAnswer: (choiceIndex, effects) =>
@@ -102,6 +104,7 @@ export const useQuizStore = create<QuizState>()(
           flags: { tsundere: 0, sns: 0 },
           birthdays: state.birthdays,
           skippedBirthday: state.skippedBirthday,
+          gaveUp: false,
         }));
       },
 
@@ -110,8 +113,13 @@ export const useQuizStore = create<QuizState>()(
         set({ birthdays: { father, mother }, skippedBirthday: false }),
 
       // 생신을 모른 채 응시 시작
-      skipBirthdays: () =>
-        set({ birthdays: { father: '', mother: '' }, skippedBirthday: true }),
+      // 응시 포기. 백지 답안을 낸 것과 같아 점수 0으로 채점된다.
+      giveUp: () =>
+        set({
+          birthdays: { father: '', mother: '' },
+          skippedBirthday: true,
+          gaveUp: true,
+        }),
     }),
     {
       name: 'hyo-quiz',
@@ -123,6 +131,7 @@ export const useQuizStore = create<QuizState>()(
         flags: state.flags,
         birthdays: state.birthdays,
         skippedBirthday: state.skippedBirthday,
+        gaveUp: state.gaveUp,
       }),
     },
   ),
