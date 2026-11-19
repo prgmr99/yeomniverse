@@ -275,7 +275,7 @@ function QuizContent() {
                     />
                     <label
                       htmlFor={optionId}
-                      className={`w-full text-left py-4 pl-1 pr-1 transition-colors group flex items-center justify-between gap-4 cursor-pointer peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-grading ${
+                      className={`pressable w-full text-left py-4 pl-1 pr-1 group flex items-center justify-between gap-4 cursor-pointer peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-grading ${
                         isSelected ? 'bg-shade' : 'hover:bg-shade/60'
                       }`}
                     >
@@ -291,7 +291,7 @@ function QuizContent() {
                         aria-hidden="true"
                         className={`shrink-0 w-7 h-7 rounded-mark border-[1.5px] grid place-items-center text-[13px] font-bold tabular transition-colors ${
                           isSelected
-                            ? 'bg-graphite border-graphite text-paper'
+                            ? 'bg-graphite border-graphite text-paper animate-mark-pop'
                             : 'border-ink/40 text-ink-faint group-hover:border-ink group-hover:text-ink'
                         }`}
                       >

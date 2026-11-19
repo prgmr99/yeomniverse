@@ -40,22 +40,65 @@
   --font-sans: var(--font-sans);
 
   /* Animations */
-  --animate-stamp-land: stampLand 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  --animate-stamp-land: stampLand 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   --animate-fade-in: fadeIn 0.5s ease-out forwards;
+  --animate-mark-pop: markPop 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-bar-fill: barFill 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 
-  /* 날인란 안에서 끝난다. 제목 위를 덮고 지나가지 않는다. */
+  /* 도장은 찍히는 물건이다. 과녁에서 한 번 튕겨야 찍혔다고 읽힌다. */
   @keyframes stampLand {
     0% {
       transform: scale(2.4) rotate(-14deg);
       opacity: 0;
     }
-    55% {
-      transform: scale(0.94) rotate(-9deg);
+    52% {
+      transform: scale(0.9) rotate(-6deg);
       opacity: 1;
+    }
+    70% {
+      transform: scale(1.06) rotate(-11deg);
+    }
+    86% {
+      transform: scale(0.98) rotate(-8deg);
     }
     100% {
       transform: scale(1) rotate(-9deg);
       opacity: 1;
+    }
+  }
+
+  /* 연필로 칸을 칠하는 순간. 선택이 손에 닿았다는 신호다. */
+  @keyframes markPop {
+    0% {
+      transform: scale(1);
+    }
+    45% {
+      transform: scale(1.22);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  /* 점수 막대는 '채점된 결과'다. 0에서 차올라야 측정으로 읽힌다. */
+  @keyframes barFill {
+    0% {
+      transform: scaleX(0);
+    }
+    100% {
+      transform: scaleX(1);
+    }
+  }
+
+  /* 시험지가 한 장씩 펼쳐지는 순서 */
+  @keyframes riseIn {
+    0% {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 
@@ -76,6 +119,66 @@
 
 @utility font-sans {
   font-family: var(--font-sans);
+}
+
+/* 누르면 눌린다. 조작 요소가 손가락에 반응하지 않으면 화면 전체가 굳어 보인다. */
+@utility pressable {
+  transition:
+    transform 150ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease;
+
+  &:active {
+    transform: scale(0.985) translateY(1px);
+  }
+}
+
+/* 지면이 한 번에 쏟아지지 않고 순서대로 올라온다. --rise 로 순번을 준다. */
+@utility rise-in {
+  animation: riseIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: calc(var(--rise, 0) * 80ms);
+}
+
+/* ── 채점자의 흔적 ───────────────────────────────────────
+   이 서비스는 시험지가 아니라 시험지 패러디다. 농담이 카피에만 있고
+   지면에는 없으면 그냥 관공서 양식으로 읽힌다. 빨간 펜을 꺼낸다. */
+
+/* 정답에 치는 동그라미. 일부러 찌그러뜨려야 손으로 그린 것으로 읽힌다. */
+@utility graded-circle {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -16% -7%;
+    border: 2.5px solid var(--color-grading);
+    border-radius: 47% 53% 51% 49% / 56% 44% 56% 44%;
+    opacity: 0.5;
+    transform: rotate(-1.5deg);
+    pointer-events: none;
+  }
+}
+
+/* 접수처에서 눌러 찍은 검인. 비뚤어야 사람이 찍은 것으로 보인다. */
+@utility inspection-seal {
+  display: inline-grid;
+  place-items: center;
+  border: 2px solid var(--color-grading);
+  border-radius: var(--radius-sheet);
+  color: var(--color-grading);
+  opacity: 0.42;
+  transform: rotate(-11deg);
+  letter-spacing: 0.1em;
+}
+
+/* 모눈. 점수를 '손으로 찍은 도표'로 읽히게 하는 바탕. */
+@utility grid-paper {
+  background-image:
+    linear-gradient(to right, rgba(27, 23, 20, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(27, 23, 20, 0.055) 1px, transparent 1px);
+  background-size: 16px 16px;
 }
 
 /* 점수·번호·문항수는 자리가 흔들리면 표가 아니라 목록으로 읽힌다. */
@@ -158,18 +261,30 @@ a {
   text-decoration-thickness: from-font;
 }
 
-@supports (scrollbar-color: auto) {
-  html {
-    scrollbar-color: var(--color-rule) transparent;
-    scrollbar-width: thin;
-  }
+/* 스크롤 막대를 감춘다. 스크롤 자체는 그대로 동작한다. */
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-in,
-  .animate-stamp-land {
+  .animate-stamp-land,
+  .animate-mark-pop,
+  .animate-bar-fill,
+  .rise-in {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  /* 누르는 변형만 끄고 색 전환은 남긴다. 상태 피드백까지 사라지면 안 된다. */
+  .pressable:active {
+    transform: none;
   }
 }

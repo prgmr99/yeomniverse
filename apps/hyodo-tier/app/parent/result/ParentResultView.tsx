@@ -35,6 +35,7 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
     resetQuiz,
     currentStep,
     childProfile,
+    gaveUp,
   } = useParentQuizStore();
   const [isReady, setIsReady] = useState(false);
   const [toast, setToast] = useState<ToastMessage | null>(null);
@@ -68,8 +69,8 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
     if (sharedResultId && PARENT_RESULTS[sharedResultId]) {
       return PARENT_RESULTS[sharedResultId];
     }
-    return calculateParentResult(storeScores, flags);
-  }, [sharedResultId, storeScores, flags]);
+    return calculateParentResult(storeScores, flags, { gaveUp });
+  }, [sharedResultId, storeScores, flags, gaveUp]);
 
   const childName = childProfile.name || undefined;
 
@@ -140,26 +141,28 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
 
   useEffect(() => {
     if (!hydrated) return;
-    if (!sharedResultId && currentStep === 0) {
+    // 포기자는 푼 문제가 0개지만 결과를 볼 자격은 있다(백지도 제출이다)
+    if (!sharedResultId && currentStep === 0 && !gaveUp) {
       router.replace('/parent');
     } else {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsReady(true);
     }
-  }, [hydrated, currentStep, router, sharedResultId]);
+  }, [hydrated, currentStep, router, sharedResultId, gaveUp]);
 
   // 결과 도달 계측 (본인 응시 / 공유 링크 유입을 구분한다)
   useEffect(() => {
     if (!isReady || trackedResult.current) return;
     trackedResult.current = true;
 
+    if (gaveUp) return; // 포기는 홈에서 quiz_giveup 으로 이미 잡았다
     trackEvent(sharedResultId ? 'shared_link_opened' : 'quiz_complete', {
       mode: 'parent',
       result_id: result.id,
       grade: result.grade,
       ref: readShareRef(searchParams.get('ref')),
     });
-  }, [isReady, sharedResultId, result, searchParams]);
+  }, [isReady, sharedResultId, result, searchParams, gaveUp]);
 
   if (!isReady) return <Loading />;
 
@@ -184,9 +187,12 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center py-10 px-6 animate-fade-in space-y-8 pb-20">
+    <main className="min-h-screen flex flex-col items-center py-10 px-6 space-y-8 pb-20">
       {/* 1. 성적표 표제부 — 도장은 제목 위가 아니라 날인란 안에 찍힌다 */}
-      <div className="w-full border-b-2 border-ink pb-6">
+      <div
+        className="rise-in w-full border-b-2 border-ink pb-6"
+        style={{ '--rise': 0 } as React.CSSProperties}
+      >
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0 pt-1">
             {/* 날인란이 폭을 가져가 두 줄이 된다. 끊기더라도 '부모편' 안에서는 끊기지 않게 */}
@@ -194,7 +200,7 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
               2026학년도 효도능력시험 · 부모편
             </p>
             <h1 className="text-[1.75rem] font-serif font-black text-ink break-keep leading-tight text-balance">
-              {result.title}
+              <span className="graded-circle inline-block">{result.title}</span>
             </h1>
           </div>
 
@@ -227,7 +233,10 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
       </div>
 
       {/* 2. 총평 — 채점자가 적어 넣은 칸 */}
-      <section className="w-full">
+      <section
+        className="rise-in w-full"
+        style={{ '--rise': 1 } as React.CSSProperties}
+      >
         <h2 className="text-xs font-sans font-bold tracking-[0.18em] text-ink-muted mb-2">
           총평
         </h2>
@@ -250,7 +259,10 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
       </section>
 
       {/* 3. 닥터의 처방전 */}
-      <section className="w-full">
+      <section
+        className="rise-in w-full"
+        style={{ '--rise': 2 } as React.CSSProperties}
+      >
         <h2 className="text-xs font-sans font-bold tracking-[0.18em] text-ink-muted mb-2 flex items-center gap-1.5">
           <Stethoscope
             className="w-3.5 h-3.5 text-grading"
@@ -266,11 +278,14 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
       </section>
 
       {/* 4. 성적 일람표 — 점수 없이 들어온 유형 랜딩에서는 감춘다 */}
-      <section className={`w-full ${hasScores ? '' : 'hidden'}`}>
+      <section
+        className={`rise-in w-full ${hasScores ? '' : 'hidden'}`}
+        style={{ '--rise': 3 } as React.CSSProperties}
+      >
         <h2 className="text-xs font-sans font-bold tracking-[0.18em] text-ink-muted mb-2">
           영역별 성적
         </h2>
-        <div className="border border-ink/25 rounded-sheet divide-y divide-ink/12 bg-sheet">
+        <div className="grid-paper border border-ink/25 rounded-sheet divide-y divide-ink/12 bg-sheet">
           <ScoreBar
             label="관심도"
             note="지식"
@@ -293,10 +308,13 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
       </section>
 
       {/* 5. 액션 버튼 */}
-      <div className="w-full space-y-3 pt-4">
+      <div
+        className="rise-in w-full space-y-3 pt-4"
+        style={{ '--rise': 4 } as React.CSSProperties}
+      >
         {/* 1순위 — 유형 랜딩·공유 링크로 들어온 방문자는 '응시',
             본인 응시자는 자식에게 넘기는 '공유'가 할 일이다. */}
-        {sharedResultId ? (
+        {sharedResultId || gaveUp ? (
           <Link
             href="/parent"
             onClick={() => {
@@ -306,14 +324,15 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
               });
               resetQuiz();
             }}
-            className="w-full bg-ink text-paper py-4 rounded-sheet font-serif font-bold text-xl shadow-[0_1px_2px_rgba(0,0,0,0.2),0_6px_16px_-8px_rgba(0,0,0,0.5)] hover:bg-graphite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors flex items-center justify-center gap-2"
+            className="relative w-full bg-ink text-paper py-4 rounded-sheet font-serif font-bold text-xl shadow-[0_1px_2px_rgba(0,0,0,0.2),0_6px_16px_-8px_rgba(0,0,0,0.5)] hover:bg-graphite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable flex items-center justify-center"
           >
-            나도 응시하기 <ChevronRight className="w-5 h-5" />
+            {gaveUp ? '제대로 응시하기' : '나도 응시하기'}
+            <ChevronRight className="absolute right-5 w-5 h-5" />
           </Link>
         ) : (
           <button
             type="button"
-            className="w-full bg-[#FEE500] text-[#191919] py-4 rounded-sheet font-bold text-[17px] flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(0,0,0,0.14),0_6px_16px_-8px_rgba(0,0,0,0.4)] hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink transition-all"
+            className="relative w-full bg-[#FEE500] text-[#191919] py-4 rounded-sheet font-bold text-[17px] flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.14),0_6px_16px_-8px_rgba(0,0,0,0.4)] hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink pressable"
             onClick={handleShare}
           >
             <Share2 className="w-5 h-5 shrink-0" /> 자식에게 보내고 시험 넘기기
@@ -322,10 +341,10 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
 
         {/* 2순위 — 윤곽선. 1순위와 같은 폭이되 무게가 다르다 */}
         <div className="w-full space-y-2.5">
-          {sharedResultId && (
+          {(sharedResultId || gaveUp) && (
             <button
               type="button"
-              className="w-full bg-[#FEE500] text-[#191919] py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center gap-2 hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink transition-all"
+              className="relative w-full bg-[#FEE500] text-[#191919] py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink pressable"
               onClick={handleShare}
             >
               <Share2 className="w-[18px] h-[18px] shrink-0" /> 이 성적표
@@ -336,7 +355,7 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
           {!sharedResultId && (
             <button
               type="button"
-              className="w-full bg-sheet border border-grading/50 text-grading py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center gap-2 hover:bg-grading-soft hover:border-grading focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+              className="relative w-full bg-sheet border border-grading/50 text-grading py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:bg-grading-soft hover:border-grading focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable"
               onClick={handleCopyMessage}
             >
               <Heart className="w-[18px] h-[18px] shrink-0" />{' '}
@@ -349,7 +368,7 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
           <button
             type="button"
             disabled={isSaving}
-            className="w-full bg-sheet border border-ink/30 text-ink py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center gap-2 hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            className="relative w-full bg-sheet border border-ink/30 text-ink py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable disabled:opacity-60 disabled:cursor-not-allowed"
             onClick={handleSaveCard}
           >
             <ImageDown className="w-[18px] h-[18px] shrink-0" />
@@ -359,13 +378,14 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
 
         {/* 3순위 — 성적표 뒷면의 안내란. 버튼이 아니라 목록이다 */}
         <ul className="w-full border-y border-ink/20 divide-y divide-ink/12 pt-1">
-          {/* 응시 이력이 없는 방문자에게 "재시험"은 누를 이유가 없는 라벨이다. */}
-          {!sharedResultId && (
+          {/* 응시 이력이 없는 방문자에게 "재시험"은 누를 이유가 없는 라벨이다.
+              포기자는 위에 '제대로 응시하기'가 이미 있어 중복이다. */}
+          {!sharedResultId && !gaveUp && (
             <li>
               <Link
                 href="/parent"
                 onClick={resetQuiz}
-                className="w-full py-3.5 flex items-center gap-3 text-sm text-ink-muted hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+                className="w-full py-3.5 flex items-center gap-3 text-sm text-ink-muted hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable"
               >
                 <RotateCcw
                   className="w-4 h-4 shrink-0 text-ink-faint"
@@ -383,7 +403,7 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
           <li>
             <Link
               href="/blog"
-              className="w-full py-3.5 flex items-center gap-3 text-sm text-ink-muted hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+              className="w-full py-3.5 flex items-center gap-3 text-sm text-ink-muted hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable"
             >
               <BookOpen
                 className="w-4 h-4 shrink-0 text-ink-faint"
@@ -437,7 +457,10 @@ function ScoreBar({
         </span>
       </span>
       <div className="flex-1 h-2 bg-shade border border-ink/12 overflow-hidden">
-        <div className={`h-full ${color}`} style={{ width: `${percent}%` }} />
+        <div
+          className={`h-full origin-left animate-bar-fill ${color}`}
+          style={{ width: `${percent}%` }}
+        />
       </div>
       <span className="w-8 shrink-0 text-right text-[15px] font-serif font-bold text-ink tabular">
         {score}

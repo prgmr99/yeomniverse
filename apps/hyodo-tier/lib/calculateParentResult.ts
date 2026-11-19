@@ -12,10 +12,20 @@ type Flags = {
   sns: number;
 };
 
+type Context = {
+  gaveUp?: boolean; // 랜딩에서 응시를 포기했는지 (백지 답안)
+};
+
 export function calculateParentResult(
   scores: Scores,
   flags: Flags,
+  context: Context = {},
 ): ParentResultType {
+  // 포기는 '점수가 낮은 것'과 다른 사건이라 점수를 보기 전에 가로챈다.
+  if (context.gaveUp) {
+    return PARENT_RESULTS.GIVE_UP_PARENT;
+  }
+
   const { interest, intimacy, expression } = scores;
   const { tsundere, sns } = flags;
 

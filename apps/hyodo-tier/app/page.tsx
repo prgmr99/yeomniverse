@@ -24,7 +24,7 @@ import { useQuizStore } from '@/store/useQuizStore';
 
 export default function Home() {
   const router = useRouter();
-  const { setBirthdays, skipBirthdays } = useQuizStore();
+  const { setBirthdays, giveUp } = useQuizStore();
   const [fatherDob, setFatherDob] = useState('');
   const [motherDob, setMotherDob] = useState('');
   const [error, setError] = useState('');
@@ -54,10 +54,12 @@ export default function Home() {
     router.push('/quiz');
   };
 
+  // 포기하면 백지 답안을 낸 것으로 친다. 점수 0 + 생신 모름이면
+  // calculateResult 가 UNFILIAL('시험 볼 자격이 없습니다') 엔딩을 돌려준다.
   const handleDontKnow = () => {
-    skipBirthdays();
-    trackEvent('quiz_start', { mode: 'child', with_birthday: false });
-    router.push('/quiz');
+    giveUp();
+    trackEvent('quiz_giveup', { mode: 'child' });
+    router.push('/result');
   };
 
   const faqSchema = {
@@ -108,10 +110,20 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col min-h-screen p-6 text-center animate-fade-in">
+    <main className="flex flex-col min-h-screen p-6 text-center">
       <section className="flex flex-col items-center justify-center w-full pt-8">
         {/* 상단: 시험지 표제부 */}
-        <div className="w-full border-b-[3px] border-ink pb-3 mb-6">
+        <div
+          className="rise-in relative w-full border-b-[3px] border-ink pb-3 mb-6"
+          style={{ '--rise': 0 } as React.CSSProperties}
+        >
+          {/* 접수처에서 눌러 찍은 검인. 진짜 시험지가 아니라 패러디라는 신호다. */}
+          <span
+            aria-hidden="true"
+            className="inspection-seal absolute right-0 top-5 w-14 h-14 text-[11px] font-serif font-bold leading-tight text-center"
+          >
+            검인
+          </span>
           <div className="min-h-[24px] mb-2">
             {parentsDayBadge && (
               <span className="inline-flex items-center gap-1.5 text-[11px] font-sans font-bold text-grading border border-grading/35 px-2 py-0.5 rounded-sheet">
@@ -137,7 +149,10 @@ export default function Home() {
         </div>
 
         {/* 메인: 지시문 — 카드가 아니라 시험지에 인쇄된 블록이다 */}
-        <div className="w-full py-2 mb-8">
+        <div
+          className="rise-in w-full py-2 mb-8"
+          style={{ '--rise': 1 } as React.CSSProperties}
+        >
           <div className="border-y border-ink/25 py-7 px-1 text-center">
             <h2 className="text-[1.35rem] leading-snug font-serif font-bold mb-4 whitespace-pre-line text-balance">
               {`"당신은 부모님에 대해\n얼마나 알고 있습니까?"`}
@@ -153,7 +168,10 @@ export default function Home() {
         </div>
 
         {/* 하단: 수험번호 입력 & 시작 버튼 */}
-        <div className="w-full space-y-6">
+        <div
+          className="rise-in w-full space-y-6"
+          style={{ '--rise': 2 } as React.CSSProperties}
+        >
           <fieldset className="w-full space-y-3 text-ink font-serif">
             <legend className="w-full text-center text-base font-bold mb-3">
               수험번호{' '}
@@ -189,7 +207,7 @@ export default function Home() {
                 aria-hidden="true"
                 className="pb-2 font-bold text-ink-faint"
               >
-                –
+                -
               </span>
 
               <div className="flex flex-col items-center gap-1.5">
@@ -238,18 +256,31 @@ export default function Home() {
             <button
               type="button"
               onClick={handleStart}
-              className="w-full bg-ink text-paper py-4 rounded-sheet font-serif font-bold text-xl shadow-[0_1px_2px_rgba(0,0,0,0.2),0_6px_16px_-8px_rgba(0,0,0,0.5)] hover:bg-graphite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors flex items-center justify-center gap-2"
+              className="relative w-full bg-ink text-paper py-4 rounded-sheet font-serif font-bold text-xl shadow-[0_1px_2px_rgba(0,0,0,0.2),0_6px_16px_-8px_rgba(0,0,0,0.5)] hover:bg-graphite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable flex items-center justify-center"
             >
-              문제지 펼치기 <ChevronRight className="w-5 h-5" />
+              문제지 펼치기
+              <ChevronRight className="absolute right-5 w-5 h-5" />
             </button>
 
             {/* 우회로도 동등한 무게로 — 여기서 막히면 퍼널 최상단이 통째로 샌다 */}
             <button
               type="button"
               onClick={handleDontKnow}
-              className="w-full min-h-[52px] px-4 rounded-sheet border border-ink/30 bg-sheet text-ink-muted text-sm font-sans hover:border-ink hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+              className="group w-full min-h-[56px] px-4 py-3 rounded-sheet border border-ink/30 bg-sheet text-left flex items-center gap-3 hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable"
             >
-              부모님 생신을 모릅니다 — 그래도 응시하기
+              {/* 체크박스를 찍어 스스로 신고하는 모양 — OMR 마킹과 같은 동작이다 */}
+              <span
+                aria-hidden="true"
+                className="shrink-0 w-6 h-6 rounded-mark border-[1.5px] border-ink/40 group-hover:border-graphite group-hover:bg-graphite transition-colors"
+              />
+              <span className="flex flex-col">
+                <span className="text-sm text-ink">
+                  저는 부모님 생신을 모릅니다
+                </span>
+                <span className="text-xs text-ink-faint mt-0.5">
+                  네, 제가 그 쓰레기입니다. 응시를 포기합니다
+                </span>
+              </span>
             </button>
           </div>
 
@@ -257,7 +288,7 @@ export default function Home() {
           <div className="pt-2">
             <Link
               href="/parent"
-              className="flex items-center justify-center gap-2 w-full border-y border-ink/20 text-ink-muted px-4 py-3.5 text-sm hover:text-ink hover:border-ink/40 transition-colors"
+              className="flex items-center justify-center gap-2 w-full border-y border-ink/20 text-ink-muted px-4 py-3.5 text-sm hover:text-ink hover:border-ink/40 pressable"
             >
               <Users className="w-4 h-4 text-grading shrink-0" />
               부모님이세요? 2교시 자녀 탐구영역 응시하러 가기

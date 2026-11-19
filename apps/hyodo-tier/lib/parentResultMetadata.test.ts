@@ -21,9 +21,10 @@ describe('buildParentResultMetadata', () => {
 
   // 이 서비스가 자식편에서 이미 겪은 버그다 — 유형이 경로에 없으면
   // 공유된 링크가 전부 같은 OG 이미지로 노출된다.
-  it('8유형 모두 서로 다른 canonical과 OG 이미지를 가진다', () => {
+  it('모든 유형이 서로 다른 canonical과 OG 이미지를 가진다', () => {
+    const TYPE_COUNT = Object.keys(PARENT_RESULTS).length;
     const ids = Object.keys(PARENT_RESULTS);
-    expect(ids).toHaveLength(8);
+    expect(ids).toHaveLength(TYPE_COUNT);
 
     const canonicals = new Set<string>();
     const ogImages = new Set<string>();
@@ -44,8 +45,8 @@ describe('buildParentResultMetadata', () => {
       ogImages.add(ogImage);
     }
 
-    expect(canonicals.size).toBe(8);
-    expect(ogImages.size).toBe(8);
+    expect(canonicals.size).toBe(TYPE_COUNT);
+    expect(ogImages.size).toBe(TYPE_COUNT);
   });
 
   it('canonical이 부모편 경로를 가리킨다', () => {
