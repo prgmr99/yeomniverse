@@ -88,9 +88,16 @@ export default function ParentHome() {
       <section className="flex flex-col items-center justify-center w-full pt-8">
         {/* 상단: 시험지 표제부 */}
         <div
-          className="rise-in w-full border-b-[3px] border-ink pb-3 mb-6"
+          className="rise-in relative w-full border-b-[3px] border-ink pb-3 mb-6"
           style={{ '--rise': 0 } as React.CSSProperties}
         >
+          {/* 접수처에서 눌러 찍은 검인. 진짜 시험지가 아니라 패러디라는 신호다. */}
+          <span
+            aria-hidden="true"
+            className="inspection-seal absolute right-0 top-5 w-14 h-14 text-[11px] font-serif font-bold leading-tight text-center"
+          >
+            검인
+          </span>
           <div className="min-h-[24px] mb-2">
             {parentsDayBadge && (
               <span className="inline-flex items-center gap-1.5 text-[11px] font-sans font-bold text-grading border border-grading/35 px-2 py-0.5 rounded-sheet">

@@ -141,6 +141,46 @@
   animation-delay: calc(var(--rise, 0) * 80ms);
 }
 
+/* ── 채점자의 흔적 ───────────────────────────────────────
+   이 서비스는 시험지가 아니라 시험지 패러디다. 농담이 카피에만 있고
+   지면에는 없으면 그냥 관공서 양식으로 읽힌다. 빨간 펜을 꺼낸다. */
+
+/* 정답에 치는 동그라미. 일부러 찌그러뜨려야 손으로 그린 것으로 읽힌다. */
+@utility graded-circle {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -16% -7%;
+    border: 2.5px solid var(--color-grading);
+    border-radius: 47% 53% 51% 49% / 56% 44% 56% 44%;
+    opacity: 0.5;
+    transform: rotate(-1.5deg);
+    pointer-events: none;
+  }
+}
+
+/* 접수처에서 눌러 찍은 검인. 비뚤어야 사람이 찍은 것으로 보인다. */
+@utility inspection-seal {
+  display: inline-grid;
+  place-items: center;
+  border: 2px solid var(--color-grading);
+  border-radius: var(--radius-sheet);
+  color: var(--color-grading);
+  opacity: 0.42;
+  transform: rotate(-11deg);
+  letter-spacing: 0.1em;
+}
+
+/* 모눈. 점수를 '손으로 찍은 도표'로 읽히게 하는 바탕. */
+@utility grid-paper {
+  background-image:
+    linear-gradient(to right, rgba(27, 23, 20, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(27, 23, 20, 0.055) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
 /* 점수·번호·문항수는 자리가 흔들리면 표가 아니라 목록으로 읽힌다. */
 @utility tabular {
   font-variant-numeric: tabular-nums;

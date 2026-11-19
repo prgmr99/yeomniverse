@@ -197,7 +197,7 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
               2026학년도 효도능력시험 · 부모편
             </p>
             <h1 className="text-[1.75rem] font-serif font-black text-ink break-keep leading-tight text-balance">
-              {result.title}
+              <span className="graded-circle inline-block">{result.title}</span>
             </h1>
           </div>
 
@@ -282,7 +282,7 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
         <h2 className="text-xs font-sans font-bold tracking-[0.18em] text-ink-muted mb-2">
           영역별 성적
         </h2>
-        <div className="border border-ink/25 rounded-sheet divide-y divide-ink/12 bg-sheet">
+        <div className="grid-paper border border-ink/25 rounded-sheet divide-y divide-ink/12 bg-sheet">
           <ScoreBar
             label="관심도"
             note="지식"
