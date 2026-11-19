@@ -13,19 +13,6 @@ import type { OgTemplateProps } from './templates/types';
 
 export const runtime = 'edge';
 
-// 배경색 매핑 (Tailwind 클래스를 hex로 변환)
-const bgColorMap: Record<string, string> = {
-  'bg-purple-100': '#f3e8ff',
-  'bg-yellow-100': '#fef9c3',
-  'bg-blue-100': '#dbeafe',
-  'bg-green-100': '#dcfce7',
-  'bg-pink-100': '#fce7f3',
-  'bg-orange-100': '#ffedd5',
-  'bg-slate-200': '#e2e8f0',
-  'bg-stone-200': '#e7e5e4',
-  'bg-gray-300': '#d1d5db',
-};
-
 const RATIOS = {
   og: { width: 1200, height: 630 },
   story: { width: 1080, height: 1920 },
@@ -43,21 +30,25 @@ const OG_STATIC_TEXT = [
   '자식도 풀러가기 →',
   '너도 테스트 하러가기 →',
   '등급',
+  '날인',
   '0123456789"',
   'hyodo-tier.yeomniverse.com',
 ].join('');
 
 // gstatic 직링크는 폰트 버전이 바뀌면 404가 되므로 CSS API로 매번 해석한다.
 // satori는 woff2를 읽지 못해 truetype/opentype src만 사용한다.
-async function loadNotoSansKr(text: string): Promise<ArrayBuffer> {
-  const cssUrl = `https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&text=${encodeURIComponent(text)}`;
+async function loadGoogleFont(
+  family: string,
+  text: string,
+): Promise<ArrayBuffer> {
+  const cssUrl = `https://fonts.googleapis.com/css2?family=${family}:wght@700&text=${encodeURIComponent(text)}`;
   const css = await fetch(cssUrl).then((res) => res.text());
   const src = css.match(
     /src:\s*url\((\S+?)\)\s*format\('(?:truetype|opentype)'\)/,
   );
 
   if (!src?.[1]) {
-    throw new Error('Noto Sans KR truetype src not found in CSS response');
+    throw new Error(`${family} truetype src not found in CSS response`);
   }
 
   return fetch(src[1]).then((res) => res.arrayBuffer());
@@ -98,15 +89,17 @@ export async function GET(req: NextRequest) {
       title: result.title,
       subtitle: result.subtitle,
       grade: `${result.grade}등급`,
-      bgColor: bgColorMap[result.imageColor] || '#f5f5f4',
       hasScores,
       scores,
     };
 
-    // 한글 폰트 로드 (이 이미지에 실제로 쓰이는 글자만 서브셋으로 받는다)
-    const fontData = await loadNotoSansKr(
-      OG_STATIC_TEXT + props.title + props.subtitle + props.grade,
-    );
+    // 한글 폰트 로드 (이 이미지에 실제로 쓰이는 글자만 서브셋으로 받는다).
+    // 표제·유형·등급은 본문과 다른 활자여야 시험지로 읽혀서 명조까지 받는다.
+    const subset = OG_STATIC_TEXT + props.title + props.subtitle + props.grade;
+    const [sansData, serifData] = await Promise.all([
+      loadGoogleFont('Noto+Sans+KR', subset),
+      loadGoogleFont('Noto+Serif+KR', subset),
+    ]);
 
     return new ImageResponse(
       ratio === 'story' ? (
@@ -116,7 +109,10 @@ export async function GET(req: NextRequest) {
       ),
       {
         ...RATIOS[ratio],
-        fonts: [{ name: 'NotoSansKR', data: fontData, style: 'normal' }],
+        fonts: [
+          { name: 'NotoSansKR', data: sansData, style: 'normal' },
+          { name: 'NotoSerifKR', data: serifData, style: 'normal' },
+        ],
       },
     );
   } catch (e: unknown) {

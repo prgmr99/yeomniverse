@@ -1,7 +1,9 @@
 import {
+  axesOf,
   ctaOf,
-  DOT_BACKGROUND,
+  OG,
   type OgTemplateProps,
+  PAPER_BACKGROUND,
   subtitleOf,
 } from './types';
 
@@ -15,10 +17,12 @@ export function StoryCard({
   title,
   subtitle,
   grade,
-  bgColor,
   hasScores,
   scores,
 }: OgTemplateProps) {
+  // "4등급" → 숫자와 '등급'을 따로 쌓는다 (웹 성적표의 도장과 같은 구성)
+  const gradeNumber = grade.replace('등급', '');
+
   return (
     <div
       style={{
@@ -28,136 +32,179 @@ export function StoryCard({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: bgColor,
-        backgroundImage: DOT_BACKGROUND,
-        backgroundSize: '100px 100px',
+        backgroundColor: OG.paper,
+        backgroundImage: PAPER_BACKGROUND,
         padding: `${SAFE_TOP}px 70px ${SAFE_BOTTOM}px`,
         fontFamily: 'NotoSansKR',
+        color: OG.ink,
       }}
     >
-      {/* 상단 브랜딩 */}
+      {/* 표제부 */}
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '10px',
+          width: '100%',
+          borderBottom: `4px solid ${OG.ink}`,
+          paddingBottom: '28px',
         }}
       >
         <div
           style={{
-            fontSize: '48px',
-            fontWeight: 900,
-            color: '#292524',
-            letterSpacing: '-0.02em',
+            fontSize: '28px',
+            color: OG.inkMuted,
+            letterSpacing: '0.22em',
+            fontFamily: 'NotoSerifKR',
+          }}
+        >
+          {subtitleOf(mode)}
+        </div>
+        <div
+          style={{
+            fontSize: '56px',
+            marginTop: '14px',
+            fontFamily: 'NotoSerifKR',
+            color: OG.ink,
           }}
         >
           효도티어
         </div>
-        <div style={{ fontSize: '26px', color: '#78716c', fontWeight: 500 }}>
-          {subtitleOf(mode)}
-        </div>
       </div>
 
-      {/* 중앙 컨텐츠 */}
+      {/* 중앙 — 도장과 유형 */}
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center',
-          gap: '48px',
           textAlign: 'center',
         }}
       >
-        {/* 등급 스탬프 */}
+        {/* 날인란 */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            border: '10px solid #dc2626',
-            borderRadius: '24px',
-            padding: '24px 72px',
-            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-            transform: 'rotate(-4deg)',
+            width: '260px',
+            height: '260px',
+            border: `3px dashed ${OG.rule}`,
+            position: 'relative',
           }}
         >
           <div
             style={{
-              fontSize: '104px',
-              fontWeight: 900,
-              color: '#dc2626',
-              letterSpacing: '-0.02em',
+              display: 'flex',
+              position: 'absolute',
+              top: '18px',
+              fontSize: '24px',
+              letterSpacing: '0.2em',
+              color: OG.inkFaint,
             }}
           >
-            {grade}
+            날인
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '200px',
+              height: '166px',
+              marginTop: '26px',
+              border: `8px solid ${OG.grading}`,
+              borderRadius: '3px',
+              color: OG.grading,
+              transform: 'rotate(-9deg)',
+              fontFamily: 'NotoSerifKR',
+            }}
+          >
+            <div style={{ fontSize: '94px', lineHeight: 1 }}>{gradeNumber}</div>
+            <div style={{ fontSize: '36px', lineHeight: 1, marginTop: '10px' }}>
+              등급
+            </div>
           </div>
         </div>
 
-        {/* 캐릭터 타이틀 */}
         <div
           style={{
             display: 'flex',
-            flexDirection: 'column',
-            gap: '24px',
-            alignItems: 'center',
+            fontSize: '92px',
+            lineHeight: 1.15,
+            marginTop: '72px',
+            fontFamily: 'NotoSerifKR',
+            color: OG.ink,
+            maxWidth: '900px',
           }}
         >
-          <div
-            style={{
-              fontSize: '76px',
-              fontWeight: 900,
-              color: '#1c1917',
-              lineHeight: 1.15,
-              letterSpacing: '-0.03em',
-              maxWidth: '900px',
-            }}
-          >
-            {title}
-          </div>
-          <div
-            style={{
-              fontSize: '34px',
-              color: '#57534e',
-              fontWeight: 500,
-              lineHeight: 1.35,
-              maxWidth: '860px',
-            }}
-          >
-            {`"${subtitle}"`}
-          </div>
+          {title}
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            fontSize: '36px',
+            color: OG.inkMuted,
+            lineHeight: 1.35,
+            marginTop: '26px',
+            maxWidth: '860px',
+          }}
+        >
+          {`"${subtitle}"`}
         </div>
 
-        {/* 점수 필 — 세 점수가 모두 0이면 숨김 */}
+        {/* 성적 일람표 */}
         {hasScores && (
-          <div style={{ display: 'flex', gap: '24px' }}>
-            {[
-              { label: '관심도', value: scores.interest },
-              { label: '친밀도', value: scores.intimacy },
-              { label: '표현력', value: scores.expression },
-            ].map((pill) => (
+          <div
+            style={{
+              display: 'flex',
+              marginTop: '64px',
+              borderTop: `2px solid ${OG.rule}`,
+              paddingTop: '32px',
+            }}
+          >
+            {axesOf(scores).map((axis) => (
               <div
-                key={pill.label}
+                key={axis.label}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  padding: '24px 36px',
-                  borderRadius: '20px',
-                  backgroundColor: 'rgba(255,255,255,0.85)',
-                  minWidth: '160px',
+                  width: '200px',
                 }}
               >
-                <span
-                  style={{ fontSize: 52, fontWeight: 900, color: '#1c1917' }}
+                <div
+                  style={{
+                    display: 'flex',
+                    fontSize: '26px',
+                    color: OG.inkFaint,
+                  }}
                 >
-                  {pill.value}
-                </span>
-                <span style={{ fontSize: 22, color: '#57534e', marginTop: 6 }}>
-                  {pill.label}
-                </span>
+                  {axis.label}
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    fontSize: '62px',
+                    lineHeight: 1,
+                    marginTop: '10px',
+                    fontFamily: 'NotoSerifKR',
+                    color: OG.ink,
+                  }}
+                >
+                  {axis.value}
+                </div>
+                {/* 축 색은 웹 성적표의 막대와 같은 잉크다 */}
+                <div
+                  style={{
+                    display: 'flex',
+                    width: '74px',
+                    height: '8px',
+                    marginTop: '16px',
+                    backgroundColor: axis.color,
+                  }}
+                />
               </div>
             ))}
           </div>
@@ -170,7 +217,6 @@ export function StoryCard({
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '22px',
         }}
       >
         <div
@@ -178,18 +224,23 @@ export function StoryCard({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: '#292524',
-            color: 'white',
+            backgroundColor: OG.ink,
+            color: OG.paper,
             padding: '26px 52px',
-            borderRadius: '18px',
-            fontSize: '32px',
-            fontWeight: 700,
-            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
+            borderRadius: '2px',
+            fontSize: '34px',
           }}
         >
-          <span>{ctaOf(mode)}</span>
+          {ctaOf(mode)}
         </div>
-        <div style={{ fontSize: '26px', color: '#78716c', fontWeight: 500 }}>
+        <div
+          style={{
+            display: 'flex',
+            fontSize: '26px',
+            color: OG.inkFaint,
+            marginTop: '24px',
+          }}
+        >
           hyodo-tier.yeomniverse.com
         </div>
       </div>

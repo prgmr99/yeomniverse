@@ -1,7 +1,9 @@
 import {
+  axesOf,
   ctaOf,
-  DOT_BACKGROUND,
+  OG,
   type OgTemplateProps,
+  PAPER_BACKGROUND,
   subtitleOf,
 } from './types';
 
@@ -11,10 +13,12 @@ export function LandscapeCard({
   title,
   subtitle,
   grade,
-  bgColor,
   hasScores,
   scores,
 }: OgTemplateProps) {
+  // "4등급" → 숫자와 '등급'을 따로 쌓는다 (웹 성적표의 도장과 같은 구성)
+  const gradeNumber = grade.replace('등급', '');
+
   return (
     <div
       style={{
@@ -22,168 +26,209 @@ export function LandscapeCard({
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: bgColor,
-        backgroundImage: DOT_BACKGROUND,
-        backgroundSize: '100px 100px',
-        padding: '60px',
-        position: 'relative',
+        justifyContent: 'space-between',
+        backgroundColor: OG.paper,
+        backgroundImage: PAPER_BACKGROUND,
+        padding: '52px 60px',
         fontFamily: 'NotoSansKR',
+        color: OG.ink,
       }}
     >
-      {/* 상단 브랜딩 */}
+      {/* 표제부 — 왼쪽은 발행 정보, 오른쪽은 날인란 */}
       <div
         style={{
-          position: 'absolute',
-          top: '40px',
-          left: '60px',
           display: 'flex',
-          flexDirection: 'column',
-          gap: '4px',
+          width: '100%',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          borderBottom: `3px solid ${OG.ink}`,
+          paddingBottom: '22px',
         }}
       >
-        <div
-          style={{
-            fontSize: '28px',
-            fontWeight: 900,
-            color: '#292524',
-            letterSpacing: '-0.02em',
-          }}
-        >
-          효도티어
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div
+            style={{
+              fontSize: '22px',
+              color: OG.inkMuted,
+              letterSpacing: '0.22em',
+              fontFamily: 'NotoSerifKR',
+            }}
+          >
+            {subtitleOf(mode)}
+          </div>
+          <div
+            style={{
+              fontSize: '40px',
+              marginTop: '10px',
+              fontFamily: 'NotoSerifKR',
+              color: OG.ink,
+            }}
+          >
+            효도티어
+          </div>
         </div>
-        <div style={{ fontSize: '16px', color: '#78716c', fontWeight: 500 }}>
-          {subtitleOf(mode)}
-        </div>
-      </div>
 
-      {/* 중앙 컨텐츠 */}
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '32px',
-          textAlign: 'center',
-          maxWidth: '900px',
-        }}
-      >
-        {/* 등급 스탬프 */}
+        {/* 날인란 — 도장이 들어올 자리를 비워 둔 칸 */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            border: '8px solid #dc2626',
-            borderRadius: '20px',
-            padding: '20px 60px',
-            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-            transform: 'rotate(-4deg)',
+            width: '150px',
+            height: '150px',
+            border: `2px dashed ${OG.rule}`,
+            position: 'relative',
           }}
         >
           <div
             style={{
-              fontSize: '80px',
-              fontWeight: 900,
-              color: '#dc2626',
-              letterSpacing: '-0.02em',
+              display: 'flex',
+              position: 'absolute',
+              top: '10px',
+              fontSize: '15px',
+              letterSpacing: '0.2em',
+              color: OG.inkFaint,
             }}
           >
-            {grade}
-          </div>
-        </div>
-
-        {/* 캐릭터 타이틀 */}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '16px',
-            alignItems: 'center',
-          }}
-        >
-          <div
-            style={{
-              fontSize: '68px',
-              fontWeight: 900,
-              color: '#1c1917',
-              lineHeight: 1.1,
-              letterSpacing: '-0.03em',
-            }}
-          >
-            {title}
+            날인
           </div>
           <div
             style={{
-              fontSize: '32px',
-              color: '#57534e',
-              fontWeight: 500,
-              lineHeight: 1.3,
-              maxWidth: '800px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '116px',
+              height: '96px',
+              marginTop: '16px',
+              border: `5px solid ${OG.grading}`,
+              borderRadius: '2px',
+              color: OG.grading,
+              transform: 'rotate(-9deg)',
+              fontFamily: 'NotoSerifKR',
             }}
           >
-            {`"${subtitle}"`}
-          </div>
-
-          {/* 점수 필 — 세 점수가 모두 0이면 숨김 */}
-          {hasScores && (
-            <div style={{ display: 'flex', gap: '20px', marginTop: '24px' }}>
-              {[
-                { label: '관심도', value: scores.interest },
-                { label: '친밀도', value: scores.intimacy },
-                { label: '표현력', value: scores.expression },
-              ].map((pill) => (
-                <div
-                  key={pill.label}
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    padding: '16px 28px',
-                    borderRadius: '16px',
-                    backgroundColor: 'rgba(255,255,255,0.85)',
-                    minWidth: '120px',
-                  }}
-                >
-                  <span
-                    style={{ fontSize: 36, fontWeight: 900, color: '#1c1917' }}
-                  >
-                    {pill.value}
-                  </span>
-                  <span
-                    style={{ fontSize: 16, color: '#57534e', marginTop: 4 }}
-                  >
-                    {pill.label}
-                  </span>
-                </div>
-              ))}
+            <div style={{ fontSize: '54px', lineHeight: 1 }}>{gradeNumber}</div>
+            <div style={{ fontSize: '21px', lineHeight: 1, marginTop: '6px' }}>
+              등급
             </div>
-          )}
+          </div>
         </div>
       </div>
 
-      {/* 하단 CTA */}
+      {/* 유형 — 카드에서 제일 먼저 읽혀야 하는 줄 */}
       <div
         style={{
-          position: 'absolute',
-          bottom: '40px',
-          right: '60px',
           display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
-          backgroundColor: '#292524',
-          color: 'white',
-          padding: '18px 36px',
-          borderRadius: '14px',
-          fontSize: '22px',
-          fontWeight: 700,
-          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
+          flexDirection: 'column',
+          marginTop: '8px',
         }}
       >
-        <span>{ctaOf(mode)}</span>
+        <div
+          style={{
+            fontSize: '82px',
+            lineHeight: 1.12,
+            fontFamily: 'NotoSerifKR',
+            color: OG.ink,
+            maxWidth: '1000px',
+          }}
+        >
+          {title}
+        </div>
+        <div
+          style={{
+            fontSize: '30px',
+            color: OG.inkMuted,
+            marginTop: '18px',
+            maxWidth: '900px',
+          }}
+        >
+          {`"${subtitle}"`}
+        </div>
+      </div>
+
+      {/* 하단 — 성적 일람표와 CTA가 한 줄에 선다 */}
+      <div
+        style={{
+          display: 'flex',
+          width: '100%',
+          alignItems: 'flex-end',
+          justifyContent: 'space-between',
+          borderTop: `1px solid ${OG.rule}`,
+          paddingTop: '22px',
+        }}
+      >
+        {hasScores ? (
+          <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+            {axesOf(scores).map((axis) => (
+              <div
+                key={axis.label}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  marginRight: '44px',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    fontSize: '19px',
+                    color: OG.inkFaint,
+                  }}
+                >
+                  {axis.label}
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-end',
+                    marginTop: '6px',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      fontSize: '44px',
+                      lineHeight: 1,
+                      fontFamily: 'NotoSerifKR',
+                      color: OG.ink,
+                    }}
+                  >
+                    {axis.value}
+                  </div>
+                  {/* 축 색은 웹 성적표의 막대와 같은 잉크다 */}
+                  <div
+                    style={{
+                      display: 'flex',
+                      width: '52px',
+                      height: '6px',
+                      marginLeft: '10px',
+                      marginBottom: '6px',
+                      backgroundColor: axis.color,
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div style={{ display: 'flex' }} />
+        )}
+
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: OG.ink,
+            color: OG.paper,
+            padding: '18px 34px',
+            borderRadius: '2px',
+            fontSize: '24px',
+          }}
+        >
+          {ctaOf(mode)}
+        </div>
       </div>
     </div>
   );
