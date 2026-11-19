@@ -248,16 +248,17 @@ function QuizContent() {
           >
             {/* 질문 텍스트 */}
             <div className="space-y-3">
-              <span className="text-grading font-bold font-serif text-xl border-b-2 border-grading/20 inline-block pb-1">
-                문제 {currentQuestion.id}
+              <span className="inline-block font-serif font-bold text-lg text-ink border-b-2 border-grading pb-0.5 tabular">
+                문 {currentQuestion.id}.
               </span>
-              <h2 className="text-2xl font-serif font-bold leading-snug break-keep text-ink">
+              <h2 className="text-[1.6rem] font-serif font-bold leading-snug break-keep text-balance text-ink">
                 {currentQuestion.q}
               </h2>
             </div>
 
-            {/* 선택지 목록 — 네이티브 라디오라 화살표 키 이동과 그룹 시맨틱이 따라온다 */}
-            <fieldset className="space-y-3">
+            {/* 답안지 — 네이티브 라디오라 화살표 키 이동과 그룹 시맨틱이 따라온다.
+                마킹은 연필(그래파이트)로 한다. 빨강은 채점자의 펜이라 여기 쓰지 않는다. */}
+            <fieldset className="border-y border-ink/20 divide-y divide-ink/12">
               <legend className="sr-only">{currentQuestion.q}</legend>
               {currentQuestion.options.map((option, index) => {
                 const isSelected = index === selectedIndex;
@@ -274,25 +275,28 @@ function QuizContent() {
                     />
                     <label
                       htmlFor={optionId}
-                      className={`w-full text-left p-5 rounded-xl border-2 transition-all group flex items-center justify-between shadow-sm cursor-pointer peer-focus-visible:ring-2 peer-focus-visible:ring-grading peer-focus-visible:ring-offset-2 ${
-                        isSelected
-                          ? 'border-grading bg-grading/10 active:scale-[0.98]'
-                          : 'border-stone-200 bg-white/60 hover:bg-stone-100 hover:border-omr active:scale-[0.98] active:bg-stone-200'
+                      className={`w-full text-left py-4 pl-1 pr-1 transition-colors group flex items-center justify-between gap-4 cursor-pointer peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-grading ${
+                        isSelected ? 'bg-shade' : 'hover:bg-shade/60'
                       }`}
                     >
                       <span
-                        className={`font-sans text-lg ${isSelected ? 'text-ink font-medium' : 'text-ink/90 group-hover:font-medium'}`}
+                        className={`font-sans text-[1.0625rem] leading-relaxed break-keep ${
+                          isSelected ? 'text-ink font-medium' : 'text-ink-muted'
+                        }`}
                       >
                         {option.text}
                       </span>
-                      {/* OMR 마킹 느낌의 체크박스 */}
-                      <div
-                        className={`w-6 h-6 rounded-full border-2 transition-all shrink-0 ml-3 ${
+                      {/* OMR 마킹란 — 번호가 적힌 원을 연필로 칠한다 */}
+                      <span
+                        aria-hidden="true"
+                        className={`shrink-0 w-7 h-7 rounded-mark border-[1.5px] grid place-items-center text-[13px] font-bold tabular transition-colors ${
                           isSelected
-                            ? 'bg-grading border-grading scale-110'
-                            : 'border-stone-300 group-hover:border-grading group-hover:bg-grading'
+                            ? 'bg-graphite border-graphite text-paper'
+                            : 'border-ink/40 text-ink-faint group-hover:border-ink group-hover:text-ink'
                         }`}
-                      />
+                      >
+                        {index + 1}
+                      </span>
                     </label>
                   </div>
                 );

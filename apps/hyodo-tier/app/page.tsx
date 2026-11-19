@@ -2,7 +2,17 @@
 
 import { trackEvent } from '@hyo/ui';
 import { PARENT_QUESTION_COUNT, QUESTION_COUNT } from '@hyo/utils';
-import { AlertCircle, BookOpen, ChevronRight, Users } from 'lucide-react';
+import {
+  AlertCircle,
+  BarChart3,
+  ChevronRight,
+  Compass,
+  Flower2,
+  Info,
+  MessageCircleQuestion,
+  TriangleAlert,
+  Users,
+} from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Script from 'next/script';
@@ -100,41 +110,44 @@ export default function Home() {
   return (
     <main className="flex flex-col min-h-screen p-6 text-center animate-fade-in">
       <section className="flex flex-col items-center justify-center w-full pt-8">
-        {/* 상단: 시험 정보 헤더 */}
-        <div className="w-full border-b-2 border-ink pb-4 mb-4">
-          <div className="min-h-[26px] mb-2">
+        {/* 상단: 시험지 표제부 */}
+        <div className="w-full border-b-[3px] border-ink pb-3 mb-6">
+          <div className="min-h-[24px] mb-2">
             {parentsDayBadge && (
-              <span className="inline-flex items-center gap-1 text-[11px] font-sans font-bold bg-grading/10 text-grading px-2 py-0.5 rounded-full">
-                🌸 {parentsDayBadge}
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-sans font-bold text-grading border border-grading/35 px-2 py-0.5 rounded-sheet">
+                <Flower2 className="w-3 h-3" aria-hidden="true" />
+                {parentsDayBadge}
               </span>
             )}
           </div>
-          <p className="text-sm font-serif font-bold tracking-widest mb-1">
-            제1교시
+          <p className="text-[13px] font-serif font-bold tracking-[0.4em] indent-[0.4em] text-ink-muted mb-1">
+            제 1 교시
           </p>
-          <h1 className="text-4xl font-serif font-black tracking-tighter">
+          <h1 className="text-[2.6rem] leading-[1.1] font-serif font-black">
             부모님 탐구영역
           </h1>
-          <div className="flex justify-between items-end mt-2 px-2">
-            <span className="text-xs font-sans bg-omr text-white px-2 py-0.5 rounded-sm">
+          <div className="flex justify-between items-end mt-3">
+            <span className="text-[11px] font-sans font-bold tracking-widest bg-omr text-paper px-2 py-1 rounded-sheet">
               홀수형
             </span>
-            <span className="text-lg font-serif font-bold">효도티어</span>
+            <span className="text-base font-serif font-bold text-ink-muted">
+              효도티어
+            </span>
           </div>
         </div>
 
-        {/* 메인: 설명 텍스트 */}
-        <div className="space-y-4 py-8">
-          <div className="bg-white/50 border border-ink/10 p-6 rounded-lg shadow-sm backdrop-blur-sm">
-            <BookOpen className="w-10 h-10 mx-auto mb-4 text-grading opacity-80" />
-            <h2 className="text-xl font-serif font-bold mb-2 whitespace-pre-line">
+        {/* 메인: 지시문 — 카드가 아니라 시험지에 인쇄된 블록이다 */}
+        <div className="w-full py-2 mb-8">
+          <div className="border-y border-ink/25 py-7 px-1 text-center">
+            <h2 className="text-[1.35rem] leading-snug font-serif font-bold mb-4 whitespace-pre-line text-balance">
               {`"당신은 부모님에 대해\n얼마나 알고 있습니까?"`}
             </h2>
-            <p className="text-sm text-ink/70 leading-relaxed whitespace-pre-line">
-              {`이 시험은 단순한 심리테스트가 아닙니다.\n당신의 효도 등급을 냉정하게 판독합니다.\n\n`}
-              <span className="text-grading font-bold">
-                ※ 주의: 뼈 맞을 수 있음
-              </span>
+            <p className="text-sm text-ink-muted leading-relaxed whitespace-pre-line">
+              {`이 시험은 단순한 심리테스트가 아닙니다.\n당신의 효도 등급을 냉정하게 판독합니다.`}
+            </p>
+            {/* 채점자가 나중에 덧붙인 빨간 펜 주석처럼 */}
+            <p className="mt-5 inline-block -rotate-1 border-b-2 border-grading/50 text-grading font-bold text-sm pb-0.5">
+              ※ 주의: 뼈 맞을 수 있음
             </p>
           </div>
         </div>
@@ -143,14 +156,17 @@ export default function Home() {
         <div className="w-full space-y-6">
           <fieldset className="w-full space-y-3 text-ink font-serif">
             <legend className="w-full text-center text-base font-bold mb-3">
-              수험번호 (부모님 생년월일)
+              수험번호{' '}
+              <span className="font-sans text-xs font-normal text-ink-muted">
+                (부모님 생년월일)
+              </span>
             </legend>
 
             <div className="flex items-end justify-center gap-3">
               <div className="flex flex-col items-center gap-1.5">
                 <label
                   htmlFor="father-dob"
-                  className="text-xs font-sans font-bold text-ink/60"
+                  className="text-xs font-sans font-bold text-ink-muted"
                 >
                   아버지
                 </label>
@@ -165,18 +181,21 @@ export default function Home() {
                   onChange={(e) => setFatherDob(digitsOnly(e.target.value, 6))}
                   aria-invalid={Boolean(error)}
                   aria-describedby={error ? 'dob-error' : 'dob-help'}
-                  className="w-32 py-2 bg-transparent border-b-2 border-ink text-center text-base tracking-[0.2em] rounded-sm placeholder:text-ink/25 focus:outline-none focus:border-grading focus-visible:ring-2 focus-visible:ring-grading/50 transition-colors"
+                  className="entry-cells tabular w-[8.4em] py-2 bg-transparent text-left text-lg tracking-[0.85em] indent-[0.425em] rounded-none placeholder:text-ink-faint focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-grading transition-colors"
                 />
               </div>
 
-              <span aria-hidden="true" className="pb-2 font-bold text-ink/40">
+              <span
+                aria-hidden="true"
+                className="pb-2 font-bold text-ink-faint"
+              >
                 –
               </span>
 
               <div className="flex flex-col items-center gap-1.5">
                 <label
                   htmlFor="mother-dob"
-                  className="text-xs font-sans font-bold text-ink/60"
+                  className="text-xs font-sans font-bold text-ink-muted"
                 >
                   어머니
                 </label>
@@ -191,14 +210,14 @@ export default function Home() {
                   onChange={(e) => setMotherDob(digitsOnly(e.target.value, 6))}
                   aria-invalid={Boolean(error)}
                   aria-describedby={error ? 'dob-error' : 'dob-help'}
-                  className="w-32 py-2 bg-transparent border-b-2 border-ink text-center text-base tracking-[0.2em] rounded-sm placeholder:text-ink/25 focus:outline-none focus:border-grading focus-visible:ring-2 focus-visible:ring-grading/50 transition-colors"
+                  className="entry-cells tabular w-[8.4em] py-2 bg-transparent text-left text-lg tracking-[0.85em] indent-[0.425em] rounded-none placeholder:text-ink-faint focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-grading transition-colors"
                 />
               </div>
             </div>
 
             <p
               id="dob-help"
-              className="text-xs font-sans text-ink/50 text-center leading-relaxed"
+              className="text-xs font-sans text-ink-faint text-center leading-relaxed"
             >
               6자리로 입력하세요 (예: 580315). 결과 화면에서 생신을 캘린더에
               저장할 때 쓰입니다.
@@ -219,7 +238,7 @@ export default function Home() {
             <button
               type="button"
               onClick={handleStart}
-              className="w-full bg-omr text-white py-4 rounded-lg font-serif font-bold text-xl shadow-lg hover:bg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-all flex items-center justify-center gap-2"
+              className="w-full bg-ink text-paper py-4 rounded-sheet font-serif font-bold text-xl shadow-[0_1px_2px_rgba(0,0,0,0.2),0_6px_16px_-8px_rgba(0,0,0,0.5)] hover:bg-graphite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors flex items-center justify-center gap-2"
             >
               문제지 펼치기 <ChevronRight className="w-5 h-5" />
             </button>
@@ -228,7 +247,7 @@ export default function Home() {
             <button
               type="button"
               onClick={handleDontKnow}
-              className="w-full min-h-[52px] px-4 rounded-lg border-2 border-ink/15 bg-white/50 text-ink/70 text-sm font-sans hover:bg-white/80 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-all"
+              className="w-full min-h-[52px] px-4 rounded-sheet border border-ink/30 bg-sheet text-ink-muted text-sm font-sans hover:border-ink hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
             >
               부모님 생신을 모릅니다 — 그래도 응시하기
             </button>
@@ -238,26 +257,30 @@ export default function Home() {
           <div className="pt-2">
             <Link
               href="/parent"
-              className="flex items-center justify-center gap-2 w-full border border-ink/20 bg-white/60 text-ink/70 px-4 py-3 rounded-lg text-sm hover:bg-white/80 hover:text-ink transition-all"
+              className="flex items-center justify-center gap-2 w-full border-y border-ink/20 text-ink-muted px-4 py-3.5 text-sm hover:text-ink hover:border-ink/40 transition-colors"
             >
-              <Users className="w-4 h-4 text-grading" />
-              부모님이세요? 🌸 → 2교시 자녀 탐구영역 응시하러 가기
+              <Users className="w-4 h-4 text-grading shrink-0" />
+              부모님이세요? 2교시 자녀 탐구영역 응시하러 가기
             </Link>
           </div>
 
-          <p className="text-xs text-ink/60 mt-4">
+          <p className="text-xs text-ink-faint mt-4">
             Designed by Hyo-Do-Tier Committee. 2026
           </p>
         </div>
       </section>
 
-      <section className="mt-16 px-6 py-10 border-t border-ink/10 text-left space-y-8 bg-stone-100/50">
+      <section className="mt-16 px-6 py-10 border-t border-ink/20 text-left space-y-8 bg-shade">
         {/* 서비스 소개 */}
         <div className="space-y-2">
-          <h3 className="font-serif font-bold text-lg text-ink">
-            📌 효도티어란 무엇인가요?
+          <h3 className="font-serif font-bold text-lg text-ink flex items-center gap-2">
+            <Info
+              className="w-[18px] h-[18px] text-grading shrink-0"
+              aria-hidden="true"
+            />
+            효도티어란 무엇인가요?
           </h3>
-          <p className="text-sm text-ink/70 leading-relaxed break-keep">
+          <p className="text-sm text-ink-muted leading-relaxed break-keep">
             &apos;2026학년도 대국민 효도능력시험&apos;은 단순한 심리 테스트를
             넘어, 현대 사회에서 점차 잊혀가는 효(孝)의 가치를 재미있게 재해석한
             자기 진단 서비스입니다. 부모님에 대한 관심도, 친밀도, 그리고
@@ -268,10 +291,14 @@ export default function Home() {
 
         {/* 이용 방법 */}
         <div className="space-y-2">
-          <h3 className="font-serif font-bold text-lg text-ink">
-            🧭 어떻게 이용하나요?
+          <h3 className="font-serif font-bold text-lg text-ink flex items-center gap-2">
+            <Compass
+              className="w-[18px] h-[18px] text-grading shrink-0"
+              aria-hidden="true"
+            />
+            어떻게 이용하나요?
           </h3>
-          <p className="text-sm text-ink/70 leading-relaxed break-keep">
+          <p className="text-sm text-ink-muted leading-relaxed break-keep">
             생년월일을 넣고 1교시 &apos;부모님 탐구영역&apos; {QUESTION_COUNT}
             문항을 풉니다. 로그인은 없고 3분이면 끝납니다. 결과 화면에서는
             등급과 유형, 그리고 부모님께 그대로 여쭤볼 수 있는 질문지를 함께
@@ -284,17 +311,21 @@ export default function Home() {
 
         {/* 채점 기준 */}
         <div className="space-y-2">
-          <h3 className="font-serif font-bold text-lg text-ink">
-            📊 점수는 무엇으로 매기나요?
+          <h3 className="font-serif font-bold text-lg text-ink flex items-center gap-2">
+            <BarChart3
+              className="w-[18px] h-[18px] text-grading shrink-0"
+              aria-hidden="true"
+            />
+            점수는 무엇으로 매기나요?
           </h3>
-          <p className="text-sm text-ink/70 leading-relaxed break-keep">
+          <p className="text-sm text-ink-muted leading-relaxed break-keep">
             문항은 관심도, 친밀도, 표현력 세 축에 나뉘어 배치되어 있습니다.
             관심도는 부모님의 취향이나 최근 상황을 얼마나 알고 있는지, 친밀도는
             연락과 방문이 실제로 얼마나 이어지는지, 표현력은 마음을 말로 꺼내 본
             적이 있는지를 봅니다. 선택지마다 세 축의 점수가 더해지거나 깎이고,
             축마다 도달 가능한 범위가 달라 마지막에 각각 0~100으로 환산합니다.
           </p>
-          <p className="text-sm text-ink/70 leading-relaxed break-keep">
+          <p className="text-sm text-ink-muted leading-relaxed break-keep">
             유형은 총점이 아니라 세 축의 모양으로 정해집니다. 어느 축이 높고
             어느 축이 낮은지, 그리고 답변에서 드러난 성향이 함께 쓰입니다.
             그래서 세 축이 모두 높은 사람과 친밀도만 높은 사람은 다른 유형이
@@ -305,10 +336,14 @@ export default function Home() {
 
         {/* 한계 */}
         <div className="space-y-2">
-          <h3 className="font-serif font-bold text-lg text-ink">
-            ⚠️ 결과를 어디까지 믿어야 하나요?
+          <h3 className="font-serif font-bold text-lg text-ink flex items-center gap-2">
+            <TriangleAlert
+              className="w-[18px] h-[18px] text-grading shrink-0"
+              aria-hidden="true"
+            />
+            결과를 어디까지 믿어야 하나요?
           </h3>
-          <p className="text-sm text-ink/70 leading-relaxed break-keep">
+          <p className="text-sm text-ink-muted leading-relaxed break-keep">
             이 시험은 검증된 심리 척도가 아니라 대화를 열기 위해 만든
             장치입니다. 낮은 등급이 효심이 부족하다는 뜻은 아닙니다. 멀리 살거나
             교대 근무를 하거나 서로 표현에 서툰 집이라면 같은 마음으로도 점수가
@@ -320,15 +355,19 @@ export default function Home() {
 
         {/* FAQ 형태의 텍스트 콘텐츠 */}
         <div className="space-y-4">
-          <h3 className="font-serif font-bold text-lg text-ink">
+          <h3 className="font-serif font-bold text-lg text-ink flex items-center gap-2">
+            <MessageCircleQuestion
+              className="w-[18px] h-[18px] text-grading shrink-0"
+              aria-hidden="true"
+            />
             자주 묻는 질문 (FAQ)
           </h3>
 
           <div className="space-y-1">
-            <h4 className="font-bold text-sm text-ink/90">
+            <h4 className="font-bold text-sm text-ink">
               Q. 결과는 어떤 기준으로 산출되나요?
             </h4>
-            <p className="text-xs text-ink/60 leading-relaxed">
+            <p className="text-xs text-ink-muted leading-relaxed">
               총 {QUESTION_COUNT}개의 문항을 통해 사용자의 답변 패턴을
               분석합니다. 단순히 연락 빈도뿐만 아니라, 부모님의 취향을 얼마나
               파악하고 있는지, 감정적인 교류는 어떠한지 등을 입체적으로 평가하여
@@ -337,10 +376,10 @@ export default function Home() {
           </div>
 
           <div className="space-y-1">
-            <h4 className="font-bold text-sm text-ink/90">
+            <h4 className="font-bold text-sm text-ink">
               Q. 정말 1등급이 존재하나요?
             </h4>
-            <p className="text-xs text-ink/60 leading-relaxed">
+            <p className="text-xs text-ink-muted leading-relaxed">
               네, 존재합니다. &apos;전설의 유니콘 효자&apos; 유형은 상위 1%에
               해당하는 완벽한 밸런스를 가진 사용자에게만 부여됩니다. 하지만
               등급보다 중요한 것은 이 테스트를 계기로 부모님께 전화 한 통 더
@@ -349,10 +388,10 @@ export default function Home() {
           </div>
 
           <div className="space-y-1">
-            <h4 className="font-bold text-sm text-ink/90">
+            <h4 className="font-bold text-sm text-ink">
               Q. 개인정보는 저장되나요?
             </h4>
-            <p className="text-xs text-ink/60 leading-relaxed">
+            <p className="text-xs text-ink-muted leading-relaxed">
               아니요, 효도티어는 별도의 회원가입 없이 이용 가능하며, 입력하신
               모든 답변 데이터는 결과 산출 후 즉시 휘발됩니다. 안심하고 테스트를
               즐겨보세요.
@@ -360,10 +399,10 @@ export default function Home() {
           </div>
 
           <div className="space-y-1">
-            <h4 className="font-bold text-sm text-ink/90">
+            <h4 className="font-bold text-sm text-ink">
               Q. 부모님도 이 시험을 볼 수 있나요?
             </h4>
-            <p className="text-xs text-ink/60 leading-relaxed">
+            <p className="text-xs text-ink-muted leading-relaxed">
               네, 2교시 &apos;자녀 탐구영역&apos;을 만들었습니다. 부모님께서
               자식에 대해 얼마나 아시는지 {PARENT_QUESTION_COUNT}문항으로
               측정하고, 결과를 자식에게 공유하면 자식도 자기 점수를 볼 수
@@ -378,10 +417,10 @@ export default function Home() {
           </div>
 
           <div className="space-y-1">
-            <h4 className="font-bold text-sm text-ink/90">
+            <h4 className="font-bold text-sm text-ink">
               Q. 이 부모님 퀴즈를 부모님 자서전 만들기에 활용할 수 있나요?
             </h4>
-            <p className="text-xs text-ink/60 leading-relaxed">
+            <p className="text-xs text-ink-muted leading-relaxed">
               네. &apos;부모님 탐구영역&apos; {QUESTION_COUNT}문항은 그대로
               부모님 자서전 인터뷰의 첫 질문지로 사용할 수 있습니다. 자식이 먼저
               풀어 답을 적어보고, 같은 문항을 부모님께 다시 여쭤보면 답변에
@@ -396,7 +435,7 @@ export default function Home() {
           </div>
         </div>
 
-        <p className="text-xs text-ink/60 pt-4 border-t border-ink/5">
+        <p className="text-xs text-ink-faint pt-4 border-t border-ink/15">
           본 서비스는 엔터테인먼트 목적으로 제작되었으며, 전문적인 심리 상담
           결과를 대체할 수 없습니다.
         </p>
