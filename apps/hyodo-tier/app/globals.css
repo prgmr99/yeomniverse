@@ -261,14 +261,18 @@ a {
   text-decoration-thickness: from-font;
 }
 
-/* 스크롤 막대를 감춘다. 스크롤 자체는 그대로 동작한다. */
-html {
+/* 스크롤 막대를 감춘다. 스크롤 자체는 그대로 동작한다.
+   스크롤 주체가 html 인지 body 인지는 브라우저마다 다르고, overflow 를 가진
+   내부 컨테이너가 자기 막대를 그리기도 한다. 한 군데만 막으면 어딘가 남는다. */
+html,
+body {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
   display: none;
 }
 
