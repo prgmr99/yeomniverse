@@ -35,6 +35,7 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
     resetQuiz,
     currentStep,
     childProfile,
+    gaveUp,
   } = useParentQuizStore();
   const [isReady, setIsReady] = useState(false);
   const [toast, setToast] = useState<ToastMessage | null>(null);
@@ -140,26 +141,28 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
 
   useEffect(() => {
     if (!hydrated) return;
-    if (!sharedResultId && currentStep === 0) {
+    // 포기자는 푼 문제가 0개지만 결과를 볼 자격은 있다(백지도 제출이다)
+    if (!sharedResultId && currentStep === 0 && !gaveUp) {
       router.replace('/parent');
     } else {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsReady(true);
     }
-  }, [hydrated, currentStep, router, sharedResultId]);
+  }, [hydrated, currentStep, router, sharedResultId, gaveUp]);
 
   // 결과 도달 계측 (본인 응시 / 공유 링크 유입을 구분한다)
   useEffect(() => {
     if (!isReady || trackedResult.current) return;
     trackedResult.current = true;
 
+    if (gaveUp) return; // 포기는 홈에서 quiz_giveup 으로 이미 잡았다
     trackEvent(sharedResultId ? 'shared_link_opened' : 'quiz_complete', {
       mode: 'parent',
       result_id: result.id,
       grade: result.grade,
       ref: readShareRef(searchParams.get('ref')),
     });
-  }, [isReady, sharedResultId, result, searchParams]);
+  }, [isReady, sharedResultId, result, searchParams, gaveUp]);
 
   if (!isReady) return <Loading />;
 
@@ -311,7 +314,7 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
       >
         {/* 1순위 — 유형 랜딩·공유 링크로 들어온 방문자는 '응시',
             본인 응시자는 자식에게 넘기는 '공유'가 할 일이다. */}
-        {sharedResultId ? (
+        {sharedResultId || gaveUp ? (
           <Link
             href="/parent"
             onClick={() => {
@@ -323,7 +326,7 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
             }}
             className="relative w-full bg-ink text-paper py-4 rounded-sheet font-serif font-bold text-xl shadow-[0_1px_2px_rgba(0,0,0,0.2),0_6px_16px_-8px_rgba(0,0,0,0.5)] hover:bg-graphite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable flex items-center justify-center"
           >
-            나도 응시하기
+            {gaveUp ? '제대로 응시하기' : '나도 응시하기'}
             <ChevronRight className="absolute right-5 w-5 h-5" />
           </Link>
         ) : (
@@ -338,7 +341,7 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
 
         {/* 2순위 — 윤곽선. 1순위와 같은 폭이되 무게가 다르다 */}
         <div className="w-full space-y-2.5">
-          {sharedResultId && (
+          {(sharedResultId || gaveUp) && (
             <button
               type="button"
               className="relative w-full bg-[#FEE500] text-[#191919] py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink pressable"
@@ -375,8 +378,9 @@ function ParentResultContent({ forcedResultId }: ParentResultViewProps) {
 
         {/* 3순위 — 성적표 뒷면의 안내란. 버튼이 아니라 목록이다 */}
         <ul className="w-full border-y border-ink/20 divide-y divide-ink/12 pt-1">
-          {/* 응시 이력이 없는 방문자에게 "재시험"은 누를 이유가 없는 라벨이다. */}
-          {!sharedResultId && (
+          {/* 응시 이력이 없는 방문자에게 "재시험"은 누를 이유가 없는 라벨이다.
+              포기자는 위에 '제대로 응시하기'가 이미 있어 중복이다. */}
+          {!sharedResultId && !gaveUp && (
             <li>
               <Link
                 href="/parent"

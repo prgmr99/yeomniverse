@@ -70,6 +70,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
     currentStep,
     birthdays,
     skippedBirthday,
+    gaveUp,
   } = useQuizStore();
   const [isReady, setIsReady] = useState(false); // 클라이언트 렌더링 준비 여부
   const [toast, setToast] = useState<ToastMessage | null>(null);
@@ -214,13 +215,14 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
   useEffect(() => {
     if (!hydrated) return;
     // 공유된 결과가 없고, 푼 문제도 0개면 비정상 접근
-    if (!sharedResultId && currentStep === 0) {
+    // 포기자는 푼 문제가 0개지만 결과를 볼 자격은 있다(백지도 제출이다)
+    if (!sharedResultId && currentStep === 0 && !gaveUp) {
       router.replace('/');
     } else {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsReady(true);
     }
-  }, [hydrated, currentStep, router, sharedResultId]);
+  }, [hydrated, currentStep, router, sharedResultId, gaveUp]);
 
   // 결과 도달 계측 (본인 응시 / 공유 링크 유입을 구분한다)
   useEffect(() => {
@@ -235,6 +237,9 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
         has_parent_compare: Boolean(parentResultId),
         ref: shareRef,
       });
+    } else if (gaveUp) {
+      // 포기는 홈에서 이미 quiz_giveup 으로 잡았다. quiz_complete 를 여기서
+      // 또 쏘면 '15문항 완주'의 의미가 망가진다.
     } else {
       trackEvent('quiz_complete', {
         mode: 'child',
@@ -251,6 +256,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
     parentResultId,
     skippedBirthday,
     shareRef,
+    gaveUp,
   ]);
 
   if (!isReady) return <Loading />; // 리다이렉트 중 깜빡임 방지 및 푸터 점프 방지
@@ -487,7 +493,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
         style={{ '--rise': 4 } as React.CSSProperties}
       >
         {/* 1순위 — 공유로 들어온 방문자는 '응시', 본인 응시자는 '공유'가 할 일이다 */}
-        {sharedResultId ? (
+        {sharedResultId || gaveUp ? (
           <Link
             href="/"
             onClick={() => {
@@ -499,7 +505,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
             }}
             className="relative w-full bg-ink text-paper py-4 rounded-sheet font-serif font-bold text-xl shadow-[0_1px_2px_rgba(0,0,0,0.2),0_6px_16px_-8px_rgba(0,0,0,0.5)] hover:bg-graphite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable flex items-center justify-center"
           >
-            나도 응시하기
+            {gaveUp ? '제대로 응시하기' : '나도 응시하기'}
             <ChevronRight className="absolute right-5 w-5 h-5" />
           </Link>
         ) : (
@@ -514,7 +520,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
 
         {/* 2순위 — 윤곽선. 1순위와 같은 폭이되 무게가 다르다 */}
         <div className="w-full space-y-2.5">
-          {sharedResultId && (
+          {(sharedResultId || gaveUp) && (
             <button
               type="button"
               className="relative w-full bg-[#FEE500] text-[#191919] py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink pressable"
@@ -601,8 +607,9 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
               </li>
             )}
 
-          {/* 응시 이력이 없는 방문자에게 "재시험"은 누를 이유가 없는 라벨이다. */}
-          {!sharedResultId && (
+          {/* 응시 이력이 없는 방문자에게 "재시험"은 누를 이유가 없는 라벨이다.
+              포기자는 위에 '제대로 응시하기'가 이미 있어 중복이다. */}
+          {!sharedResultId && !gaveUp && (
             <li>
               <Link
                 href="/"

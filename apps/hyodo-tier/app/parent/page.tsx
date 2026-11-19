@@ -20,7 +20,7 @@ import { useParentQuizStore } from '@/store/useParentQuizStore';
 
 export default function ParentHome() {
   const router = useRouter();
-  const { setChildProfile } = useParentQuizStore();
+  const { setChildProfile, giveUp } = useParentQuizStore();
   const [childName, setChildName] = useState('');
   const [childBirthday, setChildBirthday] = useState('');
   const [error, setError] = useState('');
@@ -47,9 +47,11 @@ export default function ParentHome() {
     router.push('/parent/quiz');
   };
 
+  // 포기하면 백지 답안을 낸 것으로 친다. 점수 0이면 최하위 유형이 나온다.
   const handleDontKnow = () => {
-    trackEvent('quiz_start', { mode: 'parent', with_birthday: false });
-    router.push('/parent/quiz');
+    giveUp();
+    trackEvent('quiz_giveup', { mode: 'parent' });
+    router.push('/parent/result');
   };
 
   const faqSchema = {
@@ -253,7 +255,7 @@ export default function ParentHome() {
                   저는 자식 생일을 모릅니다
                 </span>
                 <span className="text-xs text-ink-faint mt-0.5">
-                  사람이니까요. 그대로 응시합니다
+                  네, 제가 그 쓰레기입니다. 응시를 포기합니다
                 </span>
               </span>
             </button>

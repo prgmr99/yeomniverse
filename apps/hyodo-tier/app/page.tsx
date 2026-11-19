@@ -24,7 +24,7 @@ import { useQuizStore } from '@/store/useQuizStore';
 
 export default function Home() {
   const router = useRouter();
-  const { setBirthdays, skipBirthdays } = useQuizStore();
+  const { setBirthdays, giveUp } = useQuizStore();
   const [fatherDob, setFatherDob] = useState('');
   const [motherDob, setMotherDob] = useState('');
   const [error, setError] = useState('');
@@ -54,10 +54,12 @@ export default function Home() {
     router.push('/quiz');
   };
 
+  // 포기하면 백지 답안을 낸 것으로 친다. 점수 0 + 생신 모름이면
+  // calculateResult 가 UNFILIAL('시험 볼 자격이 없습니다') 엔딩을 돌려준다.
   const handleDontKnow = () => {
-    skipBirthdays();
-    trackEvent('quiz_start', { mode: 'child', with_birthday: false });
-    router.push('/quiz');
+    giveUp();
+    trackEvent('quiz_giveup', { mode: 'child' });
+    router.push('/result');
   };
 
   const faqSchema = {
@@ -276,7 +278,7 @@ export default function Home() {
                   저는 부모님 생신을 모릅니다
                 </span>
                 <span className="text-xs text-ink-faint mt-0.5">
-                  사람이니까요. 그대로 응시합니다
+                  네, 제가 그 쓰레기입니다. 응시를 포기합니다
                 </span>
               </span>
             </button>
