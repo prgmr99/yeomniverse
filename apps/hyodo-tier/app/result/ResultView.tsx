@@ -482,17 +482,18 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
               });
               resetQuiz();
             }}
-            className="w-full bg-ink text-paper py-4 rounded-sheet font-serif font-bold text-xl shadow-[0_1px_2px_rgba(0,0,0,0.2),0_6px_16px_-8px_rgba(0,0,0,0.5)] hover:bg-graphite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors flex items-center justify-center gap-2"
+            className="relative w-full bg-ink text-paper py-4 rounded-sheet font-serif font-bold text-xl shadow-[0_1px_2px_rgba(0,0,0,0.2),0_6px_16px_-8px_rgba(0,0,0,0.5)] hover:bg-graphite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors flex items-center justify-center"
           >
-            나도 응시하기 <ChevronRight className="w-5 h-5" />
+            나도 응시하기
+            <ChevronRight className="absolute right-5 w-5 h-5" />
           </Link>
         ) : (
           <button
             type="button"
-            className="w-full bg-[#FEE500] text-[#191919] py-4 rounded-sheet font-bold text-lg flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(0,0,0,0.14),0_6px_16px_-8px_rgba(0,0,0,0.4)] hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink transition-all"
+            className="relative w-full bg-[#FEE500] text-[#191919] py-4 rounded-sheet font-bold text-lg flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.14),0_6px_16px_-8px_rgba(0,0,0,0.4)] hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink transition-all"
             onClick={handleShare}
           >
-            <Share2 className="w-5 h-5" /> 부모님께 공유하기
+            <Share2 className="absolute left-5 w-5 h-5" /> 부모님께 공유하기
           </button>
         )}
 
@@ -501,21 +502,22 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
           {sharedResultId && (
             <button
               type="button"
-              className="w-full bg-[#FEE500] text-[#191919] py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center gap-2 hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink transition-all"
+              className="relative w-full bg-[#FEE500] text-[#191919] py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink transition-all"
               onClick={handleShare}
             >
-              <Share2 className="w-[18px] h-[18px]" /> 이 성적표 공유하기
+              <Share2 className="absolute left-5 w-[18px] h-[18px]" /> 이 성적표
+              공유하기
             </button>
           )}
 
           {!sharedResultId && (
             <button
               type="button"
-              className="w-full bg-sheet border border-grading/50 text-grading py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center gap-2 hover:bg-grading-soft hover:border-grading focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+              className="relative w-full bg-sheet border border-grading/50 text-grading py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:bg-grading-soft hover:border-grading focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
               onClick={handleCopyMessage}
             >
-              <Heart className="w-[18px] h-[18px]" /> 어머니·아버지께 마음
-              전하기
+              <Heart className="absolute left-5 w-[18px] h-[18px]" />{' '}
+              어머니·아버지께 마음 전하기
             </button>
           )}
 
@@ -523,10 +525,10 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
           <button
             type="button"
             disabled={isSaving}
-            className="w-full bg-sheet border border-ink/30 text-ink py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center gap-2 hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            className="relative w-full bg-sheet border border-ink/30 text-ink py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             onClick={handleSaveCard}
           >
-            <ImageDown className="w-[18px] h-[18px]" />
+            <ImageDown className="absolute left-5 w-[18px] h-[18px]" />
             {isSaving ? '성적표 만드는 중...' : '성적표 이미지 저장'}
           </button>
 
@@ -541,10 +543,10 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
                   result_id: result.id,
                 })
               }
-              className="w-full bg-sheet border border-ink/30 text-ink py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center gap-2 hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+              className="relative w-full bg-sheet border border-ink/30 text-ink py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
             >
-              <Users className="w-[18px] h-[18px] text-grading" /> 부모님께
-              2교시 보내기
+              <Users className="absolute left-5 w-[18px] h-[18px] text-grading" />{' '}
+              부모님께 2교시 보내기
             </Link>
           )}
         </div>

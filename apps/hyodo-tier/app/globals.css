@@ -158,11 +158,15 @@ a {
   text-decoration-thickness: from-font;
 }
 
-@supports (scrollbar-color: auto) {
-  html {
-    scrollbar-color: var(--color-rule) transparent;
-    scrollbar-width: thin;
-  }
+/* 스크롤 막대를 감춘다. 스크롤 자체는 그대로 동작한다. */
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

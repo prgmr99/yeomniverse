@@ -216,17 +216,30 @@ export default function ParentHome() {
             <button
               type="button"
               onClick={handleStart}
-              className="w-full bg-ink text-paper py-4 rounded-sheet font-serif font-bold text-xl shadow-[0_1px_2px_rgba(0,0,0,0.2),0_6px_16px_-8px_rgba(0,0,0,0.5)] hover:bg-graphite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors flex items-center justify-center gap-2"
+              className="relative w-full bg-ink text-paper py-4 rounded-sheet font-serif font-bold text-xl shadow-[0_1px_2px_rgba(0,0,0,0.2),0_6px_16px_-8px_rgba(0,0,0,0.5)] hover:bg-graphite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors flex items-center justify-center"
             >
-              문제지 펼치기 <ChevronRight className="w-5 h-5" />
+              문제지 펼치기
+              <ChevronRight className="absolute right-5 w-5 h-5" />
             </button>
 
             <button
               type="button"
               onClick={handleDontKnow}
-              className="w-full min-h-[52px] px-4 rounded-sheet border border-ink/30 bg-sheet text-ink-muted text-sm font-sans hover:border-ink hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+              className="group w-full min-h-[56px] px-4 py-3 rounded-sheet border border-ink/30 bg-sheet text-left flex items-center gap-3 hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
             >
-              자식 생일을 모릅니다 — 그래도 응시하기
+              {/* 체크박스를 찍어 스스로 신고하는 모양 — OMR 마킹과 같은 동작이다 */}
+              <span
+                aria-hidden="true"
+                className="shrink-0 w-6 h-6 rounded-mark border-[1.5px] border-ink/40 group-hover:border-graphite group-hover:bg-graphite transition-colors"
+              />
+              <span className="flex flex-col">
+                <span className="text-sm text-ink">
+                  저는 자식 생일을 모릅니다
+                </span>
+                <span className="text-xs text-ink-faint mt-0.5">
+                  사람이니까요 — 그대로 응시
+                </span>
+              </span>
             </button>
           </div>
 
