@@ -158,10 +158,14 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen font-sans antialiased">
-        <div className="flex justify-center bg-stone-200 min-h-screen">
-          <div className="w-full max-w-[480px] min-h-screen bg-paper text-ink shadow-2xl relative overflow-x-hidden">
-            {children}
-            <Footer />
+        <div className="flex justify-center bg-desk min-h-screen">
+          {/* 책상 위에 놓인 한 장. 그림자는 오프셋과 번짐을 함께 갖는다. */}
+          <div className="w-full max-w-[480px] min-h-screen bg-paper text-ink relative overflow-x-hidden shadow-[0_1px_2px_rgba(0,0,0,0.18),0_18px_50px_-12px_rgba(0,0,0,0.5)]">
+            <div className="paper-grain-layer z-0" aria-hidden="true" />
+            <div className="relative z-10">
+              {children}
+              <Footer />
+            </div>
           </div>
         </div>
 

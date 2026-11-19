@@ -14,7 +14,9 @@ import {
   Heart,
   ImageDown,
   RotateCcw,
+  Scale,
   Share2,
+  Stethoscope,
   Users,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -257,75 +259,91 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
     <main className="min-h-screen flex flex-col items-center py-10 px-6 animate-fade-in space-y-8 pb-20">
       {/* 0. 공유로 들어온 방문자 오리엔테이션 */}
       {sharedResultId && (
-        <p className="w-full text-center text-xs text-ink/60 bg-white/60 border border-ink/10 rounded-full py-2 px-4">
+        <p className="w-full text-center text-xs text-ink-muted bg-shade border border-ink/20 rounded-sheet py-2 px-4 break-keep">
           누군가 공유한 성적표입니다 · 내 등급은 {QUESTION_COUNT}문항이면
           나옵니다
         </p>
       )}
 
-      {/* 1. 결과 등급 (도장 애니메이션) */}
-      <div className="relative w-full text-center py-8 border-b-2 border-dashed border-ink/20">
-        <span
-          className="absolute top-3 right-3 text-2xl rotate-12 select-none"
-          aria-hidden="true"
-        >
-          🌸
-        </span>
-        <p className="text-sm font-serif text-ink/60 mb-2 font-bold">
-          2026학년도 효도능력시험 성적표
-        </p>
+      {/* 1. 성적표 표제부 — 도장은 제목 위가 아니라 날인란 안에 찍힌다 */}
+      <div className="w-full border-b-2 border-ink pb-6">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex-1 min-w-0 pt-1">
+            <p className="text-xs font-serif font-bold tracking-[0.25em] text-ink-muted mb-3">
+              2026학년도 효도능력시험
+            </p>
+            <h1 className="text-[1.75rem] font-serif font-black text-ink break-keep leading-tight text-balance">
+              {result.title}
+            </h1>
+          </div>
 
-        {/* 캐릭터 이름 */}
-        <h1 className="text-3xl font-serif font-black mb-2 text-ink break-keep leading-tight">
-          {result.title}
-        </h1>
-        <p className="text-sm font-sans text-ink/70">
-          &quot;{result.subtitle}&quot;
-        </p>
-
-        {/* 등급 도장 — 등급 값은 resultData의 grade가 단일 출처 */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-          <div className="border-[6px] border-grading text-grading rounded-xl px-6 py-2 text-6xl font-black font-serif opacity-0 animate-stamp-move whitespace-nowrap bg-paper/90 backdrop-blur-sm shadow-xl">
-            {result.grade}등급
+          {/* 날인란 — 도장이 들어올 자리를 미리 비워 둔다.
+              회전한 도장의 외접 사각형(약 74×66)이 칸 안에 들어와야 한다. */}
+          <div className="shrink-0 w-24 h-24 border border-dashed border-ink/30 grid place-items-center relative">
+            <span className="absolute top-1.5 left-0 right-0 text-center text-[9px] font-sans tracking-[0.2em] text-ink-faint">
+              날인
+            </span>
+            <div className="mt-2 border-[2.5px] border-grading text-grading rounded-sheet w-[64px] h-[54px] grid place-items-center opacity-0 animate-stamp-land shadow-[1px_2px_0_rgba(200,30,30,0.16)]">
+              <span className="font-serif font-black leading-none text-center">
+                <span className="block text-[24px] tabular">
+                  {result.grade}
+                </span>
+                <span className="block text-[10px] mt-1">등급</span>
+              </span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* 2. 캐릭터 상세 설명 */}
-      <div
-        className={`w-full p-6 rounded-2xl border-2 border-ink/10 shadow-sm ${result.imageColor}`}
-      >
-        <p className="text-ink/80 leading-relaxed font-sans text-base whitespace-pre-wrap">
-          {result.desc}
+        {/* 부제는 날인란 옆에 끼지 않고 지면 폭을 그대로 쓴다 */}
+        <p className="text-sm font-sans text-ink-muted mt-3 break-keep">
+          &quot;{result.subtitle}&quot;
         </p>
-
-        {/* 태그 */}
-        <div className="flex flex-wrap gap-2 mt-4">
-          {result.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-xs font-bold bg-white/50 text-ink/60 px-2 py-1 rounded-full"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
       </div>
+
+      {/* 2. 총평 — 채점자가 적어 넣은 칸 */}
+      <section className="w-full">
+        <h2 className="text-xs font-sans font-bold tracking-[0.18em] text-ink-muted mb-2">
+          총평
+        </h2>
+        <div className="bg-sheet border border-ink/25 p-5 rounded-sheet">
+          <p className="text-ink-muted leading-[1.75] font-sans text-[15px] whitespace-pre-wrap break-keep">
+            {result.desc}
+          </p>
+
+          {/* 태그 */}
+          <div className="flex flex-wrap gap-1.5 mt-5 pt-4 border-t border-ink/12">
+            {result.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-[11px] font-bold text-ink-faint border border-ink/20 px-2 py-0.5 rounded-sheet"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* 2-b. 부모님 vs 나 비교 카드 (parent 파라미터가 있을 때만) */}
       {parentResult && (
-        <div className="w-full bg-amber-50/60 border border-ink/10 rounded-2xl p-5 space-y-4 shadow-sm">
+        <div className="w-full bg-sheet border border-ink/25 rounded-sheet p-5 space-y-4">
           <h3 className="font-serif font-bold text-base text-ink flex items-center gap-2">
-            🧐 부모님 vs 나
+            <Scale
+              className="w-4 h-4 text-grading shrink-0"
+              aria-hidden="true"
+            />
+            부모님 vs 나
             {parentName && (
-              <span className="text-xs text-ink/50 font-sans font-normal">
+              <span className="text-xs text-ink-faint font-sans font-normal">
                 ({parentName}님 부모님)
               </span>
             )}
           </h3>
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-white/70 rounded-xl p-3 border border-ink/10 space-y-1 text-center">
-              <p className="text-[10px] text-ink/50 font-bold">부모님</p>
+            <div className="bg-paper rounded-sheet p-3 border border-ink/20 space-y-1 text-center">
+              <p className="text-[10px] text-ink-faint font-bold tracking-[0.15em]">
+                부모님
+              </p>
               <p className="text-sm font-serif font-bold text-ink leading-snug break-keep">
                 {parentResult.title}
               </p>
@@ -333,22 +351,24 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
                 <MiniBar
                   label="관심"
                   score={displayParentScores.interest}
-                  color="bg-blue-300"
+                  color="bg-axis-interest"
                 />
                 <MiniBar
                   label="친밀"
                   score={displayParentScores.intimacy}
-                  color="bg-pink-300"
+                  color="bg-axis-intimacy"
                 />
                 <MiniBar
                   label="표현"
                   score={displayParentScores.expression}
-                  color="bg-yellow-300"
+                  color="bg-axis-expression"
                 />
               </div>
             </div>
-            <div className="bg-white/70 rounded-xl p-3 border border-ink/10 space-y-1 text-center">
-              <p className="text-[10px] text-ink/50 font-bold">나</p>
+            <div className="bg-paper rounded-sheet p-3 border border-ink/20 space-y-1 text-center">
+              <p className="text-[10px] text-ink-faint font-bold tracking-[0.15em]">
+                나
+              </p>
               <p className="text-sm font-serif font-bold text-ink leading-snug break-keep">
                 {result.title}
               </p>
@@ -356,22 +376,22 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
                 <MiniBar
                   label="관심"
                   score={displayScores.interest}
-                  color="bg-blue-300"
+                  color="bg-axis-interest"
                 />
                 <MiniBar
                   label="친밀"
                   score={displayScores.intimacy}
-                  color="bg-pink-300"
+                  color="bg-axis-intimacy"
                 />
                 <MiniBar
                   label="표현"
                   score={displayScores.expression}
-                  color="bg-yellow-300"
+                  color="bg-axis-expression"
                 />
               </div>
             </div>
           </div>
-          <p className="text-xs text-ink/60 leading-relaxed text-center">
+          <p className="text-xs text-ink-muted leading-relaxed text-center break-keep">
             {(() => {
               const childTotal =
                 displayScores.interest +
@@ -402,39 +422,52 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
       )}
 
       {/* 3. 닥터의 처방전 */}
-      <div className="w-full bg-white p-6 rounded-xl border border-stone-200 shadow-sm space-y-3">
-        <h3 className="font-serif font-bold text-lg flex items-center gap-2 text-ink">
-          🩺 닥터의 처방전
-        </h3>
-        <p className="text-sm text-ink/80 leading-relaxed bg-stone-50 p-4 rounded-lg border border-stone-100">
-          {result.solution}
-        </p>
-      </div>
+      <section className="w-full">
+        <h2 className="text-xs font-sans font-bold tracking-[0.18em] text-ink-muted mb-2 flex items-center gap-1.5">
+          <Stethoscope
+            className="w-3.5 h-3.5 text-grading"
+            aria-hidden="true"
+          />
+          닥터의 처방전
+        </h2>
+        <div className="bg-sheet border border-ink/25 p-5 rounded-sheet">
+          <p className="text-[15px] text-ink leading-[1.75] break-keep">
+            {result.solution}
+          </p>
+        </div>
+      </section>
 
-      {/* 4. 점수 그래프 — 점수 없이 들어온 유형 랜딩에서는 감춘다 */}
-      <div className={`w-full space-y-2 ${hasScores ? '' : 'hidden'}`}>
-        <h4 className="text-sm font-bold opacity-70 ml-1">상세 점수</h4>
-        <ScoreBar
-          label="관심도 (지식)"
-          score={displayScores.interest}
-          color="bg-blue-400"
-        />
-        <ScoreBar
-          label="친밀도 (마음)"
-          score={displayScores.intimacy}
-          color="bg-pink-400"
-        />
-        <ScoreBar
-          label="표현력 (행동)"
-          score={displayScores.expression}
-          color="bg-yellow-400"
-        />
-      </div>
+      {/* 4. 성적 일람표 — 점수 없이 들어온 유형 랜딩에서는 감춘다 */}
+      <section className={`w-full ${hasScores ? '' : 'hidden'}`}>
+        <h2 className="text-xs font-sans font-bold tracking-[0.18em] text-ink-muted mb-2">
+          영역별 성적
+        </h2>
+        <div className="border border-ink/25 rounded-sheet divide-y divide-ink/12 bg-sheet">
+          <ScoreBar
+            label="관심도"
+            note="지식"
+            score={displayScores.interest}
+            color="bg-axis-interest"
+          />
+          <ScoreBar
+            label="친밀도"
+            note="마음"
+            score={displayScores.intimacy}
+            color="bg-axis-intimacy"
+          />
+          <ScoreBar
+            label="표현력"
+            note="행동"
+            score={displayScores.expression}
+            color="bg-axis-expression"
+          />
+        </div>
+      </section>
 
       {/* 5. 액션 버튼 */}
       <div className="w-full space-y-3 pt-4">
-        {/* 공유 링크로 들어온 방문자에게는 응시가 1순위 행동이다. */}
-        {sharedResultId && (
+        {/* 1순위 — 공유로 들어온 방문자는 '응시', 본인 응시자는 '공유'가 할 일이다 */}
+        {sharedResultId ? (
           <Link
             href="/"
             onClick={() => {
@@ -444,103 +477,146 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
               });
               resetQuiz();
             }}
-            className="w-full bg-omr text-white py-4 rounded-xl font-serif font-bold text-xl shadow-lg hover:bg-ink transition-all flex items-center justify-center gap-2"
+            className="w-full bg-ink text-paper py-4 rounded-sheet font-serif font-bold text-xl shadow-[0_1px_2px_rgba(0,0,0,0.2),0_6px_16px_-8px_rgba(0,0,0,0.5)] hover:bg-graphite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors flex items-center justify-center gap-2"
           >
             나도 응시하기 <ChevronRight className="w-5 h-5" />
           </Link>
-        )}
-
-        <button
-          type="button"
-          className={`w-full bg-[#FEE500] text-[#191919] py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md hover:opacity-90 transition-all ${
-            sharedResultId ? 'text-base' : 'text-lg'
-          }`}
-          onClick={handleShare}
-        >
-          <Share2 className="w-5 h-5" />{' '}
-          {sharedResultId ? '이 성적표 공유하기' : '부모님께 공유하기'}
-        </button>
-
-        {/* 카톡 링크로는 안 닿는 채널(인스타 스토리 등)을 여는 경로 */}
-        <button
-          type="button"
-          disabled={isSaving}
-          className="w-full bg-ink text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md hover:opacity-90 transition-all disabled:opacity-60"
-          onClick={handleSaveCard}
-        >
-          <ImageDown className="w-5 h-5" />
-          {isSaving ? '성적표 만드는 중...' : '성적표 이미지 저장'}
-        </button>
-
-        {/* 부모↔자식 비교가 이 서비스의 가장 강한 성장 동선인데,
-            그동안 랜딩 하단 링크 하나로만 닿을 수 있었다. */}
-        {!parentResult && (
-          <Link
-            href="/parent"
-            onClick={() =>
-              trackEvent('parent_quiz_cta', {
-                from: sharedResultId ? 'shared_result' : 'own_result',
-                result_id: result.id,
-              })
-            }
-            className="w-full bg-white border-2 border-ink/20 text-ink py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-50 hover:border-ink/40 transition-all"
+        ) : (
+          <button
+            type="button"
+            className="w-full bg-[#FEE500] text-[#191919] py-4 rounded-sheet font-bold text-lg flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(0,0,0,0.14),0_6px_16px_-8px_rgba(0,0,0,0.4)] hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink transition-all"
+            onClick={handleShare}
           >
-            <Users className="w-5 h-5 text-grading" /> 부모님께 2교시 보내기
-          </Link>
+            <Share2 className="w-5 h-5" /> 부모님께 공유하기
+          </button>
         )}
 
-        {!sharedResultId && (
-          <div className="w-full space-y-3 pt-2">
+        {/* 2순위 — 윤곽선. 1순위와 같은 폭이되 무게가 다르다 */}
+        <div className="w-full space-y-2.5">
+          {sharedResultId && (
             <button
               type="button"
-              className="w-full bg-grading/10 text-grading border-2 border-grading/30 py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-grading/20 transition-all"
-              onClick={handleCopyMessage}
+              className="w-full bg-[#FEE500] text-[#191919] py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center gap-2 hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink transition-all"
+              onClick={handleShare}
             >
-              <Heart className="w-5 h-5" /> 어머니/아버지께 마음 전하기
+              <Share2 className="w-[18px] h-[18px]" /> 이 성적표 공유하기
             </button>
-
-            {birthdays.father.length === 6 && birthdays.mother.length === 6 && (
-              <button
-                type="button"
-                className="w-full bg-white border-2 border-stone-300 text-ink py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-50 transition-all"
-                onClick={() => {
-                  const ics = buildICS(birthdays.father, birthdays.mother);
-                  const blob = new Blob([ics], {
-                    type: 'text/calendar;charset=utf-8',
-                  });
-                  const url = URL.createObjectURL(blob);
-                  const a = document.createElement('a');
-                  a.href = url;
-                  a.download = '부모님생신.ics';
-                  a.click();
-                  URL.revokeObjectURL(url);
-                }}
-              >
-                <CalendarPlus className="w-5 h-5" /> 부모님 생신 캘린더에 저장
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* 응시 이력이 없는 방문자에게 "재시험"은 누를 이유가 없는 라벨이다. */}
-        <div className={sharedResultId ? '' : 'grid grid-cols-2 gap-3'}>
-          {!sharedResultId && (
-            <Link
-              href="/"
-              onClick={resetQuiz}
-              className="bg-stone-800 text-white py-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 hover:bg-black transition-all"
-            >
-              <RotateCcw className="w-4 h-4" /> 재시험
-            </Link>
           )}
 
-          <Link
-            href="/blog"
-            className="bg-white border-2 border-stone-200 text-ink py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-50"
+          {!sharedResultId && (
+            <button
+              type="button"
+              className="w-full bg-sheet border border-grading/50 text-grading py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center gap-2 hover:bg-grading-soft hover:border-grading focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+              onClick={handleCopyMessage}
+            >
+              <Heart className="w-[18px] h-[18px]" /> 어머니·아버지께 마음
+              전하기
+            </button>
+          )}
+
+          {/* 카톡 링크로는 안 닿는 채널(인스타 스토리 등)을 여는 경로 */}
+          <button
+            type="button"
+            disabled={isSaving}
+            className="w-full bg-sheet border border-ink/30 text-ink py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center gap-2 hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            onClick={handleSaveCard}
           >
-            <BookOpen className="w-4 h-4" /> 효도 블로그 보기
-          </Link>
+            <ImageDown className="w-[18px] h-[18px]" />
+            {isSaving ? '성적표 만드는 중...' : '성적표 이미지 저장'}
+          </button>
+
+          {/* 부모↔자식 비교가 이 서비스의 가장 강한 성장 동선인데,
+              그동안 랜딩 하단 링크 하나로만 닿을 수 있었다. */}
+          {!parentResult && (
+            <Link
+              href="/parent"
+              onClick={() =>
+                trackEvent('parent_quiz_cta', {
+                  from: sharedResultId ? 'shared_result' : 'own_result',
+                  result_id: result.id,
+                })
+              }
+              className="w-full bg-sheet border border-ink/30 text-ink py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center gap-2 hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+            >
+              <Users className="w-[18px] h-[18px] text-grading" /> 부모님께
+              2교시 보내기
+            </Link>
+          )}
         </div>
+
+        {/* 3순위 — 성적표 뒷면의 안내란. 버튼이 아니라 목록이다 */}
+        <ul className="w-full border-y border-ink/20 divide-y divide-ink/12 pt-1">
+          {!sharedResultId &&
+            birthdays.father.length === 6 &&
+            birthdays.mother.length === 6 && (
+              <li>
+                <button
+                  type="button"
+                  className="w-full py-3.5 flex items-center gap-3 text-left text-sm text-ink-muted hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+                  onClick={() => {
+                    const ics = buildICS(birthdays.father, birthdays.mother);
+                    const blob = new Blob([ics], {
+                      type: 'text/calendar;charset=utf-8',
+                    });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = '부모님생신.ics';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                  }}
+                >
+                  <CalendarPlus
+                    className="w-4 h-4 shrink-0 text-ink-faint"
+                    aria-hidden="true"
+                  />
+                  <span className="flex-1">부모님 생신 캘린더에 저장</span>
+                  <ChevronRight
+                    className="w-4 h-4 shrink-0 text-ink-faint"
+                    aria-hidden="true"
+                  />
+                </button>
+              </li>
+            )}
+
+          {/* 응시 이력이 없는 방문자에게 "재시험"은 누를 이유가 없는 라벨이다. */}
+          {!sharedResultId && (
+            <li>
+              <Link
+                href="/"
+                onClick={resetQuiz}
+                className="w-full py-3.5 flex items-center gap-3 text-sm text-ink-muted hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+              >
+                <RotateCcw
+                  className="w-4 h-4 shrink-0 text-ink-faint"
+                  aria-hidden="true"
+                />
+                <span className="flex-1">재시험 보기</span>
+                <ChevronRight
+                  className="w-4 h-4 shrink-0 text-ink-faint"
+                  aria-hidden="true"
+                />
+              </Link>
+            </li>
+          )}
+
+          <li>
+            <Link
+              href="/blog"
+              className="w-full py-3.5 flex items-center gap-3 text-sm text-ink-muted hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+            >
+              <BookOpen
+                className="w-4 h-4 shrink-0 text-ink-faint"
+                aria-hidden="true"
+              />
+              <span className="flex-1">효도 블로그 보기</span>
+              <ChevronRight
+                className="w-4 h-4 shrink-0 text-ink-faint"
+                aria-hidden="true"
+              />
+            </Link>
+          </li>
+        </ul>
       </div>
 
       <Toast toast={toast} onDismiss={() => setToast(null)} />
@@ -568,41 +644,46 @@ function MiniBar({
 }) {
   const percent = Math.min(Math.max(score, 0), 100);
   return (
-    <div className="flex items-center gap-1 text-[10px]">
-      <span className="w-6 text-right text-ink/50 font-bold">{label}</span>
-      <div className="flex-1 h-1.5 bg-stone-200 rounded-full overflow-hidden">
-        <div
-          className={`h-full ${color} rounded-full`}
-          style={{ width: `${percent}%` }}
-        />
+    <div className="flex items-center gap-1.5 text-[10px]">
+      <span className="w-6 text-right text-ink-faint font-bold">{label}</span>
+      <div className="flex-1 h-1.5 bg-shade border border-ink/12 overflow-hidden">
+        <div className={`h-full ${color}`} style={{ width: `${percent}%` }} />
       </div>
-      <span className="w-6 text-ink/50 font-bold">{score}</span>
+      <span className="w-5 text-right text-ink-muted font-bold tabular">
+        {score}
+      </span>
     </div>
   );
 }
 
-// 점수 게이지 — score는 0~100으로 이미 환산된 값이다 (@hyo/utils normalizeScores)
+// 성적 일람표의 한 행 — score는 0~100으로 이미 환산된 값이다 (@hyo/utils normalizeScores)
 function ScoreBar({
   label,
+  note,
   score,
   color,
 }: {
   label: string;
+  note: string;
   score: number;
   color: string;
 }) {
   const percent = Math.min(Math.max(score, 0), 100);
 
   return (
-    <div className="flex items-center gap-3 text-xs">
-      <span className="w-24 font-bold opacity-70 text-right">{label}</span>
-      <div className="flex-1 h-3 bg-stone-200 rounded-full overflow-hidden">
-        <div
-          className={`h-full ${color} rounded-full`}
-          style={{ width: `${percent}%` }}
-        />
+    <div className="flex items-center gap-3 px-4 py-3">
+      <span className="w-[4.5rem] shrink-0 text-[13px] font-bold text-ink">
+        {label}
+        <span className="block text-[10px] font-normal text-ink-faint">
+          {note}
+        </span>
+      </span>
+      <div className="flex-1 h-2 bg-shade border border-ink/12 overflow-hidden">
+        <div className={`h-full ${color}`} style={{ width: `${percent}%` }} />
       </div>
-      <span className="w-8 opacity-70 font-bold">{score}</span>
+      <span className="w-8 shrink-0 text-right text-[15px] font-serif font-bold text-ink tabular">
+        {score}
+      </span>
     </div>
   );
 }
