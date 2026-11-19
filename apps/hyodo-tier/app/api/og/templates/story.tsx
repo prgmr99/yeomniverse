@@ -17,6 +17,7 @@ export function StoryCard({
   title,
   subtitle,
   grade,
+  seal,
   hasScores,
   scores,
 }: OgTemplateProps) {
@@ -128,15 +129,36 @@ export function StoryCard({
           </div>
         </div>
 
+        {/* 유형 인장. 카드에 글자만 있으면 눈이 머물 곳이 없다. */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '136px',
+            height: '136px',
+            marginTop: '64px',
+            border: `6px solid ${OG.grading}`,
+            borderRadius: '4px',
+            color: OG.grading,
+            fontFamily: 'NotoSerifKR',
+            fontSize: '76px',
+            transform: 'rotate(-4deg)',
+          }}
+        >
+          {seal}
+        </div>
+
         <div
           style={{
             display: 'flex',
             fontSize: '92px',
             lineHeight: 1.15,
-            marginTop: '72px',
+            marginTop: '40px',
             fontFamily: 'NotoSerifKR',
             color: OG.ink,
             maxWidth: '900px',
+            wordBreak: 'keep-all',
           }}
         >
           {title}

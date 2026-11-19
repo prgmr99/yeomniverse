@@ -13,6 +13,7 @@ export function LandscapeCard({
   title,
   subtitle,
   grade,
+  seal,
   hasScores,
   scores,
 }: OgTemplateProps) {
@@ -124,16 +125,38 @@ export function LandscapeCard({
           marginTop: '8px',
         }}
       >
-        <div
-          style={{
-            fontSize: '82px',
-            lineHeight: 1.12,
-            fontFamily: 'NotoSerifKR',
-            color: OG.ink,
-            maxWidth: '1000px',
-          }}
-        >
-          {title}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '26px' }}>
+          {/* 유형 인장. 카드에 글자만 있으면 눈이 머물 곳이 없다. */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '92px',
+              height: '92px',
+              flexShrink: 0,
+              border: `4px solid ${OG.grading}`,
+              borderRadius: '3px',
+              color: OG.grading,
+              fontFamily: 'NotoSerifKR',
+              fontSize: '52px',
+              transform: 'rotate(-4deg)',
+            }}
+          >
+            {seal}
+          </div>
+          <div
+            style={{
+              fontSize: '78px',
+              lineHeight: 1.12,
+              fontFamily: 'NotoSerifKR',
+              color: OG.ink,
+              maxWidth: '880px',
+              wordBreak: 'keep-all',
+            }}
+          >
+            {title}
+          </div>
         </div>
         <div
           style={{

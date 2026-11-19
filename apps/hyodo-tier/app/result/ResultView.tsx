@@ -328,15 +328,24 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
           </p>
 
           {/* 태그 */}
-          <div className="flex flex-wrap gap-1.5 mt-5 pt-4 border-t border-ink/12">
-            {result.tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-[11px] font-bold text-ink-faint border border-ink/20 px-2 py-0.5 rounded-sheet"
-              >
-                {tag}
-              </span>
-            ))}
+          <div className="flex items-end justify-between gap-3 mt-5 pt-4 border-t border-ink/12">
+            <div className="flex flex-wrap gap-1.5">
+              {result.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-[11px] font-bold text-ink-faint border border-ink/20 px-2 py-0.5 rounded-sheet"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            {/* 유형 인장. 글을 다 쓰고 끝에 찍는 낙관과 같은 자리다. */}
+            <span
+              aria-hidden="true"
+              className="shrink-0 w-14 h-14 grid place-items-center border-2 border-grading rounded-sheet text-grading font-serif text-[26px] leading-none -rotate-4 opacity-85"
+            >
+              {result.seal}
+            </span>
           </div>
         </div>
       </section>

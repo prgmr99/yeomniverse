@@ -6,7 +6,14 @@ export type ResultType = {
   desc: string; // 상세 설명
   solution: string; // 닥터의 처방전
   tags: string[]; // 해시태그 (공유 시 사용)
-  imageColor: string; // 캐릭터별 배경색 (Tailwind class)
+  imageColor: string; // 캐릭터별 배경색 (OG 라우트용으로 남겨둔 값)
+  /**
+   * 유형별 인장에 새길 한자 한 글자. 문서 끝에 찍는 낙관과 같은 역할이라
+   * 유형마다 달라야 한다. OG 카드에서도 쓰이므로 글자를 바꾸면
+   * app/api/og/route.tsx 의 OG_STATIC_TEXT 에도 같이 넣어야 한다.
+   * (서브셋 폰트라 등록하지 않은 글자는 빈칸으로 렌더된다)
+   */
+  seal: string;
 };
 
 export const RESULTS: Record<string, ResultType> = {
@@ -20,6 +27,7 @@ export const RESULTS: Record<string, ResultType> = {
       '이미 완벽하니 더 바랄 게 없습니다. 지금처럼만 부모님 곁에 머물러 주세요. 당신의 존재 자체가 부모님께는 매일매일이 축제입니다.',
     tags: ['#유니콘효자', '#상위1프로', '#효도능력시험만점'],
     imageColor: 'bg-purple-100',
+    seal: '孝', // 효도 그 자체
   },
   FINANCIAL: {
     id: 'FINANCIAL',
@@ -31,6 +39,7 @@ export const RESULTS: Record<string, ResultType> = {
       "두툼한 봉투도 좋지만, 그 안에 짤막한 손편지 한 장만 넣어보세요. '감사합니다' 다섯 글자면, 금액 뒤에 0이 하나 더 붙은 것 같은 감동을 드릴 수 있습니다.",
     tags: ['#금융치료', '#입금완료', '#자본주의효도'],
     imageColor: 'bg-yellow-100',
+    seal: '金', // 사랑을 돈으로
   },
   K_LEADER: {
     id: 'K_LEADER',
@@ -42,6 +51,7 @@ export const RESULTS: Record<string, ResultType> = {
       '당신이 행복해야 부모님도 진짜로 행복할 수 있습니다. 부모님 걱정 스위치를 잠시 끄고, 이번 주말엔 온전히 당신 자신만을 위해 시간을 써보세요.',
     tags: ['#K장녀', '#K장남', '#책임감만렙'],
     imageColor: 'bg-blue-100',
+    seal: '長', // 집안의 맏이
   },
   TSUNDERE: {
     id: 'TSUNDERE',
@@ -53,6 +63,7 @@ export const RESULTS: Record<string, ResultType> = {
       "행동은 100점인데 말투 때문에 50점이 깎이고 있어요. 물 한 잔 떠다 드릴 때 '여기' 말고 '드세요'라고 딱 한 글자만 부드럽게 바꿔보는 건 어떨까요?",
     tags: ['#츤데레', '#겉바속촉', '#말투가문제'],
     imageColor: 'bg-green-100',
+    seal: '默', // 속으로만 다정
   },
   SOULMATE: {
     id: 'SOULMATE',
@@ -64,6 +75,7 @@ export const RESULTS: Record<string, ResultType> = {
       "너무 즐겁지만 가끔은 깊은 관심이 필요합니다. 오늘은 가벼운 수다 대신, 부모님의 '건강 검진 결과'나 '요즘 제일 걱정되는 일'을 먼저 물어봐 드리세요.",
     tags: ['#엄빠는베프', '#술친구', '#친구같은딸아들'],
     imageColor: 'bg-pink-100',
+    seal: '友', // 부모가 곧 벗
   },
   SHOW_WINDOW: {
     id: 'SHOW_WINDOW',
@@ -75,6 +87,7 @@ export const RESULTS: Record<string, ResultType> = {
       "스마트폰 렌즈가 아닌, 눈을 맞추고 대화하는 시간이 필요합니다. 인스타 업로드할 시간에 전화 한 통 더 하는 것이 진짜 '좋아요'를 받는 길입니다.",
     tags: ['#SNS효도', '#보여주기', '#이벤트장인'],
     imageColor: 'bg-orange-100',
+    seal: '飾', // 보여주기로 꾸민
   },
   AI_BOT: {
     id: 'AI_BOT',
@@ -86,6 +99,7 @@ export const RESULTS: Record<string, ResultType> = {
       "용건이 없어도 전화하는 연습이 필요합니다. '점심 뭐 드셨어요?' 같은 쓸데없는 질문이 부모님께는 최고의 데이터 통신입니다.",
     tags: ['#AI효도', '#로봇설', '#용건만간단히'],
     imageColor: 'bg-slate-200',
+    seal: '信', // 소식만 오가는 통신
   },
   LODGER: {
     id: 'LODGER',
@@ -97,6 +111,7 @@ export const RESULTS: Record<string, ResultType> = {
       '방문과 마음의 문을 딱 1cm만 열어보세요. 오늘 저녁 식사 후에는 바로 방으로 도망가지 말고, 거실 과일 깎는 자리에 5분만 엉덩이를 붙여봅시다.',
     tags: ['#하숙생', '#투명인간', '#독립이답이다'],
     imageColor: 'bg-stone-200',
+    seal: '客', // 한집의 손님
   },
   UNFILIAL: {
     id: 'UNFILIAL',
@@ -108,6 +123,7 @@ export const RESULTS: Record<string, ResultType> = {
       '지금 당장 부모님께 전화해서 생신을 여쭤보세요. 그리고 달력에 빨간 펜으로 크게 적어두세요. 그게 효도의 첫걸음입니다.',
     tags: ['#불효자', '#호적파일뻔', '#반성하세요'],
     imageColor: 'bg-gray-300',
+    seal: '罰', // 벌점 만점
   },
 };
 

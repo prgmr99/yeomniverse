@@ -15,6 +15,7 @@ export const PARENT_RESULTS: Record<string, ParentResultType> = {
       '이미 만점이니 더 잘하려 하지 마시고, 지금처럼만 곁을 내어주세요. 자식이 제 속도로 부모님을 따라올 수 있도록 기다려주시는 것, 그게 마지막 한 끗입니다.',
     tags: ['#슈퍼부모', '#ML급', '#양육만렙'],
     imageColor: 'bg-purple-100',
+    seal: '慈', // 내리사랑 그 자체
   },
   FINANCIAL_PARENT: {
     id: 'FINANCIAL_PARENT',
@@ -26,6 +27,7 @@ export const PARENT_RESULTS: Record<string, ParentResultType> = {
       '봉투를 건넬 때 "잘 지내지?" 한마디만 같이 얹어보세요. 용돈보다 그 한 줄짜리 안부가 자식 속을 훨씬 오래 데웁니다.',
     tags: ['#용돈사랑', '#걱정은속으로', '#입금은칼같이'],
     imageColor: 'bg-yellow-100',
+    seal: '金', // 걱정을 통장으로
   },
   K_LEADER_PARENT: {
     id: 'K_LEADER_PARENT',
@@ -37,6 +39,7 @@ export const PARENT_RESULTS: Record<string, ParentResultType> = {
       '한 주에 한 번쯤은 "네가 하고 싶은 대로 해봐" 같은 문장을 의식적으로 꺼내 보세요. 개입 대신 응원으로 방향을 바꾸면, 자식은 훨씬 더 자주 곁에 앉고 싶어집니다.',
     tags: ['#K부모', '#디렉터모드', '#걱정이제일많음'],
     imageColor: 'bg-blue-100',
+    seal: '監', // 종합관리 감독관
   },
   TSUNDERE_PARENT: {
     id: 'TSUNDERE_PARENT',
@@ -48,6 +51,7 @@ export const PARENT_RESULTS: Record<string, ParentResultType> = {
       "오늘 딱 한 문장만 소리 내어 해보세요. '보고 싶었어' 혹은 '잘하고 있어.' 이 두 문장이면 지금까지 참아온 마음의 절반이 전달됩니다.",
     tags: ['#돌부처', '#속으론눈물바다', '#표현은수줍음'],
     imageColor: 'bg-green-100',
+    seal: '默', // 속으로만 다정
   },
   SOULMATE_PARENT: {
     id: 'SOULMATE_PARENT',
@@ -59,6 +63,7 @@ export const PARENT_RESULTS: Record<string, ParentResultType> = {
       '가벼운 수다 사이에 가끔 "요즘 진짜로 괜찮아?"를 한 번 더 물어봐 주세요. 친구의 레이더에 부모의 직감을 한 스푼만 얹으면 완벽해집니다.',
     tags: ['#엄빠친구', '#쇼핑메이트', '#술은반잔만'],
     imageColor: 'bg-pink-100',
+    seal: '友', // 자식이 곧 벗
   },
   SHOW_WINDOW_PARENT: {
     id: 'SHOW_WINDOW_PARENT',
@@ -70,6 +75,7 @@ export const PARENT_RESULTS: Record<string, ParentResultType> = {
       '오늘은 밖이 아니라 자식에게 자랑을 돌려주세요. "네 덕에 어깨 펴고 다닌다" 이 한 줄이면 평생 가는 기운을 채워줄 수 있습니다.',
     tags: ['#동창회스타', '#자랑부자', '#정작본인앞에선수줍'],
     imageColor: 'bg-orange-100',
+    seal: '誇', // 동네방네 자랑
   },
   AI_BOT_PARENT: {
     id: 'AI_BOT_PARENT',
@@ -81,6 +87,7 @@ export const PARENT_RESULTS: Record<string, ParentResultType> = {
       "이번 주엔 '밥' 대신 '요즘 뭐가 제일 재미있어?' 한 번만 물어봐 주세요. 질문 하나 바꾸는 것만으로 대화가 두 배는 길어집니다.",
     tags: ['#밥먹었니', '#안부전용회선', '#레퍼토리업데이트필요'],
     imageColor: 'bg-slate-200',
+    seal: '信', // 안부만 오가는 통신
   },
   // 응시를 포기하셨을 때. 자식편 UNFILIAL 과 짝이지만 말투가 다르다.
   // 그쪽은 자식이 자기를 깎는 농담이라 세게 때려도 되지만, 이쪽은 부모님께
@@ -95,6 +102,7 @@ export const PARENT_RESULTS: Record<string, ParentResultType> = {
       "오늘 전화 한 통이면 충분합니다. '네 생일이 며칠이었지' 하고 물으시면 자식은 서운해하기보다 웃을 겁니다. 그 김에 요즘 뭘 좋아하는지도 물어보세요. 답안은 언제든 다시 쓰실 수 있습니다.",
     tags: ['#백지답안', '#다시쓰셔도됩니다', '#전화한통이면'],
     imageColor: 'bg-stone-200',
+    seal: '空', // 백지 답안
   },
   LODGER_PARENT: {
     id: 'LODGER_PARENT',
@@ -106,5 +114,6 @@ export const PARENT_RESULTS: Record<string, ParentResultType> = {
       '오늘 저녁, 방문 앞에서 "얼굴 좀 보자"라고 한 번만 불러보세요. 거창한 대화가 아니라 같은 공간에 잠깐 앉아 있는 것, 거기서부터 다시 시작됩니다.',
     tags: ['#노크부터다시', '#거리재조정중', '#오늘한마디면충분'],
     imageColor: 'bg-stone-200',
+    seal: '客', // 한집의 손님
   },
 };

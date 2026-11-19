@@ -6,6 +6,7 @@ export type OgTemplateProps = {
   title: string;
   subtitle: string;
   grade: string;
+  seal: string; // 유형 인장에 새길 한자 한 글자
   hasScores: boolean;
   scores: { interest: number; intimacy: number; expression: number };
 };

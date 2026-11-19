@@ -31,6 +31,8 @@ const OG_STATIC_TEXT = [
   '너도 테스트 하러가기 →',
   '등급',
   '날인',
+  // 유형 인장 한자. 서브셋 폰트라 여기 없는 글자는 빈칸으로 렌더된다.
+  '孝友長金默飾信客罰慈監誇空',
   '0123456789"',
   'hyodo-tier.yeomniverse.com',
 ].join('');
@@ -89,6 +91,7 @@ export async function GET(req: NextRequest) {
       title: result.title,
       subtitle: result.subtitle,
       grade: `${result.grade}등급`,
+      seal: result.seal,
       hasScores,
       scores,
     };
