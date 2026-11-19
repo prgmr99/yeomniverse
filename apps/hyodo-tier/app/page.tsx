@@ -181,7 +181,7 @@ export default function Home() {
                   onChange={(e) => setFatherDob(digitsOnly(e.target.value, 6))}
                   aria-invalid={Boolean(error)}
                   aria-describedby={error ? 'dob-error' : 'dob-help'}
-                  className="entry-cells tabular w-[8.4em] py-2 bg-transparent text-left text-lg tracking-[0.85em] indent-[0.425em] rounded-none placeholder:text-ink-faint focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-grading transition-colors"
+                  className="entry-cells tabular w-[8.4em] py-2 bg-transparent text-left text-lg tracking-[0.85em] indent-[0.425em] rounded-none placeholder:tracking-[0.42em] placeholder:text-ink-faint focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-grading transition-colors"
                 />
               </div>
 
@@ -210,7 +210,7 @@ export default function Home() {
                   onChange={(e) => setMotherDob(digitsOnly(e.target.value, 6))}
                   aria-invalid={Boolean(error)}
                   aria-describedby={error ? 'dob-error' : 'dob-help'}
-                  className="entry-cells tabular w-[8.4em] py-2 bg-transparent text-left text-lg tracking-[0.85em] indent-[0.425em] rounded-none placeholder:text-ink-faint focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-grading transition-colors"
+                  className="entry-cells tabular w-[8.4em] py-2 bg-transparent text-left text-lg tracking-[0.85em] indent-[0.425em] rounded-none placeholder:tracking-[0.42em] placeholder:text-ink-faint focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-grading transition-colors"
                 />
               </div>
             </div>
