@@ -53,7 +53,10 @@ jobs:
           fail_ci_if_error: false
 
   e2e:
-    runs-on: ubuntu-latest
+    # ubuntu-latest 가 26.04 로 올라가면서 playwright install 이 죽는다.
+    # ("Playwright does not support chromium on ubuntu26.04-x64")
+    # Playwright 가 26.04 를 지원하면 ubuntu-latest 로 되돌린다.
+    runs-on: ubuntu-24.04
     needs: test
 
     steps:
