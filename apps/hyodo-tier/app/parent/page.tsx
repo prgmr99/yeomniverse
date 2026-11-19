@@ -2,7 +2,14 @@
 
 import { trackEvent } from '@hyo/ui';
 import { PARENT_QUESTION_COUNT } from '@hyo/utils';
-import { AlertCircle, BookOpen, ChevronRight, Users } from 'lucide-react';
+import {
+  AlertCircle,
+  ChevronRight,
+  Flower2,
+  Info,
+  MessageCircleQuestion,
+  Users,
+} from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Script from 'next/script';
@@ -79,41 +86,44 @@ export default function ParentHome() {
   return (
     <main className="flex flex-col min-h-screen p-6 text-center animate-fade-in">
       <section className="flex flex-col items-center justify-center w-full pt-8">
-        {/* 상단: 시험 정보 헤더 */}
-        <div className="w-full border-b-2 border-ink pb-4 mb-4">
-          <div className="min-h-[26px] mb-2">
+        {/* 상단: 시험지 표제부 */}
+        <div className="w-full border-b-[3px] border-ink pb-3 mb-6">
+          <div className="min-h-[24px] mb-2">
             {parentsDayBadge && (
-              <span className="inline-flex items-center gap-1 text-[11px] font-sans font-bold bg-grading/10 text-grading px-2 py-0.5 rounded-full">
-                🌸 {parentsDayBadge}
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-sans font-bold text-grading border border-grading/35 px-2 py-0.5 rounded-sheet">
+                <Flower2 className="w-3 h-3" aria-hidden="true" />
+                {parentsDayBadge}
               </span>
             )}
           </div>
-          <p className="text-sm font-serif font-bold tracking-widest mb-1">
-            제2교시
+          <p className="text-[13px] font-serif font-bold tracking-[0.4em] indent-[0.4em] text-ink-muted mb-1">
+            제 2 교시
           </p>
-          <h1 className="text-4xl font-serif font-black tracking-tighter">
+          <h1 className="text-[2.6rem] leading-[1.1] font-serif font-black">
             자녀 탐구영역
           </h1>
-          <div className="flex justify-between items-end mt-2 px-2">
-            <span className="text-xs font-sans bg-omr text-white px-2 py-0.5 rounded-sm">
+          <div className="flex justify-between items-end mt-3">
+            <span className="text-[11px] font-sans font-bold tracking-widest bg-omr text-paper px-2 py-1 rounded-sheet">
               홀수형
             </span>
-            <span className="text-lg font-serif font-bold">효도티어</span>
+            <span className="text-base font-serif font-bold text-ink-muted">
+              효도티어
+            </span>
           </div>
         </div>
 
-        {/* 메인: 설명 텍스트 */}
-        <div className="space-y-4 py-8">
-          <div className="bg-white/50 border border-ink/10 p-6 rounded-lg shadow-sm backdrop-blur-sm">
-            <BookOpen className="w-10 h-10 mx-auto mb-4 text-grading opacity-80" />
-            <h2 className="text-xl font-serif font-bold mb-2 whitespace-pre-line">
+        {/* 메인: 지시문 — 카드가 아니라 시험지에 인쇄된 블록이다 */}
+        <div className="w-full py-2 mb-8">
+          <div className="border-y border-ink/25 py-7 px-1 text-center">
+            <h2 className="text-[1.35rem] leading-snug font-serif font-bold mb-4 whitespace-pre-line text-balance">
               {`"당신은 자식에 대해\n얼마나 알고 있습니까?"`}
             </h2>
-            <p className="text-sm text-ink/70 leading-relaxed whitespace-pre-line">
-              {`이 시험은 단순한 심리테스트가 아닙니다.\n자식을 얼마나 이해하는지 냉정하게 판독합니다.\n\n`}
-              <span className="text-grading font-bold">
-                ※ 주의: 자식 얼굴이 자꾸 아른거릴 수 있음
-              </span>
+            <p className="text-sm text-ink-muted leading-relaxed whitespace-pre-line">
+              {`이 시험은 단순한 심리테스트가 아닙니다.\n자식을 얼마나 이해하는지 냉정하게 판독합니다.`}
+            </p>
+            {/* 채점자가 나중에 덧붙인 빨간 펜 주석처럼 */}
+            <p className="mt-5 inline-block -rotate-1 border-b-2 border-grading/50 text-grading font-bold text-sm pb-0.5">
+              ※ 주의: 자식 얼굴이 자꾸 아른거릴 수 있음
             </p>
           </div>
         </div>
@@ -122,17 +132,21 @@ export default function ParentHome() {
         <div className="w-full space-y-6">
           <fieldset className="w-full space-y-3 text-ink font-serif">
             <legend className="w-full text-center text-base font-bold mb-3">
-              수험번호 (자녀 정보)
+              수험번호{' '}
+              <span className="font-sans text-xs font-normal text-ink-muted">
+                (자녀 정보)
+              </span>
             </legend>
 
             <div className="flex items-end justify-center gap-3">
               <div className="flex flex-col items-center gap-1.5">
                 <label
                   htmlFor="child-name"
-                  className="text-xs font-sans font-bold text-ink/60"
+                  className="text-xs font-sans font-bold text-ink-muted"
                 >
                   자녀 이름
                 </label>
+                {/* 이름은 자릿수가 정해져 있지 않아 칸이 아니라 한 줄 괘선으로 받는다 */}
                 <input
                   id="child-name"
                   type="text"
@@ -143,18 +157,21 @@ export default function ParentHome() {
                   onChange={(e) => setChildName(e.target.value)}
                   aria-invalid={Boolean(error)}
                   aria-describedby={error ? 'child-error' : 'child-help'}
-                  className="w-32 py-2 bg-transparent border-b-2 border-ink text-center text-base rounded-sm placeholder:text-ink/25 focus:outline-none focus:border-grading focus-visible:ring-2 focus-visible:ring-grading/50 transition-colors"
+                  className="w-[6.5em] py-2 bg-transparent border-b-2 border-ink text-center text-lg rounded-none placeholder:text-ink-faint focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-grading transition-colors"
                 />
               </div>
 
-              <span aria-hidden="true" className="pb-2 font-bold text-ink/40">
+              <span
+                aria-hidden="true"
+                className="pb-2 font-bold text-ink-faint"
+              >
                 –
               </span>
 
               <div className="flex flex-col items-center gap-1.5">
                 <label
                   htmlFor="child-dob"
-                  className="text-xs font-sans font-bold text-ink/60"
+                  className="text-xs font-sans font-bold text-ink-muted"
                 >
                   생년월일
                 </label>
@@ -171,14 +188,14 @@ export default function ParentHome() {
                   }
                   aria-invalid={Boolean(error)}
                   aria-describedby={error ? 'child-error' : 'child-help'}
-                  className="w-32 py-2 bg-transparent border-b-2 border-ink text-center text-base tracking-[0.2em] rounded-sm placeholder:text-ink/25 focus:outline-none focus:border-grading focus-visible:ring-2 focus-visible:ring-grading/50 transition-colors"
+                  className="entry-cells tabular w-[8.4em] py-2 bg-transparent text-left text-lg tracking-[0.85em] indent-[0.425em] rounded-none placeholder:tracking-[0.42em] placeholder:text-ink-faint focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-grading transition-colors"
                 />
               </div>
             </div>
 
             <p
               id="child-help"
-              className="text-xs font-sans text-ink/50 text-center leading-relaxed"
+              className="text-xs font-sans text-ink-faint text-center leading-relaxed"
             >
               생년월일은 6자리로 입력하세요 (예: 950412). 결과를 자녀에게 보낼
               때 쓰입니다.
@@ -199,7 +216,7 @@ export default function ParentHome() {
             <button
               type="button"
               onClick={handleStart}
-              className="w-full bg-omr text-white py-4 rounded-lg font-serif font-bold text-xl shadow-lg hover:bg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-all flex items-center justify-center gap-2"
+              className="w-full bg-ink text-paper py-4 rounded-sheet font-serif font-bold text-xl shadow-[0_1px_2px_rgba(0,0,0,0.2),0_6px_16px_-8px_rgba(0,0,0,0.5)] hover:bg-graphite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors flex items-center justify-center gap-2"
             >
               문제지 펼치기 <ChevronRight className="w-5 h-5" />
             </button>
@@ -207,7 +224,7 @@ export default function ParentHome() {
             <button
               type="button"
               onClick={handleDontKnow}
-              className="w-full min-h-[52px] px-4 rounded-lg border-2 border-ink/15 bg-white/50 text-ink/70 text-sm font-sans hover:bg-white/80 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-all"
+              className="w-full min-h-[52px] px-4 rounded-sheet border border-ink/30 bg-sheet text-ink-muted text-sm font-sans hover:border-ink hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
             >
               자식 생일을 모릅니다 — 그래도 응시하기
             </button>
@@ -217,26 +234,30 @@ export default function ParentHome() {
           <div className="pt-2">
             <Link
               href="/"
-              className="flex items-center justify-center gap-2 w-full border border-ink/20 bg-white/60 text-ink/70 px-4 py-3 rounded-lg text-sm hover:bg-white/80 hover:text-ink transition-all"
+              className="flex items-center justify-center gap-2 w-full border-y border-ink/20 text-ink-muted px-4 py-3.5 text-sm hover:text-ink hover:border-ink/40 transition-colors"
             >
-              <Users className="w-4 h-4 text-grading" />
-              자식이세요? → 1교시 부모님 탐구영역 응시하러 가기
+              <Users className="w-4 h-4 text-grading shrink-0" />
+              자식이세요? 1교시 부모님 탐구영역 응시하러 가기
             </Link>
           </div>
 
-          <p className="text-xs text-ink/60 mt-4">
+          <p className="text-xs text-ink-faint mt-4">
             Designed by Hyo-Do-Tier Committee · 부모편. 2026
           </p>
         </div>
       </section>
 
-      <section className="mt-16 px-6 py-10 border-t border-ink/10 text-left space-y-8 bg-stone-100/50">
+      <section className="mt-16 px-6 py-10 border-t border-ink/20 text-left space-y-8 bg-shade">
         {/* 서비스 소개 */}
         <div className="space-y-2">
-          <h3 className="font-serif font-bold text-lg text-ink">
-            📌 2교시 자녀 탐구영역이란?
+          <h3 className="font-serif font-bold text-lg text-ink flex items-center gap-2">
+            <Info
+              className="w-[18px] h-[18px] text-grading shrink-0"
+              aria-hidden="true"
+            />
+            2교시 자녀 탐구영역이란?
           </h3>
-          <p className="text-sm text-ink/70 leading-relaxed break-keep">
+          <p className="text-sm text-ink-muted leading-relaxed break-keep">
             &apos;2교시 자녀 탐구영역&apos;은 부모님이 자식에 대해 얼마나 알고
             계신지를 {PARENT_QUESTION_COUNT}개의 문항으로 측정합니다. 자식의
             관심사, 생활 패턴, 소통 방식에 대한 이해를 종합적으로 분석하여 8가지
@@ -247,15 +268,19 @@ export default function ParentHome() {
 
         {/* FAQ */}
         <div className="space-y-4">
-          <h3 className="font-serif font-bold text-lg text-ink">
+          <h3 className="font-serif font-bold text-lg text-ink flex items-center gap-2">
+            <MessageCircleQuestion
+              className="w-[18px] h-[18px] text-grading shrink-0"
+              aria-hidden="true"
+            />
             자주 묻는 질문 (FAQ)
           </h3>
 
           <div className="space-y-1">
-            <h4 className="font-bold text-sm text-ink/90">
+            <h4 className="font-bold text-sm text-ink">
               Q. 부모용 시험은 자식용과 어떻게 다른가요?
             </h4>
-            <p className="text-xs text-ink/60 leading-relaxed">
+            <p className="text-xs text-ink-muted leading-relaxed">
               {PARENT_QUESTION_COUNT}문항 구조는 동일하지만, 질문의 관점과 결과
               유형이 다릅니다. 자식용(1교시)은 부모님에 대한 관심도를 측정하고,
               부모용(2교시)은 자식에 대한 이해와 소통 방식을 분석하여 8가지 부모
@@ -264,10 +289,10 @@ export default function ParentHome() {
           </div>
 
           <div className="space-y-1">
-            <h4 className="font-bold text-sm text-ink/90">
+            <h4 className="font-bold text-sm text-ink">
               Q. 결과를 자식에게 어떻게 보여주나요?
             </h4>
-            <p className="text-xs text-ink/60 leading-relaxed">
+            <p className="text-xs text-ink-muted leading-relaxed">
               카카오톡 공유 버튼을 누르면 자식에게 링크를 보낼 수 있습니다.
               자식이 링크를 타고 들어와 자기 편 테스트를 마치면, 결과 화면에서
               부모님 점수와 나란히 비교해볼 수 있습니다.
@@ -275,10 +300,10 @@ export default function ParentHome() {
           </div>
 
           <div className="space-y-1">
-            <h4 className="font-bold text-sm text-ink/90">
+            <h4 className="font-bold text-sm text-ink">
               Q. 개인정보는 저장되나요?
             </h4>
-            <p className="text-xs text-ink/60 leading-relaxed">
+            <p className="text-xs text-ink-muted leading-relaxed">
               아니요, 효도티어는 별도의 회원가입 없이 이용 가능합니다. 자녀
               이름과 생년월일을 포함한 모든 답변 데이터는 세션 종료 후 즉시
               휘발됩니다. 안심하고 테스트를 즐겨보세요.
@@ -286,7 +311,7 @@ export default function ParentHome() {
           </div>
         </div>
 
-        <p className="text-xs text-ink/60 pt-4 border-t border-ink/5">
+        <p className="text-xs text-ink-faint pt-4 border-t border-ink/15">
           본 서비스는 엔터테인먼트 목적으로 제작되었으며, 전문적인 심리 상담
           결과를 대체할 수 없습니다.
         </p>

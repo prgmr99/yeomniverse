@@ -284,7 +284,12 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
               날인
             </span>
             <div className="mt-2 border-[2.5px] border-grading text-grading rounded-sheet w-[64px] h-[54px] grid place-items-center opacity-0 animate-stamp-land shadow-[1px_2px_0_rgba(200,30,30,0.16)]">
-              <span className="font-serif font-black leading-none text-center">
+              {/* 숫자와 '등급'이 두 줄로 쪼개져 있어 그대로 읽히면 따로 발음된다 */}
+              <span className="sr-only">{result.grade}등급</span>
+              <span
+                aria-hidden="true"
+                className="font-serif font-black leading-none text-center"
+              >
                 <span className="block text-[24px] tabular">
                   {result.grade}
                 </span>

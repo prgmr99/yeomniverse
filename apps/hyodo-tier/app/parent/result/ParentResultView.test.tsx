@@ -25,7 +25,7 @@ describe('ParentResultView (유형 랜딩)', () => {
     renderLanding('LODGER_PARENT');
 
     // Tailwind가 적용되지 않는 jsdom에서는 클래스로 확인한다
-    expect(screen.getByText('상세 점수').parentElement).toHaveClass('hidden');
+    expect(screen.getByText('영역별 성적').parentElement).toHaveClass('hidden');
   });
 
   it('방문자에게 응시 경로를 준다', () => {
