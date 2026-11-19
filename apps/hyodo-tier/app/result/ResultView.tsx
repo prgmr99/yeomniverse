@@ -256,7 +256,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
   if (!isReady) return <Loading />; // 리다이렉트 중 깜빡임 방지 및 푸터 점프 방지
 
   return (
-    <main className="min-h-screen flex flex-col items-center py-10 px-6 animate-fade-in space-y-8 pb-20">
+    <main className="min-h-screen flex flex-col items-center py-10 px-6 space-y-8 pb-20">
       {/* 0. 공유로 들어온 방문자 오리엔테이션 */}
       {sharedResultId && (
         <p className="w-full text-center text-xs text-ink-muted bg-shade border border-ink/20 rounded-sheet py-2 px-4 break-keep">
@@ -266,7 +266,10 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
       )}
 
       {/* 1. 성적표 표제부 — 도장은 제목 위가 아니라 날인란 안에 찍힌다 */}
-      <div className="w-full border-b-2 border-ink pb-6">
+      <div
+        className="rise-in w-full border-b-2 border-ink pb-6"
+        style={{ '--rise': 0 } as React.CSSProperties}
+      >
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0 pt-1">
             <p className="text-xs font-serif font-bold tracking-[0.25em] text-ink-muted mb-3">
@@ -306,7 +309,10 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
       </div>
 
       {/* 2. 총평 — 채점자가 적어 넣은 칸 */}
-      <section className="w-full">
+      <section
+        className="rise-in w-full"
+        style={{ '--rise': 1 } as React.CSSProperties}
+      >
         <h2 className="text-xs font-sans font-bold tracking-[0.18em] text-ink-muted mb-2">
           총평
         </h2>
@@ -427,7 +433,10 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
       )}
 
       {/* 3. 닥터의 처방전 */}
-      <section className="w-full">
+      <section
+        className="rise-in w-full"
+        style={{ '--rise': 2 } as React.CSSProperties}
+      >
         <h2 className="text-xs font-sans font-bold tracking-[0.18em] text-ink-muted mb-2 flex items-center gap-1.5">
           <Stethoscope
             className="w-3.5 h-3.5 text-grading"
@@ -443,7 +452,10 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
       </section>
 
       {/* 4. 성적 일람표 — 점수 없이 들어온 유형 랜딩에서는 감춘다 */}
-      <section className={`w-full ${hasScores ? '' : 'hidden'}`}>
+      <section
+        className={`rise-in w-full ${hasScores ? '' : 'hidden'}`}
+        style={{ '--rise': 3 } as React.CSSProperties}
+      >
         <h2 className="text-xs font-sans font-bold tracking-[0.18em] text-ink-muted mb-2">
           영역별 성적
         </h2>
@@ -470,7 +482,10 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
       </section>
 
       {/* 5. 액션 버튼 */}
-      <div className="w-full space-y-3 pt-4">
+      <div
+        className="rise-in w-full space-y-3 pt-4"
+        style={{ '--rise': 4 } as React.CSSProperties}
+      >
         {/* 1순위 — 공유로 들어온 방문자는 '응시', 본인 응시자는 '공유'가 할 일이다 */}
         {sharedResultId ? (
           <Link
@@ -482,7 +497,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
               });
               resetQuiz();
             }}
-            className="relative w-full bg-ink text-paper py-4 rounded-sheet font-serif font-bold text-xl shadow-[0_1px_2px_rgba(0,0,0,0.2),0_6px_16px_-8px_rgba(0,0,0,0.5)] hover:bg-graphite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors flex items-center justify-center"
+            className="relative w-full bg-ink text-paper py-4 rounded-sheet font-serif font-bold text-xl shadow-[0_1px_2px_rgba(0,0,0,0.2),0_6px_16px_-8px_rgba(0,0,0,0.5)] hover:bg-graphite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable flex items-center justify-center"
           >
             나도 응시하기
             <ChevronRight className="absolute right-5 w-5 h-5" />
@@ -490,7 +505,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
         ) : (
           <button
             type="button"
-            className="relative w-full bg-[#FEE500] text-[#191919] py-4 rounded-sheet font-bold text-lg flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.14),0_6px_16px_-8px_rgba(0,0,0,0.4)] hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink transition-all"
+            className="relative w-full bg-[#FEE500] text-[#191919] py-4 rounded-sheet font-bold text-lg flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.14),0_6px_16px_-8px_rgba(0,0,0,0.4)] hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink pressable"
             onClick={handleShare}
           >
             <Share2 className="absolute left-5 w-5 h-5" /> 부모님께 공유하기
@@ -502,7 +517,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
           {sharedResultId && (
             <button
               type="button"
-              className="relative w-full bg-[#FEE500] text-[#191919] py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink transition-all"
+              className="relative w-full bg-[#FEE500] text-[#191919] py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink pressable"
               onClick={handleShare}
             >
               <Share2 className="absolute left-5 w-[18px] h-[18px]" /> 이 성적표
@@ -513,7 +528,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
           {!sharedResultId && (
             <button
               type="button"
-              className="relative w-full bg-sheet border border-grading/50 text-grading py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:bg-grading-soft hover:border-grading focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+              className="relative w-full bg-sheet border border-grading/50 text-grading py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:bg-grading-soft hover:border-grading focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable"
               onClick={handleCopyMessage}
             >
               <Heart className="absolute left-5 w-[18px] h-[18px]" />{' '}
@@ -525,7 +540,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
           <button
             type="button"
             disabled={isSaving}
-            className="relative w-full bg-sheet border border-ink/30 text-ink py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            className="relative w-full bg-sheet border border-ink/30 text-ink py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable disabled:opacity-60 disabled:cursor-not-allowed"
             onClick={handleSaveCard}
           >
             <ImageDown className="absolute left-5 w-[18px] h-[18px]" />
@@ -543,7 +558,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
                   result_id: result.id,
                 })
               }
-              className="relative w-full bg-sheet border border-ink/30 text-ink py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+              className="relative w-full bg-sheet border border-ink/30 text-ink py-3.5 rounded-sheet font-bold text-[15px] flex items-center justify-center hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable"
             >
               <Users className="absolute left-5 w-[18px] h-[18px] text-grading" />{' '}
               부모님께 2교시 보내기
@@ -559,7 +574,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
               <li>
                 <button
                   type="button"
-                  className="w-full py-3.5 flex items-center gap-3 text-left text-sm text-ink-muted hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+                  className="w-full py-3.5 flex items-center gap-3 text-left text-sm text-ink-muted hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable"
                   onClick={() => {
                     const ics = buildICS(birthdays.father, birthdays.mother);
                     const blob = new Blob([ics], {
@@ -592,7 +607,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
               <Link
                 href="/"
                 onClick={resetQuiz}
-                className="w-full py-3.5 flex items-center gap-3 text-sm text-ink-muted hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+                className="w-full py-3.5 flex items-center gap-3 text-sm text-ink-muted hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable"
               >
                 <RotateCcw
                   className="w-4 h-4 shrink-0 text-ink-faint"
@@ -610,7 +625,7 @@ function ResultContent({ forcedResultId }: ResultViewProps) {
           <li>
             <Link
               href="/blog"
-              className="w-full py-3.5 flex items-center gap-3 text-sm text-ink-muted hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+              className="w-full py-3.5 flex items-center gap-3 text-sm text-ink-muted hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable"
             >
               <BookOpen
                 className="w-4 h-4 shrink-0 text-ink-faint"
@@ -654,7 +669,10 @@ function MiniBar({
     <div className="flex items-center gap-1.5 text-[10px]">
       <span className="w-6 text-right text-ink-faint font-bold">{label}</span>
       <div className="flex-1 h-1.5 bg-shade border border-ink/12 overflow-hidden">
-        <div className={`h-full ${color}`} style={{ width: `${percent}%` }} />
+        <div
+          className={`h-full origin-left animate-bar-fill ${color}`}
+          style={{ width: `${percent}%` }}
+        />
       </div>
       <span className="w-5 text-right text-ink-muted font-bold tabular">
         {score}
@@ -686,7 +704,10 @@ function ScoreBar({
         </span>
       </span>
       <div className="flex-1 h-2 bg-shade border border-ink/12 overflow-hidden">
-        <div className={`h-full ${color}`} style={{ width: `${percent}%` }} />
+        <div
+          className={`h-full origin-left animate-bar-fill ${color}`}
+          style={{ width: `${percent}%` }}
+        />
       </div>
       <span className="w-8 shrink-0 text-right text-[15px] font-serif font-bold text-ink tabular">
         {score}

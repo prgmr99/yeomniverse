@@ -40,22 +40,65 @@
   --font-sans: var(--font-sans);
 
   /* Animations */
-  --animate-stamp-land: stampLand 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  --animate-stamp-land: stampLand 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   --animate-fade-in: fadeIn 0.5s ease-out forwards;
+  --animate-mark-pop: markPop 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-bar-fill: barFill 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 
-  /* 날인란 안에서 끝난다. 제목 위를 덮고 지나가지 않는다. */
+  /* 도장은 찍히는 물건이다. 과녁에서 한 번 튕겨야 찍혔다고 읽힌다. */
   @keyframes stampLand {
     0% {
       transform: scale(2.4) rotate(-14deg);
       opacity: 0;
     }
-    55% {
-      transform: scale(0.94) rotate(-9deg);
+    52% {
+      transform: scale(0.9) rotate(-6deg);
       opacity: 1;
+    }
+    70% {
+      transform: scale(1.06) rotate(-11deg);
+    }
+    86% {
+      transform: scale(0.98) rotate(-8deg);
     }
     100% {
       transform: scale(1) rotate(-9deg);
       opacity: 1;
+    }
+  }
+
+  /* 연필로 칸을 칠하는 순간. 선택이 손에 닿았다는 신호다. */
+  @keyframes markPop {
+    0% {
+      transform: scale(1);
+    }
+    45% {
+      transform: scale(1.22);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  /* 점수 막대는 '채점된 결과'다. 0에서 차올라야 측정으로 읽힌다. */
+  @keyframes barFill {
+    0% {
+      transform: scaleX(0);
+    }
+    100% {
+      transform: scaleX(1);
+    }
+  }
+
+  /* 시험지가 한 장씩 펼쳐지는 순서 */
+  @keyframes riseIn {
+    0% {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 
@@ -76,6 +119,26 @@
 
 @utility font-sans {
   font-family: var(--font-sans);
+}
+
+/* 누르면 눌린다. 조작 요소가 손가락에 반응하지 않으면 화면 전체가 굳어 보인다. */
+@utility pressable {
+  transition:
+    transform 150ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease;
+
+  &:active {
+    transform: scale(0.985) translateY(1px);
+  }
+}
+
+/* 지면이 한 번에 쏟아지지 않고 순서대로 올라온다. --rise 로 순번을 준다. */
+@utility rise-in {
+  animation: riseIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: calc(var(--rise, 0) * 80ms);
 }
 
 /* 점수·번호·문항수는 자리가 흔들리면 표가 아니라 목록으로 읽힌다. */
@@ -171,9 +234,17 @@ body::-webkit-scrollbar {
 
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-in,
-  .animate-stamp-land {
+  .animate-stamp-land,
+  .animate-mark-pop,
+  .animate-bar-fill,
+  .rise-in {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  /* 누르는 변형만 끄고 색 전환은 남긴다. 상태 피드백까지 사라지면 안 된다. */
+  .pressable:active {
+    transform: none;
   }
 }

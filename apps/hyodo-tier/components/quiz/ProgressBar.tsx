@@ -23,7 +23,7 @@ export default function ProgressBar({
               type="button"
               onClick={onPrev}
               aria-label="이전 문항으로 돌아가기"
-              className="-ml-2 inline-flex items-center gap-0.5 min-h-[44px] px-2 rounded-sheet text-ink-muted hover:text-grading focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading transition-colors"
+              className="-ml-2 inline-flex items-center gap-0.5 min-h-[44px] px-2 rounded-sheet text-ink-muted hover:text-grading focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grading pressable"
             >
               <ChevronLeft className="w-4 h-4" aria-hidden="true" />
               이전
