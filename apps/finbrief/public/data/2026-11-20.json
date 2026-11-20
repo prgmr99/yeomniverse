@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-20",
+  "timestamp": "2026-11-20T03:37:21.650Z",
+  "newsCount": 53,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 19,
+    "rating": "extreme fear",
+    "timestamp": "2026-11-19T23:59:41+00:00"
+  },
+  "oneWayIndex": {
+    "score": 52,
+    "direction": "bear",
+    "label": "Moderate Trend",
+    "components": {
+      "adx": 0,
+      "maAlignment": 50,
+      "rsiTrend": 80,
+      "bbWidth": 100,
+      "vix": 65,
+      "volume": 40,
+      "fearGreed": 90
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "Japan Core Inflation Accelerates, Rate Hike Expectations Cemented",
+        "summary": "Japan's core consumer inflation reached its highest level this year, driven by the expiration of energy subsidies. This persistent price pressure reinforces market expectations for an imminent policy shift by the Bank of Japan. A departure from the BOJ's ultra-loose monetary policy would mark a significant global macro event, impacting yield curves worldwide.",
+        "sentiment": "bear",
+        "reason": "This materially impacts Japanese Government Bonds, the Yen, and global fixed income markets, signaling the potential end of the last major dovish central bank stance."
+      },
+      {
+        "title": "AI Sell-off Deepens, Driving Asian Stocks to Worst Week Since 2020",
+        "summary": "Asian equity markets experienced their most significant weekly decline since 2020, as a sharp sell-off in AI-related stocks intensified. The broader market reaction indicates a reassessment of valuation multiples for high-growth technology companies. This signals a potential rotation away from speculative growth and towards more resilient segments of the market.",
+        "sentiment": "bear",
+        "reason": "Portfolio managers will de-risk exposure to high-growth technology and AI-leveraged equities, potentially rotating into defensive sectors or value stocks."
+      },
+      {
+        "title": "US Commerce Department Approved Significant AI Chip Sales to China",
+        "summary": "A US representative disclosed that the Commerce Department approved sales of over 879,000 AI chips to Chinese companies. This revelation suggests a more permissive stance on US-China tech trade than publicly perceived, despite ongoing export control narratives. The continued flow of advanced chips could temper assumptions about the long-term decoupling of US and Chinese tech ecosystems.",
+        "sentiment": "neutral",
+        "reason": "This moderates downside risk for semiconductor manufacturers with significant China exposure, particularly those producing advanced AI components."
+      },
+      {
+        "title": "BOJ's Ambiguity on Rate Path Fuels Yen Bearish Bets",
+        "summary": "The Bank of Japan's unclear communication regarding its future monetary policy path is creating uncertainty in currency markets. This ambiguity, coupled with rising domestic inflation, allows for continued divergence from other major central banks. Consequently, speculative short positions on the Japanese Yen are likely to persist, maintaining downward pressure on the currency.",
+        "sentiment": "bear",
+        "reason": "Investors will maintain or initiate short positions on the Japanese Yen, anticipating further depreciation against major currencies."
+      },
+      {
+        "title": "JPMorgan Forecasts Peak in AI Investment Boom This Year",
+        "summary": "JPMorgan analysts predict that the peak of the artificial intelligence investment boom will occur this year, with growth slowing from 2025 onwards. This outlook suggests a transition from aggressive capital expenditure to more normalized investment cycles in the AI sector. The forecast provides a strategic long-term perspective for re-evaluating sector allocations within technology.",
+        "sentiment": "bear",
+        "reason": "This calls for a strategic re-evaluation of long-term capital allocation within the technology sector, favoring proven profitability over speculative growth narratives."
+      },
+      {
+        "title": "Foreign Capital Outflows Persist in South Korea Despite Corporate Profits",
+        "summary": "South Korea's equity market continues to experience significant foreign capital outflows, with foreigners selling 26 trillion won in domestic stocks last month. This persistent selling comes despite robust corporate earnings, indicating a 'Sell Korea' trade driven by factors beyond fundamentals. The trend signals a broader investor reassessment of emerging market risk or specific regional concerns.",
+        "sentiment": "bear",
+        "reason": "This will weigh on South Korean equities and the Korean Won, prompting a re-evaluation of exposure to emerging market assets."
+      },
+      {
+        "title": "Intuit's Downbeat Outlook Signals Broader Software Sector Weakness",
+        "summary": "Intuit's recent downbeat outlook has intensified concerns across the software industry. This guidance suggests a potential deceleration in enterprise software spending beyond just the AI hardware segment. The broader anxiety impacts valuation multiples for software companies, signaling a more challenging operating environment.",
+        "sentiment": "bear",
+        "reason": "Investors will scrutinize revenue growth and profitability outlooks for software companies, potentially reducing exposure to sub-sectors vulnerable to slowing enterprise spend."
+      },
+      {
+        "title": "Dollar Rises to 19-Month Peak as AI Jitters Dampen Risk Appetite",
+        "summary": "The US Dollar climbed to a 19-month high, driven by a broad increase in risk aversion stemming from jitters over the AI sector sell-off. This flight to safety indicates a market preference for perceived low-volatility assets amidst uncertainty. The strengthening dollar puts pressure on emerging market currencies and commodity prices.",
+        "sentiment": "bull",
+        "reason": "The Dollar's strength reflects a defensive shift in global asset allocation, favoring safe-haven assets over riskier growth investments."
+      },
+      {
+        "title": "SoftBank Plunges Amid Broad Asian Tech Sell-off Following Anthropic Debut",
+        "summary": "SoftBank's shares plunged over 16%, caught in a wider sell-off across Asian tech stocks following the debut of Anthropic. As a major investor in technology and AI, SoftBank's performance serves as a proxy for sentiment toward the broader tech venture capital landscape. This decline signals significant paper losses for its Vision Fund and a recalibration of tech investment valuations.",
+        "sentiment": "bear",
+        "reason": "The significant decline in SoftBank's stock signals a negative re-rating for large technology holding companies and venture capital-backed assets."
+      },
+      {
+        "title": "Walmart Raises Outlook, Citing Ability to Maintain Low Prices",
+        "summary": "Walmart increased its financial outlook, with its CEO emphasizing the retailer's ability to keep prices low despite rising fuel costs. This updated guidance suggests resilience in consumer spending within the discount retail segment and effective cost management. The performance points to the defensive strength of consumer staples in an inflationary environment.",
+        "sentiment": "bull",
+        "reason": "This reinforces the defensive appeal of consumer staples and discount retailers, signaling robust demand and pricing power in a volatile economic climate."
+      }
+    ],
+    "keywords": [
+      "#AISellOff",
+      "#JapanInflation",
+      "#EMOutflows"
+    ],
+    "marketSentiment": "Risk aversion dominates as AI equity valuations recalibrate and global fixed income faces a potential shift in Japan's monetary policy."
+  }
+}
