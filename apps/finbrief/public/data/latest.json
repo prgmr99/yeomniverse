@@ -1,23 +1,23 @@
 {
-  "date": "2026-11-20",
-  "timestamp": "2026-11-20T03:37:21.650Z",
-  "newsCount": 53,
+  "date": "2026-11-21",
+  "timestamp": "2026-11-21T03:19:23.369Z",
+  "newsCount": 50,
   "outputLanguage": "en",
   "fearGreedIndex": {
-    "score": 19,
+    "score": 10,
     "rating": "extreme fear",
-    "timestamp": "2026-11-19T23:59:41+00:00"
+    "timestamp": "2026-11-20T23:59:52+00:00"
   },
   "oneWayIndex": {
-    "score": 52,
+    "score": 59,
     "direction": "bear",
     "label": "Moderate Trend",
     "components": {
-      "adx": 0,
-      "maAlignment": 50,
-      "rsiTrend": 80,
+      "adx": 30,
+      "maAlignment": 67,
+      "rsiTrend": 40,
       "bbWidth": 100,
-      "vix": 65,
+      "vix": 90,
       "volume": 40,
       "fearGreed": 90
     }
@@ -25,71 +25,71 @@
   "analysis": {
     "topNews": [
       {
-        "title": "Japan Core Inflation Accelerates, Rate Hike Expectations Cemented",
-        "summary": "Japan's core consumer inflation reached its highest level this year, driven by the expiration of energy subsidies. This persistent price pressure reinforces market expectations for an imminent policy shift by the Bank of Japan. A departure from the BOJ's ultra-loose monetary policy would mark a significant global macro event, impacting yield curves worldwide.",
+        "title": "Fed Official Suggests September Rate Hike Insufficient for Inflation",
+        "summary": "Federal Reserve Governor Cook stated the recent September rate hike is likely insufficient to effectively curb persistent price pressures. This indicates a more hawkish Fed stance than currently priced, suggesting further tightening or prolonged higher rates. Consequently, investors face a challenging environment for growth assets as the cost of capital remains elevated.",
         "sentiment": "bear",
-        "reason": "This materially impacts Japanese Government Bonds, the Yen, and global fixed income markets, signaling the potential end of the last major dovish central bank stance."
+        "reason": "Continued hawkish Fed rhetoric implies higher rates for longer, negatively impacting equity valuations and fixed income duration."
       },
       {
-        "title": "AI Sell-off Deepens, Driving Asian Stocks to Worst Week Since 2020",
-        "summary": "Asian equity markets experienced their most significant weekly decline since 2020, as a sharp sell-off in AI-related stocks intensified. The broader market reaction indicates a reassessment of valuation multiples for high-growth technology companies. This signals a potential rotation away from speculative growth and towards more resilient segments of the market.",
+        "title": "Nvidia Suffers Longest Weekly Losing Streak Since 2008",
+        "summary": "Nvidia shares plunged 14%, marking their longest weekly decline since the 2008 financial crisis. This significant drawdown signals a potential peak or cooling for the high-flying AI chip sector. The performance of this bellwether will dictate near-term sentiment for broader technology and growth equities.",
         "sentiment": "bear",
-        "reason": "Portfolio managers will de-risk exposure to high-growth technology and AI-leveraged equities, potentially rotating into defensive sectors or value stocks."
+        "reason": "Nvidia's extended decline indicates significant capital rotation out of AI and growth stocks, pressuring the broader technology sector."
       },
       {
-        "title": "US Commerce Department Approved Significant AI Chip Sales to China",
-        "summary": "A US representative disclosed that the Commerce Department approved sales of over 879,000 AI chips to Chinese companies. This revelation suggests a more permissive stance on US-China tech trade than publicly perceived, despite ongoing export control narratives. The continued flow of advanced chips could temper assumptions about the long-term decoupling of US and Chinese tech ecosystems.",
+        "title": "Major Indices Enter Correction as AI Rout Broadens",
+        "summary": "The S&P 500 and Dow Jones Industrial Average officially entered correction territory, while the Nasdaq Composite erased its 2026 gains. This broad market move reflects expanding investor caution beyond just a few tech names. The shift confirms a defensive posture, favoring capital preservation over aggressive growth bets.",
+        "sentiment": "bear",
+        "reason": "A confirmed market correction signals systemic risk aversion, prompting de-risking across diversified equity portfolios."
+      },
+      {
+        "title": "Anthropic's Post-Debut Performance Signals AI Valuation Reality Check",
+        "summary": "Anthropic's shares experienced a significant stumble post-debut, indicating a growing skepticism towards elevated AI valuations. This performance suggests a re-evaluation of private and public market AI technology companies. Investors should prepare for more disciplined capital deployment in nascent AI ventures.",
+        "sentiment": "bear",
+        "reason": "The difficulty faced by a prominent AI unicorn suggests reduced appetite and stricter valuation criteria for future AI investments, affecting venture capital and growth equity."
+      },
+      {
+        "title": "US Investors Shift from AI to Value Amid Tech Rout",
+        "summary": "As the AI technology sector experiences a significant rout, U.S. investors are actively reallocating capital into value stocks. This rotation reflects a defensive shift towards established companies with strong fundamentals and lower growth expectations. The trend suggests sustained demand for less volatile, income-generating assets.",
+        "sentiment": "bear",
+        "reason": "The capital rotation from growth to value implies a re-weighting of equity portfolios towards defensive, dividend-paying companies."
+      },
+      {
+        "title": "Nvidia CEO Jensen Huang to Testify Before Senate Panel",
+        "summary": "Nvidia CEO Jensen Huang is scheduled to testify publicly before the Senate banking panel, indicating increased governmental scrutiny on the AI chip industry. This development raises questions about potential regulatory impacts, particularly concerning competition, national security, and supply chain integrity. Policy shifts could influence market access and operational strategies for key technology companies.",
+        "sentiment": "bear",
+        "reason": "Increased regulatory oversight for a dominant chipmaker like Nvidia introduces policy risk, potentially impacting future growth and market structure in the AI sector."
+      },
+      {
+        "title": "US Sanctions Iranian Trustees Handling Oil Revenues",
+        "summary": "The U.S. Treasury sanctioned Iranian 'trustees' involved in collecting oil revenues, intensifying pressure on Iran's energy sector. This action aims to disrupt Iranian oil exports and funding streams, potentially impacting global crude supply. Investors should monitor for any significant shifts in oil prices or geopolitical tensions in the Middle East.",
         "sentiment": "neutral",
-        "reason": "This moderates downside risk for semiconductor manufacturers with significant China exposure, particularly those producing advanced AI components."
+        "reason": "Sanctions on Iranian oil revenue channels could tighten global oil supply, leading to higher crude prices and increased inflationary pressures."
       },
       {
-        "title": "BOJ's Ambiguity on Rate Path Fuels Yen Bearish Bets",
-        "summary": "The Bank of Japan's unclear communication regarding its future monetary policy path is creating uncertainty in currency markets. This ambiguity, coupled with rising domestic inflation, allows for continued divergence from other major central banks. Consequently, speculative short positions on the Japanese Yen are likely to persist, maintaining downward pressure on the currency.",
+        "title": "Data Center Construction Costs Expected to Rise 13%",
+        "summary": "Reports indicate that data center construction costs are projected to increase by 13% in 2026. This significant cost escalation impacts the capital expenditure of cloud computing providers and AI infrastructure developers. Higher buildout expenses could compress margins for hyperscalers and potentially slow expansion plans.",
         "sentiment": "bear",
-        "reason": "Investors will maintain or initiate short positions on the Japanese Yen, anticipating further depreciation against major currencies."
+        "reason": "Rising data center construction costs present an inflationary headwind for cloud providers and AI infrastructure companies, potentially impacting their profitability and expansion."
       },
       {
-        "title": "JPMorgan Forecasts Peak in AI Investment Boom This Year",
-        "summary": "JPMorgan analysts predict that the peak of the artificial intelligence investment boom will occur this year, with growth slowing from 2025 onwards. This outlook suggests a transition from aggressive capital expenditure to more normalized investment cycles in the AI sector. The forecast provides a strategic long-term perspective for re-evaluating sector allocations within technology.",
+        "title": "Nvidia's Accounting Practices Under SEC Scrutiny",
+        "summary": "Sources reveal that Nvidia's accounting practices are under investigation by the U.S. SEC. This regulatory inquiry adds a new layer of uncertainty and potential risk to the company's financial reporting and investor confidence. The outcome could significantly impact Nvidia's share price and corporate governance perceptions.",
         "sentiment": "bear",
-        "reason": "This calls for a strategic re-evaluation of long-term capital allocation within the technology sector, favoring proven profitability over speculative growth narratives."
+        "reason": "An SEC investigation into Nvidia's accounting introduces significant regulatory and reputational risk, potentially leading to further stock price depreciation for the company."
       },
       {
-        "title": "Foreign Capital Outflows Persist in South Korea Despite Corporate Profits",
-        "summary": "South Korea's equity market continues to experience significant foreign capital outflows, with foreigners selling 26 trillion won in domestic stocks last month. This persistent selling comes despite robust corporate earnings, indicating a 'Sell Korea' trade driven by factors beyond fundamentals. The trend signals a broader investor reassessment of emerging market risk or specific regional concerns.",
+        "title": "Prediction Markets Dim Stock Outlook for 2026 Amid AI Sell-off",
+        "summary": "Prediction markets show a significantly dimmer outlook for stock performance in 2026, directly linked to the ongoing AI sector sell-off. This shift indicates a broader recalibration of long-term growth expectations across equity markets. Investors should anticipate a more tempered growth environment and adjust multi-year projections accordingly.",
         "sentiment": "bear",
-        "reason": "This will weigh on South Korean equities and the Korean Won, prompting a re-evaluation of exposure to emerging market assets."
-      },
-      {
-        "title": "Intuit's Downbeat Outlook Signals Broader Software Sector Weakness",
-        "summary": "Intuit's recent downbeat outlook has intensified concerns across the software industry. This guidance suggests a potential deceleration in enterprise software spending beyond just the AI hardware segment. The broader anxiety impacts valuation multiples for software companies, signaling a more challenging operating environment.",
-        "sentiment": "bear",
-        "reason": "Investors will scrutinize revenue growth and profitability outlooks for software companies, potentially reducing exposure to sub-sectors vulnerable to slowing enterprise spend."
-      },
-      {
-        "title": "Dollar Rises to 19-Month Peak as AI Jitters Dampen Risk Appetite",
-        "summary": "The US Dollar climbed to a 19-month high, driven by a broad increase in risk aversion stemming from jitters over the AI sector sell-off. This flight to safety indicates a market preference for perceived low-volatility assets amidst uncertainty. The strengthening dollar puts pressure on emerging market currencies and commodity prices.",
-        "sentiment": "bull",
-        "reason": "The Dollar's strength reflects a defensive shift in global asset allocation, favoring safe-haven assets over riskier growth investments."
-      },
-      {
-        "title": "SoftBank Plunges Amid Broad Asian Tech Sell-off Following Anthropic Debut",
-        "summary": "SoftBank's shares plunged over 16%, caught in a wider sell-off across Asian tech stocks following the debut of Anthropic. As a major investor in technology and AI, SoftBank's performance serves as a proxy for sentiment toward the broader tech venture capital landscape. This decline signals significant paper losses for its Vision Fund and a recalibration of tech investment valuations.",
-        "sentiment": "bear",
-        "reason": "The significant decline in SoftBank's stock signals a negative re-rating for large technology holding companies and venture capital-backed assets."
-      },
-      {
-        "title": "Walmart Raises Outlook, Citing Ability to Maintain Low Prices",
-        "summary": "Walmart increased its financial outlook, with its CEO emphasizing the retailer's ability to keep prices low despite rising fuel costs. This updated guidance suggests resilience in consumer spending within the discount retail segment and effective cost management. The performance points to the defensive strength of consumer staples in an inflationary environment.",
-        "sentiment": "bull",
-        "reason": "This reinforces the defensive appeal of consumer staples and discount retailers, signaling robust demand and pricing power in a volatile economic climate."
+        "reason": "Declining long-term stock outlook from prediction markets signals reduced investor confidence in future equity returns, necessitating lower long-term portfolio growth assumptions."
       }
     ],
     "keywords": [
-      "#AISellOff",
-      "#JapanInflation",
-      "#EMOutflows"
+      "#AISelloff",
+      "#MonetaryTightening",
+      "#CapitalRotation"
     ],
-    "marketSentiment": "Risk aversion dominates as AI equity valuations recalibrate and global fixed income faces a potential shift in Japan's monetary policy."
+    "marketSentiment": "Equity markets entered correction territory, driven by persistent hawkish Fed rhetoric and a sharp deleveraging in the AI technology sector."
   }
 }

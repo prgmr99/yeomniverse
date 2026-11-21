@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-21",
+  "timestamp": "2026-11-21T03:19:23.369Z",
+  "newsCount": 50,
+  "outputLanguage": "en",
+  "fearGreedIndex": {
+    "score": 10,
+    "rating": "extreme fear",
+    "timestamp": "2026-11-20T23:59:52+00:00"
+  },
+  "oneWayIndex": {
+    "score": 59,
+    "direction": "bear",
+    "label": "Moderate Trend",
+    "components": {
+      "adx": 30,
+      "maAlignment": 67,
+      "rsiTrend": 40,
+      "bbWidth": 100,
+      "vix": 90,
+      "volume": 40,
+      "fearGreed": 90
+    }
+  },
+  "analysis": {
+    "topNews": [
+      {
+        "title": "Fed Official Suggests September Rate Hike Insufficient for Inflation",
+        "summary": "Federal Reserve Governor Cook stated the recent September rate hike is likely insufficient to effectively curb persistent price pressures. This indicates a more hawkish Fed stance than currently priced, suggesting further tightening or prolonged higher rates. Consequently, investors face a challenging environment for growth assets as the cost of capital remains elevated.",
+        "sentiment": "bear",
+        "reason": "Continued hawkish Fed rhetoric implies higher rates for longer, negatively impacting equity valuations and fixed income duration."
+      },
+      {
+        "title": "Nvidia Suffers Longest Weekly Losing Streak Since 2008",
+        "summary": "Nvidia shares plunged 14%, marking their longest weekly decline since the 2008 financial crisis. This significant drawdown signals a potential peak or cooling for the high-flying AI chip sector. The performance of this bellwether will dictate near-term sentiment for broader technology and growth equities.",
+        "sentiment": "bear",
+        "reason": "Nvidia's extended decline indicates significant capital rotation out of AI and growth stocks, pressuring the broader technology sector."
+      },
+      {
+        "title": "Major Indices Enter Correction as AI Rout Broadens",
+        "summary": "The S&P 500 and Dow Jones Industrial Average officially entered correction territory, while the Nasdaq Composite erased its 2026 gains. This broad market move reflects expanding investor caution beyond just a few tech names. The shift confirms a defensive posture, favoring capital preservation over aggressive growth bets.",
+        "sentiment": "bear",
+        "reason": "A confirmed market correction signals systemic risk aversion, prompting de-risking across diversified equity portfolios."
+      },
+      {
+        "title": "Anthropic's Post-Debut Performance Signals AI Valuation Reality Check",
+        "summary": "Anthropic's shares experienced a significant stumble post-debut, indicating a growing skepticism towards elevated AI valuations. This performance suggests a re-evaluation of private and public market AI technology companies. Investors should prepare for more disciplined capital deployment in nascent AI ventures.",
+        "sentiment": "bear",
+        "reason": "The difficulty faced by a prominent AI unicorn suggests reduced appetite and stricter valuation criteria for future AI investments, affecting venture capital and growth equity."
+      },
+      {
+        "title": "US Investors Shift from AI to Value Amid Tech Rout",
+        "summary": "As the AI technology sector experiences a significant rout, U.S. investors are actively reallocating capital into value stocks. This rotation reflects a defensive shift towards established companies with strong fundamentals and lower growth expectations. The trend suggests sustained demand for less volatile, income-generating assets.",
+        "sentiment": "bear",
+        "reason": "The capital rotation from growth to value implies a re-weighting of equity portfolios towards defensive, dividend-paying companies."
+      },
+      {
+        "title": "Nvidia CEO Jensen Huang to Testify Before Senate Panel",
+        "summary": "Nvidia CEO Jensen Huang is scheduled to testify publicly before the Senate banking panel, indicating increased governmental scrutiny on the AI chip industry. This development raises questions about potential regulatory impacts, particularly concerning competition, national security, and supply chain integrity. Policy shifts could influence market access and operational strategies for key technology companies.",
+        "sentiment": "bear",
+        "reason": "Increased regulatory oversight for a dominant chipmaker like Nvidia introduces policy risk, potentially impacting future growth and market structure in the AI sector."
+      },
+      {
+        "title": "US Sanctions Iranian Trustees Handling Oil Revenues",
+        "summary": "The U.S. Treasury sanctioned Iranian 'trustees' involved in collecting oil revenues, intensifying pressure on Iran's energy sector. This action aims to disrupt Iranian oil exports and funding streams, potentially impacting global crude supply. Investors should monitor for any significant shifts in oil prices or geopolitical tensions in the Middle East.",
+        "sentiment": "neutral",
+        "reason": "Sanctions on Iranian oil revenue channels could tighten global oil supply, leading to higher crude prices and increased inflationary pressures."
+      },
+      {
+        "title": "Data Center Construction Costs Expected to Rise 13%",
+        "summary": "Reports indicate that data center construction costs are projected to increase by 13% in 2026. This significant cost escalation impacts the capital expenditure of cloud computing providers and AI infrastructure developers. Higher buildout expenses could compress margins for hyperscalers and potentially slow expansion plans.",
+        "sentiment": "bear",
+        "reason": "Rising data center construction costs present an inflationary headwind for cloud providers and AI infrastructure companies, potentially impacting their profitability and expansion."
+      },
+      {
+        "title": "Nvidia's Accounting Practices Under SEC Scrutiny",
+        "summary": "Sources reveal that Nvidia's accounting practices are under investigation by the U.S. SEC. This regulatory inquiry adds a new layer of uncertainty and potential risk to the company's financial reporting and investor confidence. The outcome could significantly impact Nvidia's share price and corporate governance perceptions.",
+        "sentiment": "bear",
+        "reason": "An SEC investigation into Nvidia's accounting introduces significant regulatory and reputational risk, potentially leading to further stock price depreciation for the company."
+      },
+      {
+        "title": "Prediction Markets Dim Stock Outlook for 2026 Amid AI Sell-off",
+        "summary": "Prediction markets show a significantly dimmer outlook for stock performance in 2026, directly linked to the ongoing AI sector sell-off. This shift indicates a broader recalibration of long-term growth expectations across equity markets. Investors should anticipate a more tempered growth environment and adjust multi-year projections accordingly.",
+        "sentiment": "bear",
+        "reason": "Declining long-term stock outlook from prediction markets signals reduced investor confidence in future equity returns, necessitating lower long-term portfolio growth assumptions."
+      }
+    ],
+    "keywords": [
+      "#AISelloff",
+      "#MonetaryTightening",
+      "#CapitalRotation"
+    ],
+    "marketSentiment": "Equity markets entered correction territory, driven by persistent hawkish Fed rhetoric and a sharp deleveraging in the AI technology sector."
+  }
+}
